@@ -1,0 +1,250 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/*Main page*/
+.main-wrapper {
+
+}
+
+/*Header*/
+.header {
+    display: flex;
+    justify-content: space-between;
+    background: rgb(46, 48, 48);
+    background: linear-gradient(0deg, rgba(46, 48, 48, 1) 0%, rgba(75, 75, 70, 1) 100%);
+    width: 100%;
+    height: 110px;
+    font-size: 1.3rem;
+    color: white;
+    font-family: "Droid Sans Mono";
+    align-items: center;
+}
+
+.navbar {
+    margin-left: 10px;
+    display: flex;
+}
+
+.navItems {
+    margin-right: 20px;
+    color: white;
+    text-decoration: none;
+}
+
+.logo {
+    margin-right: 80px;
+    height: 60px;
+}
+
+/*Content */
+.content {
+    background: rgb(233, 226, 226);
+    background: linear-gradient(180deg, rgba(233, 226, 226, 1) 0%, rgba(200, 163, 163, 1) 15%, rgba(88, 87, 85, 1) 100%);
+    min-height: calc(100vh - 150px);
+    display: flex;
+    justify-content: center;
+}
+
+.content-container {
+    width: 1400px;
+    border: black;
+    background-color: transparent;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*Gallery*/
+.gallery {
+    margin: 0 auto;
+    justify-content: center;
+    width: 100%;
+    min-height: 780px;
+    color: white;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.image {
+    height: 300px;
+    margin: 10px;
+    border: white solid thick;
+}
+
+/*VIDEOS*/
+.videos {
+    margin: 0 auto;
+    min-height: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 30px;
+    justify-content: center;
+    overflow-y: scroll;
+
+}
+
+.video {
+    margin: 10px;
+    border: white solid thin;
+}
+
+
+/*MUSIC*/
+.music-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 400px;
+    overflow-y: scroll;
+}
+
+.music {
+    margin: 10px;
+}
+
+
+/*Footer*/
+.footer {
+    background: rgb(80, 75, 75);
+    background: linear-gradient(180deg, rgb(33, 33, 33) 0%, rgb(59, 56, 56) 15%, rgb(72, 60, 57) 100%);
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    font-size: 1.2rem;
+    align-items: center;
+    border-top: white solid 1px;
+    border-top-right-radius: 2px;
+    border-top-left-radius: 2px;
+}
+
+/*Login page*/
+.login-wrapper {
+    background: url("components/Login/bg.jpg") no-repeat center;
+    background-size: cover;
+    /*background: rgb(63, 94, 251);*/
+    /*background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%);*/
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    width: 600px;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    align-items: center;
+    border-radius: 20px;
+    background: transparent;
+    /*background: rgb(251, 251, 251);*/
+    /*background: linear-gradient(90deg, rgba(251, 251, 251, 1) 0%, rgba(198, 172, 178, 1) 100%);*/
+}
+
+.anonymous-avatar {
+    margin: 10px auto 0 auto;
+    width: 100px;
+    border-radius: 70px;
+}
+
+.login-title {
+    margin: 0;
+    font-size: 1.8rem;
+    font-family: cursive;
+}
+
+.login-errors-block {
+    margin: 10px;
+    color: red;
+    font-size: 1rem;
+}
+
+.login-errors-block p {
+    margin: 0;
+    font-family: Bahnschrift;
+}
+
+.login-inputs {
+    text-align: center;
+    margin: 10px;
+    height: 10px;
+    width: 250px;
+    border-color: #cccccc;
+    padding: 13px;
+    font-size: 16px;
+    border-radius: 15px;
+    border-width: 2px;
+    border-style: solid;
+    box-shadow: 0 0 2px 0 rgba(42, 42, 42, .65);
+}
+
+.signIn-button {
+    font-size: 1rem;
+    height: 35px;
+    width: 210px;
+    margin: 15px auto 10px auto;
+    letter-spacing: 2px;
+    color: white;
+    background-color: #3a3636;
+    border-radius: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: Impact;
+    text-decoration: none;
+}
+
+.restore-login-button {
+    margin: 20px auto auto auto;
+    border: none;
+    background-color: transparent;
+    color: blue;
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: "Cambria Math";
+}
+
+.signUp-button {
+    margin: 60px auto 20px auto;
+    border: none;
+    background-color: transparent;
+    color: blue;
+    font-size: 1rem;
+    font-family: "Cambria Math";
+    cursor: pointer;
+}
+
+
+/*ButtonsControls*/
+
+.buttonControls-container {
+    width: 150px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.buttonControls {
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+
+
