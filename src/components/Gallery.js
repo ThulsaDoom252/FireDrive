@@ -1,44 +1,32 @@
-import React from 'react';
+import { storage } from "../firebase";
+import { ref, deleteObject } from "firebase/storage";
 
-function Gallery({images}) {
-    function VerticalLine() {
-        return <hr style={{border: 'none', borderRight: '2px solid black', height: '100%'}}/>;
-    }
+function Gallery({ images, setImages }) {
+    const handleDeleteImage = (url) => {
+        const imageRef = ref(storage, url);
+        deleteObject(imageRef)
+            .then(() => {
+                // Обновляем список изображений без удаленного изображения
+                const updatedImages = images.filter((image) => image !== url);
+                setImages(updatedImages);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
     return (
-
         <section className='gallery'>
-            {images.map(url =>
-                <img className='image' src={url} alt="image"/>
-            )}
+            {images.map((url) => (
+                <div key={url} className='image-wrapper'>
+                    <img className='image' src={url} alt='image' onClick={() => handleDeleteImage(url)} />
+                    <button className='delete-button' onClick={() => handleDeleteImage(url)}>
+                        Delete
+                    </button>
+                </div>
+            ))}
         </section>
-
     );
 }
 
 export default Gallery;
-
-
-
-
-// import React from 'react';
-// import {testImages} from "../data/sourceFiles";
-// import ButtonControls from "./Common/ButtonCotnrols";
-//
-// function Gallery({images}) {
-//     function VerticalLine() {
-//         return <hr style={{border: 'none', borderRight: '2px solid black', height: '100%'}}/>;
-//     }
-//
-//     return (
-//
-//         <section className='gallery'>
-//             {images.map(url =>
-//                 <img className='image' src={url} alt="image"/>
-//             )}
-//         </section>
-//
-//     );
-// }
-//
-// export default Gallery;

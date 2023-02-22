@@ -6,27 +6,34 @@ import {storage} from "../../firebase";
 import {ref, uploadBytes} from "firebase/storage";
 import {v4} from "uuid";
 
-function ButtonControls({sortedList, setSortedList, setImageUrls, updateList}) {
+function ButtonControls({sortedList, setSortedList, setImageUrls}) {
     const hiddenFileInput = React.useRef(null)
     const handleClick = event => hiddenFileInput.current.click()
 
-    const uploadFile = e => {
-        const upload = e.target.files[0]
-        const fileRef = ref(storage, `images/${currentUser}/${upload.name + v4()}`)
-        alert('proceeding...')
-        uploadBytes(fileRef, upload).then((snapshot) => {
-            const url = `https://firebasestorage.googleapis.com/v0/b/${snapshot.ref.bucket}/o/${encodeURIComponent(
-                snapshot.ref.fullPath
-            )}?alt=media`;
-            alert('Uploaded!')
-            if (!sortedList.includes(url)) {
-                const updatedSortedList = [...sortedList, url];
-                setSortedList(updatedSortedList);
-                setImageUrls(updatedSortedList);
-            }
-            listAllFunc(setImageUrls)
-        })
-    }
+    const uploadFile = (e) => {
+        const upload = e.target.files[0];
+        const fileRef = ref(storage, `images/${currentUser}/${upload.name + v4()}`);
+        alert('proceeding...');
+
+        uploadBytes(fileRef, upload)
+            .then((snapshot) => {
+                const url = `https://firebasestorage.googleapis.com/v0/b/${snapshot.ref.bucket}/o/${encodeURIComponent(
+                    snapshot.ref.fullPath
+                )}?alt=media`;
+
+                return url;
+            })
+            .then((url) => {
+                if (!sortedList.includes(url)) {
+                    const updatedSortedList = [...sortedList, url];
+                    setSortedList(updatedSortedList);
+                    setImageUrls(updatedSortedList);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
     return (
         <div className='buttonControls-container'>

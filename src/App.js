@@ -34,12 +34,14 @@ const App = () => {
                 <section className="content">
                     <div className="content-container">
                         <Routes>
-                            <Route path="/gallery" element={<Gallery images={sortedList}/>}/>
+                            <Route path="/gallery" element={<Gallery images={sortedList} sortedList={sortedList}
+                                                                     setSortedList={setSortedList}
+                                                                     setImageUrls={setImageUrls}/>}/>
                             <Route path="/music" element={<Music/>}/>
                             <Route path="/videos" element={<Video/>}/>
                         </Routes>
                         <ButtonControls sortedList={sortedList} setSortedList={setSortedList}
-                                        setImageUrls={setImageUrls} updateList={setSortedList}/>
+                                        setImageUrls={setImageUrls}/>
                     </div>
                 </section>
                 <Footer/>
