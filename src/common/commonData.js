@@ -26,6 +26,10 @@ export const mediaTypes = [images, videos, audio]
 export const mediaUploadMode = 'mediaUploadMode'
 export const mediaFetchMode = 'mediaFetchMode'
 
+// Media file extensions
+export const imageFiles = '.jpg,.jpeg,.png'
+export const videoFiles = '.mpeg, .mp4, .mkv, .avi, .mpeg4'
+export const audioFiles = '.mp3'
 
 //FileTypes allowed for upload
 export const imagesOnly = ['image/jpeg', 'image/png']

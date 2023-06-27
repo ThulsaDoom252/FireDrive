@@ -29,7 +29,7 @@ const Main = ({listMedia, setCurrentRoute}) => {
 
     return (
         <>
-            <HeaderContainer/>
+            <HeaderContainer {...{pages, currentRoute}}/>
             <main>
                 {homePage && <Home/>}
                 <Routes>

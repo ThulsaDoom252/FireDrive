@@ -1,13 +1,15 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 import {
-    audioRoute,
+    audioFiles,
+    audioRoute, imageFiles,
     imagesRoute,
-    rootRoute,
+    rootRoute, videoFiles,
     videosRoute
 } from "../../common/commonData";
 
-const Header = () => {
+const Header = ({handleUploadMedia, handleUploadBtnClick, hiddenFileInput, pages}) => {
+    const [imagesPage, videosPage, audioPage] = pages
     return (
         <header
             className={'flex justify-between h-16 pr-10 pl-10 bg-gradient-to-r from-sky-500 to-indigo-500 items-center'}>
@@ -22,9 +24,17 @@ const Header = () => {
                          className={navData => navData.isActive ? 'text-white mr-5' : 'mr-5'}>Audio</NavLink>
             </div>
             <div>
+                <input
+                    ref={hiddenFileInput}
+                    accept={imagesPage ? imageFiles : videosPage ? videoFiles :
+                        audioPage ? audioFiles : ''}
+                    hidden={true}
+                    type={"file"}
+                    onChange={e => handleUploadMedia(e)}
+                    multiple/>
                 <button
                     type="button"
-                    disabled={true}
+                    onClick={handleUploadBtnClick}
                     className={'bg-purple-500 mr-5 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed'}
                 >
                     Add media
