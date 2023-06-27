@@ -10,6 +10,7 @@ module.exports = {
             },
             height: {
                 '300': '300px !important',
+                '200': '200px',
             },
         },
     },
