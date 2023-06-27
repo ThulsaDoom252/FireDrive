@@ -1,3 +1,14 @@
+export const truncate = (name, maxCharacters) => {
+    const maxNumber = maxCharacters
+    const mediaLength = name.length
+    if (mediaLength > maxNumber) {
+        let slicedMedia = name.slice(0, maxNumber)
+        return slicedMedia + '...'
+    } else {
+        return name
+    }
+}
+
 //Routes Refs
 export const imagesRoute = '/images'
 export const videosRoute = '/videos'
@@ -9,11 +20,16 @@ export const images = 'images'
 export const videos = 'videos'
 export const audio = 'audio'
 export const defaultRef = 'default'
+export const mediaTypes = [images, videos, audio]
 
 // Media filter modes
 export const mediaUploadMode = 'mediaUploadMode'
 export const mediaFetchMode = 'mediaFetchMode'
 
+// Media file extensions
+export const imageFiles = '.jpg,.jpeg,.png'
+export const videoFiles = '.mpeg, .mp4, .mkv, .avi, .mpeg4'
+export const audioFiles = '.mp3'
 
 //FileTypes allowed for upload
 export const imagesOnly = ['image/jpeg', 'image/png']
