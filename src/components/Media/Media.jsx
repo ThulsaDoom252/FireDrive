@@ -20,20 +20,15 @@ const Media = ({currentMediaSet, imagesPage, videosPage, audioPage, currentMedia
                              alt="image"/>
                         <p>{truncate(media.name, 15)}</p>
                     </div>) : videosPage ? currentMediaSet.map((video, index) =>
-                        <div key={index} className="w-full relative" style={{paddingBottom: '75%'}}>
-                            <div className="absolute inset-0">
+                        <div key={index} className="w-full relative flex flex-col justify-center text-center">
+                            <div className="player-container  h-200 bg-black rounded-lg overflow-hidden">
                                 <ReactPlayer
                                     url={video.url}
                                     width="100%"
                                     height="100%"
-                                    style={{position: 'absolute', top: 0, left: 0}}
-                                    config={{
-                                        youtube: {
-                                            playerVars: {showinfo: 0, modestbranding: 1},
-                                        },
-                                    }}
                                 />
                             </div>
+                            <p className={''}>{truncate(video.name, 15)}</p>
                         </div>
                     ) :
                     currentMediaSet.map(((audio, index) =>
@@ -44,7 +39,6 @@ const Media = ({currentMediaSet, imagesPage, videosPage, audioPage, currentMedia
                 }
             </div>
         </section>
-
     );
 };
 
