@@ -14,7 +14,7 @@ import {handleAlert, handleAlertAction} from "../redux/appSlice";
 const Alert = ({alertStyle, alertMode, handleAlert, currentRoute, currentMediaSet, handleAlertAction}) => {
     return (
         <div
-            className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-500 h-200 flex justify-center items-center rounded text-lg text-black text-center z-50 
+            className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-11/12 alert-sm:w-500 h-200 flex justify-center items-center rounded text-lg text-black text-center z-50 
              ${alertStyle === alertSuccessStyle ? 'bg-emerald-400 text-white' : alertStyle === alertWarningStyle ? 'bg-amber-200' : 'bg-red-700 text-white'} `}
         >
             <button onClick={() => handleAlert({overlayMode: true, toggle: false})}

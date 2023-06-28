@@ -19,8 +19,6 @@ const Main = ({listMedia, setCurrentRoute, toggleSmallScreen}) => {
 
     const currentMediaSet = useSelector(state => state.media.currentMediaSet)
 
-    const smallScreen = useSelector(state => state.app.smallScreen)
-
     const overlay = useSelector(state => state.app.overlay)
 
     const alert = useSelector(state => state.app.alert)
@@ -50,7 +48,7 @@ const Main = ({listMedia, setCurrentRoute, toggleSmallScreen}) => {
         <>
             {overlay && <Overlay/>}
             {alert && <Alert/>}
-            <HeaderContainer {...{pages, currentRoute, currentMediaSet, smallScreen}}/>
+            <HeaderContainer/>
             <main>
                 {homePage && <Home/>}
                 <Routes>
