@@ -24,10 +24,13 @@ export const alertSuccessStyle = 'success'
 
 //AlertModes
 export const alertRemoveAll = 'removeAll'
+export const alertMediaUploaded = `alertMediaUploaded`
 
 
 //AlertMessages
 export const removeAllMsg = 'This will delete all media on current page. Sure you want to continue?'
+
+export const mediaUploadedMsg = 'Uploaded! \u{1F600}'
 
 //Routes Refs
 export const imagesRoute = '/images'

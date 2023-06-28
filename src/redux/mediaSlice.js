@@ -1,4 +1,5 @@
 import {
+    alertMediaUploaded, alertSuccessStyle,
     audio,
     audioOnly,
     audioRoute, defaultRef,
@@ -12,6 +13,7 @@ import {
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {getDownloadURL, getMetadata, listAll, ref, uploadBytes, deleteObject} from "firebase/storage";
 import {storage} from "../firebase";
+import {handleAlert} from "./appSlice";
 
 const mediaSlice = createSlice({
     name: 'media-slice',
@@ -57,6 +59,10 @@ const mediaSlice = createSlice({
                     state.audioSet = [...state.audioSet, ...uploadedMedia]
                     break;
             }
+        },
+        toggleIsMediaUploaded(state, action) {
+            state.mediaUploaded = action.payload
+
         },
         toggleFetchMedia(state, action) {
             const {mediaType, toggle} = action.payload
@@ -180,6 +186,7 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
             dispatch(updateMediaSet({currentRoute, uploadedMedia: modifiedUploadedMedia}))
         }));
         dispatch(toggleMediaLoading(false))
+        dispatch(handleAlert({overlayMode: true, alertMode: alertMediaUploaded, alertStyle: alertSuccessStyle}))
     }
 });
 
@@ -194,7 +201,6 @@ export const deleteAllMedia = createAsyncThunk('delete-all-media-thunk', async (
         await deleteObject(refToDelete)
     }
     dispatch(clearMediaSet({route: currentRoute}))
-    handleAlert({dispatch}, error, e.toString())
 })
 
 

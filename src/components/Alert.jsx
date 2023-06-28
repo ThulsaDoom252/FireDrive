@@ -1,6 +1,13 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {alertRemoveAll, alertSuccessStyle, alertWarningStyle, removeAllMsg} from "../common/commonData";
+import {
+    alertMediaUploaded,
+    alertRemoveAll,
+    alertSuccessStyle,
+    alertWarningStyle,
+    mediaUploadedMsg,
+    removeAllMsg
+} from "../common/commonData";
 import {AiOutlineClose} from "react-icons/ai";
 import {handleAlert, handleAlertAction} from "../redux/appSlice";
 
@@ -14,6 +21,7 @@ const Alert = ({alertStyle, alertMode, handleAlert, currentRoute, currentMediaSe
                     className={'absolute top-0 right-0'}>
                 <AiOutlineClose/>
             </button>
+            {alertMode === alertMediaUploaded && <div>{mediaUploadedMsg}</div>}
             {alertMode === alertRemoveAll && <div>{removeAllMsg}</div>}
             {alertMode === alertRemoveAll && (
                 <button onClick={() => handleAlertAction({alertMode, currentRoute, currentMediaSet})}
