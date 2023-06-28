@@ -28,7 +28,10 @@ const HeaderContainer = ({
         handleAlert({overlayMode: true, alertMode: alertRemoveAll, alertStyle: alertWarningStyle})
     }
 
+    const noCurrentMedia = currentMediaSet.length === 0
+
     return <Header {...{
+        noCurrentMedia,
         handleUploadBtnClick,
         hiddenFileInput,
         handleUploadMedia,
