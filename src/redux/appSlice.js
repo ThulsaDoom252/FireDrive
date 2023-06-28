@@ -1,6 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {alertRemoveAll, delay} from "../common/commonData";
-import {useDispatch} from "react-redux";
 import {deleteAllMedia} from "./mediaSlice";
 
 
