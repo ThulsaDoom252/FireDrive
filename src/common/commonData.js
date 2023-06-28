@@ -9,6 +9,26 @@ export const truncate = (name, maxCharacters) => {
     }
 }
 
+export const delay = (ms) => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve()
+        }, ms)
+    })
+}
+
+
+//AlertStyles
+export const alertWarningStyle = 'warning'
+export const alertSuccessStyle = 'success'
+
+//AlertModes
+export const alertRemoveAll = 'removeAll'
+
+
+//AlertMessages
+export const removeAllMsg = 'This will delete all media on current page. Sure you want to continue?'
+
 //Routes Refs
 export const imagesRoute = '/images'
 export const videosRoute = '/videos'
