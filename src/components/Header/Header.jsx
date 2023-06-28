@@ -8,7 +8,7 @@ import {
     videosRoute
 } from "../../common/commonData";
 import {GoTrash} from "react-icons/go";
-import {GrAdd} from "react-icons/gr";
+import {HiOutlinePlus} from "react-icons/hi";
 
 const Header = ({
                     handleUploadMedia,
@@ -46,7 +46,7 @@ const Header = ({
                     onClick={handleUploadBtnClick}
                     className={'bg-purple-500 mr-5 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed'}
                 >
-                    {smallScreen ? < GrAdd/> : 'Add media'}
+                    {smallScreen ? < HiOutlinePlus/> : 'Add media'}
 
                 </button>
                 <button
