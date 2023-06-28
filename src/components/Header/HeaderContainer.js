@@ -3,7 +3,7 @@ import Header from "./Header";
 import {deleteAllMedia, uploadMedia} from "../../redux/mediaSlice";
 import {connect} from "react-redux";
 
-const HeaderContainer = ({currentRoute, pages, currentMediaSet, uploadMedia, deleteAllMedia}) => {
+const HeaderContainer = ({currentRoute, pages, currentMediaSet, uploadMedia, deleteAllMedia, smallScreen}) => {
 
     const hiddenFileInput = React.useRef(null)
     const handleUploadBtnClick = () => hiddenFileInput.current.click()
@@ -22,6 +22,7 @@ const HeaderContainer = ({currentRoute, pages, currentMediaSet, uploadMedia, del
         handleUploadMedia,
         pages,
         currentRoute,
+        smallScreen,
         handleDeleteAllMedia,
     }}/>
 }

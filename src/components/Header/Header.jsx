@@ -7,12 +7,15 @@ import {
     rootRoute, videoFiles,
     videosRoute
 } from "../../common/commonData";
+import {GoTrash} from "react-icons/go";
+import {HiOutlinePlus} from "react-icons/hi";
 
 const Header = ({
                     handleUploadMedia,
                     handleUploadBtnClick,
                     hiddenFileInput,
                     pages,
+                    smallScreen,
                     handleDeleteAllMedia,
                 }) => {
     const [imagesPage, videosPage, audioPage] = pages
@@ -43,14 +46,15 @@ const Header = ({
                     onClick={handleUploadBtnClick}
                     className={'bg-purple-500 mr-5 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed'}
                 >
-                    Add media
+                    {smallScreen ? < HiOutlinePlus/> : 'Add media'}
+
                 </button>
                 <button
                     type="button"
                     onClick={handleDeleteAllMedia}
                     className={'bg-purple-500 mr-5 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed'}
                 >
-                    Remove all media
+                    {smallScreen ? < GoTrash/> : 'Remove all media'}
                 </button>
             </div>
         </header>
