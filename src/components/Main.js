@@ -8,6 +8,7 @@ import {connect} from "react-redux";
 import {listMedia, setCurrentRoute} from "../redux/mediaSlice";
 import MediaContainer from "./Media/MediaContainer";
 import {toggleSmallScreen} from "../redux/appSlice";
+import Alert from "./Alert";
 
 const Main = ({listMedia, setCurrentRoute, toggleSmallScreen}) => {
     const location = useLocation()
@@ -20,6 +21,8 @@ const Main = ({listMedia, setCurrentRoute, toggleSmallScreen}) => {
     const smallScreen = useSelector(state => state.app.smallScreen)
 
     const overlay = useSelector(state => state.app.overlay)
+
+    const alert = useSelector(state => state.app.alert)
 
     const imagesPage = currentRoute === imagesRoute
     const videosPage = currentRoute === videosRoute
@@ -45,6 +48,7 @@ const Main = ({listMedia, setCurrentRoute, toggleSmallScreen}) => {
     return (
         <>
             {overlay && <Overlay/>}
+            {alert && <Alert/>}
             <HeaderContainer {...{pages, currentRoute, currentMediaSet, smallScreen}}/>
             <main>
                 {homePage && <Home/>}
