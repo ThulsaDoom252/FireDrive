@@ -1,9 +1,9 @@
 import React from 'react';
 import Header from "./Header";
-import {uploadMedia} from "../../redux/mediaSlice";
+import {deleteAllMedia, uploadMedia} from "../../redux/mediaSlice";
 import {connect} from "react-redux";
 
-const HeaderContainer = ({currentRoute, pages}) => {
+const HeaderContainer = ({currentRoute, pages, currentMediaSet, uploadMedia, deleteAllMedia}) => {
 
     const hiddenFileInput = React.useRef(null)
     const handleUploadBtnClick = () => hiddenFileInput.current.click()
@@ -12,7 +12,18 @@ const HeaderContainer = ({currentRoute, pages}) => {
         uploadMedia({event: e, currentRoute, userName: 'ThulsaDoom'})
     }
 
-    return <Header {...{handleUploadBtnClick, hiddenFileInput, handleUploadMedia, pages, currentRoute}}/>
+    const handleDeleteAllMedia = () => {
+        deleteAllMedia({currentMediaSet, currentRoute})
+    }
+
+    return <Header {...{
+        handleUploadBtnClick,
+        hiddenFileInput,
+        handleUploadMedia,
+        pages,
+        currentRoute,
+        handleDeleteAllMedia,
+    }}/>
 }
 
-export default connect(null, {uploadMedia})(HeaderContainer);
+export default connect(null, {uploadMedia, deleteAllMedia})(HeaderContainer);

@@ -11,7 +11,11 @@ import MediaContainer from "./Media/MediaContainer";
 const Main = ({listMedia, setCurrentRoute}) => {
     const location = useLocation()
     const pathName = location.pathname
+
     const currentRoute = useSelector(state => state.media.currentRoute)
+
+    const currentMediaSet = useSelector(state => state.media.currentMediaSet)
+
     const imagesPage = currentRoute === imagesRoute
     const videosPage = currentRoute === videosRoute
     const audioPage = currentRoute === audioRoute
@@ -29,11 +33,12 @@ const Main = ({listMedia, setCurrentRoute}) => {
 
     return (
         <>
-            <HeaderContainer {...{pages, currentRoute}}/>
+            <HeaderContainer {...{pages, currentRoute, currentMediaSet}}/>
             <main>
                 {homePage && <Home/>}
                 <Routes>
-                    {!homePage && <Route path={currentRoute} element={<MediaContainer {...{currentRoute, pages}}/>}/>}
+                    {!homePage && <Route path={currentRoute}
+                                         element={<MediaContainer {...{currentRoute, pages, currentMediaSet}}/>}/>}
                 </Routes>
             </main>
         </>

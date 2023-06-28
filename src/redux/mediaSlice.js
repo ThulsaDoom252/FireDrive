@@ -101,7 +101,7 @@ export const {
     setMediaSet,
     clearMediaSet,
     setCurrentRoute,
-    setCurrentMediaSet
+    setCurrentMediaSet,
 } = mediaSlice.actions;
 
 
@@ -189,8 +189,8 @@ export const deleteAllMedia = createAsyncThunk('delete-all-media-thunk', async (
     }
     dispatch(clearMediaSet({route: currentRoute}))
     handleAlert({dispatch}, error, e.toString())
-
 })
+
 
 
 
