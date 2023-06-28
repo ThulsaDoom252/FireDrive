@@ -9,6 +9,7 @@ import {listMedia, setCurrentRoute} from "../redux/mediaSlice";
 import MediaContainer from "./Media/MediaContainer";
 import {toggleSmallScreen} from "../redux/appSlice";
 import Alert from "./Alert";
+import Overlay from "./Overlay";
 
 const Main = ({listMedia, setCurrentRoute, toggleSmallScreen}) => {
     const location = useLocation()
