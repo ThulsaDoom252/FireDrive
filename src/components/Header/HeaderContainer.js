@@ -2,8 +2,20 @@ import React from 'react';
 import Header from "./Header";
 import {deleteAllMedia, uploadMedia} from "../../redux/mediaSlice";
 import {connect} from "react-redux";
+import {handleAlert} from "../../redux/appSlice";
+import {alertRemoveAll, alertWarningStyle} from "../../common/commonData";
 
-const HeaderContainer = ({currentRoute, pages, currentMediaSet, uploadMedia, deleteAllMedia, smallScreen}) => {
+const HeaderContainer = ({
+                             currentRoute,
+                             pages,
+                             currentMediaSet,
+                             uploadMedia,
+                             deleteAllMedia,
+                             smallScreen,
+                             handleAlert
+                         }) => {
+
+    //currentMediaSet and deleteMedia will be used further. Don't delete
 
     const hiddenFileInput = React.useRef(null)
     const handleUploadBtnClick = () => hiddenFileInput.current.click()
@@ -13,7 +25,7 @@ const HeaderContainer = ({currentRoute, pages, currentMediaSet, uploadMedia, del
     }
 
     const handleDeleteAllMedia = () => {
-        deleteAllMedia({currentMediaSet, currentRoute})
+        handleAlert({overlayMode: true, alertMode: alertRemoveAll, alertStyle: alertWarningStyle})
     }
 
     return <Header {...{
@@ -27,4 +39,4 @@ const HeaderContainer = ({currentRoute, pages, currentMediaSet, uploadMedia, del
     }}/>
 }
 
-export default connect(null, {uploadMedia, deleteAllMedia})(HeaderContainer);
+export default connect(null, {uploadMedia, deleteAllMedia, handleAlert})(HeaderContainer);
