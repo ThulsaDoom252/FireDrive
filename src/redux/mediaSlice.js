@@ -10,7 +10,7 @@ import {
     videosRoute
 } from "../common/commonData";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {getDownloadURL, getMetadata, listAll, ref, uploadBytes} from "firebase/storage";
+import {getDownloadURL, getMetadata, listAll, ref, uploadBytes, deleteObject} from "firebase/storage";
 import {storage} from "../firebase";
 
 const mediaSlice = createSlice({
@@ -74,6 +74,22 @@ const mediaSlice = createSlice({
         setCurrentMediaSet(state, action) {
             state.currentMediaSet = [...action.payload]
         },
+        clearMediaSet(state, action) {
+            const {route} = action.payload
+            switch (route) {
+                case imagesRoute:
+                    state.imagesSet = []
+                    break;
+                case videosRoute:
+                    state.videosSet = []
+                    break;
+                case audioRoute:
+                    state.audioSet = []
+                    break;
+                default:
+                    void 0
+            }
+        },
     },
 })
 
@@ -83,6 +99,7 @@ export const {
     updateMediaSet,
     toggleFetchMedia,
     setMediaSet,
+    clearMediaSet,
     setCurrentRoute,
     setCurrentMediaSet
 } = mediaSlice.actions;
@@ -159,6 +176,21 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
         dispatch(togglemediaFetch(false))
     }
 });
+
+export const deleteAllMedia = createAsyncThunk('delete-all-media-thunk', async ({
+                                                                                    currentMediaSet,
+                                                                                    currentRoute
+                                                                                }, {dispatch}) => {
+    let urlsToDelete = []
+    currentMediaSet.forEach(media => urlsToDelete.push(media.url))
+    for (let url of urlsToDelete) {
+        let refToDelete = ref(storage, url)
+        await deleteObject(refToDelete)
+    }
+    dispatch(clearMediaSet({route: currentRoute}))
+    handleAlert({dispatch}, error, e.toString())
+
+})
 
 
 
