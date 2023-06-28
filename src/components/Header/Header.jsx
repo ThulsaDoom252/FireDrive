@@ -8,7 +8,13 @@ import {
     videosRoute
 } from "../../common/commonData";
 
-const Header = ({handleUploadMedia, handleUploadBtnClick, hiddenFileInput, pages}) => {
+const Header = ({
+                    handleUploadMedia,
+                    handleUploadBtnClick,
+                    hiddenFileInput,
+                    pages,
+                    handleDeleteAllMedia,
+                }) => {
     const [imagesPage, videosPage, audioPage] = pages
     return (
         <header
@@ -38,6 +44,13 @@ const Header = ({handleUploadMedia, handleUploadBtnClick, hiddenFileInput, pages
                     className={'bg-purple-500 mr-5 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed'}
                 >
                     Add media
+                </button>
+                <button
+                    type="button"
+                    onClick={handleDeleteAllMedia}
+                    className={'bg-purple-500 mr-5 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed'}
+                >
+                    Remove all media
                 </button>
             </div>
         </header>
