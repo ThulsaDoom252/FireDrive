@@ -25,6 +25,7 @@ const mediaSlice = createSlice({
         fetchAudio: false,
         currentMediaSet: [],
         mediaLoading: false,
+        mediaDeleting: false,
         imagesSet: [],
         videosSet: [],
         audioSet: [],
@@ -59,6 +60,9 @@ const mediaSlice = createSlice({
                     state.audioSet = [...state.audioSet, ...uploadedMedia]
                     break;
             }
+        },
+        toggleIsMediaDeleting(state, action) {
+            state.mediaDeleting = action.payload
         },
         toggleIsMediaUploaded(state, action) {
             state.mediaUploaded = action.payload
@@ -114,6 +118,7 @@ export const {
     setCurrentRoute,
     setCurrentMediaSet,
     toggleMediaLoading,
+    toggleIsMediaDeleting,
 } = mediaSlice.actions;
 
 
@@ -195,12 +200,15 @@ export const deleteAllMedia = createAsyncThunk('delete-all-media-thunk', async (
                                                                                     currentRoute
                                                                                 }, {dispatch}) => {
     let urlsToDelete = []
+    dispatch(toggleIsMediaDeleting(true))
     currentMediaSet.forEach(media => urlsToDelete.push(media.url))
     for (let url of urlsToDelete) {
         let refToDelete = ref(storage, url)
         await deleteObject(refToDelete)
     }
     dispatch(clearMediaSet({route: currentRoute}))
+    dispatch(toggleIsMediaDeleting(false))
+
 })
 
 

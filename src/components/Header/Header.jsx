@@ -19,6 +19,7 @@ const Header = ({
                     handleDeleteAllMedia,
                     noCurrentMedia,
                     mediaLoading,
+                    mediaDeleting,
                 }) => {
     const [imagesPage, videosPage, audioPage] = pages
     return (
@@ -54,7 +55,7 @@ const Header = ({
                 </button>
                 <button
                     type="button"
-                    disabled={noCurrentMedia || mediaLoading}
+                    disabled={noCurrentMedia || mediaLoading || mediaDeleting}
                     onClick={handleDeleteAllMedia}
                     className={'bg-purple-500 mr-5 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed'}
                 >

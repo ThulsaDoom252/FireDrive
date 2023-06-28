@@ -21,6 +21,7 @@ const HeaderContainer = ({
     const handleUploadBtnClick = () => hiddenFileInput.current.click()
 
     const mediaLoading = useSelector(state => state.media.mediaLoading)
+    const mediaDeleting = useSelector(state => state.media.mediaDeleting)
 
     const handleUploadMedia = (e) => {
         uploadMedia({event: e, currentRoute, userName: 'ThulsaDoom'})
@@ -42,6 +43,7 @@ const HeaderContainer = ({
         currentRoute,
         smallScreen,
         handleDeleteAllMedia,
+        mediaDeleting,
     }}/>
 }
 
