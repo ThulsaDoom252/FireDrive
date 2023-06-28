@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import HeaderContainer from "./Header/HeaderContainer";
 import Home from "./Home";
 import {audioRoute, imagesRoute, mediaTypes, rootRoute, videosRoute} from "../common/commonData";
@@ -22,7 +22,6 @@ const Main = ({listMedia, setCurrentRoute}) => {
     const homePage = currentRoute === rootRoute
     const pages = [imagesPage, videosPage, audioPage]
 
-
     useEffect(() => {
         setCurrentRoute(pathName)
     }, [pathName])
@@ -38,7 +37,8 @@ const Main = ({listMedia, setCurrentRoute}) => {
             <main>
                 {homePage && <Home/>}
                 <Routes>
-                    {!homePage && <Route path={currentRoute} element={<MediaContainer {...{currentRoute, pages, currentMediaSet}}/>}/>}
+                    {!homePage && <Route path={currentRoute}
+                                         element={<MediaContainer {...{currentRoute, pages, currentMediaSet}}/>}/>}
                 </Routes>
             </main>
         </>
