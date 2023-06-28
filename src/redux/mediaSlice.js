@@ -22,6 +22,7 @@ const mediaSlice = createSlice({
         fetchVideos: false,
         fetchAudio: false,
         currentMediaSet: [],
+        mediaLoading: false,
         imagesSet: [],
         videosSet: [],
         audioSet: [],
@@ -74,6 +75,10 @@ const mediaSlice = createSlice({
         setCurrentMediaSet(state, action) {
             state.currentMediaSet = [...action.payload]
         },
+
+        toggleMediaLoading(state, action) {
+            state.mediaLoading = action.payload
+        },
         clearMediaSet(state, action) {
             const {route} = action.payload
             switch (route) {
@@ -102,6 +107,7 @@ export const {
     clearMediaSet,
     setCurrentRoute,
     setCurrentMediaSet,
+    toggleMediaLoading,
 } = mediaSlice.actions;
 
 
@@ -160,7 +166,7 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
     const files = Array.from(event.target.files);
     const filteredFiles = files.filter(file => allowedTypes[currentRoute].includes(file.type));
     if (filteredFiles.length > 0) {
-        dispatch(toggleFetchMedia(true));
+        dispatch(toggleMediaLoading(true))
         await Promise.all(filteredFiles.map(async (file) => {
             const fileRef = ref(storage, `${userName}/${currentRoute === videosRoute ? videos
                 : currentRoute === imagesRoute ? images
@@ -173,7 +179,7 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
             const modifiedUploadedMedia = filterMediaData(uploadedMedia, mediaUploadMode)
             dispatch(updateMediaSet({currentRoute, uploadedMedia: modifiedUploadedMedia}))
         }));
-        dispatch(togglemediaFetch(false))
+        dispatch(toggleMediaLoading(false))
     }
 });
 

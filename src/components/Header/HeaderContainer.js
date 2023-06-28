@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from "./Header";
 import {deleteAllMedia, uploadMedia} from "../../redux/mediaSlice";
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {handleAlert} from "../../redux/appSlice";
 import {alertRemoveAll, alertWarningStyle} from "../../common/commonData";
 
@@ -20,6 +20,8 @@ const HeaderContainer = ({
     const hiddenFileInput = React.useRef(null)
     const handleUploadBtnClick = () => hiddenFileInput.current.click()
 
+    const mediaLoading = useSelector(state => state.media.mediaLoading)
+
     const handleUploadMedia = (e) => {
         uploadMedia({event: e, currentRoute, userName: 'ThulsaDoom'})
     }
@@ -32,6 +34,7 @@ const HeaderContainer = ({
 
     return <Header {...{
         noCurrentMedia,
+        mediaLoading,
         handleUploadBtnClick,
         hiddenFileInput,
         handleUploadMedia,
