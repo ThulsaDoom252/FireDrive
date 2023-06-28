@@ -4,12 +4,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {rootRoute} from "../../common/commonData";
 import {handleCurrentMediaSet} from "../../redux/mediaSlice";
 
-const MediaContainer = ({currentRoute, pages}) => {
+const MediaContainer = ({currentRoute, pages, currentMediaSet}) => {
     const imagesMediaSet = useSelector(state => state.media.imagesSet)
     const videosMediaSet = useSelector(state => state.media.videosSet)
     const audioMediaSet = useSelector(state => state.media.audioSet)
     const currentMediaFetch = useSelector(state => state.media.fetchCurrentMedia)
-    const currentMediaSet = useSelector(state => state.media.currentMediaSet)
     const dispatch = useDispatch()
     const [imagesPage, videosPage, audioPage] = pages
     useEffect(() => {
