@@ -7,6 +7,7 @@ const appSlice = createSlice({
     name: 'app-slice',
     initialState: {
         smallScreen: window.innerWidth < 768,
+        tinyScreen: window.innerWidth < 400,
         overlay: false,
         alert: false,
         alertMode: '',
@@ -15,6 +16,9 @@ const appSlice = createSlice({
     reducers: {
         toggleSmallScreen(state, action) {
             state.smallScreen = action.payload
+        },
+        toggleTinyScreen(state, action) {
+            state.tinyScreen = action.payload
         },
         toggleOverlay(state, action) {
             state.overlay = action.payload
@@ -33,7 +37,13 @@ const appSlice = createSlice({
 })
 
 export default appSlice.reducer
-export const {toggleSmallScreen, toggleAlert, toggleOverlay, setAlertMode} = appSlice.actions
+export const {
+    toggleSmallScreen,
+    toggleAlert,
+    toggleOverlay,
+    setAlertMode,
+    toggleTinyScreen
+} = appSlice.actions
 
 
 export const handleAlertAction = createAsyncThunk('alert-action-thunk', async ({

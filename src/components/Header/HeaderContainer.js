@@ -1,12 +1,16 @@
 import React from 'react';
 import Header from "./Header";
-import {deleteAllMedia, uploadMedia} from "../../redux/mediaSlice";
 import {connect} from "react-redux";
-import {handleAlert} from "../../redux/appSlice";
 
-const HeaderContainer = () => {
 
-    return <Header/>
+const HeaderContainer = ({currentRoute, tinyScreen}) => {
+    return <Header {...{currentRoute, tinyScreen}}/>
 }
 
-export default connect(null, {uploadMedia, deleteAllMedia, handleAlert})(HeaderContainer);
+const mapStateToProps = (state) => {
+    return {
+        tinyScreen: state.app.tinyScreen
+    }
+}
+
+export default connect(mapStateToProps, null)(HeaderContainer);

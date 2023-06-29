@@ -7,11 +7,11 @@ import {Routes, Route, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
 import {listMedia, setCurrentRoute} from "../redux/mediaSlice";
 import MediaContainer from "./Media/MediaContainer";
-import {toggleSmallScreen} from "../redux/appSlice";
+import {toggleSmallScreen, toggleTinyScreen} from "../redux/appSlice";
 import Alert from "./Alert";
 import Overlay from "./Overlay";
 
-const Main = ({listMedia, setCurrentRoute, toggleSmallScreen}) => {
+const Main = ({listMedia, setCurrentRoute, toggleSmallScreen, toggleTinyScreen}) => {
     const location = useLocation()
     const pathName = location.pathname
 
@@ -33,7 +33,11 @@ const Main = ({listMedia, setCurrentRoute, toggleSmallScreen}) => {
         window.addEventListener('resize', handleResize)
     }, [])
 
-    const handleResize = () => toggleSmallScreen(window.innerWidth <= 768)
+    const handleResize = () => {
+        toggleSmallScreen(window.innerWidth <= 768)
+        toggleTinyScreen(window.innerWidth <= 400)
+    }
+
 
     useEffect(() => {
         setCurrentRoute(pathName)
@@ -48,7 +52,7 @@ const Main = ({listMedia, setCurrentRoute, toggleSmallScreen}) => {
         <>
             {overlay && <Overlay/>}
             {alert && <Alert/>}
-            <HeaderContainer/>
+            <HeaderContainer {...{currentRoute}}/>
             <main>
                 {homePage && <Home/>}
                 <Routes>
@@ -61,4 +65,4 @@ const Main = ({listMedia, setCurrentRoute, toggleSmallScreen}) => {
     );
 };
 
-export default connect(null, {listMedia, setCurrentRoute, toggleSmallScreen})(Main);
+export default connect(null, {listMedia, setCurrentRoute, toggleSmallScreen, toggleTinyScreen})(Main);
