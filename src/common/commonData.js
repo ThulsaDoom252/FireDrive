@@ -9,6 +9,28 @@ export const truncate = (name, maxCharacters) => {
     }
 }
 
+export const delay = (ms) => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve()
+        }, ms)
+    })
+}
+
+
+//AlertStyles
+export const alertWarningStyle = 'warning'
+export const alertSuccessStyle = 'success'
+
+//AlertModes
+export const alertRemoveAll = 'removeAll'
+export const alertMediaUploaded = `alertMediaUploaded`
+export const alertMediaRemoved = 'alertMediaRemoved'
+
+//AlertMessages
+export const removeAllMsg = 'This will delete all media on current page. Sure you want to continue?'
+export const mediaUploadedMsg = 'Uploaded! \u{1F600}'
+
 //Routes Refs
 export const imagesRoute = '/images'
 export const videosRoute = '/videos'

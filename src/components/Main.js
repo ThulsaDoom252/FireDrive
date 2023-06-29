@@ -7,16 +7,37 @@ import {Routes, Route, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
 import {listMedia, setCurrentRoute} from "../redux/mediaSlice";
 import MediaContainer from "./Media/MediaContainer";
+import {toggleSmallScreen, toggleTinyScreen} from "../redux/appSlice";
+import Alert from "./Alert";
+import Overlay from "./Overlay";
 
-const Main = ({listMedia, setCurrentRoute}) => {
+const Main = ({listMedia, setCurrentRoute, toggleSmallScreen, toggleTinyScreen}) => {
     const location = useLocation()
     const pathName = location.pathname
+
     const currentRoute = useSelector(state => state.media.currentRoute)
+
+    const currentMediaSet = useSelector(state => state.media.currentMediaSet)
+
+    const overlay = useSelector(state => state.app.overlay)
+
+    const alert = useSelector(state => state.app.alert)
+
     const imagesPage = currentRoute === imagesRoute
     const videosPage = currentRoute === videosRoute
     const audioPage = currentRoute === audioRoute
     const homePage = currentRoute === rootRoute
     const pages = [imagesPage, videosPage, audioPage]
+
+    useEffect(() => {
+        window.addEventListener('resize', handleResize)
+    }, [])
+
+    const handleResize = () => {
+        toggleSmallScreen(window.innerWidth <= 768)
+        toggleTinyScreen(window.innerWidth <= 400)
+    }
+
 
     useEffect(() => {
         setCurrentRoute(pathName)
@@ -29,11 +50,14 @@ const Main = ({listMedia, setCurrentRoute}) => {
 
     return (
         <>
-            <HeaderContainer {...{pages, currentRoute}}/>
+            {overlay && <Overlay/>}
+            {alert && <Alert/>}
+            <HeaderContainer {...{currentRoute}}/>
             <main>
                 {homePage && <Home/>}
                 <Routes>
-                    {!homePage && <Route path={currentRoute} element={<MediaContainer {...{currentRoute, pages}}/>}/>}
+                    {!homePage && <Route path={currentRoute}
+                                         element={<MediaContainer {...{currentRoute, pages, currentMediaSet}}/>}/>}
                 </Routes>
             </main>
         </>
@@ -41,4 +65,4 @@ const Main = ({listMedia, setCurrentRoute}) => {
     );
 };
 
-export default connect(null, {listMedia, setCurrentRoute})(Main);
+export default connect(null, {listMedia, setCurrentRoute, toggleSmallScreen, toggleTinyScreen})(Main);

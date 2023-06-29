@@ -1,4 +1,5 @@
 import {
+    alertMediaUploaded, alertSuccessStyle,
     audio,
     audioOnly,
     audioRoute, defaultRef,
@@ -10,8 +11,9 @@ import {
     videosRoute
 } from "../common/commonData";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {getDownloadURL, getMetadata, listAll, ref, uploadBytes} from "firebase/storage";
+import {getDownloadURL, getMetadata, listAll, ref, uploadBytes, deleteObject} from "firebase/storage";
 import {storage} from "../firebase";
+import {handleAlert} from "./appSlice";
 
 const mediaSlice = createSlice({
     name: 'media-slice',
@@ -22,6 +24,8 @@ const mediaSlice = createSlice({
         fetchVideos: false,
         fetchAudio: false,
         currentMediaSet: [],
+        mediaLoading: false,
+        mediaDeleting: false,
         imagesSet: [],
         videosSet: [],
         audioSet: [],
@@ -57,6 +61,13 @@ const mediaSlice = createSlice({
                     break;
             }
         },
+        toggleIsMediaDeleting(state, action) {
+            state.mediaDeleting = action.payload
+        },
+        toggleIsMediaUploaded(state, action) {
+            state.mediaUploaded = action.payload
+
+        },
         toggleFetchMedia(state, action) {
             const {mediaType, toggle} = action.payload
             switch (mediaType) {
@@ -74,6 +85,26 @@ const mediaSlice = createSlice({
         setCurrentMediaSet(state, action) {
             state.currentMediaSet = [...action.payload]
         },
+
+        toggleMediaLoading(state, action) {
+            state.mediaLoading = action.payload
+        },
+        clearMediaSet(state, action) {
+            const {route} = action.payload
+            switch (route) {
+                case imagesRoute:
+                    state.imagesSet = []
+                    break;
+                case videosRoute:
+                    state.videosSet = []
+                    break;
+                case audioRoute:
+                    state.audioSet = []
+                    break;
+                default:
+                    void 0
+            }
+        },
     },
 })
 
@@ -83,8 +114,11 @@ export const {
     updateMediaSet,
     toggleFetchMedia,
     setMediaSet,
+    clearMediaSet,
     setCurrentRoute,
-    setCurrentMediaSet
+    setCurrentMediaSet,
+    toggleMediaLoading,
+    toggleIsMediaDeleting,
 } = mediaSlice.actions;
 
 
@@ -143,7 +177,7 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
     const files = Array.from(event.target.files);
     const filteredFiles = files.filter(file => allowedTypes[currentRoute].includes(file.type));
     if (filteredFiles.length > 0) {
-        dispatch(toggleFetchMedia(true));
+        dispatch(toggleMediaLoading(true))
         await Promise.all(filteredFiles.map(async (file) => {
             const fileRef = ref(storage, `${userName}/${currentRoute === videosRoute ? videos
                 : currentRoute === imagesRoute ? images
@@ -156,9 +190,27 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
             const modifiedUploadedMedia = filterMediaData(uploadedMedia, mediaUploadMode)
             dispatch(updateMediaSet({currentRoute, uploadedMedia: modifiedUploadedMedia}))
         }));
-        dispatch(togglemediaFetch(false))
+        dispatch(toggleMediaLoading(false))
+        dispatch(handleAlert({overlayMode: true, alertMode: alertMediaUploaded, alertStyle: alertSuccessStyle}))
     }
 });
+
+export const deleteAllMedia = createAsyncThunk('delete-all-media-thunk', async ({
+                                                                                    currentMediaSet,
+                                                                                    currentRoute
+                                                                                }, {dispatch}) => {
+    let urlsToDelete = []
+    dispatch(toggleIsMediaDeleting(true))
+    currentMediaSet.forEach(media => urlsToDelete.push(media.url))
+    for (let url of urlsToDelete) {
+        let refToDelete = ref(storage, url)
+        await deleteObject(refToDelete)
+    }
+    dispatch(clearMediaSet({route: currentRoute}))
+    dispatch(toggleIsMediaDeleting(false))
+
+})
+
 
 
 
