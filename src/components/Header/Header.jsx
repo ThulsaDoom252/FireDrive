@@ -10,6 +10,7 @@ import RemoveAllBtn from "../common/RemoveAllBtn";
 import UploadBtn from "../common/UploadBtn";
 import {ContextMenu, ContextMenuTrigger, MenuItem} from "react-contextmenu";
 import {AiFillPicture, AiOutlineCamera, AiOutlineHome, AiOutlineMenu, AiOutlineSound} from "react-icons/ai";
+import MusicPlayer from "./MusicPlayer";
 
 const Header = ({currentRoute, tinyScreen}) => {
     const isActiveStyle = 'mr-5 text-white text-2xl navbar-xs:text-base';
@@ -33,6 +34,7 @@ const Header = ({currentRoute, tinyScreen}) => {
                          className={navData => navData.isActive ? isActiveStyle : inactiveStyle}>{tinyScreen ?
                     <AiOutlineSound/> : 'Audio'}</NavLink>
             </div>
+            <MusicPlayer/>
             <div className={'hidden header-xs:flex'}>
                 <div className={'mr-5'}>
                     <UploadBtn/>
