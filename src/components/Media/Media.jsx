@@ -3,12 +3,13 @@ import {ClipLoader} from "react-spinners";
 import ReactPlayer from "react-player";
 import {truncate} from "../../common/commonData";
 import {useSelector} from "react-redux";
+import Audio from "./Audio";
 
 const Media = ({currentMediaSet, imagesPage, videosPage, audioPage, currentMediaFetch}) => {
     const noMedia = currentMediaSet.length === 0
     return (
         <section
-            className={`${noMedia && 'justify-center'}  h-full w-full bg-amber-300 pl-10 pr-10 flex flex-col items-center`}>
+            className={`${noMedia && 'justify-center'}  h-full w-full bg-amber-300 p-10 flex flex-col items-center`}>
             {noMedia ? <div
                     className>{imagesPage ? 'You have no images' : videosPage ? 'You have no videos' : 'You have no audio'}</div> :
                 <div
@@ -36,9 +37,7 @@ const Media = ({currentMediaSet, imagesPage, videosPage, audioPage, currentMedia
                             </div>
                         ) :
                         currentMediaSet.map(((audio, index) =>
-                                <div className={'w-full bg-blue-500 text-white flex items-center mb-5'} key={index}>
-                                    {audio.name}
-                                </div>
+                                <Audio audioName={audio.name} key={index}/>
                         ))
                     }
                 </div>}
