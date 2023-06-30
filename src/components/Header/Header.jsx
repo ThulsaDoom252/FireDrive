@@ -10,7 +10,7 @@ import RemoveAllBtn from "../common/RemoveAllBtn";
 import UploadBtn from "../common/UploadBtn";
 import {ContextMenu, ContextMenuTrigger, MenuItem} from "react-contextmenu";
 import {AiFillPicture, AiOutlineCamera, AiOutlineHome, AiOutlineMenu, AiOutlineSound} from "react-icons/ai";
-import MusicPlayer from "./MusicPlayer";
+import MusicPlayer from "../MusicPlayer/MusicPlayer";
 import {useSelector} from "react-redux";
 import MobileMenu from "../common/MobileMenu";
 import {BiMusic} from "react-icons/bi";
