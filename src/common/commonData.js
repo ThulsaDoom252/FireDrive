@@ -1,4 +1,4 @@
-export const truncate = (name, maxCharacters) => {
+export const truncate = (name, maxCharacters = 15) => {
     const maxNumber = maxCharacters
     const mediaLength = name.length
     if (mediaLength > maxNumber) {

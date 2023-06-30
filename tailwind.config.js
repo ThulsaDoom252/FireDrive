@@ -6,7 +6,8 @@ module.exports = {
     theme: {
         extend: {
             inset: {
-                'custom-20': '80px',
+                'custom-80': '80px',
+                'custom-57': '57px',
             },
             screens: {
                 'alert-sm': '568px',

@@ -2,18 +2,19 @@ import React from 'react';
 import {ClipLoader} from "react-spinners";
 import ReactPlayer from "react-player";
 import {truncate} from "../../common/commonData";
-import {useSelector} from "react-redux";
 import Audio from "./Audio";
 
-const Media = ({currentMediaSet, imagesPage, videosPage, audioPage, currentMediaFetch}) => {
+const Media = ({currentMediaSet, imagesPage, videosPage, audioPage, currentMediaFetch, smallScreen}) => {
     const noMedia = currentMediaSet.length === 0
     return (
         <section
-            className={`${noMedia && 'justify-center'}  h-full w-full bg-amber-300 p-10 flex flex-col items-center`}>
-            {noMedia ? <div
-                    className>{imagesPage ? 'You have no images' : videosPage ? 'You have no videos' : 'You have no audio'}</div> :
+            className={`w-full h-full  bg-amber-300 p-10 flex flex-col items-center ${noMedia ? 'justify-center' : ''}  ${!smallScreen ? 'mt-10' : ''}`}>
+            {noMedia ?
+                <div>{imagesPage ? 'You have no images' : videosPage ? 'You have no videos' : 'You have no audio'}</div> :
                 <div
-                    className={`w-full mt-10 ${currentMediaFetch ? 'flex justify-center items-center' : !audioPage ? 'grid gap-5 sm: grid-cols-2 grid-rows-2 md:grid-cols-3 grid-rows-3  lg:grid-cols-4 grid-rows-4 xl:grid-cols-5 grid-rows-5' : void 0}`}>
+                    className={`w-full ${currentMediaFetch ? 'flex justify-center items-center' : !audioPage ?
+                        'grid gap-5 sm: grid-cols-2 grid-rows-2 md:grid-cols-3 grid-rows-3  ' +
+                        'lg:grid-cols-4 grid-rows-4 xl:grid-cols-5 grid-rows-5' : ''}`}>
                     {currentMediaFetch && <ClipLoader
                         color={'blue'}
                         size={150}
@@ -36,8 +37,10 @@ const Media = ({currentMediaSet, imagesPage, videosPage, audioPage, currentMedia
                                 <p className={''}>{truncate(video.name, 15)}</p>
                             </div>
                         ) :
-                        currentMediaSet.map(((audio, index) =>
-                                <Audio audioName={audio.name} key={index}/>
+                        currentMediaSet.map((audio =>
+                                <div key={audio.index}>
+                                    <Audio audioName={audio.name} index={audio.index}/>
+                                </div>
                         ))
                     }
                 </div>}
