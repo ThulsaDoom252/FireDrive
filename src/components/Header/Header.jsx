@@ -8,14 +8,8 @@ import {
 } from "../../common/commonData";
 import RemoveAllBtn from "../common/RemoveAllBtn";
 import UploadBtn from "../common/UploadBtn";
-<<<<<<< HEAD
 import {AiFillPicture, AiOutlineHome} from "react-icons/ai";
 import MusicPlayer from "../AudioPlayer/AudioPlayer";
-=======
-import {ContextMenu, ContextMenuTrigger, MenuItem} from "react-contextmenu";
-import {AiFillPicture, AiOutlineCamera, AiOutlineHome, AiOutlineMenu, AiOutlineSound} from "react-icons/ai";
-import MusicPlayer from "../MusicPlayer/MusicPlayer";
->>>>>>> d6cff104dc1a128230d6074a4e6f2220a65ac46c
 import {useSelector} from "react-redux";
 import MobileMenu from "../common/MobileMenu";
 import {BiMusic} from "react-icons/bi";
