@@ -2,12 +2,10 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {alertRemoveAll, delay} from "../common/commonData";
 import {deleteAllMedia} from "./mediaSlice";
 
-
 const appSlice = createSlice({
     name: 'app-slice',
     initialState: {
         smallScreen: window.innerWidth < 768,
-        tinyScreen: window.innerWidth < 400,
         overlay: false,
         alert: false,
         alertMode: '',
@@ -16,9 +14,6 @@ const appSlice = createSlice({
     reducers: {
         toggleSmallScreen(state, action) {
             state.smallScreen = action.payload
-        },
-        toggleTinyScreen(state, action) {
-            state.tinyScreen = action.payload
         },
         toggleOverlay(state, action) {
             state.overlay = action.payload
@@ -42,7 +37,6 @@ export const {
     toggleAlert,
     toggleOverlay,
     setAlertMode,
-    toggleTinyScreen
 } = appSlice.actions
 
 

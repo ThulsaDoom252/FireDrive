@@ -6,11 +6,14 @@ import './firebase';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
 import {store} from "./redux/store";
+import {AudioPlayerContextProvider} from "./context/AudioPlayerContext";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Provider store={store}>
-        <App/>
+        <AudioPlayerContextProvider>
+            <App/>
+        </AudioPlayerContextProvider>
     </Provider>
 );
 
