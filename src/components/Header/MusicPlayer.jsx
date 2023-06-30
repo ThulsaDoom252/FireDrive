@@ -1,19 +1,27 @@
-import { FiSkipBack, FiSkipForward, FiPlay } from 'react-icons/fi';
+import {FiSkipBack, FiSkipForward, FiPlay} from 'react-icons/fi';
+import {connect} from "react-redux";
 
-const MusicPlayer = () => {
+const MusicPlayer = ({smallScreenMode}) => {
     return (
-        <div className="w-300  h-12 mx-auto flex items-center justify-center bg-gradient-to-r from-purple-500 to-indigo-500 rounded-lg p-4">
+        <div
+            className={`${!smallScreenMode && 'rounded'} w-full h-full  flex items-center justify-between  p-5`}>
             <button disabled className="mr-4">
-                <FiSkipBack className="text-gray-500 text-2xl" />
+                <FiSkipBack className="text-gray-500 text-2xl"/>
             </button>
             <button disabled className="mr-4">
-                <FiPlay className="text-gray-500 text-4xl" />
+                <FiPlay className="text-gray-500 text-4xl"/>
             </button>
             <button disabled>
-                <FiSkipForward className="text-gray-500 text-2xl" />
+                <FiSkipForward className="text-gray-500 text-2xl"/>
             </button>
         </div>
     );
 };
 
-export default MusicPlayer;
+const mapStateToProps = (state) => {
+    return {
+        smallScreen: state.app.smallScreen
+    }
+}
+
+export default connect(mapStateToProps, null)(MusicPlayer);

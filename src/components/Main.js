@@ -53,7 +53,7 @@ const Main = ({listMedia, setCurrentRoute, toggleSmallScreen, toggleTinyScreen})
             {overlay && <Overlay/>}
             {alert && <Alert/>}
             <HeaderContainer {...{currentRoute}}/>
-            <main>
+            <main className={'w-full h-full'}>
                 {homePage && <Home/>}
                 <Routes>
                     {!homePage && <Route path={currentRoute}

@@ -2,12 +2,13 @@ import React from 'react';
 import {ClipLoader} from "react-spinners";
 import ReactPlayer from "react-player";
 import {truncate} from "../../common/commonData";
+import {useSelector} from "react-redux";
 
 const Media = ({currentMediaSet, imagesPage, videosPage, audioPage, currentMediaFetch}) => {
     const noMedia = currentMediaSet.length === 0
     return (
         <section
-            className={`${noMedia && 'justify-center'} min-h-screen bg-amber-300 pl-10 pr-10 flex flex-col items-center`}>
+            className={`${noMedia && 'justify-center'}  h-full w-full bg-amber-300 pl-10 pr-10 flex flex-col items-center`}>
             {noMedia ? <div
                     className>{imagesPage ? 'You have no images' : videosPage ? 'You have no videos' : 'You have no audio'}</div> :
                 <div
