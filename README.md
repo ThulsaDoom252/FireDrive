@@ -16,12 +16,11 @@ Developer: ThulsaDoom
 
 ### Changes:
 
-## Previous versions:
-
 ### v1.2.1
 
 - Hide mobile menu on home page
 
+## Previous versions:
 ### v1.2
 
 - Audio player features:
