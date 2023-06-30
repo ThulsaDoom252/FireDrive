@@ -2,7 +2,7 @@
 
 Stream and store your files with ease!
 
-Current Version: 1.2
+Current Version: 1.2.1
 
 Developer: ThulsaDoom
 
@@ -16,19 +16,25 @@ Developer: ThulsaDoom
 
 ### Changes:
 
-- Audio player features: 
-  - Play/pause music from audio page or directly from player
-  - Switch between tracks 
-  - Audio can be played everywere on site
+## Previous versions:
+
+### v1.2.1
+
+- Hide mobile menu on home page
+
+### v1.2
+
+- Audio player features:
+    - Play/pause music from audio page or directly from player
+    - Switch between tracks
+    - Audio can be played everywere on site
 
 
 - Navigation bar
-  - completely change positioning of navigation bar on mobile devices 
-
-
-## Previous versions:
+    - completely change positioning of navigation bar on mobile devices
 
 ### v1.1
+
 - Added button to delete all current media on page
 - Upload button is disabled when media is uploading
 
