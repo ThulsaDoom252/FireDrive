@@ -7,11 +7,11 @@ import {Routes, Route, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
 import {listMedia, setCurrentRoute} from "../redux/mediaSlice";
 import MediaContainer from "./Media/MediaContainer";
-import {toggleSmallScreen, toggleTinyScreen} from "../redux/appSlice";
+import {toggleSmallScreen} from "../redux/appSlice";
 import Alert from "./Alert";
 import Overlay from "./Overlay";
 
-const Main = ({listMedia, setCurrentRoute, toggleSmallScreen, toggleTinyScreen}) => {
+const Main = ({listMedia, setCurrentRoute, toggleSmallScreen}) => {
     const location = useLocation()
     const pathName = location.pathname
 
@@ -35,9 +35,7 @@ const Main = ({listMedia, setCurrentRoute, toggleSmallScreen, toggleTinyScreen})
 
     const handleResize = () => {
         toggleSmallScreen(window.innerWidth <= 768)
-        toggleTinyScreen(window.innerWidth <= 400)
     }
-
 
     useEffect(() => {
         setCurrentRoute(pathName)
@@ -48,12 +46,13 @@ const Main = ({listMedia, setCurrentRoute, toggleSmallScreen, toggleTinyScreen})
             listMedia({userName: 'ThulsaDoom', mediaType}))
     }, [])
 
+
     return (
         <>
             {overlay && <Overlay/>}
             {alert && <Alert/>}
             <HeaderContainer {...{currentRoute}}/>
-            <main>
+            <main className={'w-full h-full'}>
                 {homePage && <Home/>}
                 <Routes>
                     {!homePage && <Route path={currentRoute}
@@ -65,4 +64,4 @@ const Main = ({listMedia, setCurrentRoute, toggleSmallScreen, toggleTinyScreen})
     );
 };
 
-export default connect(null, {listMedia, setCurrentRoute, toggleSmallScreen, toggleTinyScreen})(Main);
+export default connect(null, {listMedia, setCurrentRoute, toggleSmallScreen})(Main);

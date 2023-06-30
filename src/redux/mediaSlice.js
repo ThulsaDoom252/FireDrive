@@ -18,6 +18,7 @@ import {handleAlert} from "./appSlice";
 const mediaSlice = createSlice({
     name: 'media-slice',
     initialState: {
+        currentAudioIndex: 0,
         currentRoute: '',
         fetchCurrentMedia: false,
         fetchImages: false,
@@ -33,6 +34,13 @@ const mediaSlice = createSlice({
     reducers: {
         setCurrentRoute(state, action) {
             state.currentRoute = action.payload
+        },
+        setCurrentAudioIndex(state, action) {
+            state.currentAudioIndex = action.payload
+        },
+        addAudioIndex(state) {
+            const updatedAudioRefs = state.audioSet.map((audio, index) => ({...audio, index}));
+            state.audioSet = updatedAudioRefs;
         },
         setMediaSet(state, action) {
             const {mediaType, mediaData} = action.payload
@@ -117,8 +125,10 @@ export const {
     clearMediaSet,
     setCurrentRoute,
     setCurrentMediaSet,
+    setCurrentAudioIndex,
     toggleMediaLoading,
     toggleIsMediaDeleting,
+    addAudioIndex,
 } = mediaSlice.actions;
 
 
@@ -129,6 +139,7 @@ export const handleCurrentMediaSet = ({dispatch}, mediaData) => {
         dispatch(toggleFetchMedia(false))
     }
 }
+
 
 const filterMediaData = (array, mode) => {
     let modifiedMedia
@@ -160,8 +171,10 @@ export const listMedia = createAsyncThunk('listMedia-thunk', async ({userName, m
     const results = await Promise.all(data.items.map((item) => Promise.all([getDownloadURL(item), getMetadata(item)])))
     const mediaData = filterMediaData(results, mediaFetchMode)
     dispatch(setMediaSet({mediaType, mediaData}))
+    dispatch(addAudioIndex())
     dispatch(toggleFetchMedia({mediaType, toggle: false}))
 })
+
 
 export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
                                                                             event,
@@ -174,6 +187,7 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
         [audioRoute]: audioOnly,
         [rootRoute]: []
     };
+    const audioPage = currentRoute === audioRoute
     const files = Array.from(event.target.files);
     const filteredFiles = files.filter(file => allowedTypes[currentRoute].includes(file.type));
     if (filteredFiles.length > 0) {
@@ -187,8 +201,11 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
             const uploadedMedia = await Promise.all([
                 getDownloadURL(fileRef), getMetadata(fileRef)
             ])
-            const modifiedUploadedMedia = filterMediaData(uploadedMedia, mediaUploadMode)
-            dispatch(updateMediaSet({currentRoute, uploadedMedia: modifiedUploadedMedia}))
+            const uploadedMediaWithAdditionalData = filterMediaData(uploadedMedia, mediaUploadMode)
+            dispatch(updateMediaSet({currentRoute, uploadedMedia: uploadedMediaWithAdditionalData}))
+            if (audioPage) {
+                dispatch(addAudioIndex())
+            }
         }));
         dispatch(toggleMediaLoading(false))
         dispatch(handleAlert({overlayMode: true, alertMode: alertMediaUploaded, alertStyle: alertSuccessStyle}))

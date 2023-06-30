@@ -2,7 +2,7 @@
 
 Stream and store your files with ease!
 
-Current Version: 1.1
+Current Version: 1.2
 
 Developer: ThulsaDoom
 
@@ -10,11 +10,25 @@ Developer: ThulsaDoom
 
 - Upload Media
 - View uploaded content
-- NEW: Remove all media on current page
-- NEW: Fully adaptive for FullHd monitor width and lower.
+- Remove all media on current page_
+- Fully adaptive for FullHd monitor width and lower.
+- NEW: Play music
 
 ### Changes:
 
+- Audio player features: 
+  - Play/pause music from audio page or directly from player
+  - Switch between tracks 
+  - Audio can be played everywere on site
+
+
+- Navigation bar
+  - completely change positioning of navigation bar on mobile devices 
+
+
+## Previous versions:
+
+### v1.1
 - Added button to delete all current media on page
 - Upload button is disabled when media is uploading
 

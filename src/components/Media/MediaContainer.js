@@ -8,6 +8,7 @@ const MediaContainer = ({currentRoute, pages, currentMediaSet}) => {
     const imagesMediaSet = useSelector(state => state.media.imagesSet)
     const videosMediaSet = useSelector(state => state.media.videosSet)
     const audioMediaSet = useSelector(state => state.media.audioSet)
+    const smallScreen = useSelector(state => state.app.smallScreen)
     const currentMediaFetch = useSelector(state => state.media.fetchCurrentMedia)
     const dispatch = useDispatch()
     const [imagesPage, videosPage, audioPage] = pages
@@ -21,7 +22,7 @@ const MediaContainer = ({currentRoute, pages, currentMediaSet}) => {
 
     }, [currentRoute, imagesMediaSet, audioMediaSet, videosMediaSet])
 
-    return <Media {...{imagesPage, videosPage, audioPage, currentMediaSet, currentMediaFetch}}/>
+    return <Media {...{imagesPage, videosPage, audioPage, currentMediaSet, currentMediaFetch, smallScreen}}/>
 };
 
 export default MediaContainer

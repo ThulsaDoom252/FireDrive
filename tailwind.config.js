@@ -5,13 +5,19 @@ module.exports = {
     ],
     theme: {
         extend: {
+            inset: {
+                'custom-80': '80px',
+                'custom-57': '57px',
+            },
             screens: {
                 'alert-sm': '568px',
                 'header-xs': '476px',
                 'xs': '400px',
-                'navbar-xs': '400px'
+                'navbar-xs': '400px',
+                'custom-800': '800px'
             },
             width: {
+                '150': '150px',
                 '200': '200px',
                 '300': '300px',
                 '400': '400px',
