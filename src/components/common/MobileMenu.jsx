@@ -3,12 +3,15 @@ import {ContextMenu, ContextMenuTrigger, MenuItem} from "react-contextmenu";
 import {AiOutlineMenu} from "react-icons/ai";
 import UploadBtn from "./UploadBtn";
 import RemoveAllBtn from "./RemoveAllBtn";
+import {connect} from "react-redux";
+import {rootRoute} from "../../common/commonData";
 
-const MobileMenu = ({opacity = 30, zIndex = 0}) => {
+const MobileMenu = ({opacity = 30, zIndex = 0, currentRoute}) => {
+    const disabled = currentRoute === rootRoute
     return (<>
-            <div>
-                <ContextMenuTrigger mouseButton={0} id="header-mobile-menu">
-                    <AiOutlineMenu className={'text-xl'}/>
+            <div hidden={disabled}>
+                <ContextMenuTrigger  mouseButton={0} id="header-mobile-menu">
+                    <AiOutlineMenu className={`text-xl`}/>
                 </ContextMenuTrigger>
                 <ContextMenu className={`flex flex-col items-center justify-center bg-opacity-${opacity}
                 bg-blue-700 w-20 p-5 rounded z-${zIndex}`}
@@ -26,4 +29,11 @@ const MobileMenu = ({opacity = 30, zIndex = 0}) => {
     );
 };
 
-export default MobileMenu;
+
+const mapStateToProps = (state) => {
+    return {
+        currentRoute: state.media.currentRoute
+    }
+}
+
+export default connect(mapStateToProps, null)(MobileMenu);
