@@ -5,6 +5,7 @@ import {deleteAllMedia} from "./mediaSlice";
 const appSlice = createSlice({
     name: 'app-slice',
     initialState: {
+        initializing: false,
         smallScreen: window.innerWidth < 768,
         overlay: false,
         alert: false,

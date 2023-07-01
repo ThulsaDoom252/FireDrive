@@ -6,15 +6,20 @@ import BG from "./components/BG.jpg";
 import Main from "./components/Main";
 import SignInContainer from "./components/SignIn/SignInContainer";
 import SignUpContainer from "./components/SignUp/SignUpContainer";
+import Initializing from "./components/Initializing";
 
 
 const App = () => {
     const isAuth = useSelector(state => state.auth.isAuthorized)
-
+    const initializing = useSelector(state => state.app.initializing)
     const background = {
         background: `url(${BG}) no-repeat`,
         backgroundSize: '100vw 100vh',
         backgroundPosition: 'center',
+    }
+
+    if (initializing) {
+        return <Initializing {...{background}}/>
     }
 
     return (
