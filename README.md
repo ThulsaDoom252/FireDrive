@@ -19,9 +19,10 @@ Developer: ThulsaDoom
 
 ### v1.3
 
-- NEW: Add authorization
+- Add authorization
 - Add logout button
 - Create account / login using email and password
+- Change main background 
 
 ## Previous versions:
 
