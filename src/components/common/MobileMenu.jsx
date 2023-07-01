@@ -5,24 +5,30 @@ import UploadBtn from "./UploadBtn";
 import RemoveAllBtn from "./RemoveAllBtn";
 import {connect} from "react-redux";
 import {rootRoute} from "../../common/commonData";
+import LogOutBtn from "./LogOutBtn";
 
 const MobileMenu = ({opacity = 30, zIndex = 0, currentRoute}) => {
     const disabled = currentRoute === rootRoute
     return (<>
             <div hidden={disabled}>
-                <ContextMenuTrigger  mouseButton={0} id="header-mobile-menu">
+                <ContextMenuTrigger mouseButton={0} id="header-mobile-menu">
                     <AiOutlineMenu className={`text-xl`}/>
                 </ContextMenuTrigger>
                 <ContextMenu className={`flex flex-col items-center justify-center bg-opacity-${opacity}
                 bg-blue-700 w-20 p-5 rounded z-${zIndex}`}
                              id="header-mobile-menu">
                     <MenuItem divider/>
-                    <div className={'mb-5'}>
-                        <UploadBtn/>
+                    <UploadBtn/>
+                    <MenuItem divider/>
+                    <div className={'mt-5'}>
+                        <RemoveAllBtn/>
                     </div>
+
                     <MenuItem divider/>
-                    <RemoveAllBtn/>
-                    <MenuItem divider/>
+                    <div className={'mt-5'}>
+                        <LogOutBtn/>
+                    </div>
+
                 </ContextMenu>
             </div>
         </>

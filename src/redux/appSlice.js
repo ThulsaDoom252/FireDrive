@@ -5,6 +5,7 @@ import {deleteAllMedia} from "./mediaSlice";
 const appSlice = createSlice({
     name: 'app-slice',
     initialState: {
+        initializing: false,
         smallScreen: window.innerWidth < 768,
         overlay: false,
         alert: false,
@@ -28,6 +29,9 @@ const appSlice = createSlice({
                 state.alertStyle = style
             }
         },
+        toggleInitializing(state, action) {
+            state.initializing = action.payload
+        }
     }
 })
 
@@ -37,6 +41,7 @@ export const {
     toggleAlert,
     toggleOverlay,
     setAlertMode,
+    toggleInitializing,
 } = appSlice.actions
 
 
