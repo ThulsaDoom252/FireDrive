@@ -5,9 +5,14 @@ module.exports = {
     ],
     theme: {
         extend: {
+            colors: {
+                customInputColor: '#f2f2f2',
+            },
             inset: {
                 'custom-80': '80px',
                 'custom-57': '57px',
+                'custom-20': '85px',
+                'custom-50': '65px',
             },
             screens: {
                 'alert-sm': '568px',

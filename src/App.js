@@ -1,14 +1,31 @@
 import React from 'react'
-import {BrowserRouter, Routes, Route, NavLink} from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {signInRoute, signUpRoute} from "./common/commonData";
+import {useSelector} from "react-redux";
+import BG from "./components/BG.jpg";
 import Main from "./components/Main";
+import SignInContainer from "./components/SignIn/SignInContainer";
+import SignUpContainer from "./components/SignUp/SignUpContainer";
 
 
 const App = () => {
+    const isAuth = useSelector(state => state.auth.isAuthorized)
+
+    const background = {
+        background: `url(${BG}) no-repeat`,
+        backgroundSize: '100vw 100vh',
+        backgroundPosition: 'center',
+    }
+
     return (
         <BrowserRouter>
-            <div className={'w-screen h-screen relative overflow-hidden'}>
+            <div style={background}
+                 className={`bg-center bg-over bg-no-repeat
+             w-screen h-screen relative overflow-hidden`}>
                 <Routes>
-                    <Route path={'*'} element={<Main/>}/>
+                    <Route exact path={signInRoute} element={<SignInContainer {...{isAuth}}/>}/>
+                    <Route path={signUpRoute} element={<SignUpContainer {...{isAuth}}/>}/>
+                    <Route path={'*'} element={<Main {...{isAuth}}/>}/>
                 </Routes>
             </div>
         </BrowserRouter>

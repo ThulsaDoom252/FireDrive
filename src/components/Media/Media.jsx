@@ -8,7 +8,7 @@ const Media = ({currentMediaSet, imagesPage, videosPage, audioPage, currentMedia
     const noMedia = currentMediaSet.length === 0
     return (
         <section
-            className={`w-full h-full  bg-amber-300 p-10 flex flex-col items-center ${noMedia ? 'justify-center' : ''}  ${!smallScreen ? 'mt-10' : ''}`}>
+            className={`w-full h-full  p-10 flex flex-col items-center ${noMedia ? 'justify-center' : ''}  ${!smallScreen ? 'mt-10' : ''}`}>
             {noMedia ?
                 <div>{imagesPage ? 'You have no images' : videosPage ? 'You have no videos' : 'You have no audio'}</div> :
                 <div
