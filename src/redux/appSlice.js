@@ -29,6 +29,9 @@ const appSlice = createSlice({
                 state.alertStyle = style
             }
         },
+        toggleInitializing(state, action) {
+            state.initializing = action.payload
+        }
     }
 })
 
@@ -38,6 +41,7 @@ export const {
     toggleAlert,
     toggleOverlay,
     setAlertMode,
+    toggleInitializing,
 } = appSlice.actions
 
 

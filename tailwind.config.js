@@ -12,7 +12,7 @@ module.exports = {
                 'custom-80': '80px',
                 'custom-57': '57px',
                 'custom-20': '85px',
-                'custom-50': '65px',
+                'custom-50': '140px',
             },
             screens: {
                 'alert-sm': '568px',

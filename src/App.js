@@ -1,22 +1,27 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {signInRoute, signUpRoute} from "./common/commonData";
-import {useSelector} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import BG from "./components/BG.jpg";
 import Main from "./components/Main";
 import SignInContainer from "./components/SignIn/SignInContainer";
 import SignUpContainer from "./components/SignUp/SignUpContainer";
 import Initializing from "./components/Initializing";
+import {authCheck} from "./redux/authSlice";
+import {getAuth} from "firebase/auth";
 
-
-const App = () => {
-    const isAuth = useSelector(state => state.auth.isAuthorized)
+const App = ({authCheck, isAuth}) => {
+    const user = getAuth().currentUser
     const initializing = useSelector(state => state.app.initializing)
     const background = {
         background: `url(${BG}) no-repeat`,
         backgroundSize: '100vw 100vh',
         backgroundPosition: 'center',
     }
+
+    useEffect(() => {
+        authCheck()
+    }, [user])
 
     if (initializing) {
         return <Initializing {...{background}}/>
@@ -37,5 +42,11 @@ const App = () => {
     )
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        isAuth: state.auth.isAuthorized
+    }
+}
+
+export default connect(mapStateToProps, {authCheck})(App);
 

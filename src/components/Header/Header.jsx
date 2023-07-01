@@ -14,10 +14,10 @@ import {useSelector} from "react-redux";
 import MobileMenu from "../common/MobileMenu";
 import {BiMusic} from "react-icons/bi";
 import {RiMovieLine} from "react-icons/ri";
+import LogOutBtn from "../common/LogOutBtn";
 
 const Header = () => {
     const smallScreen = useSelector(state => state.app.smallScreen)
-
     const isActiveStyle = `${smallScreen ? 'mr-5 text-white text-2xl' : 'text-base mr-5 text-white'}`;
     const inactiveStyle = `${smallScreen ? 'mr-5 text-2xl' : 'mr-5 text-base'}`;
 
@@ -45,6 +45,7 @@ const Header = () => {
             </div>
 
             {!smallScreen && <div className={'flex'}>
+                <LogOutBtn/>
                 <div className={'mr-5'}>
                     <UploadBtn/>
                 </div>
