@@ -2,7 +2,7 @@
 
 Stream and store your files with ease!
 
-Current Version: 1.2.1
+Current Version: 1.3
 
 Developer: ThulsaDoom
 
@@ -12,15 +12,23 @@ Developer: ThulsaDoom
 - View uploaded content
 - Remove all media on current page_
 - Fully adaptive for FullHd monitor width and lower.
-- NEW: Play music
+- Play music
+- NEW: Authorization
 
 ### Changes:
+
+### v1.3
+
+- NEW: Add authorization
+- Add logout button
+- Create account / login using email and password
+
+## Previous versions:
 
 ### v1.2.1
 
 - Hide mobile menu on home page
 
-## Previous versions:
 ### v1.2
 
 - Audio player features:

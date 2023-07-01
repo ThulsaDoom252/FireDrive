@@ -36,6 +36,8 @@ export const imagesRoute = '/images'
 export const videosRoute = '/videos'
 export const audioRoute = '/audio'
 export const rootRoute = '/'
+export const signInRoute = '/signIn'
+export const signUpRoute = '/signUp'
 
 // Media types
 export const images = 'images'
