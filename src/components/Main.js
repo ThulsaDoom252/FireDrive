@@ -69,7 +69,6 @@ const Main = ({
 
     return (
         <>
-            {horizontalMode && <div>In horizontal</div>}
             {overlay && <Overlay/>}
             {alert && <Alert/>}
             <HeaderContainer {...{currentRoute}}/>
