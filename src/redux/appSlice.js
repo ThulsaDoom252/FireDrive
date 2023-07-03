@@ -7,6 +7,7 @@ const appSlice = createSlice({
     initialState: {
         initializing: false,
         smallScreen: window.innerWidth < 768,
+        horizontalMode: false,
         overlay: false,
         alert: false,
         alertMode: '',
@@ -15,6 +16,9 @@ const appSlice = createSlice({
     reducers: {
         toggleSmallScreen(state, action) {
             state.smallScreen = action.payload
+        },
+        toggleHorizontalMode(state, action) {
+            state.horizontalMode = action.payload
         },
         toggleOverlay(state, action) {
             state.overlay = action.payload
@@ -42,6 +46,7 @@ export const {
     toggleOverlay,
     setAlertMode,
     toggleInitializing,
+    toggleHorizontalMode,
 } = appSlice.actions
 
 

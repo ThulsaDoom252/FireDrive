@@ -18,6 +18,9 @@ export const delay = (ms) => {
 }
 
 
+//SmallScreenMode
+export const smallScreenWidth = 768
+
 //AlertStyles
 export const alertWarningStyle = 'warning'
 export const alertSuccessStyle = 'success'
