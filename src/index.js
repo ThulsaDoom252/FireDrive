@@ -8,13 +8,16 @@ import {Provider} from "react-redux";
 import {store} from "./redux/store";
 import {AudioPlayerContextProvider} from "./context/AudioPlayerContext";
 import 'bootstrap/dist/css/bootstrap.css';
+import {PagesContextProvider} from "./context/pagesContext";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Provider store={store}>
         <AudioPlayerContextProvider>
+            <PagesContextProvider>
                 <App/>
+            </PagesContextProvider>
         </AudioPlayerContextProvider>
     </Provider>
 );
