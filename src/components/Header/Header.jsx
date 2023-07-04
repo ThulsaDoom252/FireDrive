@@ -15,6 +15,7 @@ import MobileMenu from "../common/MobileMenu";
 import {BiMusic} from "react-icons/bi";
 import {RiMovieLine} from "react-icons/ri";
 import LogOutBtn from "../common/LogOutBtn";
+import SortInput from "../common/SortInput";
 
 const Header = () => {
     const smallScreen = useSelector(state => state.app.smallScreen)
@@ -43,6 +44,7 @@ const Header = () => {
                 className={`${smallScreen ? 'fixed left-0 right-0 bottom-custom-57  h-14 bg-blue-50 bg-opacity-70' : 'relative left-24  bg-gradient-to-r from-purple-500 to-indigo-500 custom-800:w-150 h-12 lg:w-300'}`}>
                 <MusicPlayer/>
             </div>
+            <SortInput/>
             {!smallScreen && <div className={'flex'}>
                 <LogOutBtn/>
                 <div className={'mr-5'}>
