@@ -2,7 +2,7 @@ import {
     alertMediaUploaded, alertSuccessStyle,
     audio,
     audioOnly,
-    audioRoute, defaultRef,
+    audioRoute, byDate, byName, bySize, defaultRef,
     images,
     imagesOnly,
     imagesRoute, mediaFetchMode, mediaUploadMode,
@@ -24,6 +24,13 @@ const mediaSlice = createSlice({
         fetchImages: false,
         fetchVideos: false,
         fetchAudio: false,
+        sortBy: byDate,
+        sortOptions: [
+            {value: byDate, label: byDate},
+            {value: byName, label: byName},
+            {value: bySize, label: bySize},
+        ],
+        mediaSortedBy: byDate,
         currentMediaSet: [],
         mediaLoading: false,
         mediaDeleting: false,
@@ -37,6 +44,9 @@ const mediaSlice = createSlice({
         },
         setCurrentAudioIndex(state, action) {
             state.currentAudioIndex = action.payload
+        },
+        toggleSortByValue(state, action) {
+            state.sortBy = action.payload
         },
         addAudioIndex(state) {
             const updatedAudioRefs = state.audioSet.map((audio, index) => ({...audio, index}));
@@ -53,6 +63,22 @@ const mediaSlice = createSlice({
                     break;
                 case  audio:
                     state.audioSet = [...mediaData]
+            }
+        },
+        sortCurrentMediaSet(state, action) {
+            const {sortType} = action.payload
+            switch (sortType) {
+                case byDate:
+                    state.currentMediaSet.sort((a, b) => a.date.localeCompare(b.date))
+                    break;
+                case byName:
+                    state.currentMediaSet.sort((a, b) => a.name.localeCompare(b.name))
+                    break;
+                case bySize:
+                    state.currentMediaSet.sort((a, b) => b.size - a.size)
+                    break;
+                default:
+                    void 0
             }
         },
         updateMediaSet(state, action) {
@@ -129,6 +155,8 @@ export const {
     toggleMediaLoading,
     toggleIsMediaDeleting,
     addAudioIndex,
+    toggleSortByValue,
+    sortCurrentMediaSet,
 } = mediaSlice.actions;
 
 

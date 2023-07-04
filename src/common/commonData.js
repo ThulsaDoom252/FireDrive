@@ -17,6 +17,11 @@ export const delay = (ms) => {
     })
 }
 
+//Sort media types
+export const byDate = 'by date'
+export const byName = 'by name'
+export const bySize = 'by size'
+
 
 //SmallScreenMode
 export const smallScreenWidth = 768

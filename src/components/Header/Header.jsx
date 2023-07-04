@@ -23,7 +23,7 @@ const Header = () => {
 
     return (
         <header
-            className={`${smallScreen ? 'bottom-0 h-14' : 'top-0 h-16'}  absolute flex justify-between w-full  pr-10 pl-10 bg-gradient-to-r from-sky-500 to-indigo-500 items-center`}>
+            className={`${smallScreen ? 'bottom-0 h-14' : 'top-0 h-16'}  absolute flex justify-between w-full  pr-10 pl-10 bg-gradient-to-r from-sky-500 to-indigo-500 items-center relative`}>
             <div className={`${smallScreen ? 'w-full' : 'w-10'} flex justify-between`}>
                 <NavLink to={rootRoute}
                          className={navData => navData.isActive ? isActiveStyle : inactiveStyle}>{smallScreen ?
@@ -43,7 +43,6 @@ const Header = () => {
                 className={`${smallScreen ? 'fixed left-0 right-0 bottom-custom-57  h-14 bg-blue-50 bg-opacity-70' : 'relative left-24  bg-gradient-to-r from-purple-500 to-indigo-500 custom-800:w-150 h-12 lg:w-300'}`}>
                 <MusicPlayer/>
             </div>
-
             {!smallScreen && <div className={'flex'}>
                 <LogOutBtn/>
                 <div className={'mr-5'}>
