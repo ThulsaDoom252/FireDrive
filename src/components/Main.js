@@ -3,7 +3,7 @@ import HeaderContainer from "./Header/HeaderContainer";
 import Home from "./Home";
 import {
     audioRoute,
-    imagesRoute,
+    imagesRoute, mainContentId,
     mediaTypes,
     rootRoute,
     signInRoute,
@@ -17,6 +17,10 @@ import MediaContainer from "./Media/MediaContainer";
 import {toggleHorizontalMode, toggleSmallScreen} from "../redux/appSlice";
 import Alert from "./Alert";
 import Overlay from "./Overlay";
+import BurgerMenu from "./common/BurgerMenu";
+import UploadBtn from "./common/UploadBtn";
+import RemoveAllBtn from "./common/RemoveAllBtn";
+import SortInput from "./common/SortInput";
 
 const Main = ({
                   currentMediaSet,
@@ -72,7 +76,8 @@ const Main = ({
             {overlay && <Overlay/>}
             {alert && <Alert/>}
             <HeaderContainer {...{currentRoute}}/>
-            <main className={'w-full h-full'}>
+            <main id={mainContentId} className={'w-full h-full'}>
+                <BurgerMenu items={[<UploadBtn/>, <RemoveAllBtn/>, <SortInput/>,]}/>
                 {homePage && <Home/>}
                 <Routes>
                     {!homePage && <Route path={currentRoute}

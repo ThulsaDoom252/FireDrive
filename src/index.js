@@ -9,13 +9,16 @@ import {store} from "./redux/store";
 import {AudioPlayerContextProvider} from "./context/AudioPlayerContext";
 import 'bootstrap/dist/css/bootstrap.css';
 import {PagesContextProvider} from "./context/PagesContext";
+import {BurgerMenuContextProvider} from "./context/BurgerMenuContext";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Provider store={store}>
         <AudioPlayerContextProvider>
             <PagesContextProvider>
-                <App/>
+                <BurgerMenuContextProvider>
+                    <App/>
+                </BurgerMenuContextProvider>
             </PagesContextProvider>
         </AudioPlayerContextProvider>
     </Provider>
