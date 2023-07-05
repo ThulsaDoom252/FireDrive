@@ -2,7 +2,7 @@
 
 Stream and store your files with ease!
 
-Current Version: 1.4
+Current Version: 1.4.1
 
 Developer: ThulsaDoom
 
@@ -14,9 +14,14 @@ Developer: ThulsaDoom
 - Fully adaptive for FullHd monitor width and lower.
 - Play music
 - Authorization
-- NEW: Add sort feature
+- Sort feature
 
 ### Changes:
+
+### v1.4.1
+
+- FIXED: audio no longer playing after removal
+- FIXED: alerts now can be clicked in burger-menu overlay
 
 ### v1.4
 
