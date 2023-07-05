@@ -26,7 +26,7 @@ const BurgerMenu = ({
             width={adaptForASmallScreen && smallScreen ? '35%' : void 0}
             isOpen={menuOpenState}
         >
-            <div>{audioPlayer}</div>
+            <div className={'w-full bg-opacity-50 bg-red-50 h-20 mb-5'}>{audioPlayer}</div>
             <div>
                 {items.length > 0 ? items.map((item, index) =>
                     <div className={'mb-5'} key={index}>{item}</div>) : <div>No items</div>}
