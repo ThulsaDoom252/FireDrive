@@ -3,7 +3,6 @@ import {useEffect, useRef} from "react";
 import {delay} from "../common/commonData";
 import {useSelector} from "react-redux";
 
-
 export const AudioPlayerContext = createContext();
 
 export function AudioPlayerContextProvider({children}) {

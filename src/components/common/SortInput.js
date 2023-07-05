@@ -22,7 +22,7 @@ const SortInput = ({
         audioPage,
     } = sortContext
 
-    const isDisabled = disabled
+    const isDisabled = rootPage || disabled
     const isHidden = hidden ? hidden : rootPage
 
     const handleChange = async (item) => {
@@ -42,7 +42,7 @@ const SortInput = ({
 
     return (
         <>
-            {!isHidden && <Select
+            <Select
                 className={classname}
                 onMenuClose={handleCloseMenu}
                 isDisabled={isDisabled}
@@ -55,7 +55,7 @@ const SortInput = ({
                 isSearchable={false}
                 blurInputOnSelect={false}
                 menuIsOpen={isMenuOpen}
-            />}
+            />
 
         </>
 
