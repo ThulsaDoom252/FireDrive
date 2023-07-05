@@ -17,6 +17,18 @@ export const delay = (ms) => {
     })
 }
 
+// containers id's
+export const wrapperId = 'wrapper'
+export const mainContentId = 'content'
+
+//Sort media types
+export const byDate = 'by date'
+export const byName = 'by name'
+export const bySize = 'by size'
+
+
+//SmallScreenMode
+export const smallScreenWidth = 768
 
 //AlertStyles
 export const alertWarningStyle = 'warning'

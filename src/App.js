@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {signInRoute, signUpRoute} from "./common/commonData";
+import {signInRoute, signUpRoute, wrapperId} from "./common/commonData";
 import {connect, useSelector} from "react-redux";
 import BG from "./components/BG.jpg";
 import Main from "./components/Main";
@@ -30,6 +30,7 @@ const App = ({authCheck, isAuth}) => {
     return (
         <BrowserRouter>
             <div style={background}
+                 id={wrapperId}
                  className={`bg-center bg-over bg-no-repeat
              w-screen h-screen relative overflow-hidden`}>
                 <Routes>

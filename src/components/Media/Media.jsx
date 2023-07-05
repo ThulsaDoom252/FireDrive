@@ -4,15 +4,15 @@ import ReactPlayer from "react-player";
 import {truncate} from "../../common/commonData";
 import Audio from "./Audio";
 
-const Media = ({currentMediaSet, imagesPage, videosPage, audioPage, currentMediaFetch, smallScreen}) => {
+const Media = ({currentMediaSet, imagesPage, videosPage, audioPage, currentMediaFetch}) => {
     const noMedia = currentMediaSet.length === 0
     return (
         <section
-            className={`w-full h-full  p-10 flex flex-col items-center ${noMedia ? 'justify-center' : ''}  ${!smallScreen ? 'mt-10' : ''}`}>
+            className={`w-full h-full  p-10 flex overflow-y-scroll flex-col items-center ${noMedia ? 'justify-center' : ''}`}>
             {noMedia ?
                 <div>{imagesPage ? 'You have no images' : videosPage ? 'You have no videos' : 'You have no audio'}</div> :
                 <div
-                    className={`w-full ${currentMediaFetch ? 'flex justify-center items-center' : !audioPage ?
+                    className={`w-full mt-5 ${currentMediaFetch ? 'flex justify-center items-center' : !audioPage ?
                         'grid gap-5 sm: grid-cols-2 grid-rows-2 md:grid-cols-3 grid-rows-3  ' +
                         'lg:grid-cols-4 grid-rows-4 xl:grid-cols-5 grid-rows-5' : ''}`}>
                     {currentMediaFetch && <ClipLoader
