@@ -12,10 +12,10 @@ const SortInput = ({
                        disabled,
                        hidden,
                        handleArray,
+                       direction = 'bottom'
                    }) => {
 
     const sortContext = useContext(PagesContext)
-
 
     const {
         rootPage
@@ -49,6 +49,7 @@ const SortInput = ({
                 onMenuOpen={handleOpenMenu}
                 options={options}
                 onChange={handleChange}
+                menuPlacement={direction}
                 placeholder={currentOption}
                 onInputChange={handleInputChange}
                 isSearchable={false}

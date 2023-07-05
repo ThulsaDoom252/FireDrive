@@ -1,16 +1,15 @@
 import React from 'react';
-import {connect, useDispatch} from "react-redux";
-import {rootRoute} from "../../common/commonData";
+import {connect} from "react-redux";
 import {handleLogout} from "../../redux/authSlice";
 import {BiLogOut} from "react-icons/bi";
 
-const LogOutBtn = ({currentRoute, smallScreen}) => {
+const LogOutBtn = ({smallScreen, isFullWidth = true}) => {
 
     return (
         <>
-            <div hidden={!smallScreen && currentRoute !== rootRoute}>
+            <div>
                 <button onClick={handleLogout}
-                        className={'bg-purple-500  hover:bg-purple-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed'}>{
+                        className={`${isFullWidth && 'w-full'} bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed`}>{
                     smallScreen ? <BiLogOut/> : 'Logout'
                 }
                 </button>
@@ -19,7 +18,6 @@ const LogOutBtn = ({currentRoute, smallScreen}) => {
 
     );
 };
-
 
 const mapStateToProps = (state) => {
     return {

@@ -2,13 +2,10 @@ import React, {useEffect} from 'react';
 import HeaderContainer from "./Header/HeaderContainer";
 import Home from "./Home";
 import {
-    audioRoute,
-    imagesRoute, mainContentId,
-    mediaTypes,
-    rootRoute,
+    mainContentId,
+    mediaTypes, rootRoute,
     signInRoute,
     smallScreenWidth,
-    videosRoute
 } from "../common/commonData";
 import {Routes, Route, Navigate, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
@@ -21,6 +18,8 @@ import BurgerMenu from "./common/BurgerMenu";
 import UploadBtn from "./common/UploadBtn";
 import RemoveAllBtn from "./common/RemoveAllBtn";
 import SortInput from "./common/SortInput";
+import LogOutBtn from "./common/LogOutBtn";
+import AudioPlayer from "./AudioPlayer/AudioPlayer";
 
 const Main = ({
                   currentMediaSet,
@@ -38,12 +37,7 @@ const Main = ({
 
     const location = useLocation()
     const pathName = location.pathname
-
-    const imagesPage = currentRoute === imagesRoute
-    const videosPage = currentRoute === videosRoute
-    const audioPage = currentRoute === audioRoute
-    const homePage = currentRoute === rootRoute
-    const pages = [imagesPage, videosPage, audioPage]
+    const homePage = pathName === rootRoute
 
     useEffect(() => {
         window.addEventListener('resize', handleResize)
@@ -76,12 +70,17 @@ const Main = ({
             {overlay && <Overlay/>}
             {alert && <Alert/>}
             <HeaderContainer {...{currentRoute}}/>
-            <main id={mainContentId} className={'w-full h-full'}>
-                <BurgerMenu items={[<UploadBtn/>, <RemoveAllBtn/>, <SortInput/>,]}/>
+            <main className={'w-full h-full'} id={mainContentId}>
+                <BurgerMenu items={[<UploadBtn/>, <RemoveAllBtn/>,
+                    <LogOutBtn/>]}
+                            sortInput={<SortInput direction={smallScreen ? "top" : void 0}/>}
+                            audioPlayer={<AudioPlayer/>}
+
+                />
                 {homePage && <Home/>}
                 <Routes>
                     {!homePage && <Route path={currentRoute}
-                                         element={<MediaContainer {...{currentRoute, pages, currentMediaSet}}/>}/>}
+                                         element={<MediaContainer {...{currentRoute, currentMediaSet}}/>}/>}
                 </Routes>
             </main>
         </>

@@ -1,27 +1,31 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
     audioFiles,
-    audioRoute,
     imageFiles,
-    imagesRoute,
-    rootRoute,
     videoFiles,
-    videosRoute
 } from "../../common/commonData";
 import {HiOutlinePlus} from "react-icons/hi";
 import {connect} from "react-redux";
 import {uploadMedia} from "../../redux/mediaSlice";
+import {PagesContext} from "../../context/PagesContext";
 
-const UploadBtn = ({currentRoute, uploadMedia, smallScreen, mediaLoading}) => {
-    const imagesPage = currentRoute === imagesRoute
-    const videosPage = currentRoute === videosRoute
-    const audioPage = currentRoute === audioRoute
-    const homePage = currentRoute === rootRoute
+const UploadBtn = ({currentRoute, uploadMedia, smallScreen, mediaLoading, isFullWidth = true}) => {
+    const pages = useContext(PagesContext)
+    const {
+        rootPage,
+        imagesPage,
+        videosPage,
+        audioPage,
+    } = pages
+
     const inputBtnRef = React.useRef(null)
     const handleUploadBtnClick = () => inputBtnRef.current.click()
+
+    const isDisabled = rootPage || mediaLoading
+
     return (
         <>
-            {!homePage && <>
+            <>
                 <input
                     ref={inputBtnRef}
                     accept={imagesPage ? imageFiles : videosPage ? videoFiles :
@@ -32,14 +36,14 @@ const UploadBtn = ({currentRoute, uploadMedia, smallScreen, mediaLoading}) => {
                     multiple/>
                 <button
                     type="button"
-                    disabled={mediaLoading}
+                    disabled={isDisabled}
                     onClick={handleUploadBtnClick}
-                    className={'bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed'}
+                    className={`${isFullWidth && 'w-full'} bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded disabled:opacity-50 disabled:cursor-not-allowed`}
                 >
                     {smallScreen ? < HiOutlinePlus/> : 'Add media'}
 
                 </button>
-            </>}
+            </>
         </>
     );
 };

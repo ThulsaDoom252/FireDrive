@@ -4,10 +4,11 @@ import {CiMenuBurger} from "react-icons/ci";
 
 const BurgerMenuTrigger = ({classname = 'bm-burger-button'}) => {
     const ctx = useContext(BurgerMenuContext)
-    const {toggleMenu} = ctx
+    const {toggleMenu, menuOpenState} = ctx
 
     return (
-        <button className={classname} onClick={toggleMenu}><CiMenuBurger/></button>
+        <button className={classname} onClick={toggleMenu}><CiMenuBurger/>
+        </button>
     )
 };
 

@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
     overflow-y: hidden;
 }
@@ -12,23 +11,6 @@ body {
     font-size: 2rem;
 }
 
-/* Color/shape of burger icon bars */
-/*.bm-burger-bars {*/
-/*    background: #0c35ec;*/
-/*}*/
-
-/* Color/shape of burger icon bars on hover*/
-.bm-burger-bars-hover {
-    background: #a90000;
-}
-
-/* Position and sizing of clickable cross button */
-/*.bm-cross-button {*/
-/*    height: 24px;*/
-/*    width: 24px;*/
-/*}*/
-
-/* Color/shape of close button cross */
 .bm-cross {
     background: red;
 }
@@ -47,8 +29,9 @@ Note: Beware of modifying this element as it can break the animations - you shou
     background: #373a47;
     border: solid thin gray;
     border-radius: 5px;
-    padding: 2.5em 1.5em 0;
     font-size: 1.15em;
+    padding: 3rem 0.5rem 0.5rem 0.5rem;
+    overflow: auto;
 }
 
 /* Morph shape necessary with bubble or elastic */
@@ -56,23 +39,15 @@ Note: Beware of modifying this element as it can break the animations - you shou
     fill: #373a47;
 }
 
-/* Wrapper for item list */
 .bm-item-list {
     color: #b8b7ad;
-    padding: 0.8em;
     display: flex;
+    justify-content: start;
     flex-direction: column;
     align-items: center;
 
-}
 
-/* Individual item */
-.bm-item {
-    display: inline-block;
-    margin-top: 10px;
 }
-
-/* Styling of overlay */
 .bm-overlay {
     background: rgba(0, 0, 0, 0.3);
 }

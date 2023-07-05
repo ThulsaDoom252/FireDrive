@@ -23,33 +23,16 @@ export function AudioPlayerContextProvider({children}) {
         }
     }
 
-    useEffect(() => {
-        handlePlay()
-    }, [isCurrentTrackPlaying]);
-
-    useEffect(() => {
-        const audio = audioRef.current
-        if (audioIsPresent && audio) {
-            audio.src = currentTrack.url
-            audio.load()
-            const handleEnded = () => {
-                toggleCurrentTrackPlaying(false);
-                goToNextTrack({dispatch}, currentAudioIndex, audioSet)
-            };
-            audio.addEventListener('ended', handleEnded);
-
-            return () => {
-                audio.removeEventListener('ended', handleEnded);
-            };
-        }
-
-    }, [audioIsPresent, currentAudioIndex]);
 
     const playCurrentTrack = () => toggleCurrentTrackPlaying(!isCurrentTrackPlaying)
 
-    const handleNextTrack = async () => {
-        setCurrentAudioIndex(currentAudioIndex + 1)
-        if (isCurrentTrackPlaying) {
+    const handleNextTrack = async (isEnded) => {
+        if (isEnded) {
+            toggleCurrentTrackPlaying(false)
+            setCurrentAudioIndex(currentAudioIndex + 1)
+            await delay(500)
+            toggleCurrentTrackPlaying(true)
+        } else if (isCurrentTrackPlaying) {
             toggleCurrentTrackPlaying(false)
             await delay(500)
             toggleCurrentTrackPlaying(true)
@@ -60,7 +43,6 @@ export function AudioPlayerContextProvider({children}) {
         if (isCurrentTrackPlaying) {
             toggleCurrentTrackPlaying(false)
         }
-        debugger
         setCurrentAudioIndex(index)
         await delay(500)
         toggleCurrentTrackPlaying(true)
@@ -75,6 +57,29 @@ export function AudioPlayerContextProvider({children}) {
             toggleCurrentTrackPlaying(true)
         }
     }
+
+
+    useEffect(() => {
+        handlePlay()
+    }, [isCurrentTrackPlaying]);
+
+    useEffect(() => {
+        const audio = audioRef.current
+        if (audioIsPresent && audio) {
+            audio.src = currentTrack.url
+            audio.load()
+            const handleEnded = () => {
+                handleNextTrack(true)
+            };
+            audio.addEventListener('ended', handleEnded);
+
+            return () => {
+                audio.removeEventListener('ended', handleEnded);
+            };
+        }
+
+    }, [audioIsPresent, currentAudioIndex]);
+
 
     const prevBtnDisabled = currentAudioIndex === 0 || !audioIsPresent
     const nextBtnDisabled = currentAudioIndex === audioSet.length - 1 || !audioIsPresent
