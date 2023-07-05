@@ -4,7 +4,6 @@ import {audioRoute, imagesRoute, rootRoute, videosRoute} from "../../common/comm
 import {AiFillPicture, AiOutlineHome} from "react-icons/ai";
 import {RiMovieLine} from "react-icons/ri";
 import {BiMusic} from "react-icons/bi";
-import MobileMenu from "../common/MobileMenu";
 import {connect} from "react-redux";
 
 const NavItems = ({smallScreen}) => {
@@ -24,7 +23,6 @@ const NavItems = ({smallScreen}) => {
             <NavLink to={audioRoute}
                      className={navData => navData.isActive ? isActiveStyle : inactiveStyle}>{smallScreen ?
                 <BiMusic/> : 'Audio'}</NavLink>
-            {smallScreen && <MobileMenu opacity={60} zIndex={50}/>}
         </>
     );
 };
