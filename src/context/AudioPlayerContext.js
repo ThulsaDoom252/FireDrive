@@ -16,12 +16,13 @@ export function AudioPlayerContextProvider({children}) {
     const audioRef = useRef(null)
     const audio = audioRef.current
 
-    const handlePlay = () => {
-        if (audioIsPresent && audio !== null) {
+    const handlePlay = (stopAudio = false) => {
+        if (stopAudio && audio !== null) {
+            audio.pause()
+        } else if (audioIsPresent && audio !== null) {
             isCurrentTrackPlaying ? audio.play() : audio.pause()
         }
     }
-
 
     const playCurrentTrack = () => toggleCurrentTrackPlaying(!isCurrentTrackPlaying)
 
@@ -56,6 +57,10 @@ export function AudioPlayerContextProvider({children}) {
             toggleCurrentTrackPlaying(true)
         }
     }
+
+    useEffect(() => {
+        handlePlay(true)
+    }, [!audioIsPresent])
 
 
     useEffect(() => {
