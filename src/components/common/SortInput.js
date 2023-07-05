@@ -23,7 +23,6 @@ const SortInput = ({
     } = sortContext
 
     const isDisabled = rootPage || disabled
-    const isHidden = hidden ? hidden : rootPage
 
     const handleChange = async (item) => {
         await handleOptionChange(item.value)
