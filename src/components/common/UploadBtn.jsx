@@ -9,7 +9,7 @@ import {connect} from "react-redux";
 import {uploadMedia} from "../../redux/mediaSlice";
 import {PagesContext} from "../../context/PagesContext";
 
-const UploadBtn = ({currentRoute, uploadMedia, smallScreen, mediaLoading, isFullWidth = true}) => {
+const UploadBtn = ({currentRoute, uploadMedia, smallScreen, mediaLoading, isFullWidth = true, username}) => {
     const pages = useContext(PagesContext)
     const {
         rootPage,
@@ -32,7 +32,7 @@ const UploadBtn = ({currentRoute, uploadMedia, smallScreen, mediaLoading, isFull
                         audioPage ? audioFiles : ''}
                     hidden={true}
                     type={"file"}
-                    onChange={e => uploadMedia({event: e, currentRoute, userName: 'ThulsaDoom'})}
+                    onChange={e => uploadMedia({event: e, currentRoute, username})}
                     multiple/>
                 <button
                     type="button"
@@ -53,6 +53,7 @@ const mapStateToProps = (state) => {
         currentRoute: state.media.currentRoute,
         smallScreen: state.app.smallScreen,
         mediaLoading: state.media.mediaLoading,
+        username: state.auth.username,
     }
 
 }

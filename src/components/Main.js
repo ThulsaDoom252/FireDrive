@@ -32,12 +32,17 @@ const Main = ({
                   setCurrentRoute,
                   toggleHorizontalMode,
                   horizontalMode,
-                  smallScreen
+                  smallScreen,
+                  username,
+                  audioSet,
               }) => {
 
     const location = useLocation()
     const pathName = location.pathname
     const homePage = pathName === rootRoute
+    window.audioSet = audioSet
+    window.currentMediaSet = currentMediaSet
+
 
     useEffect(() => {
         window.addEventListener('resize', handleResize)
@@ -58,7 +63,7 @@ const Main = ({
 
     useEffect(() => {
         mediaTypes.forEach(mediaType =>
-            listMedia({userName: 'ThulsaDoom', mediaType}))
+            listMedia({username, mediaType}))
     }, [])
 
     if (!isAuth) {
@@ -96,6 +101,8 @@ const mapStateToProps = (state) => {
         currentMediaSet: state.media.currentMediaSet,
         overlay: state.app.overlay,
         alert: state.app.alert,
+        username: state.auth.username,
+        audioSet: state.media.audioSet,
     }
 }
 

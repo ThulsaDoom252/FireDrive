@@ -18,7 +18,8 @@ const SortInput = ({
     const sortContext = useContext(PagesContext)
 
     const {
-        rootPage
+        rootPage,
+        audioPage,
     } = sortContext
 
     const isDisabled = disabled
@@ -26,8 +27,7 @@ const SortInput = ({
 
     const handleChange = async (item) => {
         await handleOptionChange(item.value)
-        debugger
-        handleArray({sortType: currentOption})
+        handleArray({sortType: currentOption, isAudio: audioPage})
     };
 
     const handleInputChange = () => {

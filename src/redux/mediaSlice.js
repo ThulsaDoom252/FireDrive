@@ -66,16 +66,21 @@ const mediaSlice = createSlice({
             }
         },
         sortCurrentMediaSet(state, action) {
-            const {sortType} = action.payload
+            const {sortType, isAudio} = action.payload
+            debugger
             switch (sortType) {
                 case byDate:
                     state.currentMediaSet.sort((a, b) => a.date.localeCompare(b.date))
+                    isAudio && state.audioSet.sort((a, b) => a.date.localeCompare(b.date))
                     break;
                 case byName:
                     state.currentMediaSet.sort((a, b) => a.name.localeCompare(b.name))
+                    isAudio && state.audioSet.sort((a, b) => a.name.localeCompare(b.name))
+                    debugger
                     break;
                 case bySize:
                     state.currentMediaSet.sort((a, b) => b.size - a.size)
+                    isAudio && state.audioSet.sort((a, b) => b.size - a.size)
                     break;
                 default:
                     void 0
@@ -193,9 +198,9 @@ const filterMediaData = (array, mode) => {
     return modifiedMedia
 }
 
-export const listMedia = createAsyncThunk('listMedia-thunk', async ({userName, mediaType}, {dispatch}) => {
+export const listMedia = createAsyncThunk('listMedia-thunk', async ({username, mediaType}, {dispatch}) => {
     dispatch(toggleFetchMedia({mediaType, toggle: true}))
-    const data = await listAll(ref(storage, `${userName}/${mediaType}`))
+    const data = await listAll(ref(storage, `${username}/${mediaType}`))
     const results = await Promise.all(data.items.map((item) => Promise.all([getDownloadURL(item), getMetadata(item)])))
     const mediaData = filterMediaData(results, mediaFetchMode)
     dispatch(setMediaSet({mediaType, mediaData}))
@@ -207,7 +212,7 @@ export const listMedia = createAsyncThunk('listMedia-thunk', async ({userName, m
 export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
                                                                             event,
                                                                             currentRoute,
-                                                                            userName
+                                                                            username
                                                                         }, {dispatch}) => {
     const allowedTypes = {
         [imagesRoute]: imagesOnly,
@@ -221,7 +226,7 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
     if (filteredFiles.length > 0) {
         dispatch(toggleMediaLoading(true))
         await Promise.all(filteredFiles.map(async (file) => {
-            const fileRef = ref(storage, `${userName}/${currentRoute === videosRoute ? videos
+            const fileRef = ref(storage, `${username}/${currentRoute === videosRoute ? videos
                 : currentRoute === imagesRoute ? images
                     : currentRoute === audioRoute ? audio
                         : defaultRef}/${file.name}`);

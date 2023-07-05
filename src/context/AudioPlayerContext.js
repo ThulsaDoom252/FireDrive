@@ -7,10 +7,10 @@ import {useSelector} from "react-redux";
 export const AudioPlayerContext = createContext();
 
 export function AudioPlayerContextProvider({children}) {
-    const [currentAudioIndex, setCurrentAudioIndex] = useState(0);
     const [isCurrentTrackPlaying, toggleCurrentTrackPlaying] = useState(false);
     const audioSet = useSelector(state => state.media.audioSet)
     const audioIsPresent = audioSet.length !== 0
+    const [currentAudioIndex, setCurrentAudioIndex] = useState(0);
 
     const currentTrack = audioSet[currentAudioIndex]
 
