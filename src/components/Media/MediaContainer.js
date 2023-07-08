@@ -5,7 +5,7 @@ import {rootRoute} from "../../common/commonData";
 import {handleCurrentMediaSet} from "../../redux/mediaSlice";
 import {PagesContext} from "../../context/PagesContext";
 
-const MediaContainer = ({currentRoute, currentMediaSet}) => {
+const MediaContainer = ({currentRoute, currentMediaSet, mediaToShow}) => {
     const imagesMediaSet = useSelector(state => state.media.imagesSet)
     const videosMediaSet = useSelector(state => state.media.videosSet)
     const audioMediaSet = useSelector(state => state.media.audioSet)
@@ -14,6 +14,8 @@ const MediaContainer = ({currentRoute, currentMediaSet}) => {
     const dispatch = useDispatch()
     const pages = useContext(PagesContext)
     const {imagesPage, videosPage, audioPage} = pages
+
+    const noMedia = mediaToShow.length === 0
 
 
     useEffect(() => {
@@ -26,7 +28,15 @@ const MediaContainer = ({currentRoute, currentMediaSet}) => {
 
     }, [currentRoute, imagesMediaSet, audioMediaSet, videosMediaSet])
 
-    return <Media {...{imagesPage, videosPage, audioPage, currentMediaSet, currentMediaFetch, smallScreen}}/>
+    return <Media {...{
+        imagesPage,
+        videosPage,
+        audioPage,
+        currentMediaFetch,
+        smallScreen,
+        mediaToShow,
+        noMedia,
+    }}/>
 };
 
 export default MediaContainer

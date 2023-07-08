@@ -3,9 +3,9 @@ import {ClipLoader} from "react-spinners";
 import ReactPlayer from "react-player";
 import {truncate} from "../../common/commonData";
 import Audio from "./Audio";
+import Paginator from "../Paginator/Paginator";
 
-const Media = ({currentMediaSet, imagesPage, videosPage, audioPage, currentMediaFetch}) => {
-    const noMedia = currentMediaSet.length === 0
+const Media = ({imagesPage, videosPage, audioPage, currentMediaFetch, mediaToShow, noMedia}) => {
     return (
         <section
             className={`w-full h-full relative  p-10 flex overflow-y-scroll flex-col items-center ${noMedia ? 'justify-center' : ''}`}>
@@ -19,13 +19,13 @@ const Media = ({currentMediaSet, imagesPage, videosPage, audioPage, currentMedia
                         color={'blue'}
                         size={150}
                     />}
-                    {imagesPage ? currentMediaSet.map((media, index) =>
+                    {imagesPage ? mediaToShow.map((media, index) =>
                         <div key={index} className={'w-fit flex flex-col justify-center'}>
                             <img className={"w-300 h-300 object-cover"}
                                  src={media.url}
                                  alt="image"/>
                             <p>{truncate(media.name, 15)}</p>
-                        </div>) : videosPage ? currentMediaSet.map((video, index) =>
+                        </div>) : videosPage ? mediaToShow.map((video, index) =>
                             <div key={index} className="w-full relative flex flex-col justify-center text-center">
                                 <div className="player-container  h-200 bg-black rounded-lg overflow-hidden">
                                     <ReactPlayer
@@ -37,13 +37,14 @@ const Media = ({currentMediaSet, imagesPage, videosPage, audioPage, currentMedia
                                 <p className={''}>{truncate(video.name, 15)}</p>
                             </div>
                         ) :
-                        currentMediaSet.map(((audio, index) =>
+                        mediaToShow.map(((audio, index) =>
                                 <div key={audio.index}>
                                     <Audio audioName={audio.name} audioIndex={audio.index} index={index}/>
                                 </div>
                         ))
                     }
                 </div>}
+            <div hidden={noMedia} className={'mt-auto mb-5'}><Paginator/></div>
         </section>
     );
 };
