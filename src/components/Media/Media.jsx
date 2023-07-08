@@ -5,7 +5,16 @@ import {truncate} from "../../common/commonData";
 import Audio from "./Audio";
 import Paginator from "../Paginator/Paginator";
 
-const Media = ({imagesPage, videosPage, audioPage, currentMediaFetch, mediaToShow, noMedia}) => {
+const Media = ({
+                   imagesPage,
+                   videosPage,
+                   audioPage,
+                   currentMediaFetch,
+                   mediaToShow,
+                   noMedia,
+                   hoveredMediaIndex,
+                   setHoveredMediaIndex
+               }) => {
     return (
         <section
             className={`w-full h-full relative  p-10 flex overflow-y-scroll flex-col items-center ${noMedia ? 'justify-center' : ''}`}>
@@ -39,7 +48,8 @@ const Media = ({imagesPage, videosPage, audioPage, currentMediaFetch, mediaToSho
                         ) :
                         mediaToShow.map(((audio, index) =>
                                 <div key={audio.index}>
-                                    <Audio audioName={audio.name} audioIndex={audio.index} index={index}/>
+                                    <Audio audioName={audio.name} audioIndex={audio.index}
+                                           index={index} {...{hoveredMediaIndex, setHoveredMediaIndex}}/>
                                 </div>
                         ))
                     }

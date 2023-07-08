@@ -1,11 +1,11 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Media from "./Media";
 import {useDispatch, useSelector} from "react-redux";
 import {rootRoute} from "../../common/commonData";
 import {handleCurrentMediaSet} from "../../redux/mediaSlice";
 import {PagesContext} from "../../context/PagesContext";
 
-const MediaContainer = ({currentRoute, currentMediaSet, mediaToShow}) => {
+const MediaContainer = ({currentRoute, mediaToShow}) => {
     const imagesMediaSet = useSelector(state => state.media.imagesSet)
     const videosMediaSet = useSelector(state => state.media.videosSet)
     const audioMediaSet = useSelector(state => state.media.audioSet)
@@ -14,9 +14,9 @@ const MediaContainer = ({currentRoute, currentMediaSet, mediaToShow}) => {
     const dispatch = useDispatch()
     const pages = useContext(PagesContext)
     const {imagesPage, videosPage, audioPage} = pages
+    const [hoveredMediaIndex, setHoveredMediaIndex] = useState(null)
 
     const noMedia = mediaToShow.length === 0
-
 
     useEffect(() => {
         if (currentRoute !== rootRoute) {
@@ -36,6 +36,8 @@ const MediaContainer = ({currentRoute, currentMediaSet, mediaToShow}) => {
         smallScreen,
         mediaToShow,
         noMedia,
+        hoveredMediaIndex,
+        setHoveredMediaIndex,
     }}/>
 };
 

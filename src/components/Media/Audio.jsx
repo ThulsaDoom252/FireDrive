@@ -4,7 +4,7 @@ import {useContext} from "react";
 import {AudioPlayerContext} from "../../context/AudioPlayerContext";
 import {truncate} from "../../common/commonData";
 
-const Audio = ({audioName, audioIndex = 0, index = 0,}) => {
+const Audio = ({audioName, audioIndex = 0, index = 0, hoveredMediaIndex, setHoveredMediaIndex}) => {
 
     const audioContext = useContext(AudioPlayerContext)
 
@@ -34,12 +34,16 @@ const Audio = ({audioName, audioIndex = 0, index = 0,}) => {
     }
 
     const currentTrackPlaying = currentTrackNameInStorage === audioName
+    const currentTrackHovered = hoveredMediaIndex === audioIndex
 
     return (
         <div
-            className={`${currentTrackPlaying ? 'bg-yellow-600' : 'bg-blue-500'} -full  h-40  text-white flex items-center mb-5  relative rounded flex`}>
+            className={`${currentTrackPlaying || currentTrackHovered ? 'bg-yellow-600' : 'bg-blue-500'} -full  h-40  text-white flex items-center mb-5  relative rounded flex`}
+            onMouseEnter={() => setHoveredMediaIndex(audioIndex)}
+            onMouseLeave={() => setHoveredMediaIndex(null)}
+        >
             <div>
-                <div className={'w-10 text-xl h-full flex justify-center items-center '}
+                <div className={'w-10 text-xl h-full flex justify-center items-center hover:cursor-pointer'}
                      onClick={() => audioRelay(audioIndex)}>
                     {isTrackFromTheListPlaying ? <AiFillPauseCircle/> : <AiFillPlayCircle/>}
                 </div>
