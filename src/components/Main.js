@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import HeaderContainer from "./Header/HeaderContainer";
 import Home from "./Home";
 import {
@@ -20,6 +20,7 @@ import RemoveAllBtn from "./common/RemoveAllBtn";
 import SortInput from "./common/SortInput";
 import LogOutBtn from "./common/LogOutBtn";
 import AudioPlayer from "./AudioPlayer/AudioPlayer";
+import {PaginatorContext} from "../context/PaginatorContext";
 
 const Main = ({
                   currentMediaSet,
@@ -34,13 +35,14 @@ const Main = ({
                   horizontalMode,
                   smallScreen,
                   username,
-                  audioSet,
               }) => {
 
     const location = useLocation()
     const pathName = location.pathname
     const homePage = pathName === rootRoute
 
+    const paginatorContext = useContext(PaginatorContext)
+    const {firstItemIndex, lastItemIndex} = paginatorContext
 
     useEffect(() => {
         window.addEventListener('resize', handleResize)
@@ -64,6 +66,13 @@ const Main = ({
             listMedia({username, mediaType}))
     }, [])
 
+    const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
+    const mediaToShow = paginatedMedia
+
+    window.firstIndex = firstItemIndex
+    window.lastIndex = lastItemIndex
+    window.paginatedMedia = paginatedMedia
+
     if (!isAuth) {
         return <Navigate to={signInRoute}/>
     }
@@ -83,7 +92,11 @@ const Main = ({
                 {homePage && <Home/>}
                 <Routes>
                     {!homePage && <Route path={currentRoute}
-                                         element={<MediaContainer {...{currentRoute, currentMediaSet}}/>}/>}
+                                         element={<MediaContainer {...{
+                                             currentRoute,
+                                             currentMediaSet,
+                                             mediaToShow
+                                         }}/>}/>}
                 </Routes>
             </main>
         </>
