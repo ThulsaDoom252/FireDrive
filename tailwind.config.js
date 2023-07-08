@@ -8,6 +8,12 @@ module.exports = {
             colors: {
                 customInputColor: '#f2f2f2',
             },
+            keyframes: {
+                'marquee': {
+                    '0%': { transform: 'translateX(100%)' },
+                    '100%': { transform: 'translateX(-100%)' },
+                },
+            },
             inset: {
                 'custom-80': '80px',
                 'custom-57': '57px',
@@ -32,8 +38,10 @@ module.exports = {
             },
             height: {
                 "45": "45px",
+                "40": "40px",
                 '300': '300px',
                 '200': '200px',
+                '62': '130px',
             },
             maxWidth: {
                 '300': '300px',

@@ -37,9 +37,9 @@ const Media = ({currentMediaSet, imagesPage, videosPage, audioPage, currentMedia
                                 <p className={''}>{truncate(video.name, 15)}</p>
                             </div>
                         ) :
-                        currentMediaSet.map((audio =>
+                        currentMediaSet.map(((audio, index) =>
                                 <div key={audio.index}>
-                                    <Audio audioName={audio.name} index={audio.index}/>
+                                    <Audio audioName={audio.name} audioIndex={audio.index} index={index}/>
                                 </div>
                         ))
                     }

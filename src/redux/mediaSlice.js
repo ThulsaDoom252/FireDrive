@@ -49,8 +49,8 @@ const mediaSlice = createSlice({
             state.sortBy = action.payload
         },
         addAudioIndex(state) {
-            const updatedAudioRefs = state.audioSet.map((audio, index) => ({...audio, index}));
-            state.audioSet = updatedAudioRefs;
+            const updatedAudioRefs = state.currentMediaSet.map((audio, index) => ({...audio, index}));
+            state.currentMediaSet = updatedAudioRefs;
         },
         setMediaSet(state, action) {
             const {mediaType, mediaData} = action.payload
@@ -67,7 +67,6 @@ const mediaSlice = createSlice({
         },
         sortCurrentMediaSet(state, action) {
             const {sortType, isAudio} = action.payload
-            debugger
             switch (sortType) {
                 case byDate:
                     state.currentMediaSet.sort((a, b) => a.date.localeCompare(b.date))
@@ -76,7 +75,6 @@ const mediaSlice = createSlice({
                 case byName:
                     state.currentMediaSet.sort((a, b) => a.name.localeCompare(b.name))
                     isAudio && state.audioSet.sort((a, b) => a.name.localeCompare(b.name))
-                    debugger
                     break;
                 case bySize:
                     state.currentMediaSet.sort((a, b) => b.size - a.size)
@@ -169,6 +167,7 @@ export const handleCurrentMediaSet = ({dispatch}, mediaData) => {
     if (mediaData) {
         dispatch(toggleFetchMedia(true))
         dispatch(setCurrentMediaSet(mediaData))
+        dispatch(addAudioIndex())
         dispatch(toggleFetchMedia(false))
     }
 }
@@ -204,7 +203,7 @@ export const listMedia = createAsyncThunk('listMedia-thunk', async ({username, m
     const results = await Promise.all(data.items.map((item) => Promise.all([getDownloadURL(item), getMetadata(item)])))
     const mediaData = filterMediaData(results, mediaFetchMode)
     dispatch(setMediaSet({mediaType, mediaData}))
-    dispatch(addAudioIndex())
+    // dispatch(addAudioIndex())
     dispatch(toggleFetchMedia({mediaType, toggle: false}))
 })
 

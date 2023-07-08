@@ -9,6 +9,11 @@ export const truncate = (name, maxCharacters = 15) => {
     }
 }
 
+
+export const setLocalStorageItem = (key, value) => {
+    localStorage.setItem(`${key}`, `${value}`)
+}
+
 export const delay = (ms) => {
     return new Promise((resolve) => {
         setTimeout(() => {
@@ -16,6 +21,15 @@ export const delay = (ms) => {
         }, ms)
     })
 }
+
+//Format time in mm:ss format
+export const formatTime = (timeInSeconds) => {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = Math.floor(timeInSeconds % 60)
+        .toString()
+        .padStart(2, "0");
+    return `${minutes}:${seconds}`;
+};
 
 // containers id's
 export const wrapperId = 'wrapper'

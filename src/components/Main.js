@@ -40,8 +40,6 @@ const Main = ({
     const location = useLocation()
     const pathName = location.pathname
     const homePage = pathName === rootRoute
-    window.audioSet = audioSet
-    window.currentMediaSet = currentMediaSet
 
 
     useEffect(() => {

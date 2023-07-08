@@ -1,6 +1,6 @@
 import {createContext, useState} from 'react';
 import {useEffect, useRef} from "react";
-import {delay} from "../common/commonData";
+import {delay, setLocalStorageItem} from "../common/commonData";
 import {useSelector} from "react-redux";
 
 export const AudioPlayerContext = createContext();
@@ -10,6 +10,9 @@ export function AudioPlayerContextProvider({children}) {
     const audioSet = useSelector(state => state.media.audioSet)
     const audioIsPresent = audioSet.length !== 0
     const [currentAudioIndex, setCurrentAudioIndex] = useState(0);
+    const [currentAudioDuration, setCurrentAudioDuration] = useState(0)
+    const [totalAudioDuration, setTotalAudioDuration] = useState(0)
+    const [currentTrackNameInStorage, setCurrentTrackNameInStorage] = useState(localStorage.getItem('currentAudioName'))
 
     const currentTrack = audioSet[currentAudioIndex]
 
@@ -23,6 +26,10 @@ export function AudioPlayerContextProvider({children}) {
             isCurrentTrackPlaying ? audio.play() : audio.pause()
         }
     }
+
+    const handleTimeUpdate = () => {
+        setCurrentAudioDuration(audioRef.current.currentTime);
+    };
 
     const playCurrentTrack = () => toggleCurrentTrackPlaying(!isCurrentTrackPlaying)
 
@@ -72,17 +79,32 @@ export function AudioPlayerContextProvider({children}) {
         if (audioIsPresent && audio) {
             audio.src = currentTrack.url
             audio.load()
+            setLocalStorageItem('currentAudioName', currentTrack.name)
+            setCurrentTrackNameInStorage(localStorage.getItem('currentAudioName'))
             const handleEnded = () => {
                 handleNextTrack(true)
             };
             audio.addEventListener('ended', handleEnded);
 
+            const handleDurationChange = () => {
+                setTotalAudioDuration(audio.duration);
+            };
+
+            audio.addEventListener('durationchange', handleDurationChange);
+
             return () => {
                 audio.removeEventListener('ended', handleEnded);
+                audio.removeEventListener('durationchange', handleDurationChange);
             };
         }
 
     }, [audioIsPresent, currentAudioIndex]);
+
+    const handleSeekBarChange = (event) => {
+        const currentTime = Number(event.target.value);
+        setCurrentAudioDuration(currentTime)
+        audio.currentTime = currentTime;
+    };
 
 
     const prevBtnDisabled = currentAudioIndex === 0 || !audioIsPresent
@@ -102,6 +124,13 @@ export function AudioPlayerContextProvider({children}) {
         prevBtnDisabled,
         nextBtnDisabled,
         playBtnDisabled,
+        handleSeekBarChange,
+        handleTimeUpdate,
+        currentAudioDuration,
+        totalAudioDuration,
+        currentTrack,
+        audioIsPresent,
+        currentTrackNameInStorage,
 
     };
 
