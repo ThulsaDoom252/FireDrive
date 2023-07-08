@@ -5,6 +5,7 @@ import SeekBar from "./SeekBar";
 import {setCurrentAudioIndex} from "../../redux/mediaSlice";
 import {AudioPlayerContext} from "../../context/AudioPlayerContext";
 import {formatTime} from "../../common/commonData";
+import AudioPlayerDisabled from "./AudioPlayerDisabled";
 
 const AudioPlayer = ({smallScreenMode}) => {
 
@@ -29,7 +30,7 @@ const AudioPlayer = ({smallScreenMode}) => {
     } = audioContext
 
     if (!audioIsPresent) {
-        return <div>Loading...</div>
+        return <AudioPlayerDisabled/>
     }
 
     return (

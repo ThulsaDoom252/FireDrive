@@ -15,6 +15,9 @@ const MediaContainer = ({currentRoute, currentMediaSet}) => {
     const pages = useContext(PagesContext)
     const {imagesPage, videosPage, audioPage} = pages
 
+    window.audioMediaSet = audioMediaSet
+    window.currentMediaSet = currentMediaSet
+
 
     useEffect(() => {
         if (currentRoute !== rootRoute) {

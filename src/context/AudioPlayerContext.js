@@ -75,29 +75,32 @@ export function AudioPlayerContextProvider({children}) {
     }, [isCurrentTrackPlaying]);
 
     useEffect(() => {
-        const audio = audioRef.current
-        if (audioIsPresent && audio) {
-            audio.src = currentTrack.url
-            audio.load()
-            setLocalStorageItem('currentAudioName', currentTrack.name)
-            setCurrentTrackNameInStorage(localStorage.getItem('currentAudioName'))
-            const handleEnded = () => {
-                handleNextTrack(true)
-            };
-            audio.addEventListener('ended', handleEnded);
+        if (audioIsPresent) {
+            const audio = audioRef.current
+            if (audioIsPresent && audio) {
+                audio.src = currentTrack.url
+                audio.load()
+                setLocalStorageItem('currentAudioName', currentTrack.name)
+                setCurrentTrackNameInStorage(localStorage.getItem('currentAudioName'))
+                const handleEnded = () => {
+                    handleNextTrack(true)
+                };
+                audio.addEventListener('ended', handleEnded);
 
-            const handleDurationChange = () => {
-                setTotalAudioDuration(audio.duration);
-            };
+                const handleDurationChange = () => {
+                    setTotalAudioDuration(audio.duration);
+                };
 
-            audio.addEventListener('durationchange', handleDurationChange);
+                audio.addEventListener('durationchange', handleDurationChange);
 
-            return () => {
-                audio.removeEventListener('ended', handleEnded);
-                audio.removeEventListener('durationchange', handleDurationChange);
-            };
+                return () => {
+                    audio.removeEventListener('ended', handleEnded);
+                    audio.removeEventListener('durationchange', handleDurationChange);
+                };
+            }
+        } else {
+            void 0
         }
-
     }, [audioIsPresent, currentAudioIndex]);
 
     const handleSeekBarChange = (event) => {
