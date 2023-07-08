@@ -45,7 +45,7 @@ const Audio = ({audioName, audioIndex = 0, index = 0,}) => {
                 </div>
             </div>
             <div className={'w-full flex flex-col'}>
-                <p>{truncate(audioName)}</p>
+                <p>{audioName}</p>
                 {/*{currentTrackPlaying && (*/}
                 {/*    <div className="relative w-full">*/}
                 {/*        <input*/}
