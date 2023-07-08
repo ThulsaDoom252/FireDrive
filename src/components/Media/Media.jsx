@@ -4,6 +4,7 @@ import ReactPlayer from "react-player";
 import {truncate} from "../../common/commonData";
 import Audio from "./Audio";
 import Paginator from "../Paginator/Paginator";
+import Search from "../Search";
 
 const Media = ({
                    imagesPage,
@@ -18,6 +19,7 @@ const Media = ({
     return (
         <section
             className={`w-full h-full relative  p-10 flex overflow-y-scroll flex-col items-center ${noMedia ? 'justify-center' : ''}`}>
+            {!noMedia && <Search/>}
             {noMedia ?
                 <div>{imagesPage ? 'You have no images' : videosPage ? 'You have no videos' : 'You have no audio'}</div> :
                 <div
