@@ -25,6 +25,7 @@ const mediaSlice = createSlice({
         fetchVideos: false,
         fetchAudio: false,
         sortBy: byDate,
+        searchResults: [],
         sortOptions: [
             {value: byDate, label: byDate},
             {value: byName, label: byName},
@@ -64,6 +65,12 @@ const mediaSlice = createSlice({
                 case  audio:
                     state.audioSet = [...mediaData]
             }
+        },
+        searchItems(state, action) {
+            state.searchResults = state.currentMediaSet.filter(media => media.name.toLowerCase().includes(action.payload))
+        },
+        clearSearchResults(state) {
+            state.searchResults = []
         },
         sortCurrentMediaSet(state, action) {
             const {sortType, isAudio} = action.payload
@@ -160,6 +167,8 @@ export const {
     addAudioIndex,
     toggleSortByValue,
     sortCurrentMediaSet,
+    searchItems,
+    clearSearchResults,
 } = mediaSlice.actions;
 
 
@@ -171,6 +180,15 @@ export const handleCurrentMediaSet = ({dispatch}, mediaData) => {
         dispatch(toggleFetchMedia(false))
     }
 }
+
+export const handleSearchMedia = createAsyncThunk('search-thunk', async (request, {dispatch}) => {
+    if (request === '') {
+        dispatch(clearSearchResults())
+    } else {
+        const searchRequest = request.toLowerCase()
+        dispatch(searchItems(searchRequest))
+    }
+})
 
 
 const filterMediaData = (array, mode) => {

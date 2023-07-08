@@ -14,12 +14,12 @@ const Media = ({
                    mediaToShow,
                    noMedia,
                    hoveredMediaIndex,
-                   setHoveredMediaIndex
+                   setHoveredMediaIndex,
                }) => {
     return (
         <section
             className={`w-full h-full relative  p-10 flex overflow-y-scroll flex-col items-center ${noMedia ? 'justify-center' : ''}`}>
-            {!noMedia && <div className={'h-40 w-full'}><Search/></div>}
+            {!noMedia && <div className={'w-full'}><Search/></div>}
             {noMedia ?
                 <div>{imagesPage ? 'You have no images' : videosPage ? 'You have no videos' : 'You have no audio'}</div> :
                 <div

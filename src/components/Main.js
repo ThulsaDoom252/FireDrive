@@ -35,6 +35,7 @@ const Main = ({
                   horizontalMode,
                   smallScreen,
                   username,
+                  searchResults
               }) => {
 
     const location = useLocation()
@@ -66,8 +67,10 @@ const Main = ({
             listMedia({username, mediaType}))
     }, [])
 
+    const searchMode = searchResults.length > 0
+
     const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
-    const mediaToShow = paginatedMedia
+    const mediaToShow = searchMode ? searchResults : paginatedMedia
 
     window.firstIndex = firstItemIndex
     window.lastIndex = lastItemIndex
@@ -114,6 +117,7 @@ const mapStateToProps = (state) => {
         alert: state.app.alert,
         username: state.auth.username,
         audioSet: state.media.audioSet,
+        searchResults: state.media.searchResults
     }
 }
 

@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import Media from "./Media";
 import {useDispatch, useSelector} from "react-redux";
 import {rootRoute} from "../../common/commonData";
-import {handleCurrentMediaSet} from "../../redux/mediaSlice";
+import {clearSearchResults, handleCurrentMediaSet} from "../../redux/mediaSlice";
 import {PagesContext} from "../../context/PagesContext";
 
 const MediaContainer = ({currentRoute, mediaToShow}) => {
@@ -17,6 +17,10 @@ const MediaContainer = ({currentRoute, mediaToShow}) => {
     const [hoveredMediaIndex, setHoveredMediaIndex] = useState(null)
 
     const noMedia = mediaToShow.length === 0
+
+    useEffect(() => {
+        dispatch(clearSearchResults())
+    }, [currentRoute])
 
     useEffect(() => {
         if (currentRoute !== rootRoute) {
