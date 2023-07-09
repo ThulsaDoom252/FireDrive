@@ -35,6 +35,7 @@ const Main = ({
                   horizontalMode,
                   smallScreen,
                   username,
+                  searchResults
               }) => {
 
     const location = useLocation()
@@ -66,12 +67,10 @@ const Main = ({
             listMedia({username, mediaType}))
     }, [])
 
-    const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
-    const mediaToShow = paginatedMedia
+    const searchMode = searchResults.length > 0
 
-    window.firstIndex = firstItemIndex
-    window.lastIndex = lastItemIndex
-    window.paginatedMedia = paginatedMedia
+    const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
+    const mediaToShow = searchMode ? searchResults : paginatedMedia
 
     if (!isAuth) {
         return <Navigate to={signInRoute}/>
@@ -95,7 +94,8 @@ const Main = ({
                                          element={<MediaContainer {...{
                                              currentRoute,
                                              currentMediaSet,
-                                             mediaToShow
+                                             mediaToShow,
+                                             searchMode,
                                          }}/>}/>}
                 </Routes>
             </main>
@@ -114,6 +114,7 @@ const mapStateToProps = (state) => {
         alert: state.app.alert,
         username: state.auth.username,
         audioSet: state.media.audioSet,
+        searchResults: state.media.searchResults
     }
 }
 

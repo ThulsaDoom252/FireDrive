@@ -1,13 +1,8 @@
-import React, {useContext} from 'react';
-import {PaginatorContext} from "../../context/PaginatorContext";
+import React from 'react';
 
-const Paginator = () => {
-    const paginatorContext = useContext(PaginatorContext)
-    const {
-        handleNextClick, handlePrevClick, disablePrevButton, disableNextButton, handlePageClick, pages,
-        currentPage,
-    } = paginatorContext
-
+const Paginator = ({paginatorProps}) => {
+    const [handleNextClick, handlePrevClick, disablePrevButton, disableNextButton, handlePageClick, pages,
+        currentPage] = paginatorProps
     return (
         <nav aria-label="Page navigation example">
             <ul className="pagination">

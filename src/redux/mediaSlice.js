@@ -25,6 +25,8 @@ const mediaSlice = createSlice({
         fetchVideos: false,
         fetchAudio: false,
         sortBy: byDate,
+        searchResults: [],
+        noSearchResults: false,
         sortOptions: [
             {value: byDate, label: byDate},
             {value: byName, label: byName},
@@ -48,6 +50,9 @@ const mediaSlice = createSlice({
         toggleSortByValue(state, action) {
             state.sortBy = action.payload
         },
+        toggleNoSearchResults(state, action) {
+            state.noSearchResults = action.payload
+        },
         addAudioIndex(state) {
             const updatedAudioRefs = state.currentMediaSet.map((audio, index) => ({...audio, index}));
             state.currentMediaSet = updatedAudioRefs;
@@ -64,6 +69,14 @@ const mediaSlice = createSlice({
                 case  audio:
                     state.audioSet = [...mediaData]
             }
+        },
+        searchItems(state, action) {
+            state.searchResults = state.currentMediaSet.filter(media => media.name.toLowerCase().includes(action.payload))
+            state.searchResults.length === 0 ? state.noSearchResults = true : state.noSearchResults = false
+            debugger
+        },
+        clearSearchResults(state) {
+            state.searchResults = []
         },
         sortCurrentMediaSet(state, action) {
             const {sortType, isAudio} = action.payload
@@ -160,6 +173,9 @@ export const {
     addAudioIndex,
     toggleSortByValue,
     sortCurrentMediaSet,
+    searchItems,
+    clearSearchResults,
+    toggleNoSearchResults,
 } = mediaSlice.actions;
 
 
@@ -171,6 +187,15 @@ export const handleCurrentMediaSet = ({dispatch}, mediaData) => {
         dispatch(toggleFetchMedia(false))
     }
 }
+
+export const handleSearchMedia = createAsyncThunk('search-thunk', async (request, {dispatch}) => {
+    if (request === '') {
+        dispatch(clearSearchResults())
+    } else {
+        const searchRequest = request.toLowerCase()
+        dispatch(searchItems(searchRequest))
+    }
+})
 
 
 const filterMediaData = (array, mode) => {

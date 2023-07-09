@@ -4,6 +4,8 @@ import ReactPlayer from "react-player";
 import {truncate} from "../../common/commonData";
 import Audio from "./Audio";
 import Paginator from "../Paginator/Paginator";
+import Search from "../Search/Search";
+import NoSearchResults from "../Search/NoSearchResults";
 
 const Media = ({
                    imagesPage,
@@ -13,17 +15,22 @@ const Media = ({
                    mediaToShow,
                    noMedia,
                    hoveredMediaIndex,
-                   setHoveredMediaIndex
+                   setHoveredMediaIndex,
+                   noSearchResults,
+                   isPaginatorHidden,
+                   paginatorProps,
                }) => {
     return (
         <section
             className={`w-full h-full relative  p-10 flex overflow-y-scroll flex-col items-center ${noMedia ? 'justify-center' : ''}`}>
+            {!noMedia && <div className={'w-full'}><Search/></div>}
+            {noSearchResults && <div className={'absolute top-custom-50% left-custom-50%'}><NoSearchResults/></div>}
             {noMedia ?
                 <div>{imagesPage ? 'You have no images' : videosPage ? 'You have no videos' : 'You have no audio'}</div> :
-                <div
-                    className={`w-full mt-5 ${currentMediaFetch ? 'flex justify-center items-center' : !audioPage ?
-                        'grid gap-5 sm: grid-cols-2  md:grid-cols-3   ' +
-                        'lg:grid-cols-4 xl:grid-cols-5' : ''}`}>
+                <div hidden={noSearchResults}
+                     className={`w-full mt-5 ${currentMediaFetch ? 'flex justify-center items-center' : !audioPage ?
+                         'grid gap-5 sm: grid-cols-2  md:grid-cols-3   ' +
+                         'lg:grid-cols-4 xl:grid-cols-5' : ''}`}>
                     {currentMediaFetch && <ClipLoader
                         color={'blue'}
                         size={150}
@@ -54,7 +61,7 @@ const Media = ({
                         ))
                     }
                 </div>}
-            <div hidden={noMedia} className={'mt-auto mb-5'}><Paginator/></div>
+            <div hidden={isPaginatorHidden} className={'mt-auto mb-5'}><Paginator {...{paginatorProps}}/></div>
         </section>
     );
 };
