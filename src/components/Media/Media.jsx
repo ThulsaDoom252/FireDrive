@@ -39,6 +39,7 @@ const Media = ({
                     {imagesPage ? mediaToShow.map((media, index) =>
                         <div key={index} className={'w-fit flex flex-col justify-center relative'}>
                             <Image url={media.url} name={media.name}
+                                   oldName={media.oldName}
                                    {...{
                                        index,
                                        hoveredMediaIndex,

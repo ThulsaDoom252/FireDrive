@@ -1,10 +1,11 @@
 import React from 'react';
-import {truncate} from "../../common/commonData";
-
+import MediaOptions from "../common/mediaOptions";
+import MediaName from "./MediaName";
 
 const Image = ({
                    url,
                    name,
+                   oldName,
                    index,
                    hoveredMediaIndex,
                    setHoveredMediaIndex
@@ -12,6 +13,7 @@ const Image = ({
     const imageHovered = hoveredMediaIndex === index
     return (
         <>
+            <div className={'absolute top-0 right-0'}><MediaOptions {...{name}}/></div>
             <img
                 className={`w-300 h-300 object-cover rounded  ${imageHovered &&
                 'border-solid border-2 border-indigo-600'}`}
@@ -19,7 +21,7 @@ const Image = ({
                 onMouseLeave={() => setHoveredMediaIndex(null)}
                 src={url}
                 alt="image"/>
-            <p>{truncate(name, 15)}</p>
+            <MediaName {...{name, oldName}}/>
 
         </>
 
