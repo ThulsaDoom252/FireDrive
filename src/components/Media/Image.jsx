@@ -1,7 +1,14 @@
 import React from 'react';
 import {truncate} from "../../common/commonData";
 
-const Image = ({url, name, index, hoveredMediaIndex, setHoveredMediaIndex}) => {
+
+const Image = ({
+                   url,
+                   name,
+                   index,
+                   hoveredMediaIndex,
+                   setHoveredMediaIndex
+               }) => {
     const imageHovered = hoveredMediaIndex === index
     return (
         <>
@@ -13,9 +20,11 @@ const Image = ({url, name, index, hoveredMediaIndex, setHoveredMediaIndex}) => {
                 src={url}
                 alt="image"/>
             <p>{truncate(name, 15)}</p>
+
         </>
 
     );
 };
 
 export default Image;
+

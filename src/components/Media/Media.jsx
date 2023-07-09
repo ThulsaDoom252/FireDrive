@@ -38,11 +38,12 @@ const Media = ({
                     />}
                     {imagesPage ? mediaToShow.map((media, index) =>
                         <div key={index} className={'w-fit flex flex-col justify-center relative'}>
-                            <Image url={media.url} name={media.name} {...{
-                                index,
-                                hoveredMediaIndex,
-                                setHoveredMediaIndex
-                            }}/>
+                            <Image url={media.url} name={media.name}
+                                   {...{
+                                       index,
+                                       hoveredMediaIndex,
+                                       setHoveredMediaIndex
+                                   }}/>
                         </div>) : videosPage ? mediaToShow.map((video, index) =>
                             <div key={index} className="w-full relative flex flex-col justify-center text-center">
                                 <div className="player-container  h-200 bg-black rounded-lg overflow-hidden">
