@@ -72,10 +72,6 @@ const Main = ({
     const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
     const mediaToShow = searchMode ? searchResults : paginatedMedia
 
-    window.firstIndex = firstItemIndex
-    window.lastIndex = lastItemIndex
-    window.paginatedMedia = paginatedMedia
-
     if (!isAuth) {
         return <Navigate to={signInRoute}/>
     }
@@ -98,7 +94,8 @@ const Main = ({
                                          element={<MediaContainer {...{
                                              currentRoute,
                                              currentMediaSet,
-                                             mediaToShow
+                                             mediaToShow,
+                                             searchMode,
                                          }}/>}/>}
                 </Routes>
             </main>

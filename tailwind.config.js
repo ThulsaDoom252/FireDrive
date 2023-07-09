@@ -10,8 +10,8 @@ module.exports = {
             },
             keyframes: {
                 'marquee': {
-                    '0%': { transform: 'translateX(100%)' },
-                    '100%': { transform: 'translateX(-100%)' },
+                    '0%': {transform: 'translateX(100%)'},
+                    '100%': {transform: 'translateX(-100%)'},
                 },
             },
             inset: {
@@ -19,6 +19,7 @@ module.exports = {
                 'custom-57': '57px',
                 'custom-20': '85px',
                 'custom-50': '140px',
+                'custom-50%': '50%',
             },
             screens: {
                 'alert-sm': '568px',

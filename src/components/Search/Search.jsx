@@ -1,6 +1,6 @@
 import React from 'react';
 import {FaSearch} from "react-icons/fa";
-import {handleSearchMedia} from "../redux/mediaSlice";
+import {handleSearchMedia} from "../../redux/mediaSlice";
 import {connect} from "react-redux";
 
 const Search = ({handleSearchMedia, height}) => {
