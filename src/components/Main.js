@@ -68,6 +68,7 @@ const Main = ({
 
     const searchMode = searchResults.length > 0
 
+
     const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
     const mediaToShow = searchMode ? searchResults : paginatedMedia
 
