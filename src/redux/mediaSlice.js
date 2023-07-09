@@ -11,7 +11,7 @@ import {
     videosRoute
 } from "../common/commonData";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {getDownloadURL, getMetadata, listAll, ref, uploadBytes, deleteObject} from "firebase/storage";
+import {getDownloadURL, getMetadata, listAll, ref, uploadBytes, deleteObject, updateMetadata} from "firebase/storage";
 import {storage} from "../firebase";
 import {handleAlert} from "./appSlice";
 import {getAuth} from "firebase/auth";
@@ -25,6 +25,9 @@ const mediaSlice = createSlice({
         fetchImages: false,
         fetchVideos: false,
         fetchAudio: false,
+        newMediaName: null,
+        editingMediaName: null,
+        editMediaNameMode: false,
         sortBy: byDate,
         searchResults: [],
         noSearchResults: false,
@@ -51,9 +54,6 @@ const mediaSlice = createSlice({
         toggleSortByValue(state, action) {
             state.sortBy = action.payload
         },
-        toggleNoSearchResults(state, action) {
-            state.noSearchResults = action.payload
-        },
         addAudioIndex(state) {
             const updatedAudioRefs = state.currentMediaSet.map((audio, index) => ({...audio, index}));
             state.currentMediaSet = updatedAudioRefs;
@@ -71,10 +71,45 @@ const mediaSlice = createSlice({
                     state.audioSet = [...mediaData]
             }
         },
+        toggleNameEditMode(state, action) {
+            const {toggle, name} = action.payload
+            state.editMediaNameMode = toggle
+            state.newMediaName = name
+            state.editingMediaName = name
+        },
+        setNewMediaName(state, action) {
+            state.newMediaName = action.payload
+        },
         searchItems(state, action) {
             state.searchResults = state.currentMediaSet.filter(media => media.name.toLowerCase().includes(action.payload))
             state.searchResults.length === 0 ? state.noSearchResults = true : state.noSearchResults = false
-            debugger
+        },
+        changeMediaOldNameToNew(state, action) {
+            const {newName, editingName, route} = action.payload
+            switch (route) {
+                case imagesRoute:
+                    state.imagesSet = state.imagesSet.map((image) => image.name === editingName ? {
+                        ...image,
+                        name: newName,
+                    } : image)
+
+                    break;
+                case videosRoute:
+                    state.videosSet = state.videosSet.map(video => video.name === editingName ? {
+                        ...video,
+                        name: newName,
+                    } : video)
+                    break;
+                case audioRoute:
+                    state.audioSet = state.audioSet = state.audioSet.map((audio) => audio.name === editingName ? {
+                        ...audio,
+                        name: newName
+                    } : audio)
+            }
+
+        },
+        setEditingMediaName(state, action) {
+            state.editingMediaName = action.payload
         },
         clearSearchResults(state) {
             state.searchResults = []
@@ -93,6 +128,34 @@ const mediaSlice = createSlice({
                 case bySize:
                     state.currentMediaSet.sort((a, b) => b.size - a.size)
                     isAudio && state.audioSet.sort((a, b) => b.size - a.size)
+                    break;
+                default:
+                    void 0
+            }
+        },
+        changeListedMediaName(state, action) {
+            const {mediaType} = action.payload;
+            switch (mediaType) {
+                case audio:
+                    state.audioSet = state.audioSet.map(audio => audio.newName ? {
+                            ...audio,
+                            name: audio.newName
+                        }
+                        : audio)
+                    break;
+                case images:
+                    state.imagesSet = state.imagesSet.map(image => image.newName ? {
+                            ...image,
+                            name: image.newName
+                        }
+                        : image)
+                    break;
+                case videos:
+                    state.videosSet = state.videosSet.map(image => image.newName ? {
+                            ...image,
+                            name: image.newName
+                        }
+                        : image)
                     break;
                 default:
                     void 0
@@ -176,7 +239,11 @@ export const {
     sortCurrentMediaSet,
     searchItems,
     clearSearchResults,
-    toggleNoSearchResults,
+    changeMediaOldNameToNew,
+    setNewMediaName,
+    setEditingMediaName,
+    toggleNameEditMode,
+    changeListedMediaName,
 } = mediaSlice.actions;
 
 
@@ -207,8 +274,11 @@ const filterMediaData = (array, mode) => {
                 url,
                 name: metadata.name,
                 date: metadata.timeCreated,
+                newName: metadata.cacheControl,
+                oldName: metadata.name,
                 size: metadata.size,
             }))
+
         }
             break;
         case mediaUploadMode:
@@ -217,6 +287,8 @@ const filterMediaData = (array, mode) => {
                 date: array[1].timeCreated,
                 name: array[1].name,
                 size: array[1].size,
+                newName: array[1].cacheControl,
+                oldName: array[1].name,
             }]
             break;
     }
@@ -231,7 +303,7 @@ export const listMedia = createAsyncThunk('listMedia-thunk', async ({mediaType},
     const results = await Promise.all(data.items.map((item) => Promise.all([getDownloadURL(item), getMetadata(item)])))
     const mediaData = filterMediaData(results, mediaFetchMode)
     dispatch(setMediaSet({mediaType, mediaData}))
-    // dispatch(addAudioIndex())
+    dispatch(changeListedMediaName({mediaType}))
     dispatch(toggleFetchMedia({mediaType, toggle: false}))
 })
 
@@ -273,6 +345,26 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
     }
 });
 
+export const renameMedia = createAsyncThunk('rename-thunk', async ({
+                                                                       editingName,
+                                                                       newName,
+                                                                       currentRoute,
+                                                                       originalName,
+                                                                   }, {dispatch}) => {
+    const auth = getAuth()
+    const username = auth.currentUser.displayName
+    const cacheControl = newName
+    const imagesPage = currentRoute === imagesRoute
+    const videosPage = currentRoute === videosRoute
+    const folder = imagesPage ? imagesRoute : videosPage ? videosRoute : audioRoute
+    const oldRef = ref(storage, `${username}/${folder}/${cacheControl ? originalName : editingName}`)
+    const updatedName = `${newName !== '' ? newName : editingName}`
+    if (updatedName !== editingName) {
+        await updateMetadata(oldRef, {cacheControl: updatedName})
+        dispatch(changeMediaOldNameToNew({editingName, newName, route: currentRoute}))
+    }
+})
+
 export const deleteAllMedia = createAsyncThunk('delete-all-media-thunk', async ({
                                                                                     currentMediaSet,
                                                                                     currentRoute
@@ -287,6 +379,11 @@ export const deleteAllMedia = createAsyncThunk('delete-all-media-thunk', async (
     dispatch(clearMediaSet({route: currentRoute}))
     dispatch(toggleIsMediaDeleting(false))
 
+})
+
+export const handleMediaName = createAsyncThunk('handle-media-name-thunk', async ({name}, {dispatch}) => {
+    dispatch(setNewMediaName(name))
+    dispatch(setEditingMediaName(name))
 })
 
 
