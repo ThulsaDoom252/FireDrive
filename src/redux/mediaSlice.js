@@ -14,6 +14,7 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {getDownloadURL, getMetadata, listAll, ref, uploadBytes, deleteObject} from "firebase/storage";
 import {storage} from "../firebase";
 import {handleAlert} from "./appSlice";
+import {getAuth} from "firebase/auth";
 
 const mediaSlice = createSlice({
     name: 'media-slice',
@@ -222,7 +223,9 @@ const filterMediaData = (array, mode) => {
     return modifiedMedia
 }
 
-export const listMedia = createAsyncThunk('listMedia-thunk', async ({username, mediaType}, {dispatch}) => {
+export const listMedia = createAsyncThunk('listMedia-thunk', async ({mediaType}, {dispatch}) => {
+    const auth = getAuth()
+    const username = auth.currentUser.displayName
     dispatch(toggleFetchMedia({mediaType, toggle: true}))
     const data = await listAll(ref(storage, `${username}/${mediaType}`))
     const results = await Promise.all(data.items.map((item) => Promise.all([getDownloadURL(item), getMetadata(item)])))
@@ -236,8 +239,9 @@ export const listMedia = createAsyncThunk('listMedia-thunk', async ({username, m
 export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
                                                                             event,
                                                                             currentRoute,
-                                                                            username
                                                                         }, {dispatch}) => {
+    const auth = getAuth()
+    const username = auth.currentUser.displayName
     const allowedTypes = {
         [imagesRoute]: imagesOnly,
         [videosRoute]: videosOnly,

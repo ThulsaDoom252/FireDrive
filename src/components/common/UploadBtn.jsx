@@ -32,7 +32,7 @@ const UploadBtn = ({currentRoute, uploadMedia, smallScreen, mediaLoading, isFull
                         audioPage ? audioFiles : ''}
                     hidden={true}
                     type={"file"}
-                    onChange={e => uploadMedia({event: e, currentRoute, username})}
+                    onChange={e => uploadMedia({event: e, currentRoute})}
                     multiple/>
                 <button
                     type="button"

@@ -34,7 +34,6 @@ const Main = ({
                   toggleHorizontalMode,
                   horizontalMode,
                   smallScreen,
-                  username,
                   searchResults
               }) => {
 
@@ -64,7 +63,7 @@ const Main = ({
 
     useEffect(() => {
         mediaTypes.forEach(mediaType =>
-            listMedia({username, mediaType}))
+            listMedia({mediaType}))
     }, [])
 
     const searchMode = searchResults.length > 0
@@ -112,7 +111,6 @@ const mapStateToProps = (state) => {
         currentMediaSet: state.media.currentMediaSet,
         overlay: state.app.overlay,
         alert: state.app.alert,
-        username: state.auth.username,
         audioSet: state.media.audioSet,
         searchResults: state.media.searchResults
     }
