@@ -44,8 +44,6 @@ const mediaSlice = createSlice({
         imagesSet: [],
         videosSet: [],
         audioSet: [],
-        deletingMediaIndex: null,
-        deletingAudioIndex: null,
     },
     reducers: {
         setCurrentRoute(state, action) {
@@ -72,22 +70,6 @@ const mediaSlice = createSlice({
                     break;
                 case  audio:
                     state.audioSet = [...mediaData]
-            }
-        },
-        filterMediaSet(state, action) {
-            const {url, route} = action.payload
-            switch (route) {
-                case imagesRoute:
-                    state.imageSet = state.imagesSet.filter(media => media.url !== url)
-                    break;
-                case videosRoute:
-                    state.videoSet = state.videsoSet.filter(video => video.url !== url)
-                    break;
-                case audioRoute:
-                    state.audioSet = state.audioSet.filter(audio => audio.url !== url)
-                    break;
-                default:
-                    void 0
             }
         },
         toggleSearchMode(state, action) {
@@ -137,12 +119,6 @@ const mediaSlice = createSlice({
         clearSearchResults(state) {
             state.searchResults = []
         },
-        setDeletingAudioIndex(state, action) {
-            state.deletingAudioIndex = action.payload
-        },
-        setDeletingMediaIndex(state, action) {
-            state.deletingMediaIndex = action.payload
-        },
         sortCurrentMediaSet(state, action) {
             const {sortType, isAudio} = action.payload
             switch (sortType) {
@@ -189,9 +165,6 @@ const mediaSlice = createSlice({
                 default:
                     void 0
             }
-        },
-        updateSearchResults(state, action) {
-            state.searchResults = state.searchResults.filter(item => item.url !== action.payload)
         },
         updateMediaSet(state, action) {
             const {currentRoute, uploadedMedia} = action.payload
@@ -266,22 +239,18 @@ export const {
     setCurrentAudioIndex,
     toggleMediaLoading,
     toggleIsMediaDeleting,
-    updateSearchResults,
     addAudioIndex,
     toggleSortByValue,
-    sortCurrentMediaSet,
     searchItems,
     clearSearchResults,
     changeMediaOldNameToNew,
     setNewMediaName,
-    filterMediaSet,
     setEditingMediaName,
     changeListedMediaName,
-    setDeletingAudioIndex,
-    setDeletingMediaIndex,
     toggleSearchMode,
     setSearchRequest,
     toggleNoSearchResults,
+    sortCurrentMediaSet,
 } = mediaSlice.actions;
 
 
@@ -403,23 +372,6 @@ export const renameMedia = createAsyncThunk('rename-thunk', async ({
     }
 })
 
-export const deleteCurrentItem = createAsyncThunk('delete-current-media-thunk', async ({
-                                                                                           route,
-                                                                                           url,
-                                                                                           index,
-                                                                                           searchMode
-                                                                                       }, {dispatch}) => {
-    return new Promise(async (resolve) => {
-        dispatch(setDeletingMediaIndex(index))
-        const mediaRef = ref(storage, url);
-        await deleteObject(mediaRef)
-        index && setDeletingAudioIndex(index)
-        dispatch(filterMediaSet({url, route}))
-        dispatch(setDeletingMediaIndex(null))
-        searchMode && dispatch(updateSearchResults(url))
-        resolve()
-    })
-})
 
 export const deleteAllMedia = createAsyncThunk('delete-all-media-thunk', async ({
                                                                                     currentMediaSet,
