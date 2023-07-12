@@ -27,10 +27,11 @@ const mediaSlice = createSlice({
         fetchAudio: false,
         newMediaName: null,
         editingMediaName: null,
-        editMediaNameMode: false,
         sortBy: byDate,
         searchResults: [],
+        searchRequest: '',
         noSearchResults: false,
+        searchMode: false,
         sortOptions: [
             {value: byDate, label: byDate},
             {value: byName, label: byName},
@@ -43,6 +44,8 @@ const mediaSlice = createSlice({
         imagesSet: [],
         videosSet: [],
         audioSet: [],
+        deletingMediaIndex: null,
+        deletingAudioIndex: null,
     },
     reducers: {
         setCurrentRoute(state, action) {
@@ -71,18 +74,38 @@ const mediaSlice = createSlice({
                     state.audioSet = [...mediaData]
             }
         },
-        toggleNameEditMode(state, action) {
-            const {toggle, name} = action.payload
-            state.editMediaNameMode = toggle
-            state.newMediaName = name
-            state.editingMediaName = name
+        filterMediaSet(state, action) {
+            const {url, route} = action.payload
+            switch (route) {
+                case imagesRoute:
+                    state.imageSet = state.imagesSet.filter(media => media.url !== url)
+                    break;
+                case videosRoute:
+                    state.videoSet = state.videsoSet.filter(video => video.url !== url)
+                    break;
+                case audioRoute:
+                    state.audioSet = state.audioSet.filter(audio => audio.url !== url)
+                    break;
+                default:
+                    void 0
+            }
+        },
+        toggleSearchMode(state, action) {
+            debugger
+            state.searchMode = action.payload
+            debugger
         },
         setNewMediaName(state, action) {
             state.newMediaName = action.payload
         },
         searchItems(state, action) {
             state.searchResults = state.currentMediaSet.filter(media => media.name.toLowerCase().includes(action.payload))
-            state.searchResults.length === 0 ? state.noSearchResults = true : state.noSearchResults = false
+        },
+        toggleNoSearchResults(state, action) {
+            state.noSearchResults = action.payload
+        },
+        setSearchRequest(state, action) {
+            state.searchRequest = action.payload
         },
         changeMediaOldNameToNew(state, action) {
             const {newName, editingName, route} = action.payload
@@ -113,6 +136,12 @@ const mediaSlice = createSlice({
         },
         clearSearchResults(state) {
             state.searchResults = []
+        },
+        setDeletingAudioIndex(state, action) {
+            state.deletingAudioIndex = action.payload
+        },
+        setDeletingMediaIndex(state, action) {
+            state.deletingMediaIndex = action.payload
         },
         sortCurrentMediaSet(state, action) {
             const {sortType, isAudio} = action.payload
@@ -160,6 +189,9 @@ const mediaSlice = createSlice({
                 default:
                     void 0
             }
+        },
+        updateSearchResults(state, action) {
+            state.searchResults = state.searchResults.filter(item => item.url !== action.payload)
         },
         updateMediaSet(state, action) {
             const {currentRoute, uploadedMedia} = action.payload
@@ -234,6 +266,7 @@ export const {
     setCurrentAudioIndex,
     toggleMediaLoading,
     toggleIsMediaDeleting,
+    updateSearchResults,
     addAudioIndex,
     toggleSortByValue,
     sortCurrentMediaSet,
@@ -241,20 +274,25 @@ export const {
     clearSearchResults,
     changeMediaOldNameToNew,
     setNewMediaName,
+    filterMediaSet,
     setEditingMediaName,
-    toggleNameEditMode,
     changeListedMediaName,
+    setDeletingAudioIndex,
+    setDeletingMediaIndex,
+    toggleSearchMode,
+    setSearchRequest,
+    toggleNoSearchResults,
 } = mediaSlice.actions;
 
 
-export const handleCurrentMediaSet = ({dispatch}, mediaData) => {
+export const handleCurrentMediaSet = createAsyncThunk('handle-current-media-set-thunk', async (mediaData, {dispatch}) => {
     if (mediaData) {
         dispatch(toggleFetchMedia(true))
         dispatch(setCurrentMediaSet(mediaData))
         dispatch(addAudioIndex())
         dispatch(toggleFetchMedia(false))
     }
-}
+})
 
 export const handleSearchMedia = createAsyncThunk('search-thunk', async (request, {dispatch}) => {
     if (request === '') {
@@ -365,6 +403,24 @@ export const renameMedia = createAsyncThunk('rename-thunk', async ({
     }
 })
 
+export const deleteCurrentItem = createAsyncThunk('delete-current-media-thunk', async ({
+                                                                                           route,
+                                                                                           url,
+                                                                                           index,
+                                                                                           searchMode
+                                                                                       }, {dispatch}) => {
+    return new Promise(async (resolve) => {
+        dispatch(setDeletingMediaIndex(index))
+        const mediaRef = ref(storage, url);
+        await deleteObject(mediaRef)
+        index && setDeletingAudioIndex(index)
+        dispatch(filterMediaSet({url, route}))
+        dispatch(setDeletingMediaIndex(null))
+        searchMode && dispatch(updateSearchResults(url))
+        resolve()
+    })
+})
+
 export const deleteAllMedia = createAsyncThunk('delete-all-media-thunk', async ({
                                                                                     currentMediaSet,
                                                                                     currentRoute
@@ -385,6 +441,8 @@ export const handleMediaName = createAsyncThunk('handle-media-name-thunk', async
     dispatch(setNewMediaName(name))
     dispatch(setEditingMediaName(name))
 })
+
+
 
 
 

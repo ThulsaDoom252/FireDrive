@@ -13,6 +13,7 @@ const Media = ({
                    videosPage,
                    audioPage,
                    currentMediaFetch,
+                   searchRequest,
                    mediaToShow,
                    noMedia,
                    hoveredMediaIndex,
@@ -20,11 +21,13 @@ const Media = ({
                    noSearchResults,
                    isPaginatorHidden,
                    paginatorProps,
+                   searchMode,
+                   setSearchRequest,
                }) => {
     return (
         <section
             className={`w-full h-full relative  p-10 flex overflow-y-scroll flex-col items-center ${noMedia ? 'justify-center' : ''}`}>
-            {!noMedia && <div className={'w-full'}><Search/></div>}
+            {!noMedia && <div className={'w-full'}><Search {...{searchRequest, setSearchRequest}}/></div>}
             {noSearchResults && <div className={'absolute top-custom-50% left-custom-50%'}><NoSearchResults/></div>}
             {noMedia ?
                 <div>{imagesPage ? 'You have no images' : videosPage ? 'You have no videos' : 'You have no audio'}</div> :
@@ -42,6 +45,7 @@ const Media = ({
                                    oldName={media.oldName}
                                    {...{
                                        index,
+                                       searchMode,
                                        hoveredMediaIndex,
                                        setHoveredMediaIndex
                                    }}/>
