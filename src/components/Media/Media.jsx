@@ -7,12 +7,14 @@ import Paginator from "../Paginator/Paginator";
 import Search from "../Search/Search";
 import NoSearchResults from "../Search/NoSearchResults";
 import Image from "./Image";
+import Video from "./Video";
 
 const Media = ({
                    imagesPage,
                    videosPage,
                    audioPage,
                    currentMediaFetch,
+                   searchRequest,
                    mediaToShow,
                    noMedia,
                    hoveredMediaIndex,
@@ -20,11 +22,13 @@ const Media = ({
                    noSearchResults,
                    isPaginatorHidden,
                    paginatorProps,
+                   searchMode,
+                   setSearchRequest,
                }) => {
     return (
         <section
             className={`w-full h-full relative  p-10 flex overflow-y-scroll flex-col items-center ${noMedia ? 'justify-center' : ''}`}>
-            {!noMedia && <div className={'w-full'}><Search/></div>}
+            {!noMedia && <div className={'w-full'}><Search {...{searchRequest, setSearchRequest}}/></div>}
             {noSearchResults && <div className={'absolute top-custom-50% left-custom-50%'}><NoSearchResults/></div>}
             {noMedia ?
                 <div>{imagesPage ? 'You have no images' : videosPage ? 'You have no videos' : 'You have no audio'}</div> :
@@ -42,25 +46,20 @@ const Media = ({
                                    oldName={media.oldName}
                                    {...{
                                        index,
+                                       searchMode,
                                        hoveredMediaIndex,
                                        setHoveredMediaIndex
                                    }}/>
                         </div>) : videosPage ? mediaToShow.map((video, index) =>
                             <div key={index} className="w-full relative flex flex-col justify-center text-center">
-                                <div className="player-container  h-200 bg-black rounded-lg overflow-hidden">
-                                    <ReactPlayer
-                                        url={video.url}
-                                        width="100%"
-                                        height="100%"
-                                    />
-                                </div>
-                                <p className={''}>{truncate(video.name, 15)}</p>
+                                <Video url={video.url} name={video.name} oldName={video.oldName} {...{searchMode, index}}/>
                             </div>
                         ) :
                         mediaToShow.map(((audio, index) =>
                                 <div key={audio.index}>
-                                    <Audio audioName={audio.name} audioIndex={audio.index}
-                                           index={index} {...{hoveredMediaIndex, setHoveredMediaIndex}}/>
+                                    <Audio name={audio.name} oldName={audio.oldName} audioIndex={audio.index}
+                                           url={audio.url}
+                                           {...{hoveredMediaIndex, setHoveredMediaIndex, index, searchMode}}/>
                                 </div>
                         ))
                     }

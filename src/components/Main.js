@@ -9,7 +9,10 @@ import {
 } from "../common/commonData";
 import {Routes, Route, Navigate, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
-import {listMedia, setCurrentRoute} from "../redux/mediaSlice";
+import {
+    listMedia,
+    setCurrentRoute,
+} from "../redux/mediaSlice";
 import MediaContainer from "./Media/MediaContainer";
 import {toggleHorizontalMode, toggleSmallScreen} from "../redux/appSlice";
 import Alert from "./Alert";
@@ -34,7 +37,8 @@ const Main = ({
                   toggleHorizontalMode,
                   horizontalMode,
                   smallScreen,
-                  searchResults
+                  searchMode,
+                  searchResults,
               }) => {
 
     const location = useLocation()
@@ -66,13 +70,15 @@ const Main = ({
             listMedia({mediaType}))
     }, [])
 
-    const searchMode = searchResults.length > 0
-
 
     const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
     const mediaToShow = searchMode ? searchResults : paginatedMedia
 
-    window.currentMediaSet = currentMediaSet
+    window.mediaToShow = mediaToShow
+
+    // window.currentMediaSet = currentMediaSet
+    // window.searchMode = searchMode
+    // window.noSearchResults = noSearchResults
 
     if (!isAuth) {
         return <Navigate to={signInRoute}/>
@@ -98,6 +104,7 @@ const Main = ({
                                              currentMediaSet,
                                              mediaToShow,
                                              searchMode,
+                                             searchResults
                                          }}/>}/>}
                 </Routes>
             </main>
@@ -115,11 +122,12 @@ const mapStateToProps = (state) => {
         overlay: state.app.overlay,
         alert: state.app.alert,
         audioSet: state.media.audioSet,
-        searchResults: state.media.searchResults
+        searchMode: state.media.searchMode,
+        searchResults: state.media.searchResults,
     }
 }
 
 export default connect(mapStateToProps, {
     listMedia, setCurrentRoute, toggleSmallScreen,
-    toggleHorizontalMode
+    toggleHorizontalMode,
 })(Main);

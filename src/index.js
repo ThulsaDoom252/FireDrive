@@ -19,7 +19,7 @@ root.render(
             <PagesContextProvider>
                 <BurgerMenuContextProvider>
                     <PaginatorContextProvider>
-                        <App/>
+                            <App/>
                     </PaginatorContextProvider>
                 </BurgerMenuContextProvider>
             </PagesContextProvider>

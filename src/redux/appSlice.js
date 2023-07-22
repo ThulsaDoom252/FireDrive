@@ -64,7 +64,6 @@ export const handleAlertAction = createAsyncThunk('alert-action-thunk', async ({
     }
 })
 
-
 export const handleAlert = createAsyncThunk('alert-thunk', async ({
                                                                       overlayMode,
                                                                       alertMode,
