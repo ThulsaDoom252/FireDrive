@@ -14,6 +14,12 @@ export const setLocalStorageItem = (key, value) => {
     localStorage.setItem(`${key}`, `${value}`)
 }
 
+export const getLocalStorageItem = (key) => {
+    const currentValue = localStorage.getItem(key)
+    return currentValue
+    debugger
+}
+
 export const delay = (ms) => {
     return new Promise((resolve) => {
         setTimeout(() => {

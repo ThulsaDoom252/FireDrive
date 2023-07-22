@@ -1,8 +1,9 @@
 import {useState, useContext} from "react";
 import Select from "react-select";
 import {connect} from "react-redux";
-import {sortCurrentMediaSet, toggleSortByValue} from "../../redux/mediaSlice";
+import {setLastPlayedAudioNameBeforeSort, sortCurrentMediaSet, toggleSortByValue} from "../../redux/mediaSlice";
 import {PagesContext} from "../../context/PagesContext";
+import {delay, getLocalStorageItem} from "../../common/commonData";
 
 const SortInput = ({
                        options,
@@ -10,6 +11,7 @@ const SortInput = ({
                        currentOption,
                        handleOptionChange,
                        disabled,
+                       setSortedAudioName,
                        hidden,
                        handleArray,
                        direction = 'bottom'
@@ -26,7 +28,10 @@ const SortInput = ({
 
     const handleChange = async (item) => {
         await handleOptionChange(item.value)
-        handleArray({sortType: currentOption, isAudio: audioPage})
+        audioPage && await setSortedAudioName(getLocalStorageItem('currentTrackName'))
+        await handleArray({sortType: currentOption, isAudio: audioPage})
+        await delay(100)
+        audioPage && setSortedAudioName(null)
     };
 
     const handleInputChange = () => {
@@ -71,5 +76,6 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
     handleOptionChange: toggleSortByValue,
     handleArray: sortCurrentMediaSet,
+    setSortedAudioName: setLastPlayedAudioNameBeforeSort,
 })(SortInput)
 

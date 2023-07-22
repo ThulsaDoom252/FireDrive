@@ -7,6 +7,7 @@ import Paginator from "../Paginator/Paginator";
 import Search from "../Search/Search";
 import NoSearchResults from "../Search/NoSearchResults";
 import Image from "./Image";
+import Video from "./Video";
 
 const Media = ({
                    imagesPage,
@@ -51,20 +52,14 @@ const Media = ({
                                    }}/>
                         </div>) : videosPage ? mediaToShow.map((video, index) =>
                             <div key={index} className="w-full relative flex flex-col justify-center text-center">
-                                <div className="player-container  h-200 bg-black rounded-lg overflow-hidden">
-                                    <ReactPlayer
-                                        url={video.url}
-                                        width="100%"
-                                        height="100%"
-                                    />
-                                </div>
-                                <p className={''}>{truncate(video.name, 15)}</p>
+                                <Video url={video.url} name={video.name} oldName={video.oldName} {...{searchMode, index}}/>
                             </div>
                         ) :
                         mediaToShow.map(((audio, index) =>
                                 <div key={audio.index}>
-                                    <Audio audioName={audio.name} audioIndex={audio.index}
-                                           index={index} {...{hoveredMediaIndex, setHoveredMediaIndex}}/>
+                                    <Audio name={audio.name} oldName={audio.oldName} audioIndex={audio.index}
+                                           url={audio.url}
+                                           {...{hoveredMediaIndex, setHoveredMediaIndex, index, searchMode}}/>
                                 </div>
                         ))
                     }

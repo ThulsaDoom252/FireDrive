@@ -2,7 +2,7 @@ import {
     alertMediaUploaded, alertSuccessStyle,
     audio,
     audioOnly,
-    audioRoute, byDate, byName, bySize, defaultRef,
+    audioRoute, byDate, byName, bySize, defaultRef, delay,
     images,
     imagesOnly,
     imagesRoute, mediaFetchMode, mediaUploadMode,
@@ -25,6 +25,8 @@ const mediaSlice = createSlice({
         fetchImages: false,
         fetchVideos: false,
         fetchAudio: false,
+        lastPlayedAudioNameBeforeSort: null,
+        deletedItemUrl: null,
         newMediaName: null,
         editingMediaName: null,
         sortBy: byDate,
@@ -38,6 +40,8 @@ const mediaSlice = createSlice({
             {value: bySize, label: bySize},
         ],
         mediaSortedBy: byDate,
+        deletingMediaIndex: null,
+        deletingAudioIndex: null,
         currentMediaSet: [],
         mediaLoading: false,
         mediaDeleting: false,
@@ -46,6 +50,9 @@ const mediaSlice = createSlice({
         audioSet: [],
     },
     reducers: {
+        setDeletedItemUrl(state, action) {
+            state.deletedItemUrl = action.payload
+        },
         setCurrentRoute(state, action) {
             state.currentRoute = action.payload
         },
@@ -73,9 +80,10 @@ const mediaSlice = createSlice({
             }
         },
         toggleSearchMode(state, action) {
-            debugger
             state.searchMode = action.payload
-            debugger
+        },
+        updateSearchResults(state, action) {
+            state.searchResults = state.searchResults.filter(item => item.url !== action.payload)
         },
         setNewMediaName(state, action) {
             state.newMediaName = action.payload
@@ -85,6 +93,22 @@ const mediaSlice = createSlice({
         },
         toggleNoSearchResults(state, action) {
             state.noSearchResults = action.payload
+        },
+        filterMediaSet(state, action) {
+            const {url, route} = action.payload
+            switch (route) {
+                case imagesRoute:
+                    state.imagesSet = state.imagesSet.filter(media => media.url !== url)
+                    break;
+                case videosRoute:
+                    state.videosSet = state.videosSet.filter(video => video.url !== url)
+                    break;
+                case audioRoute:
+                    state.audioSet = state.audioSet.filter(audio => audio.url !== url)
+                    break;
+                default:
+                    break;
+            }
         },
         setSearchRequest(state, action) {
             state.searchRequest = action.payload
@@ -119,20 +143,30 @@ const mediaSlice = createSlice({
         clearSearchResults(state) {
             state.searchResults = []
         },
+        setLastPlayedAudioNameBeforeSort(state, action) {
+            state.lastPlayedAudioNameBeforeSort = action.payload
+        },
         sortCurrentMediaSet(state, action) {
             const {sortType, isAudio} = action.payload
             switch (sortType) {
                 case byDate:
                     state.currentMediaSet.sort((a, b) => a.date.localeCompare(b.date))
-                    isAudio && state.audioSet.sort((a, b) => a.date.localeCompare(b.date))
+                    if (isAudio) {
+                        state.audioSet.sort((a, b) => a.date.localeCompare(b.date))
+                    }
                     break;
                 case byName:
                     state.currentMediaSet.sort((a, b) => a.name.localeCompare(b.name))
-                    isAudio && state.audioSet.sort((a, b) => a.name.localeCompare(b.name))
+                    if (isAudio) {
+                        state.audioSet.sort((a, b) => a.name.localeCompare(b.name))
+                    }
+
                     break;
                 case bySize:
                     state.currentMediaSet.sort((a, b) => b.size - a.size)
-                    isAudio && state.audioSet.sort((a, b) => b.size - a.size)
+                    if (isAudio) {
+                        state.audioSet.sort((a, b) => b.size - a.size)
+                    }
                     break;
                 default:
                     void 0
@@ -241,6 +275,8 @@ export const {
     toggleIsMediaDeleting,
     addAudioIndex,
     toggleSortByValue,
+    filterMediaSet,
+    updateSearchResults,
     searchItems,
     clearSearchResults,
     changeMediaOldNameToNew,
@@ -251,6 +287,8 @@ export const {
     setSearchRequest,
     toggleNoSearchResults,
     sortCurrentMediaSet,
+    setDeletedItemUrl,
+    setLastPlayedAudioNameBeforeSort,
 } = mediaSlice.actions;
 
 
@@ -393,6 +431,24 @@ export const handleMediaName = createAsyncThunk('handle-media-name-thunk', async
     dispatch(setNewMediaName(name))
     dispatch(setEditingMediaName(name))
 })
+
+
+export const deleteCurrentItem = createAsyncThunk('delete-current-media-thunk', async ({
+                                                                                           route,
+                                                                                           url,
+                                                                                           index,
+                                                                                           searchMode
+                                                                                       }, {dispatch}) => {
+    const mediaRef = ref(storage, url);
+    await dispatch(setDeletedItemUrl(url))
+    await deleteObject(mediaRef)
+    await dispatch(filterMediaSet({url, route}))
+    searchMode && dispatch(updateSearchResults(url))
+    dispatch(setDeletedItemUrl(null))
+
+})
+
+
 
 
 

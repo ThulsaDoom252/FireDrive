@@ -7,7 +7,7 @@ const PaginatorContextProvider = ({children}) => {
     const currentMediaSet = useSelector(state => state.media.currentMediaSet)
     const [currentPage, setCurrentPage] = useState(1)
     const [totalPages, setTotalPages] = useState(1)
-    const [itemsPerPage, setItemsPerPage] = useState(6)
+    const [itemsPerPage, setItemsPerPage] = useState(100)
     const [firstItemIndex, setFirstItemIndex] = useState(0)
     const [lastItemIndex, setLastItemIndex] = useState(6)
 

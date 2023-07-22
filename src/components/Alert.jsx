@@ -44,3 +44,24 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {handleAlert, handleAlertAction})(Alert);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
