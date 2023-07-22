@@ -15,16 +15,15 @@ import {
 } from "../redux/mediaSlice";
 import MediaContainer from "./Media/MediaContainer";
 import {toggleHorizontalMode, toggleSmallScreen} from "../redux/appSlice";
-import Alert from "./Alert/Alert";
 import Overlay from "./Overlay";
 import BurgerMenu from "./common/BurgerMenu";
-import UploadBtn from "./common/UploadBtn";
-import RemoveAllBtn from "./common/RemoveAllBtn";
 import SortInput from "./common/SortInput";
-import LogOutBtn from "./common/LogOutBtn";
 import AudioPlayer from "./AudioPlayer/AudioPlayer";
 import {PaginatorContext} from "../context/PaginatorContext";
 import AlertContainer from "./Alert/AlertContainer";
+import UploadContainer from "./ButtonContainers/UploadBtnContainer";
+import RemoveAllBtnContainer from "./ButtonContainers/RemoveAllBtnContainer";
+import LogOutContainer from "./ButtonContainers/LogOutContainer";
 
 const Main = ({
                   currentMediaSet,
@@ -89,26 +88,29 @@ const Main = ({
         <>
             {overlay && <Overlay/>}
             {alert && <AlertContainer/>}
-            <HeaderContainer {...{currentRoute}}/>
-            <main className={'w-full h-full'} id={mainContentId}>
-                <BurgerMenu items={[<UploadBtn/>, <RemoveAllBtn/>,
-                    <LogOutBtn/>]}
-                            sortInput={<SortInput direction={smallScreen ? "top" : void 0}/>}
-                            audioPlayer={<AudioPlayer/>}
-
-                />
-                {homePage && <Home/>}
-                <Routes>
-                    {!homePage && <Route path={currentRoute}
-                                         element={<MediaContainer {...{
-                                             currentRoute,
-                                             currentMediaSet,
-                                             mediaToShow,
-                                             searchMode,
-                                             searchResults
-                                         }}/>}/>}
-                </Routes>
-            </main>
+                <HeaderContainer {...{currentRoute}}/>
+                <main className={'w-full h-full'} id={mainContentId}>
+                    <BurgerMenu smallScreen={smallScreen}>
+                        <div className={'w-full bg-opacity-50 bg-blue-300 h-62 p-2 rounded'}><AudioPlayer/></div>
+                        <div className={'mt-5 flex flex-col justify-center'}>
+                            <div className={'mb-5 mx-auto'}><UploadContainer/></div>
+                            <div className={'mb-5 mx-auto'}><RemoveAllBtnContainer/></div>
+                            <div className={'mb-5 mx-auto'}><LogOutContainer/></div>
+                        </div>
+                        <div><SortInput/></div>
+                    </BurgerMenu>
+                    {homePage && <Home/>}
+                    <Routes>
+                        {!homePage && <Route path={currentRoute}
+                                             element={<MediaContainer {...{
+                                                 currentRoute,
+                                                 currentMediaSet,
+                                                 mediaToShow,
+                                                 searchMode,
+                                                 searchResults
+                                             }}/>}/>}
+                    </Routes>
+                </main>
         </>
 
     );
