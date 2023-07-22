@@ -15,7 +15,7 @@ import {
 } from "../redux/mediaSlice";
 import MediaContainer from "./Media/MediaContainer";
 import {toggleHorizontalMode, toggleSmallScreen} from "../redux/appSlice";
-import Alert from "./Alert";
+import Alert from "./Alert/Alert";
 import Overlay from "./Overlay";
 import BurgerMenu from "./common/BurgerMenu";
 import UploadBtn from "./common/UploadBtn";
@@ -24,6 +24,7 @@ import SortInput from "./common/SortInput";
 import LogOutBtn from "./common/LogOutBtn";
 import AudioPlayer from "./AudioPlayer/AudioPlayer";
 import {PaginatorContext} from "../context/PaginatorContext";
+import AlertContainer from "./Alert/AlertContainer";
 
 const Main = ({
                   currentMediaSet,
@@ -87,7 +88,7 @@ const Main = ({
     return (
         <>
             {overlay && <Overlay/>}
-            {alert && <Alert/>}
+            {alert && <AlertContainer/>}
             <HeaderContainer {...{currentRoute}}/>
             <main className={'w-full h-full'} id={mainContentId}>
                 <BurgerMenu items={[<UploadBtn/>, <RemoveAllBtn/>,

@@ -132,7 +132,6 @@ export function AudioPlayerContextProvider({children}) {
                 playNextOrPrevBasedOnCurrent()
                 loadAudio()
             }
-
         } else {
 
             isCurrentTrackPlaying && toggleCurrentTrackPlaying(false)

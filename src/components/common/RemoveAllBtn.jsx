@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {GoTrash} from "react-icons/go";
 import {connect} from "react-redux";
-import {alertRemoveAll, alertWarningStyle} from "../../common/commonData";
+import {alertWarningStyle, removeAllMsg} from "../../common/commonData";
 import {handleAlert} from "../../redux/appSlice";
 import {PagesContext} from "../../context/PagesContext";
 
@@ -12,7 +12,7 @@ const RemoveAllBtn = ({mediaLoading, mediaDeleting, handleAlert, currentMediaSet
     } = pages
 
     const handleDeleteAllMedia = () => {
-        handleAlert({overlayMode: true, alertMode: alertRemoveAll, alertStyle: alertWarningStyle})
+        handleAlert({overlayMode: true, alertContent: removeAllMsg, alertStyle: alertWarningStyle})
     }
 
     const noCurrentMedia = currentMediaSet.length === 0

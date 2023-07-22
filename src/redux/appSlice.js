@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {alertRemoveAll, delay} from "../common/commonData";
+import {delay, removeAllMsg} from "../common/commonData";
 import {deleteAllMedia} from "./mediaSlice";
 
 const appSlice = createSlice({
@@ -10,12 +10,19 @@ const appSlice = createSlice({
         horizontalMode: false,
         overlay: false,
         alert: false,
-        alertMode: '',
         alertStyle: '',
+        alertContent: '',
     },
     reducers: {
         toggleSmallScreen(state, action) {
             state.smallScreen = action.payload
+        },
+        setAlertContent(state, action) {
+            const {content, style} = action.payload
+            state.alertContent = content
+            if (style) {
+                state.alertStyle = style
+            }
         },
         toggleHorizontalMode(state, action) {
             state.horizontalMode = action.payload
@@ -25,13 +32,6 @@ const appSlice = createSlice({
         },
         toggleAlert(state, action) {
             state.alert = action.payload
-        },
-        setAlertMode(state, action) {
-            const {alertMode, style} = action.payload
-            state.alertMode = alertMode
-            if (style) {
-                state.alertStyle = style
-            }
         },
         toggleInitializing(state, action) {
             state.initializing = action.payload
@@ -44,39 +44,38 @@ export const {
     toggleSmallScreen,
     toggleAlert,
     toggleOverlay,
-    setAlertMode,
     toggleInitializing,
     toggleHorizontalMode,
+    setAlertContent,
 } = appSlice.actions
 
 
 export const handleAlertAction = createAsyncThunk('alert-action-thunk', async ({
-                                                                                   alertMode,
-                                                                                   currentRoute,
-                                                                                   currentMediaSet,
+                                                                                   alertContent,
                                                                                }, {dispatch}) => {
-    switch (alertMode) {
-        case alertRemoveAll:
-            dispatch(deleteAllMedia({currentRoute, currentMediaSet}))
+
+    switch (alertContent) {
+        case removeAllMsg:
+            dispatch(deleteAllMedia())
             dispatch(handleAlert({overlayMode: true, toggle: false}))
             break
+        default:
+            void 0
 
     }
 })
 
 export const handleAlert = createAsyncThunk('alert-thunk', async ({
-                                                                      overlayMode,
-                                                                      alertMode,
-                                                                      alertStyle,
+                                                                      overlayMode = false,
+                                                                      alertContent = '',
+                                                                      alertStyle = null,
                                                                       toggle = true
                                                                   }, {dispatch}) => {
-    dispatch(setAlertMode({mode: '', alertStyle: ''}))
+    dispatch(setAlertContent({content: '', alertStyle: ''}))
     if (overlayMode) {
         dispatch(toggleOverlay(toggle))
     }
-    if (alertMode) {
-        dispatch(setAlertMode({alertMode, style: alertStyle}))
-    }
-    delay(500)
+    dispatch(setAlertContent({content: alertContent, style: alertStyle}))
+    delay(50)
     dispatch(toggleAlert(toggle))
 })

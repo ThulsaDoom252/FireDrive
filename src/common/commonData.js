@@ -54,11 +54,6 @@ export const smallScreenWidth = 768
 export const alertWarningStyle = 'warning'
 export const alertSuccessStyle = 'success'
 
-//AlertModes
-export const alertRemoveAll = 'removeAll'
-export const alertMediaUploaded = `alertMediaUploaded`
-export const alertMediaRemoved = 'alertMediaRemoved'
-
 //AlertMessages
 export const removeAllMsg = 'This will delete all media on current page. Sure you want to continue?'
 export const mediaUploadedMsg = 'Uploaded! \u{1F600}'

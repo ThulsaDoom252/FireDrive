@@ -8,7 +8,6 @@ const MediaName = ({
                        oldName,
                        editingName,
                        newName,
-                       currentRoute,
                        renameMedia,
                        setNewMediaName,
                        handleMediaName,
@@ -17,7 +16,7 @@ const MediaName = ({
 
     const handleRenameMedia = () => {
         handleMediaName({name: null})
-        renameMedia({newName, currentRoute, editingName, originalName: oldName})
+        renameMedia({newName, editingName, originalName: oldName})
     }
 
     return (
@@ -40,9 +39,7 @@ const mapStateToProps = (state) => {
     return {
         editingName: state.media.editingMediaName,
         newName: state.media.newMediaName,
-        currentRoute: state.media.currentRoute,
         editMediaNameMode: state.media.editMediaNameMode,
-
     }
 }
 

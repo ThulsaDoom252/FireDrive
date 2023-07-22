@@ -5,7 +5,7 @@ import {
     audioRoute, byDate, byName, bySize, defaultRef, delay,
     images,
     imagesOnly,
-    imagesRoute, mediaFetchMode, mediaUploadMode,
+    imagesRoute, mediaFetchMode, mediaUploadedMsg, mediaUploadMode,
     rootRoute, videos,
     videosOnly,
     videosRoute
@@ -15,6 +15,7 @@ import {getDownloadURL, getMetadata, listAll, ref, uploadBytes, deleteObject, up
 import {storage} from "../firebase";
 import {handleAlert} from "./appSlice";
 import {getAuth} from "firebase/auth";
+import {getSpecificState} from "../common/helpers";
 
 const mediaSlice = createSlice({
     name: 'media-slice',
@@ -355,9 +356,10 @@ export const listMedia = createAsyncThunk('listMedia-thunk', async ({mediaType},
 
 export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
                                                                             event,
-                                                                            currentRoute,
                                                                         }, {dispatch}) => {
     const auth = getAuth()
+    const {payload} = await dispatch(getSpecificState({keys: ["currentRoute"]}))
+    const [currentRoute] = payload
     const username = auth.currentUser.displayName
     const allowedTypes = {
         [imagesRoute]: imagesOnly,
@@ -386,17 +388,18 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
             }
         }));
         dispatch(toggleMediaLoading(false))
-        dispatch(handleAlert({overlayMode: true, alertMode: alertMediaUploaded, alertStyle: alertSuccessStyle}))
+        dispatch(handleAlert({overlayMode: true, alertContent: mediaUploadedMsg, alertStyle: alertSuccessStyle}))
     }
 });
 
 export const renameMedia = createAsyncThunk('rename-thunk', async ({
                                                                        editingName,
                                                                        newName,
-                                                                       currentRoute,
                                                                        originalName,
                                                                    }, {dispatch}) => {
     const auth = getAuth()
+    const {payload} = await dispatch(getSpecificState({keys: ["currentRoute"]}))
+    const [currentRoute] = payload
     const username = auth.currentUser.displayName
     const cacheControl = newName
     const imagesPage = currentRoute === imagesRoute
@@ -411,10 +414,9 @@ export const renameMedia = createAsyncThunk('rename-thunk', async ({
 })
 
 
-export const deleteAllMedia = createAsyncThunk('delete-all-media-thunk', async ({
-                                                                                    currentMediaSet,
-                                                                                    currentRoute
-                                                                                }, {dispatch}) => {
+export const deleteAllMedia = createAsyncThunk('delete-all-media-thunk', async (_, {dispatch}) => {
+    const {payload} = await dispatch(getSpecificState({keys: ["currentRoute", "currentMediaSet"]}))
+    const [currentRoute, currentMediaSet] = payload
     let urlsToDelete = []
     dispatch(toggleIsMediaDeleting(true))
     currentMediaSet.forEach(media => urlsToDelete.push(media.url))
@@ -439,6 +441,7 @@ export const deleteCurrentItem = createAsyncThunk('delete-current-media-thunk', 
                                                                                            index,
                                                                                            searchMode
                                                                                        }, {dispatch}) => {
+
     const mediaRef = ref(storage, url);
     await dispatch(setDeletedItemUrl(url))
     await deleteObject(mediaRef)
