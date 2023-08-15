@@ -46,6 +46,7 @@ module.exports = {
                 '300': '300px',
                 '200': '200px',
                 '62': '130px',
+                'playerHeight': '50px'
             },
             maxWidth: {
                 '300': '300px',

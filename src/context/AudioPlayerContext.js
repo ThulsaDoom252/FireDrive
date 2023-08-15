@@ -7,6 +7,8 @@ export const AudioPlayerContext = createContext();
 
 export function AudioPlayerContextProvider({children}) {
     const audioSet = useSelector(state => state.media.audioSet)
+    const [repeatMode, setRepeatMode] = useState('none')
+    const [volume, setVolume] = useState(0.5);
     const deletedItemUrl = useSelector(state => state.media.deletedItemUrl)
     const [currentDuration, setCurrentDuration] = useState(0)
     const [totalDuration, setTotalDuration] = useState(0)
@@ -26,6 +28,8 @@ export function AudioPlayerContextProvider({children}) {
         await delay(100)
         toggleCurrentTrackPlaying(true)
     }
+
+    window.ref = audioRef
 
     const handleSetCurrentAudioIndex = async ({index, goToNext, goToPrev, isEnded = false}) => {
         if (currentTrackIndex !== index) {
@@ -137,8 +141,20 @@ export function AudioPlayerContextProvider({children}) {
             isCurrentTrackPlaying && toggleCurrentTrackPlaying(false)
             unloadAudio()
         }
-        const handleEnded = () => {
-            handleNextTrack({isEnded: true})
+        const handleEnded = async () => {
+            if (repeatMode === 'none') {
+                handleNextTrack({isEnded: true})
+            } else if (repeatMode === 'once' || 'infinite') {
+                setCurrentDuration(0)
+                toggleCurrentTrackPlaying(false)
+                await delay(100)
+                toggleCurrentTrackPlaying(true)
+                repeatMode === 'once' && setRepeatMode('none')
+
+            }
+
+            return void 0
+
         };
         audio.addEventListener('ended', handleEnded);
 
@@ -153,7 +169,7 @@ export function AudioPlayerContextProvider({children}) {
             audio.removeEventListener('durationchange', handleDurationChange);
         };
 
-    }, [audioSet?.length, audioSet?.name, audioSet, currentTrackIndex])
+    }, [audioSet?.length, audioSet?.name, audioSet, currentTrackIndex, repeatMode])
 
 
     const prevBtnDisabled = currentTrackIndex === 0 || noAudio
@@ -178,6 +194,11 @@ export function AudioPlayerContextProvider({children}) {
         handleTimeUpdate,
         handleSeekBarChange,
         handleSetCurrentAudioIndex,
+        repeatMode,
+        setRepeatMode,
+        audioRef,
+        volume,
+        setVolume,
 
     };
 

@@ -88,29 +88,29 @@ const Main = ({
         <>
             {overlay && <Overlay/>}
             {alert && <AlertContainer/>}
-                <HeaderContainer {...{currentRoute}}/>
-                <main className={'w-full h-full'} id={mainContentId}>
-                    <BurgerMenu smallScreen={smallScreen}>
-                        <div className={'w-full bg-opacity-50 bg-blue-300 h-62 p-2 rounded'}><AudioPlayer/></div>
-                        <div className={'mt-5 flex flex-col justify-center'}>
-                            <div className={'mb-5 mx-auto'}><UploadContainer/></div>
-                            <div className={'mb-5 mx-auto'}><RemoveAllBtnContainer/></div>
-                            <div className={'mb-5 mx-auto'}><LogOutContainer/></div>
-                        </div>
-                        <div><SortInput/></div>
-                    </BurgerMenu>
-                    {homePage && <Home/>}
-                    <Routes>
-                        {!homePage && <Route path={currentRoute}
-                                             element={<MediaContainer {...{
-                                                 currentRoute,
-                                                 currentMediaSet,
-                                                 mediaToShow,
-                                                 searchMode,
-                                                 searchResults
-                                             }}/>}/>}
-                    </Routes>
-                </main>
+            <HeaderContainer {...{currentRoute}}/>
+            <main className={'w-full h-full'} id={mainContentId}>
+                <BurgerMenu smallScreen={smallScreen}>
+                    <div className={'mt-5 flex flex-col justify-center'}>
+                        <div className={'mb-5 mx-auto'}><UploadContainer/></div>
+                        <div className={'mb-5 mx-auto'}><RemoveAllBtnContainer/></div>
+                        <div className={'mb-5 mx-auto'}><LogOutContainer/></div>
+                    </div>
+                    <div><SortInput/></div>
+                </BurgerMenu>
+                {homePage && <Home/>}
+                <Routes>
+                    {!homePage && <Route path={currentRoute}
+                                         element={<MediaContainer {...{
+                                             currentRoute,
+                                             currentMediaSet,
+                                             mediaToShow,
+                                             searchMode,
+                                             searchResults
+                                         }}/>}/>}
+                </Routes>
+                <div className={`w-full  bg-opacity-90 fixed-bottom bg-blue-300 h-playerHeight} p-2 rounded`}><AudioPlayer buttonsBlockWidth={'1/2'}/></div>
+            </main>
         </>
 
     );

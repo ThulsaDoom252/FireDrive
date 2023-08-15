@@ -54,10 +54,6 @@ const MediaContainer = ({
         }
     }, [searchRequest, searchResults])
 
-    window.audioSet = audioSet
-    window.currentMediaSet = currentMediaSet
-
-
     useEffect(() => {
         clearSearchResults()
     }, [currentRoute])
