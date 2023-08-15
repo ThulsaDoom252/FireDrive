@@ -13,6 +13,7 @@ import {ImVolumeHigh, ImVolumeMute2} from "react-icons/im";
 
 const AudioPlayer = ({smallScreenMode, shouldTruncate = false, buttonsBlockWidth = 'full', showTime = false}) => {
 
+
     const audioContext = useContext(AudioPlayerContext)
 
     const {
@@ -99,10 +100,9 @@ const AudioPlayer = ({smallScreenMode, shouldTruncate = false, buttonsBlockWidth
                                 <LuRepeat1 size={20}/> : <IoInfinite size={20}/>}
 
                         </button>
-                        <div className={'flex space-between'}>
+                        <div className={'flex space-between relative'}>
                             <button>
                                 {volume !== 0 ? <ImVolumeHigh size={20}/> : <ImVolumeMute2 size={20}/>}
-
                             </button>
                             <input
                                 type="range"
@@ -112,6 +112,7 @@ const AudioPlayer = ({smallScreenMode, shouldTruncate = false, buttonsBlockWidth
                                 value={volume}
                                 onChange={event => handleVolumeChange({event})}
                             />
+
                         </div>
 
                     </div>

@@ -1,9 +1,10 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {deleteCurrentItem, handleMediaName} from "../../redux/mediaSlice";
-import {BsPencilFill, BsTrash} from "react-icons/bs";
+import {BsDownload, BsPencilFill, BsTrash} from "react-icons/bs";
 import {TelegramShareButton, ViberShareButton} from "react-share";
 import {FaTelegram, FaViber} from "react-icons/fa";
+
 
 const MediaOptions = ({
                           handleMediaName,
@@ -14,15 +15,23 @@ const MediaOptions = ({
                           iconsSize = 20,
                           url, index, searchMode, currentRoute
                       }) => {
+
     return (
         <div className={'hover:cursor-pointer p-1 h-fit bg-settingsBar flex justify-center items-center rounded'}>
-            <TelegramShareButton url={url} title={''}><FaTelegram className={'mx-2'} size={iconsSize}
+            <TelegramShareButton url={url} title={''}><FaTelegram className={'mx-2'}
+                                                                  title={"share via telegram"}
+                                                                  size={iconsSize}
                                                                   color={tgIconColor}/></TelegramShareButton>
-            <ViberShareButton url={url}><FaViber className={'mx-2'} size={iconsSize}
-                                                 color={vbIconColor}/></ViberShareButton>
-            <BsPencilFill size={iconsSize} className={'mx-2'} color={'blue'} onClick={() => handleMediaName({name})}/>
-            <BsTrash size={iconsSize} className={'mx-2'} color={'red'}
+            <ViberShareButton url={url}><FaViber
+                title={"share via viber"}
+                className={'mx-2'} size={iconsSize}
+                color={vbIconColor}/></ViberShareButton>
+            <BsPencilFill size={iconsSize} className={'mx-2'}
+                          title={"edit current item name"}
+                          color={'blue'} onClick={() => handleMediaName({name})}/>
+            <BsTrash title={'delete current item'} size={iconsSize} className={'mx-2'} color={'red'}
                      onClick={() => deleteCurrentItem({url, index, searchMode, route: currentRoute})}/>
+            {/*<BsDownload className="text-gray-200" size={iconsSize}/>*/}
         </div>
     );
 };

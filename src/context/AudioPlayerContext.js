@@ -127,9 +127,17 @@ export function AudioPlayerContextProvider({children}) {
             } else if (isCurrentTrackChanged && !deletedItemUrl) {
                 loadAudio()
             } else if (isCurrentTrackChanged && deletedItemUrl) {
-                currentTrackIndex !== 0 ? setCurrentTrackIndex(currentTrackIndex - 1)
-                    : setCurrentTrackIndex(currentTrackIndex + 1)
-                playNextOrPrevBasedOnCurrent()
+                if (currentTrackIndex !== 0) {
+                    setCurrentTrackIndex(currentTrackIndex - 1)
+                    playNextOrPrevBasedOnCurrent()
+                } else {
+                    unloadAudio()
+                    setCurrentTrackIndex(0)
+                    loadAudio()
+                    playNextOrPrevBasedOnCurrent()
+
+                }
+
                 void 0
             } else if (!isCurrentTrackChanged && !isTrackDeleted) {
                 setCurrentTrackName(currentTrack.name)

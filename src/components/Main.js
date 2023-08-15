@@ -76,10 +76,6 @@ const Main = ({
 
     window.mediaToShow = mediaToShow
 
-    // window.currentMediaSet = currentMediaSet
-    // window.searchMode = searchMode
-    // window.noSearchResults = noSearchResults
-
     if (!isAuth) {
         return <Navigate to={signInRoute}/>
     }
@@ -109,7 +105,7 @@ const Main = ({
                                              searchResults
                                          }}/>}/>}
                 </Routes>
-                <div className={`w-full  bg-opacity-90 fixed-bottom bg-blue-300 h-playerHeight} p-2 rounded`}><AudioPlayer buttonsBlockWidth={'1/2'}/></div>
+                <div className={`w-full  bg-opacity-90 fixed-bottom bg-blue-300 h-playerHeight} p-2 rounded`}><AudioPlayer buttonsBlockWidth={'full'}/></div>
             </main>
         </>
 
