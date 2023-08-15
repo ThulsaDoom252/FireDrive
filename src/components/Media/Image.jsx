@@ -1,5 +1,5 @@
 import React from 'react';
-import MediaOptions from "../common/mediaOptions";
+import MediaOptions from "../Options/mediaOptions";
 import MediaName from "./MediaName";
 
 const Image = ({

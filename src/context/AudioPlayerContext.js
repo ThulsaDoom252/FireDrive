@@ -19,7 +19,7 @@ export function AudioPlayerContextProvider({children}) {
     const audio = audioRef.current
     const lastPlayedAudioNameBeforeSort = useSelector(state => state.media.lastPlayedAudioNameBeforeSort)
 
-    const isLastTrack = currentTrackIndex === audioSet.length
+    const isLastTrack = currentTrackIndex === audioSet?.length
 
     const handleChangedTrackPlay = async () => {
         toggleCurrentTrackPlaying(false)
@@ -93,8 +93,8 @@ export function AudioPlayerContextProvider({children}) {
 
 
     useEffect(() => {
-        const audio = audioRef.current
-        let isTrackDeleted = audio.src === deletedItemUrl
+        const audio = audioRef?.current
+        let isTrackDeleted = audio?.src === deletedItemUrl
 
         const playNextOrPrevBasedOnCurrent = async () => {
             if (isCurrentTrackPlaying) {
@@ -123,7 +123,8 @@ export function AudioPlayerContextProvider({children}) {
             } else if (isCurrentTrackChanged && !deletedItemUrl) {
                 loadAudio()
             } else if (isCurrentTrackChanged && deletedItemUrl) {
-                setCurrentTrackIndex(currentTrackIndex - 1)
+                currentTrackIndex !== 0 ? setCurrentTrackIndex(currentTrackIndex - 1)
+                    : setCurrentTrackIndex(currentTrackIndex + 1)
                 playNextOrPrevBasedOnCurrent()
                 void 0
             } else if (!isCurrentTrackChanged && !isTrackDeleted) {
@@ -133,7 +134,6 @@ export function AudioPlayerContextProvider({children}) {
                 loadAudio()
             }
         } else {
-
             isCurrentTrackPlaying && toggleCurrentTrackPlaying(false)
             unloadAudio()
         }
@@ -153,7 +153,7 @@ export function AudioPlayerContextProvider({children}) {
             audio.removeEventListener('durationchange', handleDurationChange);
         };
 
-    }, [audioSet.length, audioSet.name, audioSet, currentTrackIndex])
+    }, [audioSet?.length, audioSet?.name, audioSet, currentTrackIndex])
 
 
     const prevBtnDisabled = currentTrackIndex === 0 || noAudio

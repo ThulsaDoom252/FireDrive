@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactPlayer from "react-player";
 import {truncate} from "../../common/commonData";
-import MediaOptions from "../common/mediaOptions";
+import MediaOptions from "../Options/mediaOptions";
 import MediaName from "./MediaName";
 
 const Video = ({url, name, oldName, searchMode, index}) => {

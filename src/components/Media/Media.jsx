@@ -55,12 +55,17 @@ const Media = ({
                                 <Video url={video.url} name={video.name} oldName={video.oldName} {...{searchMode, index}}/>
                             </div>
                         ) :
-                        mediaToShow.map(((audio, index) =>
+                        mediaToShow.map(((audio, index) => {
+                            return (
                                 <div key={audio.index}>
                                     <Audio name={audio.name} oldName={audio.oldName} audioIndex={audio.index}
                                            url={audio.url}
                                            {...{hoveredMediaIndex, setHoveredMediaIndex, index, searchMode}}/>
                                 </div>
+                                )
+
+                        }
+
                         ))
                     }
                 </div>}

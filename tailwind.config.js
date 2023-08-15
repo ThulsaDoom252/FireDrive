@@ -28,6 +28,9 @@ module.exports = {
                 'navbar-xs': '400px',
                 'custom-800': '800px'
             },
+            backgroundColor: {
+                'settingsBar': 'rgba(255,255,255,0.5)'
+            },
             width: {
                 '150': '150px',
                 '200': '200px',
