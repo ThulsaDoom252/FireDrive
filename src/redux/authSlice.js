@@ -88,7 +88,7 @@ export const authCheck = createAsyncThunk('auth-check-thunk', async (_, {dispatc
             dispatch(toggleInitializing(false))
         })
     } catch (e) {
-        handleAlert({dispatch}, error, e.toString())
+        handleAlert({dispatch}, e, e.toString())
     }
 })
 

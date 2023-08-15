@@ -199,13 +199,16 @@ const filterMediaData = (array, mode) => {
 }
 
 export const listMedia = createAsyncThunk('listMedia-thunk', async ({username, mediaType}, {dispatch}) => {
+    debugger
     dispatch(toggleFetchMedia({mediaType, toggle: true}))
     const data = await listAll(ref(storage, `${username}/${mediaType}`))
+    debugger
     const results = await Promise.all(data.items.map((item) => Promise.all([getDownloadURL(item), getMetadata(item)])))
     const mediaData = filterMediaData(results, mediaFetchMode)
     dispatch(setMediaSet({mediaType, mediaData}))
     dispatch(addAudioIndex())
     dispatch(toggleFetchMedia({mediaType, toggle: false}))
+    debugger
 })
 
 
