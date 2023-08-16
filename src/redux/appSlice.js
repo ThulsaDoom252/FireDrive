@@ -12,10 +12,14 @@ const appSlice = createSlice({
         alert: false,
         alertStyle: '',
         alertContent: '',
+        showUserModal: false,
     },
     reducers: {
         toggleSmallScreen(state, action) {
             state.smallScreen = action.payload
+        },
+        toggleUserModal(state, action) {
+            state.showUserModal = action.payload
         },
         setAlertContent(state, action) {
             const {content, style} = action.payload
@@ -47,6 +51,7 @@ export const {
     toggleInitializing,
     toggleHorizontalMode,
     setAlertContent,
+    toggleUserModal,
 } = appSlice.actions
 
 
@@ -79,3 +84,4 @@ export const handleAlert = createAsyncThunk('alert-thunk', async ({
     delay(50)
     dispatch(toggleAlert(toggle))
 })
+

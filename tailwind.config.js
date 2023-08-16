@@ -32,6 +32,7 @@ module.exports = {
                 'settingsBar': 'rgba(255,255,255,0.5)'
             },
             width: {
+                'userModal': '400px',
                 '150': '150px',
                 '200': '200px',
                 '300': '300px',
@@ -47,6 +48,9 @@ module.exports = {
                 '200': '200px',
                 '62': '130px',
                 'playerHeight': '50px'
+            },
+            zIndex: {
+                'max': '999999999999'
             },
             maxWidth: {
                 '300': '300px',

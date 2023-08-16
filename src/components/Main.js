@@ -14,7 +14,7 @@ import {
     setCurrentRoute,
 } from "../redux/mediaSlice";
 import MediaContainer from "./Media/MediaContainer";
-import {toggleHorizontalMode, toggleSmallScreen} from "../redux/appSlice";
+import {toggleHorizontalMode, toggleSmallScreen, toggleUserModal} from "../redux/appSlice";
 import Overlay from "./Overlay";
 import BurgerMenu from "./common/BurgerMenu";
 import SortInput from "./common/SortInput";
@@ -24,6 +24,8 @@ import AlertContainer from "./Alert/AlertContainer";
 import UploadContainer from "./ButtonContainers/UploadBtnContainer";
 import RemoveAllBtnContainer from "./ButtonContainers/RemoveAllBtnContainer";
 import LogOutContainer from "./ButtonContainers/LogOutContainer";
+import UserModal from "./modals/UserModal";
+import UserAvatar from "./user/UserAvatar";
 
 const Main = ({
                   currentMediaSet,
@@ -39,6 +41,8 @@ const Main = ({
                   smallScreen,
                   searchMode,
                   searchResults,
+                  showUserModal,
+                  toggleUserModal,
               }) => {
 
     const location = useLocation()
@@ -84,8 +88,12 @@ const Main = ({
             {alert && <AlertContainer/>}
             <HeaderContainer {...{currentRoute}}/>
             <main className={'w-full h-full'} id={mainContentId}>
+                {showUserModal && <UserModal toggleModal={toggleUserModal}
+                />}
                 <BurgerMenu smallScreen={smallScreen}>
                     <div className={'mt-5 flex flex-col justify-center'}>
+                        <div onClick={() => toggleUserModal(!showUserModal)} className={'mb-5 mx-auto'}><UserAvatar
+                        /></div>
                         <div className={'mb-5 mx-auto'}><UploadContainer/></div>
                         <div className={'mb-5 mx-auto'}><RemoveAllBtnContainer/></div>
                         <div className={'mb-5 mx-auto'}><LogOutContainer/></div>
@@ -123,10 +131,11 @@ const mapStateToProps = (state) => {
         audioSet: state.media.audioSet,
         searchMode: state.media.searchMode,
         searchResults: state.media.searchResults,
+        showUserModal: state.app.showUserModal
     }
 }
 
 export default connect(mapStateToProps, {
     listMedia, setCurrentRoute, toggleSmallScreen,
-    toggleHorizontalMode,
+    toggleHorizontalMode, toggleUserModal,
 })(Main);

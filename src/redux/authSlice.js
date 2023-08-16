@@ -10,6 +10,10 @@ import {
     onAuthStateChanged,
     signOut,
 } from 'firebase/auth'
+
+import {uploadBytes, ref, getDownloadURL} from "firebase/storage";
+
+import {storage,} from "../firebase";
 import {handleAlert, toggleInitializing} from "./appSlice";
 
 
@@ -18,16 +22,25 @@ const authSlice = createSlice({
     initialState: {
         email: '',
         username: '',
+        avatar: '',
         isAuthorized: false,
         isAuthBtnFetching: false,
         authError: '',
+        isAvatarLoading: false,
     },
 
     reducers: {
         setUserData(state, action) {
-            const {email, username} = action.payload
+            const {email, username, avatar} = action.payload
             state.username = username
             state.email = email
+            state.avatar = avatar
+        },
+        setUserAvatar(state, action) {
+            state.avatar = action.payload
+        },
+        toggleAvatarLoading(state, action) {
+            state.isAvatarLoading = action.payload
         },
         toggleAuthStatus(state, action) {
             state.isAuthorized = action.payload
@@ -42,7 +55,14 @@ const authSlice = createSlice({
 })
 
 export default authSlice.reducer
-export const {setUserData, toggleAuthStatus, toggleFetchAuthBtn, setAuthError} = authSlice.actions
+export const {
+    setUserData,
+    setUserAvatar,
+    toggleAvatarLoading,
+    toggleAuthStatus,
+    toggleFetchAuthBtn,
+    setAuthError
+} = authSlice.actions
 
 export const handleEmailAndPasswordSignUp = createAsyncThunk('email-password-signup-thunk', async ({
                                                                                                        email,
@@ -100,8 +120,9 @@ export const authCheck = createAsyncThunk('auth-check-thunk', async (_, {dispatc
                 dispatch(toggleAuthStatus(false))
                 dispatch(setUserData({email: '', username: '',}))
             } else {
-                const {email, displayName} = user
-                dispatch(setUserData({email, username: displayName}))
+                const {email, displayName, photoURL} = user
+                debugger
+                dispatch(setUserData({email, username: displayName, avatar: photoURL}))
                 dispatch(toggleAuthStatus(true))
             }
             dispatch(toggleInitializing(false))
@@ -115,5 +136,24 @@ export const handleLogout = () => {
     const auth = getAuth()
     signOut(auth)
 }
+
+export const changeAvatar = createAsyncThunk('change-avatar-thunk', async ({avatar}, {dispatch}) => {
+    const user = getAuth().currentUser
+    const userName = user.displayName
+    if (user) {
+        dispatch(toggleAvatarLoading(true))
+        const fileRef = ref(storage, `${userName}/userAvatar/${avatar.name}`);
+        await uploadBytes(fileRef, avatar);
+        const avatarUrl = await getDownloadURL(fileRef);
+        await updateProfile(user, {
+            displayName: user.displayName,
+            photoURL: avatarUrl,
+        });
+        dispatch(setUserAvatar(avatarUrl));
+        dispatch(toggleAvatarLoading(false))
+    }
+
+
+})
 
 

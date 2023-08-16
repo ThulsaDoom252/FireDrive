@@ -19,6 +19,9 @@ const App = ({authCheck, isAuth}) => {
         backgroundPosition: 'center',
     }
 
+
+    window.user = user
+
     useEffect(() => {
         authCheck()
     }, [user])
