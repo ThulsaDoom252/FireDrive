@@ -26,6 +26,7 @@ import RemoveAllBtnContainer from "./ButtonContainers/RemoveAllBtnContainer";
 import LogOutContainer from "./ButtonContainers/LogOutContainer";
 import UserModal from "./modals/UserModal";
 import UserAvatar from "./user/UserAvatar";
+import toast from "react-hot-toast";
 
 const Main = ({
                   currentMediaSet,

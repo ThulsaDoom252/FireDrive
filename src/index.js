@@ -15,15 +15,15 @@ import PaginatorContextProvider from "./context/PaginatorContext";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Provider store={store}>
-        <AudioPlayerContextProvider>
-            <PagesContextProvider>
-                <BurgerMenuContextProvider>
-                    <PaginatorContextProvider>
+            <AudioPlayerContextProvider>
+                <PagesContextProvider>
+                    <BurgerMenuContextProvider>
+                        <PaginatorContextProvider>
                             <App/>
-                    </PaginatorContextProvider>
-                </BurgerMenuContextProvider>
-            </PagesContextProvider>
-        </AudioPlayerContextProvider>
+                        </PaginatorContextProvider>
+                    </BurgerMenuContextProvider>
+                </PagesContextProvider>
+            </AudioPlayerContextProvider>
     </Provider>
 );
 

@@ -16,6 +16,7 @@ import {storage} from "../firebase";
 import {handleAlert} from "./appSlice";
 import {getAuth} from "firebase/auth";
 import {getSpecificState} from "../common/helpers";
+import toast from "react-hot-toast";
 
 const mediaSlice = createSlice({
     name: 'media-slice',
@@ -388,7 +389,8 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
             }
         }));
         dispatch(toggleMediaLoading(false))
-        dispatch(handleAlert({overlayMode: true, alertContent: mediaUploadedMsg, alertStyle: alertSuccessStyle}))
+        toast.success('Media uploaded')
+        // dispatch(handleAlert({overlayMode: true, alertContent: mediaUploadedMsg, alertStyle: alertSuccessStyle}))
     }
 });
 

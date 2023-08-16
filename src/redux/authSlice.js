@@ -15,6 +15,7 @@ import {uploadBytes, ref, getDownloadURL} from "firebase/storage";
 
 import {storage,} from "../firebase";
 import {handleAlert, toggleInitializing} from "./appSlice";
+import toast from "react-hot-toast";
 
 
 const authSlice = createSlice({
@@ -151,6 +152,7 @@ export const changeAvatar = createAsyncThunk('change-avatar-thunk', async ({avat
         });
         dispatch(setUserAvatar(avatarUrl));
         dispatch(toggleAvatarLoading(false))
+        toast.success('Avatar changed')
     }
 
 

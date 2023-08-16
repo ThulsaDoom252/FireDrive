@@ -9,6 +9,7 @@ import SignUpContainer from "./components/SignUp/SignUpContainer";
 import Initializing from "./components/Initializing";
 import {authCheck} from "./redux/authSlice";
 import {getAuth} from "firebase/auth";
+import {Toaster} from "react-hot-toast";
 
 const App = ({authCheck, isAuth}) => {
     const user = getAuth().currentUser
@@ -32,6 +33,7 @@ const App = ({authCheck, isAuth}) => {
 
     return (
         <BrowserRouter>
+            <Toaster/>
             <div style={background}
                  id={wrapperId}
                  className={`bg-center bg-over bg-no-repeat
