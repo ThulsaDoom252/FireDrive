@@ -3,6 +3,7 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 import {signInRoute} from "../../common/commonData";
 import {NavLink} from "react-router-dom";
+import {AiOutlineGoogle} from "react-icons/ai";
 
 const SignUp = ({emailPasswordSignup, isAuthBtnFetching}) => {
     const signUpForm = useFormik({

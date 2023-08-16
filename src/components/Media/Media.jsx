@@ -22,6 +22,7 @@ const Media = ({
                    paginatorProps,
                    searchMode,
                    setSearchRequest,
+                   smallScreen,
                }) => {
     return (
         <section
@@ -59,7 +60,13 @@ const Media = ({
                                     <div key={audio.index}>
                                         <Audio name={audio.name} oldName={audio.oldName} audioIndex={audio.index}
                                                url={audio.url}
-                                               {...{hoveredMediaIndex, setHoveredMediaIndex, index, searchMode}}/>
+                                               {...{
+                                                   hoveredMediaIndex,
+                                                   setHoveredMediaIndex,
+                                                   index,
+                                                   searchMode,
+                                                   smallScreen
+                                               }}/>
                                     </div>
                                 )
 

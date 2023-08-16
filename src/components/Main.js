@@ -74,8 +74,6 @@ const Main = ({
     const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
     const mediaToShow = searchMode ? searchResults : paginatedMedia
 
-    window.mediaToShow = mediaToShow
-
     if (!isAuth) {
         return <Navigate to={signInRoute}/>
     }
@@ -102,10 +100,12 @@ const Main = ({
                                              currentMediaSet,
                                              mediaToShow,
                                              searchMode,
-                                             searchResults
+                                             searchResults,
+                                             smallScreen,
                                          }}/>}/>}
                 </Routes>
-                <div className={`w-full  bg-opacity-90 fixed-bottom bg-blue-300 h-playerHeight} p-2 rounded`}><AudioPlayer buttonsBlockWidth={'full'}/></div>
+                <div className={`w-full  bg-opacity-90 fixed-bottom bg-blue-300 h-playerHeight} p-2 rounded`}>
+                    <AudioPlayer buttonsBlockWidth={'full'}/></div>
             </main>
         </>
 

@@ -3,8 +3,13 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 import {NavLink} from "react-router-dom";
 import {signUpRoute} from "../../common/commonData";
+import {FcGoogle} from "react-icons/fc";
+import {FaGithub} from "react-icons/fa";
 
-const SignIn = ({handleLogin, authError, isAuthBtnFetching}) => {
+const SignIn = ({
+                    handleLogin, authError, isAuthBtnFetching, googleAuth,
+                    githubAuth,
+                }) => {
     const signInForm = useFormik({
         initialValues: {
             email: '',
@@ -26,6 +31,7 @@ const SignIn = ({handleLogin, authError, isAuthBtnFetching}) => {
     const errors = signInForm.errors
     const handleChange = signInForm.handleChange
     const handleSubmit = signInForm.handleSubmit
+
     return (
         <div
             className={'container-fluid h-screen max-w-xl mx-auto flex flex-col justify-center items-center max-w-2xl'}>
@@ -46,10 +52,22 @@ const SignIn = ({handleLogin, authError, isAuthBtnFetching}) => {
                            placeholder={'password'}/>
                     {<span className={'text-red-500'}>{errors.password}</span>}
                     <button disabled={isAuthBtnFetching} className={'w-full btn btn-success mt-5 mb-2'} type={'submit'}
-                            onClick={handleSubmit}>Log
-                        in
+                            onClick={handleSubmit}>Log in
                     </button>
-                    {<div className={'text-red-500 text-center text-lg'}>{authError}</div>}
+                    <button
+                        type={'button'}
+                        onClick={googleAuth}
+                        title={'sign up with google'}
+                        className={'w-full btn mt-2 mb-2 btn-outline-secondary '}>
+                        <FcGoogle size={20} color={'blue'} className={'mx-auto'}/></button>
+                    <button
+                        type={'button'}
+                        onClick={githubAuth}
+                        title={'sign up with github'}
+                        className={'w-full btn mt-2 mb-2 btn-outline-secondary '}>
+                        <FaGithub size={20} color={'green'} className={'mx-auto'}/></button>
+                    <hr/>
+                    {<div className={'text-red-500 text-center  text-lg'}>{authError}</div>}
                     <div className={'text-center'}>Not registered? <NavLink to={signUpRoute}
                                                                             className={'text-blue-300'}>Create an
                         account</NavLink></div>

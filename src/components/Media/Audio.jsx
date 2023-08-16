@@ -15,7 +15,8 @@ const Audio = ({
                    audioIndex = 0,
                    index = 0,
                    hoveredMediaIndex,
-                   setHoveredMediaIndex
+                   setHoveredMediaIndex,
+                   smallScreen,
                }) => {
 
     const audioContext = useContext(AudioPlayerContext)
@@ -50,7 +51,7 @@ const Audio = ({
                     </div>
                 </div>
                 <MediaName textColor={'black'} {...{name, oldName}}/>
-                {(currentTrackName === name || hoveredMediaIndex === index) &&
+                {(hoveredMediaIndex === index && !smallScreen) &&
                     <div className={'absolute top-1/2 transform -translate-y-1/2 right-0 z-50 mr-40 '}>
                         <MediaOptions {...{name, url, index, searchMode}}/>
                     </div>}

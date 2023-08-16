@@ -3,9 +3,11 @@ import {Navigate} from 'react-router-dom'
 import {rootRoute,} from "../../common/commonData";
 import SignIn from "./SignIn";
 import {connect} from "react-redux";
-import {handleLogin, setAuthError} from "../../redux/authSlice";
+import {githubAuth, googleAuth, handleLogin, setAuthError} from "../../redux/authSlice";
 
-const SignInContainer = ({isAuth, handleLogin, authError, isAuthBtnFetching, setAuthError}) => {
+const SignInContainer = ({
+                             isAuth, handleLogin, authError, isAuthBtnFetching, setAuthError,
+                         }) => {
     useEffect(() => {
         setAuthError('')
     }, [])
@@ -15,7 +17,10 @@ const SignInContainer = ({isAuth, handleLogin, authError, isAuthBtnFetching, set
         return <Navigate to={rootRoute}/>
     }
 
-    return <SignIn {...{handleLogin, authError, isAuthBtnFetching,}}/>
+    return <SignIn {...{
+        handleLogin, authError, isAuthBtnFetching, googleAuth,
+        githubAuth,
+    }}/>
 };
 
 const mapStateToProps = (state) => {
@@ -25,4 +30,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {handleLogin, setAuthError})(SignInContainer);
+export default connect(mapStateToProps, {
+    handleLogin,
+    setAuthError,
+})(SignInContainer);

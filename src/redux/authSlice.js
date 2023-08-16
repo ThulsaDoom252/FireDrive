@@ -3,7 +3,10 @@ import {
     updateProfile,
     createUserWithEmailAndPassword,
     getAuth,
+    signInWithPopup,
     signInWithEmailAndPassword,
+    GoogleAuthProvider,
+    GithubAuthProvider,
     onAuthStateChanged,
     signOut,
 } from 'firebase/auth'
@@ -71,6 +74,22 @@ export const handleLogin = createAsyncThunk('login-thunk', async ({email, passwo
         })
     dispatch(toggleFetchAuthBtn(false))
 })
+
+export const googleAuth = async () => {
+    const auth = getAuth()
+    const googleProvider = new GoogleAuthProvider();
+    await signInWithPopup(auth, googleProvider)
+        .then(() => console.log('auth goggle success'))
+        .catch((e) => console.log(`auth google error: ${e}`))
+}
+
+export const githubAuth = async () => {
+    const auth = getAuth()
+    const githubProvider = new GithubAuthProvider()
+    await signInWithPopup(auth, githubProvider).then(() => console.log('success')).catch((e) => {
+        console.log(`GITHUB ERROR, ${e}`)
+    })
+}
 
 export const authCheck = createAsyncThunk('auth-check-thunk', async (_, {dispatch}) => {
     dispatch(toggleInitializing(true))

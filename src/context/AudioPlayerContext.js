@@ -29,8 +29,6 @@ export function AudioPlayerContextProvider({children}) {
         toggleCurrentTrackPlaying(true)
     }
 
-    window.ref = audioRef
-
     const handleSetCurrentAudioIndex = async ({index, goToNext, goToPrev, isEnded = false}) => {
         if (currentTrackIndex !== index) {
             setCurrentTrackIndex(index)
