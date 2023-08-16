@@ -29,6 +29,7 @@ const UploadBtnContainer = ({smallScreen, mediaLoading, uploadMedia}) => {
                 onChange={e => uploadMedia({event: e})}
                 multiple/>
             <ActionBtn isDisabled={rootPage || mediaLoading} label={'Add media'}
+                       switchToIconIfSmallScreen={true}
                        icon={< HiOutlinePlus/>} {...{handleClick, smallScreen}}/>
         </>
     )

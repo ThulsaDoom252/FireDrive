@@ -14,24 +14,29 @@ import {
     setCurrentRoute,
 } from "../redux/mediaSlice";
 import MediaContainer from "./Media/MediaContainer";
-import {toggleHorizontalMode, toggleSmallScreen, toggleUserModal} from "../redux/appSlice";
+import {
+    toggleAlertModal,
+    toggleHorizontalMode,
+    toggleRenameModal,
+    toggleSmallScreen,
+    toggleUserModal
+} from "../redux/appSlice";
 import Overlay from "./Overlay";
 import BurgerMenu from "./common/BurgerMenu";
 import SortInput from "./common/SortInput";
 import AudioPlayer from "./AudioPlayer/AudioPlayer";
 import {PaginatorContext} from "../context/PaginatorContext";
-import AlertContainer from "./Alert/AlertContainer";
 import UploadContainer from "./ButtonContainers/UploadBtnContainer";
 import RemoveAllBtnContainer from "./ButtonContainers/RemoveAllBtnContainer";
 import LogOutContainer from "./ButtonContainers/LogOutContainer";
 import UserModal from "./modals/UserModal";
 import UserAvatar from "./user/UserAvatar";
-import toast from "react-hot-toast";
+import RenameModal from "./modals/RenameModal";
+import AlertModal from "./modals/AlertModal";
 
 const Main = ({
                   currentMediaSet,
                   overlay,
-                  alert,
                   currentRoute,
                   listMedia,
                   toggleSmallScreen,
@@ -44,6 +49,10 @@ const Main = ({
                   searchResults,
                   showUserModal,
                   toggleUserModal,
+                  showRenameModal,
+                  toggleRenameModal,
+                  showAlertModal,
+                  toggleAlertModal
               }) => {
 
     const location = useLocation()
@@ -85,12 +94,14 @@ const Main = ({
 
     return (
         <>
-            {overlay && <Overlay/>}
-            {alert && <AlertContainer/>}
+            {/*{overlay && <Overlay/>}*/}
             <HeaderContainer {...{currentRoute}}/>
             <main className={'w-full h-full'} id={mainContentId}>
+                {showAlertModal && <AlertModal closeModal={toggleAlertModal} showAlertModal={showAlertModal}/>}
                 {showUserModal && <UserModal toggleModal={toggleUserModal}
+
                 />}
+                {showRenameModal && <RenameModal toggleModal={toggleRenameModal}/>}
                 <BurgerMenu smallScreen={smallScreen}>
                     <div className={'mt-5 flex flex-col justify-center'}>
                         <div onClick={() => toggleUserModal(!showUserModal)} className={'mb-5 mx-auto'}><UserAvatar
@@ -128,15 +139,16 @@ const mapStateToProps = (state) => {
         currentRoute: state.media.currentRoute,
         currentMediaSet: state.media.currentMediaSet,
         overlay: state.app.overlay,
-        alert: state.app.alert,
+        showAlertModal: state.app.showAlertModal,
         audioSet: state.media.audioSet,
         searchMode: state.media.searchMode,
         searchResults: state.media.searchResults,
-        showUserModal: state.app.showUserModal
+        showUserModal: state.app.showUserModal,
+        showRenameModal: state.app.showRenameModal,
     }
 }
 
 export default connect(mapStateToProps, {
     listMedia, setCurrentRoute, toggleSmallScreen,
-    toggleHorizontalMode, toggleUserModal,
+    toggleHorizontalMode, toggleUserModal, toggleRenameModal, toggleAlertModal
 })(Main);

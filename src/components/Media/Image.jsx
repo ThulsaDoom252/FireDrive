@@ -14,7 +14,7 @@ const Image = ({
     const imageHovered = hoveredMediaIndex === index
     return (
         <>
-            <div className={'absolute top-0 right-0'}><MediaOptions {...{name, url, index, searchMode}}/></div>
+            <div className={'absolute top-0 right-0'}><MediaOptions {...{name, oldName, url, index, searchMode}}/></div>
             <img
                 className={`w-300 h-300 object-cover rounded  ${imageHovered &&
                 'border-solid border-2 border-indigo-600'}`}

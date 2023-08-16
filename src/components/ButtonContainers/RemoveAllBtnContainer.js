@@ -1,22 +1,26 @@
 import React, {useContext} from 'react';
 import {PagesContext} from "../../context/PagesContext";
 import ActionBtn from "../common/ActionBtn";
-import {connect} from "react-redux";
-import {handleAlert} from "../../redux/appSlice";
-import {alertWarningStyle, removeAllMsg} from "../../common/commonData";
+import {connect,} from "react-redux";
+import {handleAlertModal} from "../../redux/appSlice";
 import {GoTrash} from "react-icons/go";
 
-const RemoveAllBtnContainer = ({mediaLoading, mediaDeleting, handleAlert, currentMediaSet, smallScreen}) => {
+const RemoveAllBtnContainer = ({
+                                   mediaLoading,
+                                   mediaDeleting,
+                                   handleAlert,
+                                   handleAlertModal,
+                                   currentMediaSet,
+                                   smallScreen
+                               }) => {
     const pages = useContext(PagesContext)
     const {
         rootPage,
     } = pages
 
-    const handleClick = () => handleAlert({
-        overlayMode: true,
-        alertContent: removeAllMsg,
-        alertStyle: alertWarningStyle
-    })
+    const handleClick = () => {
+        handleAlertModal({})
+    }
 
     const noCurrentMedia = currentMediaSet.length === 0
     const isDisabled = rootPage || noCurrentMedia || mediaLoading || mediaDeleting
@@ -24,6 +28,7 @@ const RemoveAllBtnContainer = ({mediaLoading, mediaDeleting, handleAlert, curren
     return (
         <>
             <ActionBtn label={'Remove all'}
+                       switchToIconIfSmallScreen={true}
                        icon={< GoTrash/>} {...{handleClick, isDisabled, smallScreen}}/>
         </>
     )
@@ -41,4 +46,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {handleAlert})(RemoveAllBtnContainer);
+export default connect(mapStateToProps, {handleAlertModal})(RemoveAllBtnContainer);

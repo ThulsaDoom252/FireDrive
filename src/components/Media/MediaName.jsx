@@ -21,16 +21,16 @@ const MediaName = ({
 
     return (
         <div className={'w-full'}>
-            {editingName === name ?
-                <input
-                    className={`w-full rounded focus:outline-none text-${textColor} focus:ring-1  focus:ring-blue-300`}
-                    type={"text"}
-                    value={newName} autoFocus={true}
-                    onBlur={handleRenameMedia}
-                    onChange={e => setNewMediaName(e.currentTarget.value)}
+            {/*{editingName === name ?*/}
+            {/*    <input*/}
+            {/*        className={`w-full rounded focus:outline-none text-${textColor} focus:ring-1  focus:ring-blue-300`}*/}
+            {/*        type={"text"}*/}
+            {/*        value={newName} autoFocus={true}*/}
+            {/*        onBlur={handleRenameMedia}*/}
+            {/*        onChange={e => setNewMediaName(e.currentTarget.value)}*/}
 
-                /> :
-                <span title={name}>{truncate(name, 15)}</span>}
+            {/*    /> :*/}
+                <span title={name}>{truncate(name, 15)}</span>
         </div>
     );
 };

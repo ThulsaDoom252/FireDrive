@@ -6,7 +6,7 @@ import {BiLogOut} from "react-icons/bi";
 
 const LogOutContainer = ({smallScreen}) => {
     const handleClick = () => handleLogout()
-    return <ActionBtn label={'logout'} icon={<BiLogOut/>} {...{smallScreen, handleClick}}/>
+    return <ActionBtn   switchToIconIfSmallScreen={true} label={'logout'} icon={<BiLogOut/>} {...{smallScreen, handleClick}}/>
 };
 
 const mapStateToProps = (state) => {

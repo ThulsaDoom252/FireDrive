@@ -13,7 +13,7 @@ import {
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {getDownloadURL, getMetadata, listAll, ref, uploadBytes, deleteObject, updateMetadata} from "firebase/storage";
 import {storage} from "../firebase";
-import {handleAlert} from "./appSlice";
+import {handleAlert, toggleRenameModal} from "./appSlice";
 import {getAuth} from "firebase/auth";
 import {getSpecificState} from "../common/helpers";
 import toast from "react-hot-toast";
@@ -30,6 +30,7 @@ const mediaSlice = createSlice({
         lastPlayedAudioNameBeforeSort: null,
         deletedItemUrl: null,
         newMediaName: null,
+        oldMediaName: null,
         editingMediaName: null,
         sortBy: byDate,
         searchResults: [],
@@ -50,10 +51,14 @@ const mediaSlice = createSlice({
         imagesSet: [],
         videosSet: [],
         audioSet: [],
+        isItemRenaming: false,
     },
     reducers: {
         setDeletedItemUrl(state, action) {
             state.deletedItemUrl = action.payload
+        },
+        toggleIsItemRenaming(state, action) {
+            state.isItemRenaming = action.payload
         },
         setCurrentRoute(state, action) {
             state.currentRoute = action.payload
@@ -89,6 +94,9 @@ const mediaSlice = createSlice({
         },
         setNewMediaName(state, action) {
             state.newMediaName = action.payload
+        },
+        setOldMediaName(state, action) {
+            state.oldMediaName = action.payload
         },
         searchItems(state, action) {
             state.searchResults = state.currentMediaSet.filter(media => media.name.toLowerCase().includes(action.payload))
@@ -291,6 +299,8 @@ export const {
     sortCurrentMediaSet,
     setDeletedItemUrl,
     setLastPlayedAudioNameBeforeSort,
+    setOldMediaName,
+    toggleIsItemRenaming,
 } = mediaSlice.actions;
 
 
@@ -410,8 +420,12 @@ export const renameMedia = createAsyncThunk('rename-thunk', async ({
     const oldRef = ref(storage, `${username}/${folder}/${cacheControl ? originalName : editingName}`)
     const updatedName = `${newName !== '' ? newName : editingName}`
     if (updatedName !== editingName) {
+        dispatch(toggleIsItemRenaming(true))
         await updateMetadata(oldRef, {cacheControl: updatedName})
         dispatch(changeMediaOldNameToNew({editingName, newName, route: currentRoute}))
+        dispatch(toggleIsItemRenaming(false))
+        toast.success('Item renamed')
+        dispatch(toggleRenameModal(false))
     }
 })
 
@@ -431,9 +445,10 @@ export const deleteAllMedia = createAsyncThunk('delete-all-media-thunk', async (
 
 })
 
-export const handleMediaName = createAsyncThunk('handle-media-name-thunk', async ({name}, {dispatch}) => {
+export const handleMediaName = createAsyncThunk('handle-media-name-thunk', async ({name, oldName}, {dispatch}) => {
     dispatch(setNewMediaName(name))
     dispatch(setEditingMediaName(name))
+    dispatch(setOldMediaName(oldName))
 })
 
 

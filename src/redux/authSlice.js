@@ -14,7 +14,7 @@ import {
 import {uploadBytes, ref, getDownloadURL} from "firebase/storage";
 
 import {storage,} from "../firebase";
-import {handleAlert, toggleInitializing} from "./appSlice";
+import {toggleInitializing} from "./appSlice";
 import toast from "react-hot-toast";
 
 
@@ -129,7 +129,7 @@ export const authCheck = createAsyncThunk('auth-check-thunk', async (_, {dispatc
             dispatch(toggleInitializing(false))
         })
     } catch (e) {
-        handleAlert({dispatch}, e, e.toString())
+        console.log(`AUTH CHECK ERROR: ${e}`)
     }
 })
 

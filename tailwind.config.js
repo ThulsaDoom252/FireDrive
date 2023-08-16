@@ -54,7 +54,8 @@ module.exports = {
             },
             maxWidth: {
                 '300': '300px',
-            }
+            },
+
         },
     },
     plugins: [],

@@ -1,7 +1,22 @@
 import React from 'react';
 import clsx from "clsx";
 
-const ActionBtn = ({label = 'button', icon, smallScreen, isFullWidth = false, isDisabled, handleClick}) => {
+
+const actionBtnStyles = {
+    primary: 'bg-purple-500'
+}
+
+const ActionBtn = ({
+                       label = 'button',
+                       switchToIconIfSmallScreen = false,
+                       btnStyle = 'primary',
+                       icon,
+                       children,
+                       smallScreen,
+                       isFullWidth = false,
+                       isDisabled,
+                       handleClick
+                   }) => {
 
     return (
         <>
@@ -11,7 +26,7 @@ const ActionBtn = ({label = 'button', icon, smallScreen, isFullWidth = false, is
                     disabled={isDisabled}
                     onClick={handleClick}
                     className={clsx(`
-                     bg-purple-500
+                     ${btnStyle === 'warning' ? 'bg-yellow-500' : btnStyle === 'danger' ? 'bg-red-600' : 'bg-purple-500'}
                       text-white 
                       font-bold py-2
                        px-4 rounded 
@@ -20,7 +35,7 @@ const ActionBtn = ({label = 'button', icon, smallScreen, isFullWidth = false, is
                         isFullWidth && 'w-full',
                     )}
                 >
-                    {smallScreen ? icon : label}
+                    {switchToIconIfSmallScreen && smallScreen ? icon : label}
                 </button>
             </>
         </>
