@@ -2,7 +2,7 @@ import React from 'react';
 import MediaOptions from "../Options/mediaOptions";
 import {useDispatch} from 'react-redux'
 import MediaName from "./MediaName";
-import {handleInitialModalItemUrl} from "../../redux/appSlice";
+import {handleInitialModalIndex} from "../../redux/appSlice";
 
 const Image = ({
                    url,
@@ -19,7 +19,7 @@ const Image = ({
         <>
             <div className={'absolute top-0 right-0'}><MediaOptions {...{name, oldName, url, index, searchMode}}/></div>
             <img
-                onClick={() => dispatch(handleInitialModalItemUrl({index}))}
+                onClick={() => dispatch(handleInitialModalIndex({index}))}
                 className={`w-300 h-300 object-cover rounded  ${imageHovered &&
                 'border-solid border-2 border-indigo-600'}`}
                 onMouseEnter={() => setHoveredMediaIndex(index)}

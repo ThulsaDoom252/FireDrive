@@ -81,8 +81,11 @@ export function AudioPlayerContextProvider({children}) {
 
     const loadAudio = () => {
         setCurrentTrackName(currentTrack.name)
-        audio.src = currentTrack?.url
-        audio.load()
+        if (audio) {
+            audio.src = currentTrack?.url
+            audio.load()
+        }
+
     }
 
 

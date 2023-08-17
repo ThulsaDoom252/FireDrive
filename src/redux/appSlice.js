@@ -13,6 +13,7 @@ const appSlice = createSlice({
         showUserModal: false,
         showRenameModal: false,
         showImageModal: false,
+        showVideoModal: false,
         showAlertModal: false,
         alertTitle: 'Delete all items',
         alertMessage: removeAllMsg,
@@ -26,6 +27,9 @@ const appSlice = createSlice({
     reducers: {
         toggleSmallScreen(state, action) {
             state.smallScreen = action.payload
+        },
+        toggleVideoModal(state, action) {
+            state.showVideoModal = action.payload
         },
         toggleUserModal(state, action) {
             state.showUserModal = action.payload
@@ -88,6 +92,7 @@ export const {
     setAlertModalContent,
     setCurrentModalItemUrl,
     toggleImageModal,
+    toggleVideoModal,
     setCurrentModalItemIndex,
 } = appSlice.actions
 
@@ -120,16 +125,18 @@ export const handleAlertAction = createAsyncThunk('alert-action-thunk', async ({
     }
 })
 
-export const handleInitialModalItemUrl = createAsyncThunk('modal-item-initial-url-thunk', async ({
-                                                                                                     index,
-                                                                                                     modalType = "Image"
-                                                                                                 }, {dispatch}) => {
+export const handleInitialModalIndex = createAsyncThunk('modal-item-initial-url-thunk', async ({
+                                                                                                   index,
+                                                                                                   modalType = "Image"
+                                                                                               }, {dispatch}) => {
     dispatch(setCurrentModalItemIndex(index))
     await delay(10)
     switch (modalType) {
         case 'Image':
             dispatch(toggleImageModal(true))
             break;
+        case 'video':
+            dispatch(toggleVideoModal(true))
         default:
             void 0
     }

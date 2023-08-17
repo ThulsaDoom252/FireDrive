@@ -19,7 +19,7 @@ import {
     toggleHorizontalMode, toggleImageModal,
     toggleRenameModal,
     toggleSmallScreen,
-    toggleUserModal
+    toggleUserModal, toggleVideoModal
 } from "../redux/appSlice";
 import Overlay from "./Overlay";
 import BurgerMenu from "./common/BurgerMenu";
@@ -35,6 +35,7 @@ import RenameModal from "./modals/RenameModal";
 import AlertModal from "./modals/AlertModal";
 import ImageModal from "./modals/ImageModal";
 import imageModal from "./modals/ImageModal";
+import VideoModal from "./modals/VideoModal";
 
 const Main = ({
                   currentMediaSet,
@@ -53,10 +54,13 @@ const Main = ({
                   showRenameModal,
                   toggleRenameModal,
                   showAlertModal,
+                  showVideoModal,
                   toggleAlertModal,
                   toggleImageModal,
+                  toggleVideoModal,
                   showImageModal,
                   currentModalItemUrl,
+
               }) => {
 
     const location = useLocation()
@@ -100,6 +104,9 @@ const Main = ({
         <>
             {showImageModal &&
                 <ImageModal closeModal={toggleImageModal} modal={showImageModal} url={currentModalItemUrl}/>}
+            {showVideoModal && <VideoModal onClose={toggleVideoModal} modal={showVideoModal}/>}
+
+
             {showAlertModal && <AlertModal closeModal={toggleAlertModal} showAlertModal={showAlertModal}/>}
             <HeaderContainer {...{currentRoute}}/>
             <main className={'w-full h-full'} id={mainContentId}>
@@ -129,9 +136,10 @@ const Main = ({
                                          }}/>}/>}
                 </Routes>
                 <div
-                    className={`w-full  bg-opacity-90 bg-blue-300 h-playerHeight} p-2 rounded ${!showImageModal && 'fixed-bottom'}`}>
+                    className={`w-full  bg-opacity-90 bg-blue-300 h-playerHeight} p-2 rounded ${(!showImageModal && !showVideoModal) && 'fixed-bottom'}`}>
                     <AudioPlayer buttonsBlockWidth={'full'}/></div>
             </main>
+
         </>
 
     );
@@ -151,6 +159,7 @@ const mapStateToProps = (state) => {
         showRenameModal: state.app.showRenameModal,
         showImageModal: state.app.showImageModal,
         currentModalItemUrl: state.app.currentModalItemUrl,
+        showVideoModal: state.app.showVideoModal,
 
     }
 }
@@ -158,5 +167,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
     listMedia, setCurrentRoute, toggleSmallScreen,
     toggleHorizontalMode, toggleUserModal, toggleRenameModal, toggleAlertModal,
-    toggleImageModal
+    toggleImageModal, toggleVideoModal,
 })(Main);

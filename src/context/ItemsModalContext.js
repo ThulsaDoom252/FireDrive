@@ -24,11 +24,13 @@ export const ItemsModalContextProvider = ({children}) => {
     }
 
     const currentModalItemUrl = currentMediaSet[currentModalItemIndex]?.url
+    const currentModalItemName = currentMediaSet[currentModalItemIndex]?.name
 
     const values = {
         currentMediaSet,
         currentModalItemIndex,
         currentModalItemUrl,
+        currentModalItemName,
         handleNextModalItem,
         handlePrevModalItem,
         handleCurrentModalItemIndex,

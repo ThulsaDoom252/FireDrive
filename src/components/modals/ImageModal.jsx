@@ -2,8 +2,11 @@ import React, {useContext} from 'react';
 import {IoIosArrowBack, IoIosArrowForward} from 'react-icons/io'
 import {IoClose} from "react-icons/io5";
 import {ItemsModalContext} from "../../context/ItemsModalContext";
+import Overlay from "../Overlay";
 
 const ImageModal = ({
+
+                        showOverlay = true,
                         arrowSize = 30,
                         closeIconColor = 'white',
                         closeIconSize = 30,
@@ -39,7 +42,8 @@ const ImageModal = ({
             items-center
             justify-center
             ">
-                <div className={'w-full h-full bg-black opacity-50'}></div>
+                {showOverlay &&          <Overlay/>}
+
                 <div className='absolute right-10 top-10 hover:cursor-pointer' onClick={handleCLose}><IoClose
                     size={closeIconSize}
                     color={closeIconColor}/></div>
