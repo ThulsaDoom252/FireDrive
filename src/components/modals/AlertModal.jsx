@@ -38,7 +38,7 @@ const AlertModal = ({
             flex-col
             items-center
             justify-center
-            z-50
+            z-30
             transition'>
             <div className={' w-full flex justify-start items-center flex-col'}>
                 <div className={'absolute right-2 top-2 hover:cursor-pointer transition'}

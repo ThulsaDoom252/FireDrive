@@ -32,16 +32,19 @@ module.exports = {
                 'settingsBar': 'rgba(255,255,255,0.5)'
             },
             width: {
+                '90vw': '90vw',
                 'userModal': '400px',
                 '150': '150px',
                 '200': '200px',
                 '300': '300px',
                 '400': '400px',
                 '500': '500px',
+                '554': '554px',
                 '600': '600px',
                 '800': '800px',
             },
             height: {
+                '90vh': '80h',
                 "45": "45px",
                 "40": "40px",
                 '300': '300px',
@@ -53,7 +56,11 @@ module.exports = {
                 'max': '999999999999'
             },
             maxWidth: {
+                '90screen': '90vw',
                 '300': '300px',
+            },
+            maxHeight: {
+                '90screen': '80vh'
             },
 
         },

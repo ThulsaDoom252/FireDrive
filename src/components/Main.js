@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import HeaderContainer from "./Header/HeaderContainer";
 import Home from "./Home";
 import {
@@ -16,7 +16,7 @@ import {
 import MediaContainer from "./Media/MediaContainer";
 import {
     toggleAlertModal,
-    toggleHorizontalMode,
+    toggleHorizontalMode, toggleImageModal,
     toggleRenameModal,
     toggleSmallScreen,
     toggleUserModal
@@ -33,10 +33,11 @@ import UserModal from "./modals/UserModal";
 import UserAvatar from "./user/UserAvatar";
 import RenameModal from "./modals/RenameModal";
 import AlertModal from "./modals/AlertModal";
+import ImageModal from "./modals/ImageModal";
+import imageModal from "./modals/ImageModal";
 
 const Main = ({
                   currentMediaSet,
-                  overlay,
                   currentRoute,
                   listMedia,
                   toggleSmallScreen,
@@ -52,7 +53,10 @@ const Main = ({
                   showRenameModal,
                   toggleRenameModal,
                   showAlertModal,
-                  toggleAlertModal
+                  toggleAlertModal,
+                  toggleImageModal,
+                  showImageModal,
+                  currentModalItemUrl,
               }) => {
 
     const location = useLocation()
@@ -94,12 +98,12 @@ const Main = ({
 
     return (
         <>
-            {/*{overlay && <Overlay/>}*/}
+            {showImageModal &&
+                <ImageModal closeModal={toggleImageModal} modal={showImageModal} url={currentModalItemUrl}/>}
+            {showAlertModal && <AlertModal closeModal={toggleAlertModal} showAlertModal={showAlertModal}/>}
             <HeaderContainer {...{currentRoute}}/>
             <main className={'w-full h-full'} id={mainContentId}>
-                {showAlertModal && <AlertModal closeModal={toggleAlertModal} showAlertModal={showAlertModal}/>}
                 {showUserModal && <UserModal toggleModal={toggleUserModal}
-
                 />}
                 {showRenameModal && <RenameModal toggleModal={toggleRenameModal}/>}
                 <BurgerMenu smallScreen={smallScreen}>
@@ -124,7 +128,8 @@ const Main = ({
                                              smallScreen,
                                          }}/>}/>}
                 </Routes>
-                <div className={`w-full  bg-opacity-90 fixed-bottom bg-blue-300 h-playerHeight} p-2 rounded`}>
+                <div
+                    className={`w-full  bg-opacity-90 bg-blue-300 h-playerHeight} p-2 rounded ${!showImageModal && 'fixed-bottom'}`}>
                     <AudioPlayer buttonsBlockWidth={'full'}/></div>
             </main>
         </>
@@ -138,17 +143,20 @@ const mapStateToProps = (state) => {
         horizontalMode: state.app.horizontalMode,
         currentRoute: state.media.currentRoute,
         currentMediaSet: state.media.currentMediaSet,
-        overlay: state.app.overlay,
         showAlertModal: state.app.showAlertModal,
         audioSet: state.media.audioSet,
         searchMode: state.media.searchMode,
         searchResults: state.media.searchResults,
         showUserModal: state.app.showUserModal,
         showRenameModal: state.app.showRenameModal,
+        showImageModal: state.app.showImageModal,
+        currentModalItemUrl: state.app.currentModalItemUrl,
+
     }
 }
 
 export default connect(mapStateToProps, {
     listMedia, setCurrentRoute, toggleSmallScreen,
-    toggleHorizontalMode, toggleUserModal, toggleRenameModal, toggleAlertModal
+    toggleHorizontalMode, toggleUserModal, toggleRenameModal, toggleAlertModal,
+    toggleImageModal
 })(Main);

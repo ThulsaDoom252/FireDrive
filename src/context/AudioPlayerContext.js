@@ -81,7 +81,7 @@ export function AudioPlayerContextProvider({children}) {
 
     const loadAudio = () => {
         setCurrentTrackName(currentTrack.name)
-        audio.src = currentTrack.url
+        audio.src = currentTrack?.url
         audio.load()
     }
 
@@ -119,7 +119,7 @@ export function AudioPlayerContextProvider({children}) {
         };
 
         if (!noAudio) {
-            const isCurrentTrackChanged = currentTrack ? currentTrack.url !== audio.src : void 0
+            const isCurrentTrackChanged = currentTrack ? currentTrack.url !== audio?.src : void 0
             if (lastPlayedAudioNameBeforeSort === currentTrackName) {
                 switchToTrackByName(lastPlayedAudioNameBeforeSort)
             } else if (isCurrentTrackChanged && !deletedItemUrl) {

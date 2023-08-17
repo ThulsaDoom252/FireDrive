@@ -468,6 +468,11 @@ export const deleteCurrentItem = createAsyncThunk('delete-current-media-thunk', 
 
 })
 
+// Items (image and videos) in modal
+
+
+
+
 
 
 

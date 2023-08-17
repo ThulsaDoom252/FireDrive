@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {removeAllMsg} from "../common/commonData";
+import {delay, removeAllMsg} from "../common/commonData";
 import {deleteAllMedia} from "./mediaSlice";
 
 const appSlice = createSlice({
@@ -12,6 +12,7 @@ const appSlice = createSlice({
         alertStyle: '',
         showUserModal: false,
         showRenameModal: false,
+        showImageModal: false,
         showAlertModal: false,
         alertTitle: 'Delete all items',
         alertMessage: removeAllMsg,
@@ -19,8 +20,8 @@ const appSlice = createSlice({
         alertBtnStyle: 'danger',
         alertActionType: removeAllMsg,
         showAlertBtn: true,
-
-
+        currentModalItemUrl: '',
+        currentModalItemIndex: 0,
     },
     reducers: {
         toggleSmallScreen(state, action) {
@@ -45,11 +46,17 @@ const appSlice = createSlice({
         toggleOverlay(state, action) {
             state.overlay = action.payload
         },
-         toggleAlertModal(state, action) {
-           state.showAlertModal  = action.payload
-         },
+        toggleAlertModal(state, action) {
+            state.showAlertModal = action.payload
+        },
         toggleInitializing(state, action) {
             state.initializing = action.payload
+        },
+        toggleImageModal(state, action) {
+            state.showImageModal = action.payload
+        },
+        setCurrentModalItemUrl(state, action) {
+            state.currentModalItemUrl = action.payload
         },
         setAlertModalContent(state, action) {
             const {message, title, style, btnStyle, btnLabel, actionType, showBtn} = action.payload
@@ -60,7 +67,11 @@ const appSlice = createSlice({
             state.alertBtnLabel = btnLabel
             state.alertActionType = actionType
             state.showAlertBtn = showBtn
-        }
+        },
+        setCurrentModalItemIndex(state, action) {
+            state.currentModalItemIndex = action.payload
+
+        },
     }
 })
 
@@ -75,6 +86,9 @@ export const {
     toggleUserModal,
     toggleRenameModal,
     setAlertModalContent,
+    setCurrentModalItemUrl,
+    toggleImageModal,
+    setCurrentModalItemIndex,
 } = appSlice.actions
 
 export const handleAlertModal = createAsyncThunk('alertModal-thunk', async ({
@@ -103,22 +117,21 @@ export const handleAlertAction = createAsyncThunk('alert-action-thunk', async ({
             break
         default:
             void 0
-
     }
 })
 
-// export const handleAlert = createAsyncThunk('alert-thunk', async ({
-//                                                                       overlayMode = false,
-//                                                                       alertContent = '',
-//                                                                       alertStyle = null,
-//                                                                       toggle = true
-//                                                                   }, {dispatch}) => {
-//     dispatch(setAlertContent({content: '', alertStyle: ''}))
-//     if (overlayMode) {
-//         dispatch(toggleOverlay(toggle))
-//     }
-//     dispatch(setAlertContent({content: alertContent, style: alertStyle}))
-//     delay(50)
-//     dispatch(toggleAlert(toggle))
-// })
+export const handleInitialModalItemUrl = createAsyncThunk('modal-item-initial-url-thunk', async ({
+                                                                                                     index,
+                                                                                                     modalType = "Image"
+                                                                                                 }, {dispatch}) => {
+    dispatch(setCurrentModalItemIndex(index))
+    await delay(10)
+    switch (modalType) {
+        case 'Image':
+            dispatch(toggleImageModal(true))
+            break;
+        default:
+            void 0
+    }
+})
 
