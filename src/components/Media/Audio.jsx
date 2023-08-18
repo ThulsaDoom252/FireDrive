@@ -1,44 +1,90 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {AiFillPauseCircle, AiFillPlayCircle} from "react-icons/ai";
 import {useContext} from "react";
 import {AudioPlayerContext} from "../../context/AudioPlayerContext";
-import {truncate} from "../../common/commonData";
+import MediaOptions from "../Options/mediaOptions";
+import MediaName from "./MediaName";
+import {formatTime} from "../../common/commonData";
+import {ClipLoader} from "react-spinners";
 
-const Audio = ({audioName, index = 0}) => {
+const Audio = ({
+                   name,
+                   oldName,
+                   url,
+                   searchMode,
+                   audioIndex = 0,
+                   index = 0,
+                   hoveredMediaIndex,
+                   setHoveredMediaIndex,
+                   smallScreen,
+               }) => {
 
     const audioContext = useContext(AudioPlayerContext)
+    const audioRef = useRef(url)
+
+    const itemHovered = hoveredMediaIndex === index && !smallScreen
 
     const {
-        currentAudioIndex,
+        currentTrackName,
+        currentDuration,
         handleSetCurrentAudioIndex,
         isCurrentTrackPlaying,
-        playCurrentTrack
     } = audioContext
 
+    const isTrackFromTheListPlaying = isCurrentTrackPlaying && currentTrackName === name
 
-    const isTrackFromTheListPlaying = isCurrentTrackPlaying && currentAudioIndex === index
-    const isTrackFromTheListNotPlaying = !isCurrentTrackPlaying && currentAudioIndex === index
+    const currentTrackPlaying = currentTrackName === name
+    const currentTrackHovered = hoveredMediaIndex === audioIndex
 
-    const audioRelay = (index) => {
-        if (isTrackFromTheListPlaying || isTrackFromTheListNotPlaying) {
-            playCurrentTrack()
-        } else if (!isTrackFromTheListPlaying || isTrackFromTheListNotPlaying) {
-            handleSetCurrentAudioIndex(index)
-        }
-    }
+    const isDurationIsNan = isNaN(audioRef?.current?.duration)
 
     return (
-        <div
-            className={`${currentAudioIndex === index ? 'bg-yellow-600' : 'bg-blue-500'} -full  h-10 text-white flex items-center mb-5 rounded`}>
-            <div className={'w-10 text-xl h-full flex justify-center items-center '}
-                 onClick={() => audioRelay(index)}>
-                {isTrackFromTheListPlaying ? <AiFillPauseCircle/> : <AiFillPlayCircle/>}
+        <>
+            <audio hidden={true} src={url || ''} ref={audioRef}></audio>
+            <div
+                onClick={() => handleSetCurrentAudioIndex({index: audioIndex})}
+                className={`
+                ${currentTrackPlaying || currentTrackHovered ? 'bg-yellow-600' : 'bg-blue-500'}   
+                h-40  
+                text-white 
+                flex 
+                items-center 
+                mb-5  
+                relative 
+                rounded 
+                cursor-pointer
+                
+                `}
+                onMouseEnter={() => setHoveredMediaIndex(audioIndex)}
+                onMouseLeave={() => setHoveredMediaIndex(null)}
+            >
+                <div>
+                    <div className={'w-10 text-xl h-full flex justify-center items-center hover:cursor-pointer'}
+                    >
+                        {isTrackFromTheListPlaying ? <AiFillPauseCircle/> : <AiFillPlayCircle/>}
+                    </div>
+                </div>
+                <MediaName textColor={'black'} {...{name, oldName}}/>
+                <div className={'absolute top-1/2 transform -translate-y-1/2 right-0 z-50 mr-40 '}>
+                    <MediaOptions initialMode={'show'} itemOptionsHovered={itemHovered} {...{
+                        name,
+                        url,
+                        index,
+                        searchMode
+                    }}/>
+                </div>
+
+                <div className={'flex mr-5 '}>
+                    <div>{currentTrackName === name && `${formatTime(currentDuration)}/`}</div>
+                    <div>{!isDurationIsNan ? formatTime(audioRef.current.duration) :
+                        <ClipLoader color={'orange'} size={20}/>}</div>
+                </div>
+
 
             </div>
-            <p>{truncate(audioName)}</p>
-        </div>
+        </>
+
     );
 };
-
 
 export default Audio;

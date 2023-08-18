@@ -9,6 +9,17 @@ export const truncate = (name, maxCharacters = 15) => {
     }
 }
 
+
+export const setLocalStorageItem = (key, value) => {
+    localStorage.setItem(`${key}`, `${value}`)
+}
+
+export const getLocalStorageItem = (key) => {
+    const currentValue = localStorage.getItem(key)
+    return currentValue
+    debugger
+}
+
 export const delay = (ms) => {
     return new Promise((resolve) => {
         setTimeout(() => {
@@ -16,6 +27,15 @@ export const delay = (ms) => {
         }, ms)
     })
 }
+
+//Format time in mm:ss format
+export const formatTime = (timeInSeconds) => {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = Math.floor(timeInSeconds % 60)
+        .toString()
+        .padStart(2, "0");
+    return `${minutes}:${seconds}`;
+};
 
 // containers id's
 export const wrapperId = 'wrapper'
@@ -33,11 +53,6 @@ export const smallScreenWidth = 768
 //AlertStyles
 export const alertWarningStyle = 'warning'
 export const alertSuccessStyle = 'success'
-
-//AlertModes
-export const alertRemoveAll = 'removeAll'
-export const alertMediaUploaded = `alertMediaUploaded`
-export const alertMediaRemoved = 'alertMediaRemoved'
 
 //AlertMessages
 export const removeAllMsg = 'This will delete all media on current page. Sure you want to continue?'

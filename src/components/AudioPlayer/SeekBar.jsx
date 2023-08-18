@@ -1,7 +1,8 @@
-const SeekBar = ({value, max, onChange}) => {
+const SeekBar = ({value, max, onChange, disabled = false}) => {
     return (
         <input
             type="range"
+            disabled={disabled}
             min="0"
             max={max}
             value={value}
