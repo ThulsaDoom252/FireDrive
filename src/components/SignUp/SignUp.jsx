@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {signInRoute} from "../../common/commonData";
 import {NavLink} from "react-router-dom";
 import {AiOutlineGoogle} from "react-icons/ai";
+import Verification from "./Verification";
 
 const SignUp = ({emailPasswordSignup, isAuthBtnFetching}) => {
     const signUpForm = useFormik({
@@ -28,6 +29,12 @@ const SignUp = ({emailPasswordSignup, isAuthBtnFetching}) => {
     const errors = signUpForm.errors
     const handleChange = signUpForm.handleChange
     const handleSubmit = signUpForm.handleSubmit
+
+    const [verification, toggleVerification] = useState(true)
+
+    if (verification) {
+        return <Verification/>
+    }
 
     return (
         <div
