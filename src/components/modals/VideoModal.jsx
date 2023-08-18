@@ -16,13 +16,14 @@ const VideoModal = ({modal, closeModal, showOverlay = true}) => {
         currentModalItemIndex,
         currentModalItemName,
         handleCurrentModalItemIndex,
+        smallScreen,
     } = ModalContext
     const handleCLose = () => closeModal(false)
 
     return (
         <>
             <MyCustomTransition show={modal}>
-                <div className={'h-screen w-screen fixed z-10 flex justify-center items-center'}>
+                <div className={`h-screen w-screen fixed z-10 flex  justify-center items-center`}>
                     {showOverlay && <Overlay zIndexValue={'0'} toggleModal={closeModal}/>}
                     <button className='absolute right-5 top-5  text-gray-400 hover:text-white' onClick={handleCLose}>
                         <IoClose size={30}/>

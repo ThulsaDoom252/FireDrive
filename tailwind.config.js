@@ -48,6 +48,7 @@ module.exports = {
                 '554': '554px',
                 '600': '600px',
                 '800': '800px',
+                'image-settings': '400px',
             },
             height: {
                 '10%': '10%',
@@ -69,11 +70,13 @@ module.exports = {
             maxWidth: {
                 '65vw': '65vw',
                 '90screen': '90vw',
+                '95vw': '95vw',
                 '300': '300px',
             },
             maxHeight: {
                 '65vh': '65vh',
-                '90screen': '80vh'
+                '90screen': '90vh',
+                '95vh': '95vh',
             },
 
         },

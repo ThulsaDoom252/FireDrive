@@ -104,6 +104,7 @@ const Main = ({
 
     return (
         <>
+
             <ImageModal closeModal={toggleImageModal} modal={showImageModal} url={currentModalItemUrl}/>
             <VideoModal closeModal={toggleVideoModal} modal={showVideoModal}/>
             <AlertModal closeModal={toggleAlertModal} showAlertModal={showAlertModal}/>
