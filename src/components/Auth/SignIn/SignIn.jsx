@@ -2,7 +2,7 @@ import React from 'react';
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import {NavLink} from "react-router-dom";
-import {signUpRoute} from "../../common/commonData";
+import {signUpRoute} from "../../../common/commonData";
 import {FcGoogle} from "react-icons/fc";
 import {FaGithub} from "react-icons/fa";
 

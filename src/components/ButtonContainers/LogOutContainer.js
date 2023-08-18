@@ -4,9 +4,14 @@ import ActionBtn from "../common/ActionBtn";
 import {handleLogout} from "../../redux/authSlice";
 import {BiLogOut} from "react-icons/bi";
 
-const LogOutContainer = ({smallScreen}) => {
+const LogOutContainer = ({smallScreen, handleLogout}) => {
+
     const handleClick = () => handleLogout()
-    return <ActionBtn   switchToIconIfSmallScreen={true} label={'logout'} icon={<BiLogOut/>} {...{smallScreen, handleClick}}/>
+
+    return <ActionBtn switchToIconIfSmallScreen={true}
+                      label={'logout'}
+                      icon={<BiLogOut/>}
+                      {...{smallScreen, handleClick}}/>
 };
 
 const mapStateToProps = (state) => {
@@ -15,4 +20,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, null)(LogOutContainer);
+export default connect(mapStateToProps, {handleLogout})(LogOutContainer);

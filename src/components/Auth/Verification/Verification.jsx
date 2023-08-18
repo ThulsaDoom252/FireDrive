@@ -1,15 +1,22 @@
 import React from 'react';
+import ActionBtn from "../../common/ActionBtn";
 
-const Verification = () => {
+const Verification = ({sendVerificationEmail, handleLogout, email, username}) => {
+
+    const handleSetVerificationEmail = () => {
+        sendVerificationEmail({resend: true})
+    }
+
+
     return (
         <>
             <div className={'container-sm flex items-center  flex-col h-screen'}>
                 <h3 className='
                 mt-5
-                '>Welcome to FireDrive!</h3>
+                '>Welcome to FireDrive {username}</h3>
                 <h4 className='
                 mt-4
-                '>Confirm link has been send to email</h4>
+                '>Confirm link has been send to {email}</h4>
                 <p className='
                 text-lg
                 mt-5
@@ -29,11 +36,19 @@ const Verification = () => {
                     has to offer.</p>
 
                 <div className={'mt-4 flex flex-col justify-center items-center'}>
-                    <button className={'mt-2'}>Resend verification link</button>
-                    <button className={'mt-10'}>Return to login page</button>
+                    <div>
+                        <ActionBtn handleClick={handleSetVerificationEmail} label={'resend verification email'}
+                                   btnStyle={'primary'}/>
+                    </div>
+                    <div className={'mt-5'}>
+                        <ActionBtn label={'Return to login page'} handleClick={handleLogout}
+                                   btnStyle={'primary'}/>
+                    </div>
+
                 </div>
 
-                <p className={'mt-5'}>Thank you for helping us keep FireDrive a safe and secure platform for all of our users. If you have
+                <p className={'mt-5'}>Thank you for helping us keep FireDrive a safe and secure platform for all of our
+                    users. If you have
                     any
                     questions or concerns, please don't hesitate to contact us.</p>
 

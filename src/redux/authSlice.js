@@ -8,14 +8,14 @@ import {
     GoogleAuthProvider,
     GithubAuthProvider,
     onAuthStateChanged,
+    sendEmailVerification,
     signOut,
 } from 'firebase/auth'
-
 import {uploadBytes, ref, getDownloadURL} from "firebase/storage";
-
 import {storage,} from "../firebase";
 import {toggleInitializing} from "./appSlice";
 import toast from "react-hot-toast";
+import {generateRandomString} from "../common/commonData";
 
 
 const authSlice = createSlice({
@@ -24,6 +24,8 @@ const authSlice = createSlice({
         email: '',
         username: '',
         avatar: '',
+        isVerificationEmailSend: false,
+        verificationMode: false,
         isAuthorized: false,
         isAuthBtnFetching: false,
         authError: '',
@@ -43,6 +45,9 @@ const authSlice = createSlice({
         toggleAvatarLoading(state, action) {
             state.isAvatarLoading = action.payload
         },
+        toggleVerificationEmailSendStatus(state, action) {
+            state.isVerificationEmailSend = action.payload
+        },
         toggleAuthStatus(state, action) {
             state.isAuthorized = action.payload
         },
@@ -51,6 +56,9 @@ const authSlice = createSlice({
         },
         setAuthError(state, action) {
             state.authError = action.payload
+        },
+        toggleVerificationMode(state, action) {
+            state.verificationMode = action.payload
         }
     }
 })
@@ -62,7 +70,9 @@ export const {
     toggleAvatarLoading,
     toggleAuthStatus,
     toggleFetchAuthBtn,
-    setAuthError
+    setAuthError,
+    toggleVerificationEmailSendStatus,
+    toggleVerificationMode,
 } = authSlice.actions
 
 export const handleEmailAndPasswordSignUp = createAsyncThunk('email-password-signup-thunk', async ({
@@ -90,10 +100,31 @@ export const handleLogin = createAsyncThunk('login-thunk', async ({email, passwo
     const auth = getAuth()
     dispatch(toggleFetchAuthBtn(true))
     await signInWithEmailAndPassword(auth, email, password)
+        .then((credentials) => {
+            if (!credentials.user.emailVerified) {
+                dispatch(sendVerificationEmail({}))
+            }
+
+        })
         .catch((error) => {
             dispatch(setAuthError(error.code))
         })
+    debugger
     dispatch(toggleFetchAuthBtn(false))
+})
+
+export const sendVerificationEmail = createAsyncThunk('send-verification-thunk', async ({resend}, {dispatch}) => {
+    debugger
+    const auth = getAuth()
+    const user = auth.currentUser
+    try {
+        await sendEmailVerification(user)
+        debugger
+        toast.success('email send')
+    } catch (e) {
+        toast.error('error...')
+        console.log(`ERROR SENDING VERIFICATION EMAIL: ${e}`)
+    }
 })
 
 export const googleAuth = async () => {
@@ -104,39 +135,73 @@ export const googleAuth = async () => {
         .catch((e) => console.log(`auth google error: ${e}`))
 }
 
-export const githubAuth = async () => {
+export const githubAuth = createAsyncThunk('github-auth-thunk', async (_, {dispatch}) => {
     const auth = getAuth()
     const githubProvider = new GithubAuthProvider()
-    await signInWithPopup(auth, githubProvider).then(() => console.log('success')).catch((e) => {
-        console.log(`GITHUB ERROR, ${e}`)
-    })
-}
+    await signInWithPopup(auth, githubProvider)
+        .then(async (credentials) => {
+            if (credentials.user.displayName === null) {
+                const user = credentials.user
+                const randomNumber = generateRandomString(4)
+                await updateProfile(user, {
+                    displayName: `githubUser${randomNumber}`
+                })
+                dispatch(setUserData({
+                    username: auth.currentUser.displayName,
+                    email: user.email,
+                    avatar: user.photoURL
+                }))
+                debugger
+            }
+        })
+        .catch((e) => {
+            console.log(`GITHUB ERROR, ${e}`)
+        })
+})
 
 export const authCheck = createAsyncThunk('auth-check-thunk', async (_, {dispatch}) => {
+    debugger
     dispatch(toggleInitializing(true))
+    debugger
     try {
+        debugger
         const auth = await getAuth()
         onAuthStateChanged(auth, async (user) => {
             if (user === null) {
-                dispatch(toggleAuthStatus(false))
-                dispatch(setUserData({email: '', username: '',}))
-            } else {
-                const {email, displayName, photoURL} = user
                 debugger
-                dispatch(setUserData({email, username: displayName, avatar: photoURL}))
-                dispatch(toggleAuthStatus(true))
+                dispatch(toggleAuthStatus(false))
+                dispatch(setUserData({email: '', username: '', avatar: null}))
             }
+            if (user) {
+                debugger
+                const {email, displayName, photoURL} = user
+                dispatch(setUserData({email, username: displayName, avatar: photoURL}))
+                if (user.providerData[0].providerId === 'github.com' || user.emailVerified) {
+                    debugger
+                    dispatch(toggleAuthStatus(true))
+                } else {
+                    dispatch(toggleVerificationMode(true))
+                }
+            }
+
             dispatch(toggleInitializing(false))
+
         })
     } catch (e) {
         console.log(`AUTH CHECK ERROR: ${e}`)
     }
 })
 
-export const handleLogout = () => {
-    const auth = getAuth()
-    signOut(auth)
-}
+
+export const handleLogout = createAsyncThunk('logout-thunk', async (_, {dispatch}) => {
+    debugger
+    const auth = await getAuth()
+    if (!auth.currentUser.emailVerified) {
+        await dispatch(toggleVerificationMode(false))
+    }
+    return signOut(auth)
+})
+
 
 export const changeAvatar = createAsyncThunk('change-avatar-thunk', async ({avatar}, {dispatch}) => {
     const user = getAuth().currentUser

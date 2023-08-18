@@ -1,17 +1,20 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useFormik} from "formik";
 import * as Yup from "yup";
-import {signInRoute} from "../../common/commonData";
+import {signInRoute} from "../../../common/commonData";
 import {NavLink} from "react-router-dom";
-import {AiOutlineGoogle} from "react-icons/ai";
-import Verification from "./Verification";
+
+
+const testEmail = 'thulsaDev@proton.me'
+const testPassword = 'devastator252'
+const testUserName = 'teta252'
 
 const SignUp = ({emailPasswordSignup, isAuthBtnFetching}) => {
     const signUpForm = useFormik({
         initialValues: {
-            email: '',
-            password: '',
-            username: '',
+            email: testEmail,
+            password: testPassword,
+            username: testUserName,
         },
         validationSchema: Yup.object({
             email: Yup.string().email('use email format').required('email required'),
@@ -30,11 +33,6 @@ const SignUp = ({emailPasswordSignup, isAuthBtnFetching}) => {
     const handleChange = signUpForm.handleChange
     const handleSubmit = signUpForm.handleSubmit
 
-    const [verification, toggleVerification] = useState(true)
-
-    if (verification) {
-        return <Verification/>
-    }
 
     return (
         <div

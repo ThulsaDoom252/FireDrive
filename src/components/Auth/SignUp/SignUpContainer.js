@@ -1,14 +1,19 @@
 import React, {useEffect} from 'react';
 import SignUp from "./SignUp";
-import {rootRoute} from "../../common/commonData";
+import {rootRoute, verificationRoute} from "../../../common/commonData";
 import {Navigate} from "react-router-dom"
-import {handleEmailAndPasswordSignUp, setAuthError} from "../../redux/authSlice";
+import {handleEmailAndPasswordSignUp, setAuthError} from "../../../redux/authSlice";
 import {connect} from "react-redux";
 
-const SignUpContainer = ({isAuth, emailPasswordSignup, isAuthBtnFetching, setAuthError}) => {
+const SignUpContainer = ({isAuth, emailPasswordSignup, isAuthBtnFetching, setAuthError, verificationMode}) => {
     useEffect(() => {
         setAuthError('')
     }, [])
+
+    if (verificationMode) {
+        debugger
+        return <Navigate to={verificationRoute}/>
+    }
 
     if (isAuth) {
         return <Navigate to={rootRoute}/>
@@ -19,7 +24,8 @@ const SignUpContainer = ({isAuth, emailPasswordSignup, isAuthBtnFetching, setAut
 
 const mapStateToProps = (state) => {
     return {
-        isAuthBtnFetching: state.auth.isAuthBtnFetching
+        verificationMode: state.auth.verificationMode,
+        isAuthBtnFetching: state.auth.isAuthBtnFetching,
     }
 }
 

@@ -37,6 +37,20 @@ export const formatTime = (timeInSeconds) => {
     return `${minutes}:${seconds}`;
 };
 
+
+// Generate random string for github username, base on length
+export const generateRandomString = (length) => {
+    let result = '';
+    const characters = '0123456789';
+    const charactersLength = characters.length;
+
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return result;
+}
+
 // containers id's
 export const wrapperId = 'wrapper'
 export const mainContentId = 'content'
@@ -63,6 +77,7 @@ export const imagesRoute = '/images'
 export const videosRoute = '/videos'
 export const audioRoute = '/audio'
 export const rootRoute = '/'
+export const verificationRoute = '/verification'
 export const signInRoute = '/signIn'
 export const signUpRoute = '/signUp'
 

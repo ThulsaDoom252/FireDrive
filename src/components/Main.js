@@ -61,7 +61,6 @@ const Main = ({
                   toggleVideoModal,
                   showImageModal,
                   currentModalItemUrl,
-
               }) => {
 
     const location = useLocation()
@@ -96,6 +95,8 @@ const Main = ({
 
     const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
     const mediaToShow = searchMode ? searchResults : paginatedMedia
+
+
 
     if (!isAuth) {
         return <Navigate to={signInRoute}/>
