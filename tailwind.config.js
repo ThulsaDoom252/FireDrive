@@ -15,6 +15,8 @@ module.exports = {
                 },
             },
             inset: {
+                'volumeBar': '65px',
+                'volumeBarLeft': '-10px',
                 'custom-80': '80px',
                 'custom-57': '57px',
                 'custom-20': '85px',
@@ -34,9 +36,10 @@ module.exports = {
             width: {
                 '80%': '80%',
                 '20%': '20%',
+                '65vw': '65vw',
                 '90vw': '90vw',
                 '80vw': '80vw',
-                'userModal': '400px',
+                'modal': '400px',
                 '150': '150px',
                 '200': '200px',
                 '300': '300px',
@@ -49,6 +52,8 @@ module.exports = {
             height: {
                 '10%': '10%',
                 '20%': '20%',
+                '10vh': '10vh',
+                '65vh': '65vh',
                 '90vh': '90vh',
                 '80vh': '80h',
                 "45": "45px",
@@ -62,10 +67,12 @@ module.exports = {
                 'max': '999999999999'
             },
             maxWidth: {
+                '65vw': '65vw',
                 '90screen': '90vw',
                 '300': '300px',
             },
             maxHeight: {
+                '65vh': '65vh',
                 '90screen': '80vh'
             },
 

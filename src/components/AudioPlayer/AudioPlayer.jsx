@@ -10,6 +10,7 @@ import {BsFillVolumeUpFill, BsVolumeMute} from "react-icons/bs";
 import {LuRepeat, LuRepeat1} from "react-icons/lu";
 import {IoInfinite} from "react-icons/io5";
 import {ImVolumeHigh, ImVolumeMute2} from "react-icons/im";
+import MyCustomTransition from "../common/MyCustomTransition";
 
 const AudioPlayer = ({smallScreenMode, shouldTruncate = false, buttonsBlockWidth = 'full', showTime = false}) => {
 
@@ -34,11 +35,23 @@ const AudioPlayer = ({smallScreenMode, shouldTruncate = false, buttonsBlockWidth
         audioRef,
         volume,
         setVolume,
+        showVolumeBar,
+        toggleVolumeBar,
     } = audioContext
 
     if (noAudio) {
         return <AudioPlayerDisabled/>
     }
+
+
+    const handleMouseEnter = () => {
+        toggleVolumeBar(true)
+    }
+
+    const handleMouseExit = () => {
+        toggleVolumeBar(false)
+    }
+
 
     const handleRepeatMode = () => {
         if (repeatMode === 'none') {
@@ -94,25 +107,31 @@ const AudioPlayer = ({smallScreenMode, shouldTruncate = false, buttonsBlockWidth
                     </button>
                 </div>
                 <div className={`w-${buttonsBlockWidth} flex items-center justify-end `}>
-                    <div className={'w-1/4 flex justify-between mr-10'}>
+                    <div className={'w-20 flex justify-between mr-10 relative'}>
                         <button onClick={handleRepeatMode} className={'hover:bg-blue-400 rounded transition'}>
                             {repeatMode === 'none' ? <LuRepeat size={20}/> : repeatMode === 'once' ?
                                 <LuRepeat1 size={20}/> : <IoInfinite size={20}/>}
 
                         </button>
-                        <div className={'flex space-between relative'}>
-                            <button>
+                        <div>
+                            <MyCustomTransition show={showVolumeBar}>
+                                <div onMouseLeave={handleMouseExit}
+                                     className=' absolute transform -rotate-90 bottom-volumeBar left-volumeBarLeft w-40 h-10  rounded flex justify-center'>
+                                    <input
+                                        className='cursor-pointer'
+                                        type="range"
+                                        min="0"
+                                        max="1"
+                                        step="0.01"
+                                        value={volume}
+                                        onChange={event => handleVolumeChange({event})}
+                                    />
+                                </div>
+                            </MyCustomTransition>
+
+                            <button onMouseEnter={handleMouseEnter}>
                                 {volume !== 0 ? <ImVolumeHigh size={20}/> : <ImVolumeMute2 size={20}/>}
                             </button>
-                            <input
-                                type="range"
-                                min="0"
-                                max="1"
-                                step="0.01"
-                                value={volume}
-                                onChange={event => handleVolumeChange({event})}
-                            />
-
                         </div>
 
                     </div>

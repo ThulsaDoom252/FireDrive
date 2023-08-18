@@ -16,6 +16,7 @@ export function AudioPlayerContextProvider({children}) {
     const [isCurrentTrackPlaying, toggleCurrentTrackPlaying] = useState(false)
     let currentTrack = audioSet[currentTrackIndex] || {url: '', name: ''}
     const [currentTrackName, setCurrentTrackName] = useState('')
+    const [showVolumeBar, toggleVolumeBar] = useState(false)
     const noAudio = audioSet.length === 0
     const audioRef = useRef(null)
     const audio = audioRef.current
@@ -208,6 +209,8 @@ export function AudioPlayerContextProvider({children}) {
         audioRef,
         volume,
         setVolume,
+        showVolumeBar,
+        toggleVolumeBar,
 
     };
 

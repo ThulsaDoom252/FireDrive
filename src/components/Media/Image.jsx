@@ -1,8 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import MediaOptions from "../Options/mediaOptions";
-import {useDispatch} from 'react-redux'
 import MediaName from "./MediaName";
-import {handleInitialModalIndex} from "../../redux/appSlice";
+import OpacityTransition from "../common/MyCustomTransition";
 
 const Image = ({
                    url,
@@ -12,21 +11,44 @@ const Image = ({
                    hoveredMediaIndex,
                    setHoveredMediaIndex,
                    searchMode,
+                   handleInitialModalIndex,
+
                }) => {
     const imageHovered = hoveredMediaIndex === index
-    const dispatch = useDispatch()
+    const [itemOptionsHovered, setItemOptionsHovered] = useState(false)
+
     return (
         <>
-            <div className={'absolute top-0 right-0'}><MediaOptions {...{name, oldName, url, index, searchMode}}/></div>
-            <img
-                onClick={() => dispatch(handleInitialModalIndex({index}))}
-                className={`w-300 h-300 object-cover rounded  ${imageHovered &&
-                'border-solid border-2 border-indigo-600'}`}
-                onMouseEnter={() => setHoveredMediaIndex(index)}
-                onMouseLeave={() => setHoveredMediaIndex(null)}
-                src={url}
-                alt="image"/>
-            <MediaName {...{name, oldName}}/>
+            <div onMouseEnter={() => setHoveredMediaIndex(index)}
+                 onMouseLeave={() => setHoveredMediaIndex(null)}>
+                <OpacityTransition show={(imageHovered || itemOptionsHovered)}>
+                    <div className={'absolute top-0 right-0'}>
+                        <MediaOptions {...{
+                            name,
+                            oldName,
+                            url,
+                            index,
+                            searchMode,
+                            itemOptionsHovered,
+                            setItemOptionsHovered,
+                        }}/></div>
+                </OpacityTransition>
+                <img
+                    onClick={() => handleInitialModalIndex({index})}
+                    className={`
+                w-300 
+                h-300 
+                object-cover 
+                rounded 
+                cursor-pointer 
+                ${imageHovered && 'border-2 border-blue-300'}
+                `}
+
+                    src={url}
+                    alt="image"/>
+                <MediaName {...{name, oldName}}/>
+
+            </div>
 
         </>
 

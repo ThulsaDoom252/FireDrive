@@ -22,6 +22,8 @@ const Audio = ({
     const audioContext = useContext(AudioPlayerContext)
     const audioRef = useRef(url)
 
+    const itemHovered = hoveredMediaIndex === index && !smallScreen
+
     const {
         currentTrackName,
         currentDuration,
@@ -40,21 +42,37 @@ const Audio = ({
         <>
             <audio hidden={true} src={url || ''} ref={audioRef}></audio>
             <div
-                className={`${currentTrackPlaying || currentTrackHovered ? 'bg-yellow-600' : 'bg-blue-500'} -full  h-40  text-white flex items-center mb-5  relative rounded flex`}
+                onClick={() => handleSetCurrentAudioIndex({index: audioIndex})}
+                className={`
+                ${currentTrackPlaying || currentTrackHovered ? 'bg-yellow-600' : 'bg-blue-500'}   
+                h-40  
+                text-white 
+                flex 
+                items-center 
+                mb-5  
+                relative 
+                rounded 
+                cursor-pointer
+                
+                `}
                 onMouseEnter={() => setHoveredMediaIndex(audioIndex)}
                 onMouseLeave={() => setHoveredMediaIndex(null)}
             >
                 <div>
                     <div className={'w-10 text-xl h-full flex justify-center items-center hover:cursor-pointer'}
-                         onClick={() => handleSetCurrentAudioIndex({index: audioIndex})}>
+                    >
                         {isTrackFromTheListPlaying ? <AiFillPauseCircle/> : <AiFillPlayCircle/>}
                     </div>
                 </div>
                 <MediaName textColor={'black'} {...{name, oldName}}/>
-                {(hoveredMediaIndex === index && !smallScreen) &&
-                    <div className={'absolute top-1/2 transform -translate-y-1/2 right-0 z-50 mr-40 '}>
-                        <MediaOptions {...{name, url, index, searchMode}}/>
-                    </div>}
+                <div className={'absolute top-1/2 transform -translate-y-1/2 right-0 z-50 mr-40 '}>
+                    <MediaOptions initialMode={'show'} itemOptionsHovered={itemHovered} {...{
+                        name,
+                        url,
+                        index,
+                        searchMode
+                    }}/>
+                </div>
 
                 <div className={'flex mr-5 '}>
                     <div>{currentTrackName === name && `${formatTime(currentDuration)}/`}</div>

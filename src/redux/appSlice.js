@@ -21,12 +21,15 @@ const appSlice = createSlice({
         alertBtnStyle: 'danger',
         alertActionType: removeAllMsg,
         showAlertBtn: true,
-        currentModalItemUrl: '',
         currentModalItemIndex: 0,
+        itemOptionsHovered: false,
     },
     reducers: {
         toggleSmallScreen(state, action) {
             state.smallScreen = action.payload
+        },
+        setItemOptionsHovered(state, action) {
+            state.itemOptionsHovered = action.payload
         },
         toggleVideoModal(state, action) {
             state.showVideoModal = action.payload
@@ -59,9 +62,6 @@ const appSlice = createSlice({
         toggleImageModal(state, action) {
             state.showImageModal = action.payload
         },
-        setCurrentModalItemUrl(state, action) {
-            state.currentModalItemUrl = action.payload
-        },
         setAlertModalContent(state, action) {
             const {message, title, style, btnStyle, btnLabel, actionType, showBtn} = action.payload
             state.alertMessage = message
@@ -74,8 +74,8 @@ const appSlice = createSlice({
         },
         setCurrentModalItemIndex(state, action) {
             state.currentModalItemIndex = action.payload
-
         },
+
     }
 })
 
@@ -90,10 +90,10 @@ export const {
     toggleUserModal,
     toggleRenameModal,
     setAlertModalContent,
-    setCurrentModalItemUrl,
     toggleImageModal,
     toggleVideoModal,
     setCurrentModalItemIndex,
+    setItemOptionsHovered,
 } = appSlice.actions
 
 export const handleAlertModal = createAsyncThunk('alertModal-thunk', async ({

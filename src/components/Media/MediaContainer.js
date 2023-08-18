@@ -10,13 +10,14 @@ import {
 import {PagesContext} from "../../context/PagesContext";
 import {PaginatorContext} from "../../context/PaginatorContext";
 import {connect} from "react-redux";
+import {handleInitialModalIndex, setItemOptionsHovered} from "../../redux/appSlice";
 
 const MediaContainer = ({
                             currentRoute, handleCurrentMediaSet, handleSearchMedia,
                             toggleNoSearchResults, clearSearchResults, imagesSet, videosSet, audioSet,
                             smallScreen, currentMediaSet, currentMediaFetch, searchResults,
                             toggleSearchMode, setSearchRequest, mediaToShow, searchMode, noSearchResults,
-                            searchRequest,
+                            searchRequest, handleInitialModalIndex, itemOptionsHovered, setItemOptionsHovered
                         }) => {
     const pagesContext = useContext(PagesContext)
     const {imagesPage, videosPage, audioPage} = pagesContext
@@ -83,6 +84,9 @@ const MediaContainer = ({
         noSearchResults,
         isPaginatorHidden,
         paginatorProps,
+        handleInitialModalIndex,
+        itemOptionsHovered,
+        setItemOptionsHovered
     }}/>
 };
 
@@ -95,6 +99,7 @@ const mapStateToProps = (state) => {
         currentMediaFetch: state.media.fetchCurrentMedia,
         noSearchResults: state.media.noSearchResults,
         searchRequest: state.media.searchRequest,
+        itemOptionsHovered: state.app.itemOptionsHovered,
     }
 }
 
@@ -105,4 +110,6 @@ export default connect(mapStateToProps, {
     toggleNoSearchResults,
     clearSearchResults,
     setSearchRequest,
+    handleInitialModalIndex,
+    setItemOptionsHovered,
 })(MediaContainer)

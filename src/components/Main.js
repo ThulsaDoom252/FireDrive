@@ -36,6 +36,7 @@ import AlertModal from "./modals/AlertModal";
 import ImageModal from "./modals/ImageModal";
 import imageModal from "./modals/ImageModal";
 import VideoModal from "./modals/VideoModal";
+import ModalExample from "./Test";
 
 const Main = ({
                   currentMediaSet,
@@ -102,17 +103,15 @@ const Main = ({
 
     return (
         <>
-            {showImageModal &&
-                <ImageModal closeModal={toggleImageModal} modal={showImageModal} url={currentModalItemUrl}/>}
-            {showVideoModal && <VideoModal onClose={toggleVideoModal} modal={showVideoModal}/>}
-
-
-            {showAlertModal && <AlertModal closeModal={toggleAlertModal} showAlertModal={showAlertModal}/>}
+            <ImageModal closeModal={toggleImageModal} modal={showImageModal} url={currentModalItemUrl}/>
+            <VideoModal closeModal={toggleVideoModal} modal={showVideoModal}/>
+            <AlertModal closeModal={toggleAlertModal} showAlertModal={showAlertModal}/>
+            <RenameModal toggleModal={toggleRenameModal} showModal={showRenameModal}/>
             <HeaderContainer {...{currentRoute}}/>
             <main className={'w-full h-full'} id={mainContentId}>
-                {showUserModal && <UserModal toggleModal={toggleUserModal}
-                />}
-                {showRenameModal && <RenameModal toggleModal={toggleRenameModal}/>}
+                <UserModal toggleModal={toggleUserModal}
+                           modal={showUserModal}
+                />
                 <BurgerMenu smallScreen={smallScreen}>
                     <div className={'mt-5 flex flex-col justify-center'}>
                         <div onClick={() => toggleUserModal(!showUserModal)} className={'mb-5 mx-auto'}><UserAvatar
@@ -169,3 +168,8 @@ export default connect(mapStateToProps, {
     toggleHorizontalMode, toggleUserModal, toggleRenameModal, toggleAlertModal,
     toggleImageModal, toggleVideoModal,
 })(Main);
+
+
+
+
+

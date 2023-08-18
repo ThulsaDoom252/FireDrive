@@ -9,7 +9,9 @@ export const ItemsModalContextProvider = ({children}) => {
 
     const dispatch = useDispatch()
     const currentMediaSet = useSelector(state => state.media.currentMediaSet)
+    const searchResults = useSelector(state => state.media.searchResults)
     const currentModalItemIndex = useSelector(state => state.app.currentModalItemIndex)
+    const searchMode = useSelector(state => state.media.searchMode)
 
     const handleCurrentModalItemIndex = (index) => {
         dispatch(setCurrentModalItemIndex(index))
@@ -23,8 +25,8 @@ export const ItemsModalContextProvider = ({children}) => {
         currentModalItemIndex !== 0 && dispatch(setCurrentModalItemIndex(currentModalItemIndex - 1))
     }
 
-    const currentModalItemUrl = currentMediaSet[currentModalItemIndex]?.url
-    const currentModalItemName = currentMediaSet[currentModalItemIndex]?.name
+    const currentModalItemUrl = searchMode ? searchResults[currentModalItemIndex]?.url : currentMediaSet[currentModalItemIndex]?.url
+    const currentModalItemName = searchMode ? searchResults[currentModalItemIndex]?.name : currentMediaSet[currentModalItemIndex]?.name
 
     const values = {
         currentMediaSet,

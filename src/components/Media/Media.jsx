@@ -23,6 +23,9 @@ const Media = ({
                    searchMode,
                    setSearchRequest,
                    smallScreen,
+                   handleInitialModalIndex,
+                   itemOptionsHovered,
+                   setItemOptionsHovered
                }) => {
     return (
         <section
@@ -48,11 +51,21 @@ const Media = ({
                                        index,
                                        searchMode,
                                        hoveredMediaIndex,
-                                       setHoveredMediaIndex
+                                       setHoveredMediaIndex,
+                                       handleInitialModalIndex,
+                                       itemOptionsHovered, setItemOptionsHovered
                                    }}/>
                         </div>) : videosPage ? mediaToShow.map((video, index) =>
                             <div key={index} className="w-full relative flex flex-col justify-center text-center">
-                                <Video url={video.url} name={video.name} oldName={video.oldName} {...{searchMode, index}}/>
+                                <Video url={video.url} name={video.name} oldName={video.oldName} {...{
+                                    searchMode,
+                                    index,
+                                    handleInitialModalIndex,
+                                    hoveredMediaIndex,
+                                    setHoveredMediaIndex,
+                                    itemOptionsHovered, setItemOptionsHovered,
+
+                                }}/>
                             </div>
                         ) :
                         mediaToShow.map(((audio, index) => {
