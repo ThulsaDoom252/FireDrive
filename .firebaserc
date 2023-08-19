@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "firedrive-15296"
-  }
+    "default": "firedrive-15e06",
+    "firedrive": "firedrive-15e06"
+  },
+  "targets": {},
+  "etags": {}
 }

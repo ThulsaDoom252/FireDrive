@@ -28,15 +28,18 @@ const VideoModal = ({modal, closeModal, showOverlay = true}) => {
                     <button className='absolute right-5 top-5  text-gray-400 hover:text-white' onClick={handleCLose}>
                         <IoClose size={30}/>
                     </button>
-                    <div className={'absolute w-80vw h-90vh bg-white  flex rounded'}>
-                        <div className={'w-80% h-full bg-black relative'}>
-                            <ReactPlayer
-                                controls={true}
-                                width={'100%'}
-                                height={'90%'}
-                                url={currentModalItemUrl || ''}/>
-
-                            <div className={'absolute w-full h-10% bottom-0 r-5 pl-5 flex justify-between'}>
+                    <div
+                        className={`flex relative rounded ${smallScreen ? 'w-100% h-100% flex-col items-center' : 'w-80% h-90%'}`}>
+                        <div className={`bg-black ${smallScreen ? 'w-100% h-60%' : 'w-80% h-full'}`}>
+                            <div className={'w-100% h-90%'}>
+                                <ReactPlayer
+                                    height={'100%'}
+                                    width={'100%'}
+                                    className={'object-cover'}
+                                    controls={true}
+                                    url={currentModalItemUrl || ''}/>
+                            </div>
+                            <div className={'w-full h-10% bottom-0 r-5 pl-5 flex justify-between'}>
                                 <div className='text-white'>
                                     {currentModalItemName}
                                 </div>
@@ -55,7 +58,8 @@ const VideoModal = ({modal, closeModal, showOverlay = true}) => {
                                 </div>
                             </div>
                         </div>
-                        <div className={'w-20% h-full flex flex-col justify-start items-center overflow-y-scroll '}>
+                        <div
+                            className={`flex bg-white flex-col justify-start items-center overflow-y-scroll ${smallScreen ? 'w-100% h-40%' : 'w-20% h-full'}`}>
                             {currentMediaSet.map((video, index) =>
                                 <div key={index}
                                      className='w-80% h-32 mt-5 mb-4  rounded flex flex-col justify-center items-center'>
