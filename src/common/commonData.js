@@ -37,6 +37,8 @@ export const formatTime = (timeInSeconds) => {
     return `${minutes}:${seconds}`;
 };
 
+export const stopPropagation = e => e.stopPropagation()
+
 
 // Generate random string for github username, base on length
 export const generateRandomString = (length) => {
@@ -64,13 +66,23 @@ export const bySize = 'by size'
 //SmallScreenMode
 export const smallScreenWidth = 768
 
+
+//ALERT
+
 //AlertStyles
-export const alertWarningStyle = 'warning'
 export const alertSuccessStyle = 'success'
 
-//AlertMessages
+//Title
+export const removeAllItemsTitle = 'Delete all items'
+export const removeCurrentItemTitle = 'Delete item'
+
+//Messages
 export const removeAllMsg = 'This will delete all media on current page. Sure you want to continue?'
-export const mediaUploadedMsg = 'Uploaded! \u{1F600}'
+export const removeCurrentMsg = 'This will delete current item. Sure you want to continue?'
+
+//Actions
+export const removeCurrentItem = 'REMOVE CURRENT ITEM'
+export const removeAllItems = 'REMOVE ALL'
 
 //Routes Refs
 export const imagesRoute = '/images'

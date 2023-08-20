@@ -10,7 +10,7 @@ import {
 import {PagesContext} from "../../context/PagesContext";
 import {PaginatorContext} from "../../context/PaginatorContext";
 import {connect} from "react-redux";
-import {handleInitialModalIndex, setItemOptionsHovered} from "../../redux/appSlice";
+import {handleInitialModalItem, setItemOptionsHovered} from "../../redux/appSlice";
 
 const MediaContainer = ({
                             currentRoute, handleCurrentMediaSet, handleSearchMedia,
@@ -110,6 +110,6 @@ export default connect(mapStateToProps, {
     toggleNoSearchResults,
     clearSearchResults,
     setSearchRequest,
-    handleInitialModalIndex,
+    handleInitialModalIndex: handleInitialModalItem,
     setItemOptionsHovered,
 })(MediaContainer)

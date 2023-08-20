@@ -1,10 +1,10 @@
 import React, {createContext, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {setCurrentModalItemIndex} from "../redux/appSlice";
-
+import {setCurrentModalItemIndex, toggleRenameModal} from "../redux/appSlice";
+import {handleMediaName} from "../redux/mediaSlice";
+import {delay} from "../common/commonData";
 
 export const ItemsModalContext = createContext();
-
 export const ItemsModalContextProvider = ({children}) => {
 
     const dispatch = useDispatch()
@@ -14,6 +14,10 @@ export const ItemsModalContextProvider = ({children}) => {
     const currentModalItemIndex = useSelector(state => state.app.currentModalItemIndex)
     const searchMode = useSelector(state => state.media.searchMode)
     const [fullScreen, toggleFullScreen] = useState(false)
+
+    const currentModalItemUrl = searchMode ? searchResults[currentModalItemIndex]?.url : currentMediaSet[currentModalItemIndex]?.url
+    const currentModalItemName = searchMode ? searchResults[currentModalItemIndex]?.name : currentMediaSet[currentModalItemIndex]?.name
+    const currentModalItemOldName = searchMode ? searchResults[currentModalItemIndex]?.oldName : currentMediaSet[currentModalItemIndex]?.oldName
 
     const handleCurrentModalItemIndex = (index) => {
         dispatch(setCurrentModalItemIndex(index))
@@ -29,17 +33,23 @@ export const ItemsModalContextProvider = ({children}) => {
         currentModalItemIndex !== 0 && dispatch(setCurrentModalItemIndex(currentModalItemIndex - 1))
     }
 
-    const currentModalItemUrl = searchMode ? searchResults[currentModalItemIndex]?.url : currentMediaSet[currentModalItemIndex]?.url
-    const currentModalItemName = searchMode ? searchResults[currentModalItemIndex]?.name : currentMediaSet[currentModalItemIndex]?.name
+
+    const handleRenameModal = async () => {
+        dispatch(handleMediaName({name: currentModalItemName, oldName: currentModalItemOldName}))
+        await delay(50)
+        dispatch(toggleRenameModal(true))
+    }
 
     const values = {
         currentMediaSet,
         currentModalItemIndex,
         currentModalItemUrl,
         currentModalItemName,
+        currentModalItemOldName,
         handleNextModalItem,
         handlePrevModalItem,
         handleCurrentModalItemIndex,
+        handleRenameModal,
         fullScreen,
         toggleFullScreen,
         searchMode,
@@ -54,3 +64,4 @@ export const ItemsModalContextProvider = ({children}) => {
         </ItemsModalContext.Provider>
     );
 };
+

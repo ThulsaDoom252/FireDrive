@@ -19,7 +19,7 @@ const SignUp = ({emailPasswordSignup, isAuthBtnFetching}) => {
         validationSchema: Yup.object({
             email: Yup.string().email('use email format').required('email required'),
             password: Yup.string().required('password required'),
-            username: Yup.string().min(5).max(10).required('username required')
+            username: Yup.string().min(5).max(20).required('username required')
         }),
         onSubmit: ({email, password, username}) => {
             emailPasswordSignup({email, password, username})

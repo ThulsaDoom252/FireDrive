@@ -4,16 +4,23 @@ import {IoClose} from "react-icons/io5";
 import {ItemsModalContext} from "../../context/ItemsModalContext";
 import MyCustomTransition from "../common/MyCustomTransition";
 import {AiOutlineFullscreenExit} from "react-icons/ai";
+import {useDispatch} from "react-redux";
+import {handleAlertModal} from "../../redux/appSlice";
+import Overlay from "../common/Overlay";
+import ModalContainer from "./ModalContainer";
+import {removeCurrentItem, removeCurrentItemTitle, removeCurrentMsg} from "../../common/commonData";
 
 const ImageModal = ({
                         overlayColor = 'bg-gray-900',
-                        overlayOpacity = 'bg-opacity-95',
-                        overlayZIndex = 'z-10',
+                        overlayOpacity = 'opacity-95',
+                        showOverlay = true,
                         arrowSize = 30,
                         closeIconColor = 'white',
                         closeIconSize = 30,
+                        toggleShareModal,
                         modal,
                         closeModal,
+                        setAlertActionType,
                     }) => {
 
 
@@ -29,6 +36,7 @@ const ImageModal = ({
         searchMode,
         searchResults,
         smallScreen,
+        handleRenameModal
     } = modalContext
 
     const prevArrowDisabled = currentModalItemIndex === 0
@@ -40,25 +48,20 @@ const ImageModal = ({
     }
     const stopPropagation = (e) => e.stopPropagation()
 
+    /// In test mode *********
+    const dispatch = useDispatch()
     const tesImageUrl = 'https://wallpapers.com/images/featured/mountain-t6qhv1lk4j0au09t.jpg'
+    const handleDeleteCurrentItem = () => {
+        setAlertActionType(removeCurrentMsg)
+        dispatch(handleAlertModal({title: removeCurrentItemTitle, message: removeCurrentMsg, actionType: removeCurrentItem}))
+    }
+    //****************
+
 
     return (
         <MyCustomTransition show={modal}>
-            <div
-                onClick={handleCLose}
-                className={`
-            w-screen
-            h-screen
-            fixed
-            flex
-            flex-col
-            items-center
-            justify-center
-            ${overlayColor}
-            ${overlayOpacity}
-            ${overlayZIndex}
-            hover:cursor-pointer
-            `}>
+            <ModalContainer handleClose={handleCLose}>
+                {showOverlay && <Overlay bg={overlayColor} opacity={overlayOpacity}/>}
                 <div hidden={fullScreen} className='absolute right-10  top-10 hover:cursor-pointer'
                      onClick={handleCLose}><IoClose
                     size={closeIconSize}
@@ -90,9 +93,10 @@ const ImageModal = ({
                     w-image-settings
                     text-white
                     '>
-                    <div onClick={() => toggleFullScreen(true)}>FullScreen</div>
-                    <div>Share</div>
-                    <div>Delete</div>
+                    <div className='hover:cursor-pointer' onClick={() => toggleFullScreen(true)}>FullScreen</div>
+                    <div className='hover:cursor-pointer' onClick={handleRenameModal}>Rename</div>
+                    <div className='hover:cursor-pointer' onClick={() => toggleShareModal(true)}>Share</div>
+                    <div className='hover:cursor-pointer' onClick={handleDeleteCurrentItem}>Delete</div>
                 </div>
 
                 <button disabled={prevArrowDisabled}
@@ -114,7 +118,7 @@ const ImageModal = ({
                         onClick={handleNextModalItem}>
                     <IoIosArrowForward
                         size={arrowSize}/></button>
-            </div>
+            </ModalContainer>
         </MyCustomTransition>
     )
         ;

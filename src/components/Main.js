@@ -15,9 +15,10 @@ import {
 } from "../redux/mediaSlice";
 import MediaContainer from "./Media/MediaContainer";
 import {
+    setAlertActionType,
     toggleAlertModal,
     toggleHorizontalMode, toggleImageModal,
-    toggleRenameModal,
+    toggleRenameModal, toggleShareModal,
     toggleSmallScreen,
     toggleUserModal, toggleVideoModal
 } from "../redux/appSlice";
@@ -37,6 +38,7 @@ import ImageModal from "./modals/ImageModal";
 import imageModal from "./modals/ImageModal";
 import VideoModal from "./modals/VideoModal";
 import ModalExample from "./Test";
+import ShareModal from "./modals/ShareModal";
 
 const Main = ({
                   currentMediaSet,
@@ -61,6 +63,10 @@ const Main = ({
                   toggleVideoModal,
                   showImageModal,
                   currentModalItemUrl,
+                  showShareModal,
+                  toggleShareModal,
+                  alertActionType,
+                  setAlertActionType,
               }) => {
 
     const location = useLocation()
@@ -97,23 +103,23 @@ const Main = ({
     const mediaToShow = searchMode ? searchResults : paginatedMedia
 
 
-
     if (!isAuth) {
         return <Navigate to={signInRoute}/>
     }
 
     return (
         <>
-
-            <ImageModal closeModal={toggleImageModal} modal={showImageModal} url={currentModalItemUrl}/>
-            <VideoModal closeModal={toggleVideoModal} modal={showVideoModal}/>
-            <AlertModal closeModal={toggleAlertModal} showAlertModal={showAlertModal}/>
+            <AlertModal closeModal={toggleAlertModal}
+                        showAlertModal={showAlertModal}/>
             <RenameModal toggleModal={toggleRenameModal} showModal={showRenameModal}/>
+            <ShareModal toggleModal={toggleShareModal} showModal={showShareModal}/>
+            <VideoModal closeModal={toggleVideoModal} modal={showVideoModal}/>
+            <ImageModal closeModal={toggleImageModal} modal={showImageModal} url={currentModalItemUrl}
+                        toggleShareModal={toggleShareModal} setAlertActionType={setAlertActionType}/>
+            <UserModal toggleModal={toggleUserModal}
+                       modal={showUserModal}/>
             <HeaderContainer {...{currentRoute}}/>
             <main className={'w-full h-full'} id={mainContentId}>
-                <UserModal toggleModal={toggleUserModal}
-                           modal={showUserModal}
-                />
                 <BurgerMenu smallScreen={smallScreen}>
                     <div className={'mt-5 flex flex-col justify-center'}>
                         <div onClick={() => toggleUserModal(!showUserModal)} className={'mb-5 mx-auto'}><UserAvatar
@@ -140,7 +146,6 @@ const Main = ({
                     className={`w-full  bg-opacity-90 bg-blue-300 h-playerHeight} p-2 rounded ${(!showImageModal && !showVideoModal) && 'fixed-bottom'}`}>
                     <AudioPlayer buttonsBlockWidth={'full'}/></div>
             </main>
-
         </>
 
     );
@@ -161,6 +166,8 @@ const mapStateToProps = (state) => {
         showImageModal: state.app.showImageModal,
         currentModalItemUrl: state.app.currentModalItemUrl,
         showVideoModal: state.app.showVideoModal,
+        showShareModal: state.app.showShareModal,
+        alertActionType: state.app.alertActionType,
 
     }
 }
@@ -168,7 +175,7 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
     listMedia, setCurrentRoute, toggleSmallScreen,
     toggleHorizontalMode, toggleUserModal, toggleRenameModal, toggleAlertModal,
-    toggleImageModal, toggleVideoModal,
+    toggleImageModal, toggleVideoModal, toggleShareModal, setAlertActionType,
 })(Main);
 
 

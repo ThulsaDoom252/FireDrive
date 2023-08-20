@@ -4,11 +4,11 @@ import ActionBtn from "../common/ActionBtn";
 import {connect,} from "react-redux";
 import {handleAlertModal} from "../../redux/appSlice";
 import {GoTrash} from "react-icons/go";
+import {removeAllItems, removeAllItemsTitle, removeAllMsg} from "../../common/commonData";
 
 const RemoveAllBtnContainer = ({
                                    mediaLoading,
                                    mediaDeleting,
-                                   handleAlert,
                                    handleAlertModal,
                                    currentMediaSet,
                                    smallScreen
@@ -19,7 +19,11 @@ const RemoveAllBtnContainer = ({
     } = pages
 
     const handleClick = () => {
-        handleAlertModal({})
+        handleAlertModal({
+            message: removeAllMsg,
+            title: removeAllItemsTitle,
+            actionType: removeAllItems,
+        })
     }
 
     const noCurrentMedia = currentMediaSet.length === 0

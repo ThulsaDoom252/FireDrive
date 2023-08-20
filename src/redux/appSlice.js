@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {delay, removeAllMsg} from "../common/commonData";
-import {deleteAllMedia} from "./mediaSlice";
+import {delay, removeAllItems, removeAllMsg, removeCurrentItem, removeCurrentMsg} from "../common/commonData";
+import {deleteAllMedia, deleteCurrentItem, setOldMediaName} from "./mediaSlice";
 
 const appSlice = createSlice({
     name: 'app-slice',
@@ -15,11 +15,12 @@ const appSlice = createSlice({
         showImageModal: false,
         showVideoModal: false,
         showAlertModal: false,
-        alertTitle: 'Delete all items',
-        alertMessage: removeAllMsg,
-        alertBtnLabel: 'Delete',
-        alertBtnStyle: 'danger',
-        alertActionType: removeAllMsg,
+        showShareModal: false,
+        alertTitle: '',
+        alertMessage: '',
+        alertBtnLabel: '',
+        alertBtnStyle: '',
+        alertActionType: '',
         showAlertBtn: true,
         currentModalItemIndex: 0,
         itemOptionsHovered: false,
@@ -39,6 +40,9 @@ const appSlice = createSlice({
         },
         toggleRenameModal(state, action) {
             state.showRenameModal = action.payload
+        },
+        setAlertActionType(state, action) {
+            state.alertActionType = action.payload
         },
         setAlertContent(state, action) {
             const {content, style} = action.payload
@@ -62,6 +66,9 @@ const appSlice = createSlice({
         toggleImageModal(state, action) {
             state.showImageModal = action.payload
         },
+        toggleShareModal(state, action) {
+            state.showShareModal = action.payload
+        },
         setAlertModalContent(state, action) {
             const {message, title, style, btnStyle, btnLabel, actionType, showBtn} = action.payload
             state.alertMessage = message
@@ -84,6 +91,7 @@ export const {
     toggleSmallScreen,
     toggleAlertModal,
     toggleOverlay,
+    toggleShareModal,
     toggleInitializing,
     toggleHorizontalMode,
     setAlertContent,
@@ -94,41 +102,48 @@ export const {
     toggleVideoModal,
     setCurrentModalItemIndex,
     setItemOptionsHovered,
+    setAlertActionType,
 } = appSlice.actions
 
 export const handleAlertModal = createAsyncThunk('alertModal-thunk', async ({
                                                                                 type = 'danger',
-                                                                                title = 'Delete All items',
-                                                                                message = removeAllMsg,
+                                                                                title,
+                                                                                message,
                                                                                 btnStyle = 'danger',
                                                                                 btnLabel = 'Delete',
                                                                                 showBtn = true,
-                                                                                actionType = removeAllMsg,
+                                                                                actionType,
                                                                             }, {dispatch}) => {
+    debugger
     await dispatch(setAlertModalContent({type, title, message, btnStyle, btnLabel, showBtn, actionType}))
     dispatch(toggleAlertModal(true))
 })
 
 
 export const handleAlertAction = createAsyncThunk('alert-action-thunk', async ({
-                                                                                   actionType = removeAllMsg,
+                                                                                   actionType,
+                                                                                   route, url, index, searchMode,
                                                                                }, {dispatch}) => {
 
     switch (actionType) {
-        case removeAllMsg:
+        case removeAllItems:
             await dispatch(deleteAllMedia())
             dispatch(toggleAlertModal(false))
-            // dispatch(handleAlert({overlayMode: true, toggle: false}))
             break
+        case removeCurrentItem:
+            debugger
+            await dispatch(deleteCurrentItem({route, url, index, searchMode}))
+            dispatch(toggleAlertModal(false))
         default:
             void 0
+
     }
 })
 
-export const handleInitialModalIndex = createAsyncThunk('modal-item-initial-url-thunk', async ({
-                                                                                                   index,
-                                                                                                   modalType = "Image"
-                                                                                               }, {dispatch}) => {
+export const handleInitialModalItem = createAsyncThunk('modal-item-initial-url-thunk', async ({
+                                                                                                  index,
+                                                                                                  modalType = "Image",
+                                                                                              }, {dispatch}) => {
     dispatch(setCurrentModalItemIndex(index))
     await delay(10)
     switch (modalType) {

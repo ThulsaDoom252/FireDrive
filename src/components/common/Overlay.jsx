@@ -1,8 +1,11 @@
 import React from 'react';
 
-const Overlay = ({zIndex = 10}) => {
+const Overlay = ({bg = 'bg-gray-600', opacity = 'opacity-50'}) => {
     return (
-        <div className={`w-screen h-screen bg-black opacity-50 z-${zIndex}`}/>
+        <div className={`absolute w-full h-full
+        ${bg}
+        ${opacity}
+        `}/>
     );
 };
 

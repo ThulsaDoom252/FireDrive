@@ -65,12 +65,12 @@ const Video = ({
                         onEnded={() => setIsPlaying(false)}
                         onProgress={handleProgress}
                     />
-                    <div className="absolute bottom-5 text-white left-2">
+                    <div className="absolute bottom-5 text-white left-2 flex">
                         <MyCustomTransition show={isPlaying}>
                             {formatTime(currentTime)}
                             {' / '}
-                            {playerRef.current && formatTime(playerRef.current.getDuration())}
                         </MyCustomTransition>
+                        {playerRef.current && formatTime(playerRef.current.getDuration())}
                     </div>
                 </div>
                 <MediaName {...{name, oldName}} />

@@ -1,9 +1,11 @@
 import React from 'react';
-import {CgCloseR} from "react-icons/cg";
 import {connect} from "react-redux";
 import {handleMediaName, renameMedia, setNewMediaName} from "../../redux/mediaSlice";
-import Modal from "./Modal";
 import MyCustomTransition from "../common/MyCustomTransition";
+import {IoClose} from "react-icons/io5";
+import Overlay from "../common/Overlay";
+import MyModal from "../common/MyModal";
+import ModalContainer from "./ModalContainer";
 
 const RenameModal = ({
                          oldName,
@@ -27,33 +29,27 @@ const RenameModal = ({
     return (
         <>
             <MyCustomTransition show={showModal}>
-                <Modal modalZIndex={'20'}>
-                    <div className="
-            absolute
-            top-0
-            right-0
-            text-gray-400
-            hover:text-black
-            cursor-pointer
-            "
-                         onClick={() => toggleModal(false)}
-                    ><CgCloseR size={20}/></div>
-                    <div className={'mx-auto'}>
-                        <input className='border-b-2
-                        border-gray-300
-                        focus:outline-none'
-                               value={newName}
-                               autoFocus={true}
-                               type='text'
-                               onChange={e => setNewMediaName(e.currentTarget.value)}/>
-                    </div>
-
-                    <button
-                        disabled={isRenameBtnDisabled}
-                        onClick={handleRenameMedia}
-                        className={`absolute bottom-1 right-0 disabled:bg-gray-400 bg-blue-500 text-white rounded mr-8 ${isRenameBtnDisabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}>Rename
-                    </button>
-                </Modal>
+                <ModalContainer zIndex={'z-2'}>
+                    <Overlay/>
+                    <div className={'absolute  top-5 right-5 text-white'}
+                         onClick={() => toggleModal(false)}><IoClose/></div>
+                    <MyModal>
+                        <div className={'mx-auto'}>
+                            <input className='border-b-2
+                            border-gray-300
+                            focus:outline-none'
+                                   value={newName}
+                                   autoFocus={true}
+                                   type='text'
+                                   onChange={e => setNewMediaName(e.currentTarget.value)}/>
+                        </div>
+                        <button
+                            disabled={isRenameBtnDisabled}
+                            onClick={handleRenameMedia}
+                            className={`disabled:bg-gray-400 bg-blue-500 text-white rounded mr-8 ${isRenameBtnDisabled ? 'cursor-not-allowed' : 'cursor-pointer'}`}>Rename
+                        </button>
+                    </MyModal>
+                </ModalContainer>
             </MyCustomTransition>
         </>
     );

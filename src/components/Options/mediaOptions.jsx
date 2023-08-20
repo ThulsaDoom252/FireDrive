@@ -5,7 +5,7 @@ import {BsDownload, BsPencilFill, BsThreeDots, BsTrash} from "react-icons/bs";
 import {TelegramShareButton, ViberShareButton} from "react-share";
 import {FaTelegram, FaViber} from "react-icons/fa";
 import {toggleRenameModal} from "../../redux/appSlice";
-import {delay} from "../../common/commonData";
+import {delay, stopPropagation} from "../../common/commonData";
 import MyCustomTransition from "../common/MyCustomTransition";
 
 
@@ -42,9 +42,6 @@ const MediaOptions = ({
         initialMode === 'hide' && setItemOptionsHovered(false)
     }
 
-    const stopPropagation = e => {
-        e.stopPropagation()
-    }
     return (
         <div
             onClick={stopPropagation}

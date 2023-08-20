@@ -410,6 +410,7 @@ export const renameMedia = createAsyncThunk('rename-thunk', async ({
                                                                        newName,
                                                                        originalName,
                                                                    }, {dispatch}) => {
+    debugger
     const auth = getAuth()
     const {payload} = await dispatch(getSpecificState({keys: ["currentRoute"]}))
     const [currentRoute] = payload
@@ -420,14 +421,20 @@ export const renameMedia = createAsyncThunk('rename-thunk', async ({
     const folder = imagesPage ? imagesRoute : videosPage ? videosRoute : audioRoute
     const oldRef = ref(storage, `${username}/${folder}/${cacheControl ? originalName : editingName}`)
     const updatedName = `${newName !== '' ? newName : editingName}`
-    if (updatedName !== editingName) {
-        dispatch(toggleIsItemRenaming(true))
-        await updateMetadata(oldRef, {cacheControl: updatedName})
-        dispatch(changeMediaOldNameToNew({editingName, newName, route: currentRoute}))
+    try {
+        if (updatedName !== editingName) {
+            dispatch(toggleIsItemRenaming(true))
+            await updateMetadata(oldRef, {cacheControl: updatedName})
+            dispatch(changeMediaOldNameToNew({editingName, newName, route: currentRoute}))
+            toast.success('Item renamed')
+        }
+    } catch (e) {
+        alert(`RENAMING ERROR: ${e}`)
+    } finally {
         dispatch(toggleIsItemRenaming(false))
-        toast.success('Item renamed')
         dispatch(toggleRenameModal(false))
     }
+
 })
 
 
@@ -447,6 +454,7 @@ export const deleteAllMedia = createAsyncThunk('delete-all-media-thunk', async (
 })
 
 export const handleMediaName = createAsyncThunk('handle-media-name-thunk', async ({name, oldName}, {dispatch}) => {
+    debugger
     dispatch(setNewMediaName(name))
     dispatch(setEditingMediaName(name))
     dispatch(setOldMediaName(oldName))

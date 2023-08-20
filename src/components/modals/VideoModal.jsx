@@ -1,12 +1,20 @@
 import React, {useContext} from 'react';
-import Overlay from "../Overlay";
 import ReactPlayer from "react-player";
 import {IoClose} from "react-icons/io5";
 import {ItemsModalContext} from "../../context/ItemsModalContext";
 import MyCustomTransition from "../common/MyCustomTransition";
 import MediaOptions from "../Options/mediaOptions";
+import ModalVideoItem from "../Media/ModalVideoItem";
+import Overlay from "../common/Overlay";
+import ModalContainer from "./ModalContainer";
 
-const VideoModal = ({modal, closeModal, showOverlay = true}) => {
+const VideoModal = ({
+                        modal,
+                        closeModal,
+                        showOverlay = true,
+                        overlayColor = 'bg-gray-900',
+                        overlayOpacity = 'opacity-95'
+                    }) => {
 
     const ModalContext = useContext(ItemsModalContext)
 
@@ -15,6 +23,7 @@ const VideoModal = ({modal, closeModal, showOverlay = true}) => {
         currentModalItemUrl,
         currentModalItemIndex,
         currentModalItemName,
+        currentModalItemOldName,
         handleCurrentModalItemIndex,
         smallScreen,
     } = ModalContext
@@ -23,15 +32,15 @@ const VideoModal = ({modal, closeModal, showOverlay = true}) => {
     return (
         <>
             <MyCustomTransition show={modal}>
-                <div className={`h-screen w-screen fixed z-10 flex  justify-center items-center`}>
-                    {showOverlay && <Overlay zIndexValue={'0'} toggleModal={closeModal}/>}
+                <ModalContainer>
+                    {showOverlay && <Overlay bg={overlayColor} opacity={overlayOpacity}/>}
                     <button className='absolute right-5 top-5  text-gray-400 hover:text-white' onClick={handleCLose}>
                         <IoClose size={30}/>
                     </button>
                     <div
                         className={`flex relative rounded ${smallScreen ? 'w-100% h-100% flex-col items-center' : 'w-80% h-90%'}`}>
                         <div className={`bg-black ${smallScreen ? 'w-100% h-60%' : 'w-80% h-full'}`}>
-                            <div className={'w-100% h-90%'}>
+                            <div className={'w-100% h-85%'}>
                                 <ReactPlayer
                                     height={'100%'}
                                     width={'100%'}
@@ -39,8 +48,9 @@ const VideoModal = ({modal, closeModal, showOverlay = true}) => {
                                     controls={true}
                                     url={currentModalItemUrl || ''}/>
                             </div>
-                            <div className={'w-full h-10% bottom-0 r-5 pl-5 flex justify-between'}>
-                                <div className='text-white'>
+                            <div
+                                className={`w-full h-15% bottom-0 r-5 pl-5 flex justify-between items-center ${smallScreen && 'border-t-2 border-white'}`}>
+                                <div className='text-white text-center'>
                                     {currentModalItemName}
                                 </div>
                                 <div><MediaOptions initialMode={'show'}
@@ -48,6 +58,7 @@ const VideoModal = ({modal, closeModal, showOverlay = true}) => {
                                                    url={currentModalItemUrl}
                                                    index={currentModalItemIndex}
                                                    name={currentModalItemName}
+                                                   oldName={currentModalItemOldName}
                                                    showBg={false}
                                                    tgIconColor={'white'}
                                                    vbIconColor={'white'}
@@ -59,21 +70,15 @@ const VideoModal = ({modal, closeModal, showOverlay = true}) => {
                             </div>
                         </div>
                         <div
-                            className={`flex bg-white flex-col justify-start items-center overflow-y-scroll ${smallScreen ? 'w-100% h-40%' : 'w-20% h-full'}`}>
-                            {currentMediaSet.map((video, index) =>
-                                <div key={index}
-                                     className='w-80% h-32 mt-5 mb-4  rounded flex flex-col justify-center items-center'>
-                                    <div
-                                        onClick={() => handleCurrentModalItemIndex(index)}
-                                        className={`w-full h-full  bg-black rounded ${video.url === currentModalItemUrl && 'border-4 border-amber-300'} flex items-center justify-center cursor-pointer`}>
-                                        <ReactPlayer url={video?.url || ''} height={'98%'} width={'98%'}/>
-                                    </div>
-                                    <div className={'text-black w-full text-center'}>{video?.name || ''}</div>
-                                </div>
+                            className={`flex bg-white flex-col justify-start items-center overflow-y-scroll ${smallScreen ? 'w-100% h-40% pb-12' : 'w-20% h-full'}`}>
+                            {currentMediaSet.map((video, index) => <ModalVideoItem item={video}
+                                                                                   onClick={handleCurrentModalItemIndex}
+                                                                                   index={index}
+                                                                                   currentModalItemUrl={currentModalItemUrl}/>
                             )}
                         </div>
                     </div>
-                </div>
+                </ModalContainer>
             </MyCustomTransition>
         </>
     );

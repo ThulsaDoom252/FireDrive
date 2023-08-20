@@ -3,8 +3,9 @@ import {CgCloseR} from "react-icons/cg";
 import {connect} from "react-redux";
 import {changeAvatar} from "../../redux/authSlice";
 import CurrentUser from "../user/CurrentUser";
-import Modal from "./Modal";
 import MyCustomTransition from "../common/MyCustomTransition";
+import MyModal from "../common/MyModal";
+import ModalContainer from "./ModalContainer";
 
 const UserModal = ({
                        toggleModal,
@@ -30,24 +31,29 @@ const UserModal = ({
 
     return (
         <MyCustomTransition show={modal}>
-            <Modal>
-                <input type="file" hidden={true} ref={hiddenFileInput} onChange={uploadPhoto}/>
-                <div className="
+            <ModalContainer zIndex={'z-max'} handleClose={handleClose}>
+                <MyModal width={'w-auto'} padding={'p-5'}>
+                    <input type="file" hidden={true} ref={hiddenFileInput} onChange={uploadPhoto}/>
+                    <div className="
             absolute
             top-0
             right-0
             "
-                     onClick={handleClose}
-                ><CgCloseR size={20} color={'gray'}/></div>
-                <CurrentUser/>
-                <hr/>
-                <div className="w-full flex justify-end">
-                    <button disabled={isAvatarLoading} onClick={uploadPhoto}
-                            className='disabled:bg-gray-400 mb-3 bg-blue-500 text-white rounded mr-8'>Change
-                        avatar
-                    </button>
-                </div>
-            </Modal>
+                         onClick={handleClose}
+                    ><CgCloseR size={20} color={'gray'}/></div>
+                    <div className={'flex flex-col justify-center items-center'}>
+                        <CurrentUser/>
+                        <hr/>
+                        <div className="w-full flex justify-end">
+                            <button disabled={isAvatarLoading} onClick={uploadPhoto}
+                                    className='disabled:bg-gray-400 mb-3 bg-blue-500 text-white rounded mr-8'>Change
+                                avatar
+                            </button>
+                        </div>
+
+                    </div>
+                </MyModal>
+            </ModalContainer>
         </MyCustomTransition>
 
 
