@@ -1,8 +1,8 @@
 import React, {createContext, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {setCurrentModalItemIndex, toggleRenameModal} from "../redux/appSlice";
+import {handleAlertModal, setCurrentModalItemIndex, setModalType} from "../redux/appSlice";
 import {handleMediaName} from "../redux/mediaSlice";
-import {delay} from "../common/commonData";
+import {delay, removeCurrentItem, removeCurrentItemTitle, removeCurrentMsg, renameModal} from "../common/commonData";
 
 export const ItemsModalContext = createContext();
 export const ItemsModalContextProvider = ({children}) => {
@@ -33,11 +33,19 @@ export const ItemsModalContextProvider = ({children}) => {
         currentModalItemIndex !== 0 && dispatch(setCurrentModalItemIndex(currentModalItemIndex - 1))
     }
 
+    const handleDeleteCurrentModalItem = () => {
+        dispatch(handleAlertModal({
+            title: removeCurrentItemTitle,
+            message: removeCurrentMsg,
+            actionType: removeCurrentItem
+        }))
+    }
+
 
     const handleRenameModal = async () => {
         dispatch(handleMediaName({name: currentModalItemName, oldName: currentModalItemOldName}))
         await delay(50)
-        dispatch(toggleRenameModal(true))
+        dispatch(setModalType(renameModal))
     }
 
     const values = {
@@ -50,6 +58,7 @@ export const ItemsModalContextProvider = ({children}) => {
         handlePrevModalItem,
         handleCurrentModalItemIndex,
         handleRenameModal,
+        handleDeleteCurrentModalItem,
         fullScreen,
         toggleFullScreen,
         searchMode,

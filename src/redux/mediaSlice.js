@@ -1,11 +1,10 @@
 import {
-    alertMediaUploaded, alertSuccessStyle,
     audio,
     audioOnly,
     audioRoute, byDate, byName, bySize, defaultRef, delay,
     images,
     imagesOnly,
-    imagesRoute, mediaFetchMode, mediaUploadedMsg, mediaUploadMode,
+    imagesRoute, mediaFetchMode,  mediaUploadMode, noModal,
     rootRoute, videos,
     videosOnly,
     videosRoute
@@ -13,7 +12,7 @@ import {
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {getDownloadURL, getMetadata, listAll, ref, uploadBytes, deleteObject, updateMetadata} from "firebase/storage";
 import {storage} from "../firebase";
-import {handleAlert, toggleRenameModal} from "./appSlice";
+import {setModalType} from "./appSlice";
 import {getAuth} from "firebase/auth";
 import {getSpecificState} from "../common/helpers";
 import toast from "react-hot-toast";
@@ -432,7 +431,7 @@ export const renameMedia = createAsyncThunk('rename-thunk', async ({
         alert(`RENAMING ERROR: ${e}`)
     } finally {
         dispatch(toggleIsItemRenaming(false))
-        dispatch(toggleRenameModal(false))
+        dispatch(setModalType(noModal))
     }
 
 })

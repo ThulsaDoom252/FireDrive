@@ -6,6 +6,7 @@ import {IoClose} from "react-icons/io5";
 import Overlay from "../common/Overlay";
 import MyModal from "../common/MyModal";
 import ModalContainer from "./ModalContainer";
+import {noModal} from "../../common/commonData";
 
 const RenameModal = ({
                          oldName,
@@ -32,7 +33,7 @@ const RenameModal = ({
                 <ModalContainer zIndex={'z-2'}>
                     <Overlay/>
                     <div className={'absolute  top-5 right-5 text-white'}
-                         onClick={() => toggleModal(false)}><IoClose/></div>
+                         onClick={() => toggleModal(noModal)}><IoClose/></div>
                     <MyModal>
                         <div className={'mx-auto'}>
                             <input className='border-b-2

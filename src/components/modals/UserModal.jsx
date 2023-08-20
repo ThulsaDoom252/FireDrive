@@ -6,12 +6,13 @@ import CurrentUser from "../user/CurrentUser";
 import MyCustomTransition from "../common/MyCustomTransition";
 import MyModal from "../common/MyModal";
 import ModalContainer from "./ModalContainer";
+import {noModal} from "../../common/commonData";
 
 const UserModal = ({
                        toggleModal,
                        changeAvatar,
                        isAvatarLoading,
-                       modal,
+                       showModal,
                    }) => {
 
     const hiddenFileInput = useRef(null)
@@ -27,10 +28,10 @@ const UserModal = ({
         input.click();
     };
 
-    const handleClose = () => toggleModal(!modal)
+    const handleClose = () => toggleModal(noModal)
 
     return (
-        <MyCustomTransition show={modal}>
+        <MyCustomTransition show={showModal}>
             <ModalContainer zIndex={'z-max'} handleClose={handleClose}>
                 <MyModal width={'w-auto'} padding={'p-5'}>
                     <input type="file" hidden={true} ref={hiddenFileInput} onChange={uploadPhoto}/>

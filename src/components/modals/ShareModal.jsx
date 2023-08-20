@@ -5,7 +5,7 @@ import MyModal from "../common/MyModal";
 import Overlay from "../common/Overlay";
 import {ItemsModalContext} from "../../context/ItemsModalContext";
 import {FacebookShareButton, TelegramShareButton, ViberShareButton} from "react-share";
-import {stopPropagation} from "../../common/commonData";
+import {noModal, stopPropagation} from "../../common/commonData";
 import {SiFacebook, SiTelegram, SiViber} from "react-icons/si";
 
 const ShareModal = ({showModal, toggleModal}) => {
@@ -15,7 +15,7 @@ const ShareModal = ({showModal, toggleModal}) => {
     const {currentModalItemUrl} = itemsModal
     return (
         <MyCustomTransition show={showModal}>
-            <ModalContainer handleClose={() => toggleModal(false)} zIndex={'z-2'}>
+            <ModalContainer handleClose={() => toggleModal(noModal)} zIndex={'z-2'}>
                 <Overlay/>
                 <MyModal flex={true} width={'w-auto'}>
                     <div onClick={stopPropagation} className={'w-200 flex justify-between p-2 items-center '}>

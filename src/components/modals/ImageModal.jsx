@@ -4,11 +4,9 @@ import {IoClose} from "react-icons/io5";
 import {ItemsModalContext} from "../../context/ItemsModalContext";
 import MyCustomTransition from "../common/MyCustomTransition";
 import {AiOutlineFullscreenExit} from "react-icons/ai";
-import {useDispatch} from "react-redux";
-import {handleAlertModal} from "../../redux/appSlice";
 import Overlay from "../common/Overlay";
 import ModalContainer from "./ModalContainer";
-import {removeCurrentItem, removeCurrentItemTitle, removeCurrentMsg} from "../../common/commonData";
+import {noModal, shareModal, stopPropagation} from "../../common/commonData";
 
 const ImageModal = ({
                         overlayColor = 'bg-gray-900',
@@ -17,10 +15,8 @@ const ImageModal = ({
                         arrowSize = 30,
                         closeIconColor = 'white',
                         closeIconSize = 30,
-                        toggleShareModal,
-                        modal,
-                        closeModal,
-                        setAlertActionType,
+                        toggleModal,
+                        showModal,
                     }) => {
 
 
@@ -31,6 +27,7 @@ const ImageModal = ({
         currentModalItemIndex,
         handleNextModalItem,
         handlePrevModalItem,
+        handleDeleteCurrentModalItem,
         fullScreen,
         toggleFullScreen,
         searchMode,
@@ -44,22 +41,12 @@ const ImageModal = ({
 
     const handleCLose = () => {
         fullScreen && toggleFullScreen(false)
-        closeModal(!modal)
+        toggleModal(noModal)
     }
-    const stopPropagation = (e) => e.stopPropagation()
-
-    /// In test mode *********
-    const dispatch = useDispatch()
     const tesImageUrl = 'https://wallpapers.com/images/featured/mountain-t6qhv1lk4j0au09t.jpg'
-    const handleDeleteCurrentItem = () => {
-        setAlertActionType(removeCurrentMsg)
-        dispatch(handleAlertModal({title: removeCurrentItemTitle, message: removeCurrentMsg, actionType: removeCurrentItem}))
-    }
-    //****************
-
 
     return (
-        <MyCustomTransition show={modal}>
+        <MyCustomTransition show={showModal}>
             <ModalContainer handleClose={handleCLose}>
                 {showOverlay && <Overlay bg={overlayColor} opacity={overlayOpacity}/>}
                 <div hidden={fullScreen} className='absolute right-10  top-10 hover:cursor-pointer'
@@ -95,11 +82,11 @@ const ImageModal = ({
                     '>
                     <div className='hover:cursor-pointer' onClick={() => toggleFullScreen(true)}>FullScreen</div>
                     <div className='hover:cursor-pointer' onClick={handleRenameModal}>Rename</div>
-                    <div className='hover:cursor-pointer' onClick={() => toggleShareModal(true)}>Share</div>
-                    <div className='hover:cursor-pointer' onClick={handleDeleteCurrentItem}>Delete</div>
+                    <div className='hover:cursor-pointer' onClick={() => toggleModal(shareModal)}>Share</div>
+                    <div className='hover:cursor-pointer' onClick={handleDeleteCurrentModalItem}>Delete</div>
                 </div>
 
-                <button disabled={prevArrowDisabled}
+                <button hidden={smallScreen} disabled={prevArrowDisabled}
                         className={`
                 absolute 
                 left-5 
@@ -109,7 +96,7 @@ const ImageModal = ({
                         onClick={handlePrevModalItem}>
                     <IoIosArrowBack
                         size={arrowSize}/></button>
-                <button disabled={nextArrowDisabled} className={`
+                <button hidden={fullScreen} disabled={nextArrowDisabled} className={`
                 absolute 
                 right-5
                 border-0 

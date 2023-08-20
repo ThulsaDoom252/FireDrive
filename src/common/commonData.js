@@ -40,22 +40,21 @@ export const formatTime = (timeInSeconds) => {
 export const stopPropagation = e => e.stopPropagation()
 
 
-// Generate random string for github username, base on length
+// Generate random string for github username, base on length (Whe authorizing with github -  username no settings up automatically"
 export const generateRandomString = (length) => {
     let result = '';
     const characters = '0123456789';
     const charactersLength = characters.length;
-
     for (let i = 0; i < length; i++) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-
     return result;
 }
 
 // containers id's
 export const wrapperId = 'wrapper'
 export const mainContentId = 'content'
+
 
 //Sort media types
 export const byDate = 'by date'
@@ -67,9 +66,22 @@ export const bySize = 'by size'
 export const smallScreenWidth = 768
 
 
+//Modals
+
+//Types
+export const AlertModal = 'ALERT MODAL'
+export const UserModal = 'USER MODAL'
+export const renameModal = 'RENAME MODAL'
+export const imageModal = 'IMAGES MODAL'
+export const videoModal = 'VIDEO MODAL'
+
+export const shareModal = 'SHARE MODAL'
+export const noModal = 'NO MODAL'
+
+
 //ALERT
 
-//AlertStyles
+//Styles
 export const alertSuccessStyle = 'success'
 
 //Title

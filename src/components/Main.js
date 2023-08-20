@@ -1,11 +1,12 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import HeaderContainer from "./Header/HeaderContainer";
 import Home from "./Home";
 import {
+    imageModal,
     mainContentId,
-    mediaTypes, rootRoute,
+    mediaTypes, renameModal, rootRoute, shareModal,
     signInRoute,
-    smallScreenWidth,
+    smallScreenWidth, videoModal,
 } from "../common/commonData";
 import {Routes, Route, Navigate, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
@@ -15,14 +16,11 @@ import {
 } from "../redux/mediaSlice";
 import MediaContainer from "./Media/MediaContainer";
 import {
-    setAlertActionType,
-    toggleAlertModal,
-    toggleHorizontalMode, toggleImageModal,
-    toggleRenameModal, toggleShareModal,
+    handleAlertAction,
+    setItemModalType, setModalType,
+    toggleHorizontalMode,
     toggleSmallScreen,
-    toggleUserModal, toggleVideoModal
 } from "../redux/appSlice";
-import Overlay from "./Overlay";
 import BurgerMenu from "./common/BurgerMenu";
 import SortInput from "./common/SortInput";
 import AudioPlayer from "./AudioPlayer/AudioPlayer";
@@ -35,10 +33,10 @@ import UserAvatar from "./user/UserAvatar";
 import RenameModal from "./modals/RenameModal";
 import AlertModal from "./modals/AlertModal";
 import ImageModal from "./modals/ImageModal";
-import imageModal from "./modals/ImageModal";
 import VideoModal from "./modals/VideoModal";
-import ModalExample from "./Test";
 import ShareModal from "./modals/ShareModal";
+import alertModal from "./modals/AlertModal";
+import userModal from "./modals/UserModal";
 
 const Main = ({
                   currentMediaSet,
@@ -52,21 +50,14 @@ const Main = ({
                   smallScreen,
                   searchMode,
                   searchResults,
-                  showUserModal,
-                  toggleUserModal,
-                  showRenameModal,
-                  toggleRenameModal,
-                  showAlertModal,
                   showVideoModal,
-                  toggleAlertModal,
-                  toggleImageModal,
-                  toggleVideoModal,
                   showImageModal,
                   currentModalItemUrl,
-                  showShareModal,
-                  toggleShareModal,
-                  alertActionType,
-                  setAlertActionType,
+                  modalType,
+                  itemModalType,
+                  setModalType,
+                  setItemModalType,
+                  handleAlertAction,
               }) => {
 
     const location = useLocation()
@@ -102,27 +93,27 @@ const Main = ({
     const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
     const mediaToShow = searchMode ? searchResults : paginatedMedia
 
-
     if (!isAuth) {
         return <Navigate to={signInRoute}/>
     }
 
     return (
         <>
-            <AlertModal closeModal={toggleAlertModal}
-                        showAlertModal={showAlertModal}/>
-            <RenameModal toggleModal={toggleRenameModal} showModal={showRenameModal}/>
-            <ShareModal toggleModal={toggleShareModal} showModal={showShareModal}/>
-            <VideoModal closeModal={toggleVideoModal} modal={showVideoModal}/>
-            <ImageModal closeModal={toggleImageModal} modal={showImageModal} url={currentModalItemUrl}
-                        toggleShareModal={toggleShareModal} setAlertActionType={setAlertActionType}/>
-            <UserModal toggleModal={toggleUserModal}
-                       modal={showUserModal}/>
+            <AlertModal toggleModal={setModalType}
+                        showAlertModal={modalType === alertModal}
+                        handleAlertAction={handleAlertAction}
+            />
+            <RenameModal toggleModal={setModalType} showModal={modalType === renameModal}/>
+            <ShareModal toggleModal={setModalType} showModal={modalType === shareModal}/>
+            <VideoModal toggleModal={setItemModalType} showModal={itemModalType === videoModal}/>
+            <ImageModal toggleModal={setItemModalType} showModal={itemModalType === imageModal} url={currentModalItemUrl}/>
+            <UserModal toggleModal={setModalType}
+                       showModal={modalType === userModal}/>
             <HeaderContainer {...{currentRoute}}/>
             <main className={'w-full h-full'} id={mainContentId}>
                 <BurgerMenu smallScreen={smallScreen}>
                     <div className={'mt-5 flex flex-col justify-center'}>
-                        <div onClick={() => toggleUserModal(!showUserModal)} className={'mb-5 mx-auto'}><UserAvatar
+                        <div onClick={() => setModalType(userModal)} className={'mb-5 mx-auto'}><UserAvatar
                         /></div>
                         <div className={'mb-5 mx-auto'}><UploadContainer/></div>
                         <div className={'mb-5 mx-auto'}><RemoveAllBtnContainer/></div>
@@ -157,25 +148,18 @@ const mapStateToProps = (state) => {
         horizontalMode: state.app.horizontalMode,
         currentRoute: state.media.currentRoute,
         currentMediaSet: state.media.currentMediaSet,
-        showAlertModal: state.app.showAlertModal,
         audioSet: state.media.audioSet,
         searchMode: state.media.searchMode,
         searchResults: state.media.searchResults,
-        showUserModal: state.app.showUserModal,
-        showRenameModal: state.app.showRenameModal,
-        showImageModal: state.app.showImageModal,
         currentModalItemUrl: state.app.currentModalItemUrl,
-        showVideoModal: state.app.showVideoModal,
-        showShareModal: state.app.showShareModal,
-        alertActionType: state.app.alertActionType,
-
+        modalType: state.app.modalType,
+        itemModalType: state.app.itemModalType,
     }
 }
 
 export default connect(mapStateToProps, {
     listMedia, setCurrentRoute, toggleSmallScreen,
-    toggleHorizontalMode, toggleUserModal, toggleRenameModal, toggleAlertModal,
-    toggleImageModal, toggleVideoModal, toggleShareModal, setAlertActionType,
+    toggleHorizontalMode, setModalType, setItemModalType, handleAlertAction,
 })(Main);
 
 

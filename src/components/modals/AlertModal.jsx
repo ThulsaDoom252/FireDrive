@@ -3,11 +3,10 @@ import {GoAlert} from "react-icons/go";
 import {IoClose} from "react-icons/io5";
 import ActionBtn from "../common/ActionBtn";
 import {connect} from "react-redux";
-import {handleAlertAction} from "../../redux/appSlice";
 import MyCustomTransition from "../common/MyCustomTransition";
 import {
     audioRoute,
-    imagesRoute,
+    imagesRoute, noModal,
     removeAllItems,
     removeCurrentItem,
     videosRoute
@@ -25,12 +24,13 @@ const AlertModal = ({
                         alertTitle,
                         alertActionType,
                         handleAlertAction,
-                        closeModal,
+                        toggleModal,
                         showAlertModal,
+
                     }) => {
 
     const handleClose = () => {
-        closeModal(!showAlertModal)
+        toggleModal(noModal)
     }
 
     const modalContext = useContext(ItemsModalContext)
@@ -48,10 +48,8 @@ const AlertModal = ({
 
 
     const handleAction = () => {
-        debugger
         switch (alertActionType) {
             case removeCurrentItem:
-                debugger
                 handleAlertAction({
                     actionType: alertActionType,
                     url: currentModalItemUrl,
@@ -61,13 +59,11 @@ const AlertModal = ({
                 })
                 break
             case removeAllItems:
-                debugger
                 handleAlertAction({actionType: alertActionType})
                 break
             default:
                 void 0
         }
-
     }
 
     return (
@@ -117,4 +113,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, {handleAlertAction})(AlertModal);
+export default connect(mapStateToProps, null)(AlertModal);

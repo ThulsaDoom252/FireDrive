@@ -4,15 +4,16 @@ import {deleteCurrentItem, handleMediaName} from "../../redux/mediaSlice";
 import {BsDownload, BsPencilFill, BsThreeDots, BsTrash} from "react-icons/bs";
 import {TelegramShareButton, ViberShareButton} from "react-share";
 import {FaTelegram, FaViber} from "react-icons/fa";
-import {toggleRenameModal} from "../../redux/appSlice";
-import {delay, stopPropagation} from "../../common/commonData";
+import {setModalType} from "../../redux/appSlice";
+import {delay, renameModal, stopPropagation} from "../../common/commonData";
 import MyCustomTransition from "../common/MyCustomTransition";
+
 
 
 const MediaOptions = ({
                           handleMediaName,
                           deleteCurrentItem,
-                          toggleRenameModal,
+                          setModalType,
                           name,
                           oldName,
                           tgIconColor = 'rgb(77, 171, 247)',
@@ -31,7 +32,7 @@ const MediaOptions = ({
     const handleRenameModal = async () => {
         handleMediaName({name, oldName})
         await delay(50)
-        toggleRenameModal(true)
+        setModalType(renameModal)
     }
 
     const handleMouseEnter = () => {
@@ -85,4 +86,4 @@ const mapStateToProps = (state) => {
 }
 
 
-export default connect(mapStateToProps, {handleMediaName, toggleRenameModal, deleteCurrentItem})(MediaOptions);
+export default connect(mapStateToProps, {handleMediaName, setModalType, deleteCurrentItem})(MediaOptions);
