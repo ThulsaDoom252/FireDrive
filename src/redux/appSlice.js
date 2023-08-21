@@ -7,7 +7,7 @@ const appSlice = createSlice({
     name: 'app-slice',
     initialState: {
         initializing: false,
-        smallScreen: window.innerWidth < 768,
+        smallScreen: false,
         horizontalMode: false,
         modalType: '',
         itemModalType: '',
@@ -89,7 +89,6 @@ export const handleAlertModal = createAsyncThunk('alertModal-thunk', async ({
                                                                                 showBtn = true,
                                                                                 actionType,
                                                                             }, {dispatch}) => {
-    debugger
     await dispatch(setAlertModalContent({type, title, message, btnStyle, btnLabel, showBtn, actionType}))
     dispatch(setModalType(alertModal))
 })
@@ -106,7 +105,6 @@ export const handleAlertAction = createAsyncThunk('alert-action-thunk', async ({
             dispatch(setModalType(noModal))
             break
         case removeCurrentItem:
-            debugger
             await dispatch(deleteCurrentItem({route, url, index, searchMode}))
             dispatch(setModalType(noModal))
             break;

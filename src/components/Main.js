@@ -37,6 +37,8 @@ import VideoModal from "./modals/VideoModal";
 import ShareModal from "./modals/ShareModal";
 import alertModal from "./modals/AlertModal";
 import userModal from "./modals/UserModal";
+import toast from "react-hot-toast";
+import MediaQuery from "react-responsive";
 
 const Main = ({
                   currentMediaSet,
@@ -77,11 +79,7 @@ const Main = ({
 
     const handleResize = () => {
         toggleSmallScreen(window.innerWidth <= smallScreenWidth)
-        if (smallScreen && window.innerWidth > window.innerHeight) {
-            toggleHorizontalMode(true)
-        } else {
-            horizontalMode && toggleHorizontalMode(false)
-        }
+        toggleHorizontalMode(smallScreen && (window.innerWidth > window.innerHeight))
     }
 
     useEffect(() => {
@@ -99,6 +97,15 @@ const Main = ({
 
     return (
         <>
+            <MediaQuery orientation="landscape">
+                {(matches) =>
+                    matches ? (
+                        <div>Экран в альбомной ориентации</div>
+                    ) : (
+                        <div>Экран в портретной ориентации</div>
+                    )
+                }
+            </MediaQuery>
             <AlertModal toggleModal={setModalType}
                         showAlertModal={modalType === alertModal}
                         handleAlertAction={handleAlertAction}
@@ -106,7 +113,8 @@ const Main = ({
             <RenameModal toggleModal={setModalType} showModal={modalType === renameModal}/>
             <ShareModal toggleModal={setModalType} showModal={modalType === shareModal}/>
             <VideoModal toggleModal={setItemModalType} showModal={itemModalType === videoModal}/>
-            <ImageModal toggleModal={setItemModalType} showModal={itemModalType === imageModal} url={currentModalItemUrl}/>
+            <ImageModal toggleModal={setItemModalType} showModal={itemModalType === imageModal}
+                        url={currentModalItemUrl}/>
             <UserModal toggleModal={setModalType}
                        showModal={modalType === userModal}/>
             <HeaderContainer {...{currentRoute}}/>
@@ -134,7 +142,7 @@ const Main = ({
                                          }}/>}/>}
                 </Routes>
                 <div
-                    className={`w-full  bg-opacity-90 bg-blue-300 h-playerHeight} p-2 rounded ${(!showImageModal && !showVideoModal) && 'fixed-bottom'}`}>
+                    className={`w-full  bg-opacity-90 bg-blue-300 h-playerHeight} p-2 rounded ${itemModalType !== imageModal && itemModalType !== videoModal && 'fixed-bottom'}`}>
                     <AudioPlayer buttonsBlockWidth={'full'}/></div>
             </main>
         </>

@@ -1,7 +1,7 @@
 import {
     audio,
     audioOnly,
-    audioRoute, byDate, byName, bySize, defaultRef, delay,
+    audioRoute, byDate, byName, bySize, defaultRef,
     images,
     imagesOnly,
     imagesRoute, mediaFetchMode,  mediaUploadMode, noModal,
@@ -355,13 +355,11 @@ export const listMedia = createAsyncThunk('listMedia-thunk', async ({mediaType},
     const username = auth.currentUser.displayName
     dispatch(toggleFetchMedia({mediaType, toggle: true}))
     const data = await listAll(ref(storage, `${username}/${mediaType}`))
-    debugger
     const results = await Promise.all(data.items.map((item) => Promise.all([getDownloadURL(item), getMetadata(item)])))
     const mediaData = filterMediaData(results, mediaFetchMode)
     dispatch(setMediaSet({mediaType, mediaData}))
     dispatch(changeListedMediaName({mediaType}))
     dispatch(toggleFetchMedia({mediaType, toggle: false}))
-    debugger
 })
 
 
@@ -409,7 +407,6 @@ export const renameMedia = createAsyncThunk('rename-thunk', async ({
                                                                        newName,
                                                                        originalName,
                                                                    }, {dispatch}) => {
-    debugger
     const auth = getAuth()
     const {payload} = await dispatch(getSpecificState({keys: ["currentRoute"]}))
     const [currentRoute] = payload
@@ -453,7 +450,6 @@ export const deleteAllMedia = createAsyncThunk('delete-all-media-thunk', async (
 })
 
 export const handleMediaName = createAsyncThunk('handle-media-name-thunk', async ({name, oldName}, {dispatch}) => {
-    debugger
     dispatch(setNewMediaName(name))
     dispatch(setEditingMediaName(name))
     dispatch(setOldMediaName(oldName))
@@ -475,8 +471,6 @@ export const deleteCurrentItem = createAsyncThunk('delete-current-media-thunk', 
     dispatch(setDeletedItemUrl(null))
 
 })
-
-// Items (image and videos) in modal
 
 
 
