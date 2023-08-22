@@ -12,19 +12,16 @@ import {getAuth} from "firebase/auth";
 import VerificationContainer from "./components/Auth/Verification/VerificationContainer";
 import BG from './images/BG.jpg'
 import DESERT from './images/DESERT.jpg'
-import {dayTheme} from "./common/themes";
+import {mainDayBg} from "./common/themes";
 
 const App = ({authCheck, isAuth, currentTheme}) => {
-
-
-    window.current = currentTheme
 
     const auth = getAuth()
     const user = auth.currentUser
     const initializing = useSelector(state => state.app.initializing)
 
     const background = {
-        background: `url(${currentTheme === dayTheme ? BG : DESERT}) no-repeat`,
+        background: `url(${currentTheme === mainDayBg ? BG : DESERT}) no-repeat`,
         backgroundSize: '100vw 100vh',
         backgroundPosition: 'center',
     }
@@ -43,7 +40,7 @@ const App = ({authCheck, isAuth, currentTheme}) => {
             <Toaster/>
             <div id={wrapperId}
                  className={`
-                 ${currentTheme}
+                 ${currentTheme.mainBg}
                  bg-cover
                  bg-over 
                  bg-no-repeat

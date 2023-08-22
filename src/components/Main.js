@@ -17,7 +17,7 @@ import {
 import MediaContainer from "./Media/MediaContainer";
 import {
     handleAlertAction,
-    setItemModalType, setModalType,
+    setItemModalType, setModalType, toggleCurrentTheme,
     toggleSmallScreen,
 } from "../redux/appSlice";
 import BurgerMenu from "./common/BurgerMenu";
@@ -39,6 +39,11 @@ import ActionBtn from "./common/ActionBtn";
 import {BiColorFill} from "react-icons/bi";
 import LogOutContainer from "./ButtonContainers/LogOutContainer";
 import {BiLogOut} from "react-icons/bi";
+import DAS from '../images/themeTypes/DAS.jpg'
+import DS from '../images/themeTypes/DS.jpg'
+import NS from '../images/themeTypes/NS.jpg'
+import AdaptiveImage from "./AdaptiveImage";
+import {dayTheme, desertTheme, nightTheme} from "../common/themes";
 
 const Main = ({
                   currentMediaSet,
@@ -60,6 +65,8 @@ const Main = ({
                   setModalType,
                   setItemModalType,
                   handleAlertAction,
+                  currentTheme,
+                  toggleCurrentTheme,
               }) => {
 
     const location = useLocation()
@@ -109,7 +116,7 @@ const Main = ({
                         url={currentModalItemUrl}/>
             <UserModal toggleModal={setModalType}
                        showModal={modalType === userModal}/>
-            <HeaderContainer/>
+            <HeaderContainer currentTheme={currentTheme}/>
             <main className={'w-full h-full'} id={mainContentId}>
                 <BurgerMenu smallScreen={smallScreen}>
                     <div className={'mt-5 flex flex-col justify-center'}>
@@ -120,14 +127,20 @@ const Main = ({
                             <div className={'mx-auto w-40%'}><RemoveAllBtnContainer/></div>
                         </div>
                         <div className={'bg-gray-100 h-0.5 rounded w-full'}/>
-                        <div className='mt-3 mb-3'><ActionBtn smallScreenIcon={<BiColorFill/>}
-                                                              isFullWidth={true}
-                                                              isDisabled={true}
-                                                              label={'Change theme'}
-                                                              smallScreen={smallScreen}
-                                                              switchToIconIfSmallScreen={true}
+                        <div
+                            className={`w-full flex ${smallScreen && 'flex-col'} justify-between items-center mt-2 mb-3`}>
+                            <AdaptiveImage url={DAS} onClick={() => toggleCurrentTheme({type: dayTheme})}/>
+                            <AdaptiveImage url={NS} onClick={() => toggleCurrentTheme({type: nightTheme})}/>
+                            <AdaptiveImage url={DS} onClick={() => toggleCurrentTheme({type: desertTheme})}/>
+                        </div>
+                        {/*<div className='mt-3 mb-3'><ActionBtn smallScreenIcon={<BiColorFill/>}*/}
+                        {/*                                      isFullWidth={true}*/}
+                        {/*                                      isDisabled={true}*/}
+                        {/*                                      label={'Change theme'}*/}
+                        {/*                                      smallScreen={smallScreen}*/}
+                        {/*                                      switchToIconIfSmallScreen={true}*/}
 
-                        /></div>
+                        {/*/></div>*/}
                         <div className={'mb-5 '}><LogOutContainer
                             label={'logout'}
                             switchToIconIfSmallScreen={true}
@@ -147,11 +160,12 @@ const Main = ({
                                              searchMode,
                                              searchResults,
                                              smallScreen,
+                                             currentTheme,
                                          }}/>}/>}
                 </Routes>
                 <div
-                    className={`w-full  bg-opacity-90 bg-blue-300 h-playerHeight} p-2 rounded ${itemModalType !== imageModal && itemModalType !== videoModal && 'fixed-bottom'}`}>
-                    <AudioPlayer smallScreenMode={smallScreen}/></div>
+                    className={`w-full  bg-opacity-90 ${currentTheme.primeBg} p-2 rounded ${itemModalType !== imageModal && itemModalType !== videoModal && 'fixed-bottom'}`}>
+                    <AudioPlayer currentTheme={currentTheme} smallScreenMode={smallScreen}/></div>
             </main>
         </>
 
@@ -175,6 +189,7 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
     listMedia, setCurrentRoute, toggleSmallScreen,
     setModalType, setItemModalType, handleAlertAction,
+    toggleCurrentTheme,
 })(Main);
 
 

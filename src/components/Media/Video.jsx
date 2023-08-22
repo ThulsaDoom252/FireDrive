@@ -1,9 +1,9 @@
 import React, {useState, useRef} from 'react';
 import ReactPlayer from "react-player";
 import MediaOptions from "../Options/mediaOptions";
-import MediaName from "./MediaName";
 import {formatTime} from "../../common/commonData";
 import MyCustomTransition from "../common/MyCustomTransition";
+import {BiSolidVolume, BiVolumeMute} from "react-icons/bi";
 
 const Video = ({
                    url,
@@ -18,6 +18,7 @@ const Video = ({
                }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
+    const [currentVolume, setCurrentVolume] = useState(0)
     const playerRef = useRef(null);
 
     const isVideoHovered = hoveredMediaIndex === index
@@ -37,6 +38,16 @@ const Video = ({
         setCurrentTime(progress.playedSeconds);
     };
 
+    const handleVolume = e => {
+        e.stopPropagation()
+        setCurrentVolume(prevState => {
+            if (prevState === 0) {
+                setCurrentVolume(1)
+            } else {
+                setCurrentVolume(0)
+            }
+        })
+    }
     return (
         <>
             <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
@@ -44,7 +55,6 @@ const Video = ({
                     <div className={'absolute top-0 right-0 z-50'}><MediaOptions {...{
                         name,
                         oldName,
-
                         url,
                         index,
                         searchMode,
@@ -54,7 +64,8 @@ const Video = ({
                     </div>
                 </MyCustomTransition>
                 <div
-                    className={`player-container h-200 bg-black ${!isVideoHovered && 'rounded'}-lg overflow-hidden cursor-pointer`}
+                    className={`player-container h-200 bg-black 
+                    ${!isVideoHovered && 'rounded-t-lg'} overflow-hidden cursor-pointer`}
                     onClick={() => handleInitialModalIndex({index, modalType: 'video'})}
                 >
                     <ReactPlayer
@@ -63,20 +74,38 @@ const Video = ({
                         width="100%"
                         height="100%"
                         playing={isPlaying}
-                        volume={0}
+                        volume={currentVolume}
                         onEnded={() => setIsPlaying(false)}
                         onProgress={handleProgress}
                     />
-                    <div className="absolute bottom-5 text-white left-2 flex">
+                    <div className="absolute bottom-10 text-white left-2 flex justify-between w-full">
+                        <div className={'flex'}>
+                            <MyCustomTransition show={isPlaying}>
+                                {formatTime(currentTime)}
+                                {' / '}
+                            </MyCustomTransition>
+                            {playerRef.current && formatTime(playerRef.current.getDuration())}
+                        </div>
                         <MyCustomTransition show={isPlaying}>
-                            {formatTime(currentTime)}
-                            {' / '}
+                            <div className={`
+                            absolute 
+                            flex
+                            justify-center
+                            items-center
+                            w-14
+                            h-5
+                            right-1
+                            bottom-0.4
+                            transition-all duration-300
+                            hover:text-white
+                            text-gray-400`}
+                                 onClick={handleVolume}
+                            >
+                                {currentVolume === 0 ? <BiVolumeMute/> : <BiSolidVolume/>}
+                            </div>
                         </MyCustomTransition>
-                        {playerRef.current && formatTime(playerRef.current.getDuration())}
                     </div>
                 </div>
-                <MediaName {...{name, oldName}} />
-
             </div>
         </>
     );

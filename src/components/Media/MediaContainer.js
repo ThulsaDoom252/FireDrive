@@ -17,7 +17,8 @@ const MediaContainer = ({
                             toggleNoSearchResults, clearSearchResults, imagesSet, videosSet, audioSet,
                             smallScreen, currentMediaSet, currentMediaFetch, searchResults,
                             toggleSearchMode, setSearchRequest, mediaToShow, searchMode, noSearchResults,
-                            searchRequest, handleInitialModalIndex, itemOptionsHovered, setItemOptionsHovered
+                            searchRequest, handleInitialModalIndex, itemOptionsHovered, setItemOptionsHovered,
+                            currentTheme,
                         }) => {
     const pagesContext = useContext(PagesContext)
     const {imagesPage, videosPage, audioPage} = pagesContext
@@ -69,6 +70,7 @@ const MediaContainer = ({
     }, [currentRoute, imagesSet, audioSet, videosSet])
 
     return <Media {...{
+        currentTheme,
         imagesPage,
         videosPage,
         audioPage,

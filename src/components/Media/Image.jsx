@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import MediaOptions from "../Options/mediaOptions";
-import MediaName from "./MediaName";
 import OpacityTransition from "../common/MyCustomTransition";
 
 const Image = ({
@@ -46,8 +45,6 @@ const Image = ({
 
                     src={url}
                     alt="image"/>
-                <MediaName {...{name, oldName}}/>
-
             </div>
 
         </>

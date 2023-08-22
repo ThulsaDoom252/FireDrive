@@ -6,14 +6,16 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                desert: '#fd6100',
-                night: '#ffffff',
+                'night': '#f6f6f6',
                 day: '#000000',
                 customInputColor: '#f2f2f2',
             },
             backgroundImage: {
-                'desert': "url('/src/images/DESERT.jpg')",
-                'day': "url('/src/images/BG.jpg')",
+                'desert-main': "url('/src/images/DESERT.jpg')",
+                'day-main': "url('/src/images/BG.jpg')",
+                'night-main': "url('/src/images/NIGHT.jpg')",
+
+
             },
             keyframes: {
                 'marquee': {
@@ -23,7 +25,8 @@ module.exports = {
             },
             inset: {
                 'volumeBar': '65px',
-                'volumeBarLeft': '-10px',
+                'volumeBarLeft': '-40px',
+                '0.4': '0.01px',
                 'custom-80': '80px',
                 'custom-57': '57px',
                 'custom-20': '85px',
@@ -38,7 +41,13 @@ module.exports = {
                 'custom-800': '800px'
             },
             backgroundColor: {
-                'settingsBar': 'rgba(255,255,255,0.5)'
+                'settingsBar': 'rgba(255,255,255,0.5)',
+                'desert-prime': '#ffc08b',
+                'desert-sec': '#383634',
+                'day-prime': '#30eeff',
+                'day-sec': '#ffffff',
+                'night-prime': '#2a4cde',
+                'night-sec': '#2e3333',
             },
             width: {
                 '40%': '40%',

@@ -10,7 +10,16 @@ import {
 } from "../common/commonData";
 import {deleteAllMedia, deleteCurrentItem} from "./mediaSlice";
 import alertModal from "../components/modals/AlertModal";
-import {dayTheme, desertTheme} from "../common/themes";
+import {
+    dayPrimary, dayTheme, desertPrimary, desertTheme,
+    mainDayBg,
+    mainDesertBg,
+    mainNightBg,
+    nightPrimary, nightTheme, primeDayBg, primeDesertBg,
+    primeNightBg, secDayBg,
+    secDesertBg,
+    secNightBg
+} from "../common/themes";
 
 const appSlice = createSlice({
     name: 'app-slice',
@@ -28,11 +37,41 @@ const appSlice = createSlice({
         showAlertBtn: true,
         currentModalItemIndex: 0,
         itemOptionsHovered: false,
-        currentTheme: dayTheme,
+        currentTheme: {
+            mainBg: mainNightBg,
+            primeBg: primeNightBg,
+            secBg: secNightBg,
+            color: nightPrimary,
+        },
     },
     reducers: {
         toggleSmallScreen(state, action) {
             state.smallScreen = action.payload
+        },
+        toggleCurrentTheme(state, action) {
+            const {type} = action.payload
+            switch (type) {
+                case dayTheme:
+                    state.currentTheme.mainBg = mainDayBg
+                    state.currentTheme.primeBg = primeDayBg
+                    state.currentTheme.secBg = secDayBg
+                    state.currentTheme.color = dayPrimary
+                    break
+                case nightTheme:
+                    state.currentTheme.mainBg = mainNightBg
+                    state.currentTheme.primeBg = primeNightBg
+                    state.currentTheme.secBg = secNightBg
+                    state.currentTheme.color = nightPrimary
+                    break
+                case desertTheme:
+                    state.currentTheme.mainBg = mainDesertBg
+                    state.currentTheme.primeBg = primeDesertBg
+                    state.currentTheme.secBg = secDesertBg
+                    state.currentTheme.color = desertPrimary
+                    break
+                default:
+                    void 0
+            }
         },
         setItemOptionsHovered(state, action) {
             state.itemOptionsHovered = action.payload
@@ -75,6 +114,7 @@ export const {
     setItemOptionsHovered,
     setModalType,
     setItemModalType,
+    toggleCurrentTheme,
 } = appSlice.actions
 
 export const handleAlertModal = createAsyncThunk('alertModal-thunk', async ({

@@ -25,7 +25,8 @@ const Media = ({
                    smallScreen,
                    handleInitialModalIndex,
                    itemOptionsHovered,
-                   setItemOptionsHovered
+                   setItemOptionsHovered,
+                   currentTheme,
                }) => {
     return (
         <section
@@ -49,6 +50,7 @@ const Media = ({
                                    oldName={media.oldName}
                                    {...{
                                        index,
+                                       currentTheme,
                                        searchMode,
                                        hoveredMediaIndex,
                                        setHoveredMediaIndex,
@@ -56,7 +58,14 @@ const Media = ({
                                        itemOptionsHovered, setItemOptionsHovered
                                    }}/>
                         </div>) : videosPage ? mediaToShow.map((video, index) =>
-                            <div key={index} className="w-full relative flex flex-col justify-center text-center">
+                            <div key={index} className={`
+                            w-full 
+                            relative 
+                            flex
+                             flex-col 
+                             justify-center 
+                             text-center   
+                             `}>
                                 <Video url={video.url} name={video.name} oldName={video.oldName} {...{
                                     searchMode,
                                     index,
@@ -64,8 +73,16 @@ const Media = ({
                                     hoveredMediaIndex,
                                     setHoveredMediaIndex,
                                     itemOptionsHovered, setItemOptionsHovered,
+                                    currentTheme,
 
                                 }}/>
+                                <p className={`                             
+                                p-1
+                                 m-0 
+                                 ${currentTheme.secBg}
+                                 ${hoveredMediaIndex === index ? 'bg-opacity-100' : 'bg-opacity-50 rounded-b-lg'}
+                                ${currentTheme.color}
+                                `}>{video.name}</p>
                             </div>
                         ) :
                         mediaToShow.map(((audio, index) => {
@@ -78,7 +95,8 @@ const Media = ({
                                                    setHoveredMediaIndex,
                                                    index,
                                                    searchMode,
-                                                   smallScreen
+                                                   smallScreen,
+                                                   currentTheme,
                                                }}/>
                                     </div>
                                 )
