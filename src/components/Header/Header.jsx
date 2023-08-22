@@ -2,6 +2,7 @@ import React from 'react';
 import {useSelector} from "react-redux";
 import BurgerMenuTrigger from "../common/BurgerMenuTrigger";
 import NavItems from "./NavItems";
+import Search from "../Search/Search";
 
 const Header = ({currentTheme}) => {
     const smallScreen = useSelector(state => state.app.smallScreen)
@@ -22,8 +23,18 @@ const Header = ({currentTheme}) => {
             
              ${smallScreen ? 'p-4' : ' pr-10  pl-10'}            
             `}>
-            <div className={`${smallScreen ? 'w-11/12' : 'w-10'} flex justify-between`}>
-                <NavItems/>
+            <div className={`${smallScreen ? 'w-11/12' : 'w-full'} flex justify-center items-center`}>
+                <div className={`
+                ${smallScreen ? 'w-full' : 'w-300'} 
+                flex 
+                justify-between 
+                mr-10`}>
+                    <NavItems/>
+                </div>
+                <div className={'w-300'} hidden={smallScreen}>
+                    <div className={'w-full'}><Search/></div>
+                </div>
+
             </div>
             <BurgerMenuTrigger/>
         </header>

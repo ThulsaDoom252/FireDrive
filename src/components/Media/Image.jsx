@@ -40,7 +40,8 @@ const Image = ({
                 object-cover 
                 rounded 
                 cursor-pointer 
-                ${imageHovered && 'border-2 border-blue-300'}
+                ${imageHovered && 'hover:border-2 border-blue-300'}          
+                transition-all duration-100
                 `}
 
                     src={url}

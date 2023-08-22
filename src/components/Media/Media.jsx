@@ -31,7 +31,6 @@ const Media = ({
     return (
         <section
             className={`w-full h-full relative  p-10 pb-60 flex overflow-y-scroll flex-col items-center ${noMedia ? 'justify-center' : ''}`}>
-            {!noMedia && <div className={'w-full'}><Search {...{searchRequest, setSearchRequest}}/></div>}
             <div hidden={isPaginatorHidden} className={'mt-2'}><Paginator {...{paginatorProps}}/></div>
             {noSearchResults && <div className={'absolute top-custom-50% left-custom-50%'}><NoSearchResults/></div>}
             {noMedia ?
