@@ -51,6 +51,9 @@ export const generateRandomString = (length) => {
     return result;
 }
 
+
+
+
 // containers id's
 export const wrapperId = 'wrapper'
 export const mainContentId = 'content'

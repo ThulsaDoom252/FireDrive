@@ -33,6 +33,7 @@ const MediaOptions = ({
         handleMediaName({name, oldName})
         await delay(50)
         setModalType(renameModal)
+        debugger
     }
 
     const handleMouseEnter = () => {

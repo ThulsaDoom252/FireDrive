@@ -35,12 +35,12 @@ const VideoModal = ({
             <MyCustomTransition show={showModal}>
                 <ModalContainer handleClose={handleClose}>
                     {showOverlay && <Overlay bg={overlayColor} opacity={overlayOpacity}/>}
-                    <button className='absolute right-5 top-5  text-gray-400 hover:text-white' onClick={handleClose}>
+                    <button className='absolute right-5 top-5  text-gray-400 hover:text-white z-1' onClick={handleClose}>
                         <IoClose size={30}/>
                     </button>
                     <div onClick={stopPropagation}
-                         className={`flex relative rounded ${smallScreen ? 'w-100% h-100% flex-col items-center' : 'w-80% h-90%'}`}>
-                        <div className={`bg-black ${smallScreen ? 'w-100% h-60%' : 'w-80% h-full'}`}>
+                         className={`flex relative rounded ${smallScreen ? 'w-100% h-100% justify-center items-center' : ' w-80% h-90%'}`}>
+                        <div className={`bg-black ${smallScreen ? 'w-100% h-100% flex justify-center items-center' : 'w-80% h-full'}`}>
                             <div className={'w-100% h-85%'}>
                                 <ReactPlayer
                                     height={'100%'}
@@ -50,7 +50,8 @@ const VideoModal = ({
                                     url={currentModalItemUrl || ''}/>
                             </div>
                             <div
-                                className={`w-full h-15% bottom-0 r-5 pl-5 flex justify-between items-center ${smallScreen && 'border-t-2 border-white'}`}>
+                                hidden={smallScreen}
+                                className={'w-full h-15% bottom-0 r-5 pl-5 flex justify-between items-center'}>
                                 <div className='text-white text-center'>
                                     {currentModalItemName}
                                 </div>
@@ -70,8 +71,8 @@ const VideoModal = ({
                                 </div>
                             </div>
                         </div>
-                        <div
-                            className={`flex bg-white flex-col justify-start items-center overflow-y-scroll ${smallScreen ? 'w-100% h-40% pb-12' : 'w-20% h-full'}`}>
+                        <div hidden={smallScreen}
+                             className={`flex bg-white flex-col justify-start items-center overflow-y-scroll ${smallScreen ? 'w-100% h-40% pb-12' : 'w-20% h-full'}`}>
                             {currentMediaSet.map((video, index) => <ModalVideoItem item={video}
                                                                                    onClick={handleCurrentModalItemIndex}
                                                                                    index={index}

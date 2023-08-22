@@ -1,16 +1,12 @@
 import React from 'react';
 import clsx from "clsx";
-
-
-const actionBtnStyles = {
-    primary: 'bg-purple-500'
-}
+import {GoTrash} from "react-icons/go";
 
 const ActionBtn = ({
                        label = 'button',
                        switchToIconIfSmallScreen = false,
                        btnStyle = 'primary',
-                       icon,
+                       smallScreenIcon,
                        children,
                        smallScreen,
                        isFullWidth = false,
@@ -19,26 +15,26 @@ const ActionBtn = ({
                    }) => {
 
     return (
-        <>
-            <>
-                <button
-                    type="button"
-                    disabled={isDisabled}
-                    onClick={handleClick}
-                    className={clsx(`
-                     ${btnStyle === 'warning' ? 'bg-yellow-500' : btnStyle === 'danger' ? 'bg-red-600' : 'bg-purple-500'}
-                      text-white 
-                      font-bold py-2
-                       px-4 rounded 
-                        hover:bg-purple-60`,
-                        isDisabled && 'opacity-50 cursor-not-allowed',
-                        isFullWidth && 'w-full',
-                    )}
-                >
-                    {switchToIconIfSmallScreen && smallScreen ? icon : label}
-                </button>
-            </>
-        </>
+        <button
+            type={"button"}
+            disabled={isDisabled}
+            onClick={handleClick}
+            className={clsx(`
+        text-white 
+        border-none
+       flex
+       justify-center
+       items-center
+       p-2
+       font-bold py-2
+        rounded
+         `,
+                isFullWidth && 'w-full',
+                btnStyle === 'warning' ? 'bg-yellow-500' : btnStyle === 'danger' ? 'bg-red-600' : 'bg-purple-500',
+                isDisabled && 'opacity-50 cursor-not-allowed',
+            )}>
+            {switchToIconIfSmallScreen && smallScreen ? smallScreenIcon : label}
+        </button>
     );
 };
 

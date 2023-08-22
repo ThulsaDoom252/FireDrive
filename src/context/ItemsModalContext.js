@@ -1,10 +1,9 @@
-import React, {createContext, useEffect, useState} from 'react';
+import React, {createContext,  useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {handleAlertModal, setCurrentModalItemIndex, setModalType} from "../redux/appSlice";
 import {handleMediaName} from "../redux/mediaSlice";
 import {
     delay,
-    noModal,
     removeCurrentItem,
     removeCurrentItemTitle,
     removeCurrentMsg,
@@ -28,14 +27,6 @@ export const ItemsModalContextProvider = ({children}) => {
     const currentModalItemName = searchMode ? searchResults[currentModalItemIndex]?.name : currentMediaSet[currentModalItemIndex]?.name
     const currentModalItemOldName = searchMode ? searchResults[currentModalItemIndex]?.oldName : currentMediaSet[currentModalItemIndex]?.oldName
 
-
-    useEffect(() => {
-        if (smallScreen) {
-            setTimeout(() => {
-                window.scroll(0, 1)
-            }, 0)
-        }
-    }, [smallScreen])
 
     const handleCurrentModalItemIndex = (index) => {
         dispatch(setCurrentModalItemIndex(index))
@@ -64,7 +55,6 @@ export const ItemsModalContextProvider = ({children}) => {
             actionType: removeCurrentItem
         }))
     }
-
 
     const handleRenameModal = async () => {
         dispatch(handleMediaName({name: currentModalItemName, oldName: currentModalItemOldName}))

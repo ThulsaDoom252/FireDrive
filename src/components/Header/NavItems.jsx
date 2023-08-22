@@ -7,8 +7,8 @@ import {BiMusic} from "react-icons/bi";
 import {connect} from "react-redux";
 
 const NavItems = ({smallScreen}) => {
-    const isActiveStyle = `${smallScreen && 'text-2xl'} mr-5 text-white`;
-    const inactiveStyle = `${smallScreen && 'text-2xl'} mr-5 text-gray-500 no-underline !important'}`;
+    const isActiveStyle = `${smallScreen && 'text-2xl'} mr-5 text-white transition-transform duration-300`;
+    const inactiveStyle = `${smallScreen && 'text-2xl'} mr-5 text-gray-500 no-underline !important hover:text-white transition-all duration-300'}`;
     return (
         <>
             <NavLink to={rootRoute}

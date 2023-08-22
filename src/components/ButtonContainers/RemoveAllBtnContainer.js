@@ -32,8 +32,11 @@ const RemoveAllBtnContainer = ({
     return (
         <>
             <ActionBtn label={'Remove all'}
+
+                       isFullWidth={true}
+                       btnStyle={'danger'}
                        switchToIconIfSmallScreen={true}
-                       icon={< GoTrash/>} {...{handleClick, isDisabled, smallScreen}}/>
+                       smallScreenIcon={< GoTrash/>} {...{handleClick, isDisabled, smallScreen}}/>
         </>
     )
 

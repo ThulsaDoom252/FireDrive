@@ -18,7 +18,6 @@ import MediaContainer from "./Media/MediaContainer";
 import {
     handleAlertAction,
     setItemModalType, setModalType,
-    toggleHorizontalMode,
     toggleSmallScreen,
 } from "../redux/appSlice";
 import BurgerMenu from "./common/BurgerMenu";
@@ -27,7 +26,6 @@ import AudioPlayer from "./AudioPlayer/AudioPlayer";
 import {PaginatorContext} from "../context/PaginatorContext";
 import UploadContainer from "./ButtonContainers/UploadBtnContainer";
 import RemoveAllBtnContainer from "./ButtonContainers/RemoveAllBtnContainer";
-import LogOutContainer from "./ButtonContainers/LogOutContainer";
 import UserModal from "./modals/UserModal";
 import UserAvatar from "./user/UserAvatar";
 import RenameModal from "./modals/RenameModal";
@@ -37,8 +35,10 @@ import VideoModal from "./modals/VideoModal";
 import ShareModal from "./modals/ShareModal";
 import alertModal from "./modals/AlertModal";
 import userModal from "./modals/UserModal";
-import toast from "react-hot-toast";
-import MediaQuery from "react-responsive";
+import ActionBtn from "./common/ActionBtn";
+import {BiColorFill} from "react-icons/bi";
+import LogOutContainer from "./ButtonContainers/LogOutContainer";
+import {BiLogOut} from "react-icons/bi";
 
 const Main = ({
                   currentMediaSet,
@@ -77,19 +77,20 @@ const Main = ({
         setCurrentRoute(pathName)
     }, [pathName])
 
-    const handleResize = () => {
-        toggleSmallScreen(window.innerWidth <= smallScreenWidth)
-        toggleHorizontalMode(smallScreen && (window.innerWidth > window.innerHeight))
-    }
 
     useEffect(() => {
         mediaTypes.forEach(mediaType =>
             listMedia({mediaType}))
     }, [])
 
+    const handleResize = () => {
+        toggleSmallScreen(window.innerWidth <= smallScreenWidth)
+    }
+
 
     const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
     const mediaToShow = searchMode ? searchResults : paginatedMedia
+
 
     if (!isAuth) {
         return <Navigate to={signInRoute}/>
@@ -97,15 +98,6 @@ const Main = ({
 
     return (
         <>
-            <MediaQuery orientation="landscape">
-                {(matches) =>
-                    matches ? (
-                        <div>Экран в альбомной ориентации</div>
-                    ) : (
-                        <div>Экран в портретной ориентации</div>
-                    )
-                }
-            </MediaQuery>
             <AlertModal toggleModal={setModalType}
                         showAlertModal={modalType === alertModal}
                         handleAlertAction={handleAlertAction}
@@ -117,15 +109,31 @@ const Main = ({
                         url={currentModalItemUrl}/>
             <UserModal toggleModal={setModalType}
                        showModal={modalType === userModal}/>
-            <HeaderContainer {...{currentRoute}}/>
+            <HeaderContainer/>
             <main className={'w-full h-full'} id={mainContentId}>
                 <BurgerMenu smallScreen={smallScreen}>
                     <div className={'mt-5 flex flex-col justify-center'}>
                         <div onClick={() => setModalType(userModal)} className={'mb-5 mx-auto'}><UserAvatar
                         /></div>
-                        <div className={'mb-5 mx-auto'}><UploadContainer/></div>
-                        <div className={'mb-5 mx-auto'}><RemoveAllBtnContainer/></div>
-                        <div className={'mb-5 mx-auto'}><LogOutContainer/></div>
+                        <div className={'flex justify-between items-center mb-2'}>
+                            <div className={'mx-auto w-40%'}><UploadContainer/></div>
+                            <div className={'mx-auto w-40%'}><RemoveAllBtnContainer/></div>
+                        </div>
+                        <div className={'bg-gray-100 h-0.5 rounded w-full'}/>
+                        <div className='mt-3 mb-3'><ActionBtn smallScreenIcon={<BiColorFill/>}
+                                                              isFullWidth={true}
+                                                              isDisabled={true}
+                                                              label={'Change theme'}
+                                                              smallScreen={smallScreen}
+                                                              switchToIconIfSmallScreen={true}
+
+                        /></div>
+                        <div className={'mb-5 '}><LogOutContainer
+                            label={'logout'}
+                            switchToIconIfSmallScreen={true}
+                            smallScreenIcon={<BiLogOut/>}
+                            isFullWidth={true}
+                        /></div>
                     </div>
                     <div><SortInput/></div>
                 </BurgerMenu>
@@ -143,7 +151,7 @@ const Main = ({
                 </Routes>
                 <div
                     className={`w-full  bg-opacity-90 bg-blue-300 h-playerHeight} p-2 rounded ${itemModalType !== imageModal && itemModalType !== videoModal && 'fixed-bottom'}`}>
-                    <AudioPlayer buttonsBlockWidth={'full'}/></div>
+                    <AudioPlayer smallScreenMode={smallScreen}/></div>
             </main>
         </>
 
@@ -153,7 +161,6 @@ const Main = ({
 const mapStateToProps = (state) => {
     return {
         smallScreen: state.app.smallScreen,
-        horizontalMode: state.app.horizontalMode,
         currentRoute: state.media.currentRoute,
         currentMediaSet: state.media.currentMediaSet,
         audioSet: state.media.audioSet,
@@ -167,7 +174,7 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
     listMedia, setCurrentRoute, toggleSmallScreen,
-    toggleHorizontalMode, setModalType, setItemModalType, handleAlertAction,
+    setModalType, setItemModalType, handleAlertAction,
 })(Main);
 
 

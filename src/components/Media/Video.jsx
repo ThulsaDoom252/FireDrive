@@ -43,6 +43,8 @@ const Video = ({
                 <MyCustomTransition show={isVideoHovered}>
                     <div className={'absolute top-0 right-0 z-50'}><MediaOptions {...{
                         name,
+                        oldName,
+
                         url,
                         index,
                         searchMode,

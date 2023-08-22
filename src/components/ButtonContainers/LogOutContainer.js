@@ -2,15 +2,15 @@ import React from 'react';
 import {connect} from "react-redux";
 import ActionBtn from "../common/ActionBtn";
 import {handleLogout} from "../../redux/authSlice";
-import {BiLogOut} from "react-icons/bi";
 
-const LogOutContainer = ({smallScreen, handleLogout}) => {
+const LogOutContainer = ({smallScreen, handleLogout, label, switchToIconIfSmallScreen, smallScreenIcon, isFullWidth}) => {
 
     const handleClick = () => handleLogout()
 
-    return <ActionBtn switchToIconIfSmallScreen={true}
-                      label={'logout'}
-                      icon={<BiLogOut/>}
+    return <ActionBtn switchToIconIfSmallScreen={switchToIconIfSmallScreen}
+                      isFullWidth={isFullWidth}
+                      label={label}
+                      smallScreenIcon={smallScreenIcon}
                       {...{smallScreen, handleClick}}/>
 };
 

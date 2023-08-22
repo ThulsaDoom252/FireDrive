@@ -8,8 +8,8 @@ import Overlay from "../common/Overlay";
 import ModalContainer from "./ModalContainer";
 import {noModal, stopPropagation} from "../../common/commonData";
 import ModalDesktopOptions from "../Options/ModalDesktopOptions";
-import {useSwipeable} from "react-swipeable";
 import {useSelector} from "react-redux";
+import MediaQuery from "react-responsive";
 
 const ImageModal = ({
                         overlayColor = 'bg-gray-900',
@@ -53,6 +53,7 @@ const ImageModal = ({
     }
     const tesImageUrl = 'https://wallpapers.com/images/featured/mountain-t6qhv1lk4j0au09t.jpg'
 
+
     return (
         <MyCustomTransition show={showModal}>
             <ModalContainer handleClose={handleCLose}>
@@ -71,19 +72,21 @@ const ImageModal = ({
                     color={closeIconColor}/></div>
                 <div {...swipeHandlers}
                      className={'relative w-fit h-fit flex items-center justify-center'}>
-                    {smallScreen && horizontalMode ? <img onClick={stopPropagation}
-                                                          className={`rounded max-w-95vw max-h-95vh'} `}
-                                                          src={currentModalItemUrl || tesImageUrl}
-                                                          alt='image'/> :
-                        smallScreen && !horizontalMode ? <img onClick={stopPropagation}
-                                                              className={`rounded max-w-100vw max-h-100vh'} `}
-                                                              src={currentModalItemUrl || tesImageUrl}
-                                                              alt='image'/> :
-                            <img
-                                onClick={stopPropagation}
-                                className={`rounded ${fullScreen ? 'max-w-95vw max-h-95vh' : 'max-w-65vw max-h-65vh'} `}
-                                src={currentModalItemUrl || tesImageUrl}
-                                alt='image'/>}
+                    {smallScreen ? <MediaQuery orientation="landscape">
+                            {(matches) =>
+                                matches ? (
+                                    <img style={{maxWidth: '100vw', maxHeight: '84vh', borderRadius: '5px'}}
+                                         src={currentModalItemUrl} alt=""/>
+                                ) : (
+                                    <img style={{maxWidth: '100vw', maxHeight: '84vh', borderRadius: '5px'}}
+                                         className={'rounded'}
+                                         src={currentModalItemUrl} alt=""/>
+                                )
+                            }
+                        </MediaQuery> :
+                        <img
+                            className={`rounded rounded  ${fullScreen ? 'max-h-95vh max-w-95vw' : 'max-h-65vh max-w-65vw'}`}
+                            src={currentModalItemUrl} alt=""/>}
                 </div>
                 <div
                     hidden={(!smallScreen && fullScreen) || !showMobileSettings}

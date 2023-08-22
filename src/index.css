@@ -11,6 +11,7 @@ body {
     font-size: 2rem;
 }
 
+/*Close btn icon*/
 .bm-cross {
     background: red;
 }
@@ -30,7 +31,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
     border: solid thin gray;
     border-radius: 5px;
     font-size: 1.15em;
-    padding: 3rem 0.5rem 0.5rem 0.5rem;
+    padding: 0.1rem 0.5rem 3rem 0.5rem;
     overflow: auto;
     z-index: 20;
 }

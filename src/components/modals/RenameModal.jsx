@@ -30,7 +30,7 @@ const RenameModal = ({
     return (
         <>
             <MyCustomTransition show={showModal}>
-                <ModalContainer zIndex={'z-2'}>
+                <ModalContainer zIndex={'z-2'} handleClose={() => toggleModal(noModal)}>
                     <Overlay/>
                     <div className={'absolute  top-5 right-5 text-white'}
                          onClick={() => toggleModal(noModal)}><IoClose/></div>

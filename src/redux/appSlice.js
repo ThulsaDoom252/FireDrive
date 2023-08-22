@@ -1,14 +1,22 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {delay, imageModal, noModal, removeAllItems, removeCurrentItem, videoModal} from "../common/commonData";
+import {
+    delay,
+    imageModal,
+    noModal,
+    removeAllItems,
+    removeCurrentItem,
+    smallScreenWidth,
+    videoModal
+} from "../common/commonData";
 import {deleteAllMedia, deleteCurrentItem} from "./mediaSlice";
 import alertModal from "../components/modals/AlertModal";
+import {dayTheme, desertTheme} from "../common/themes";
 
 const appSlice = createSlice({
     name: 'app-slice',
     initialState: {
         initializing: false,
-        smallScreen: false,
-        horizontalMode: false,
+        smallScreen: window.innerWidth <= smallScreenWidth,
         modalType: '',
         itemModalType: '',
         alertTitle: '',
@@ -20,6 +28,7 @@ const appSlice = createSlice({
         showAlertBtn: true,
         currentModalItemIndex: 0,
         itemOptionsHovered: false,
+        currentTheme: dayTheme,
     },
     reducers: {
         toggleSmallScreen(state, action) {
@@ -36,16 +45,6 @@ const appSlice = createSlice({
         },
         setItemModalType(state, action) {
             state.itemModalType = action.payload
-        },
-        setAlertContent(state, action) {
-            const {content, style} = action.payload
-            state.alertContent = content
-            if (style) {
-                state.alertStyle = style
-            }
-        },
-        toggleHorizontalMode(state, action) {
-            state.horizontalMode = action.payload
         },
         toggleInitializing(state, action) {
             state.initializing = action.payload
@@ -71,8 +70,6 @@ export default appSlice.reducer
 export const {
     toggleSmallScreen,
     toggleInitializing,
-    toggleHorizontalMode,
-    setAlertContent,
     setAlertModalContent,
     setCurrentModalItemIndex,
     setItemOptionsHovered,

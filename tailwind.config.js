@@ -6,7 +6,14 @@ module.exports = {
     theme: {
         extend: {
             colors: {
+                desert: '#fd6100',
+                night: '#ffffff',
+                day: '#000000',
                 customInputColor: '#f2f2f2',
+            },
+            backgroundImage: {
+                'desert': "url('/src/images/DESERT.jpg')",
+                'day': "url('/src/images/BG.jpg')",
             },
             keyframes: {
                 'marquee': {
@@ -34,6 +41,7 @@ module.exports = {
                 'settingsBar': 'rgba(255,255,255,0.5)'
             },
             width: {
+                '40%': '40%',
                 '100%': '100%',
                 '80%': '80%',
                 '90%': '90%',
@@ -50,6 +58,7 @@ module.exports = {
                 '554': '554px',
                 '600': '600px',
                 '800': '800px',
+                'player-controls': '870px',
                 'image-settings': '400px',
             },
             height: {
@@ -58,7 +67,7 @@ module.exports = {
                 '20%': '20%',
                 '60%': '60%',
                 '80%': '80%',
-                '85%' : '85%',
+                '85%': '85%',
                 '90%': '90%',
                 '100%': '100%',
                 '70%': '70%',
@@ -73,7 +82,7 @@ module.exports = {
                 '300': '300px',
                 '200': '200px',
                 '62': '130px',
-                'playerHeight': '50px'
+                'playerHeight': '40px'
             },
             zIndex: {
                 '1': '1',
@@ -90,6 +99,7 @@ module.exports = {
                 '90screen': '90vw',
                 '95vw': '95vw',
                 '300': '300px',
+                'player-controls': '870px',
             },
             maxHeight: {
                 '65vh': '65vh',
