@@ -87,7 +87,8 @@ const Media = ({
                         mediaToShow.map(((audio, index) => {
                                 return (
                                     <div key={audio.index}>
-                                        <Audio name={audio.name} oldName={audio.oldName} audioIndex={audio.index}
+                                        <Audio name={audio.name}
+                                               audioIndex={audio.index}
                                                url={audio.url}
                                                {...{
                                                    hoveredMediaIndex,

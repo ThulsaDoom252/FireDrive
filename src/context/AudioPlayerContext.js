@@ -2,6 +2,7 @@ import {createContext, useState} from 'react';
 import {useEffect, useRef} from "react";
 import {delay} from "../common/commonData";
 import {useSelector} from "react-redux";
+import toast from "react-hot-toast";
 
 export const AudioPlayerContext = createContext();
 
@@ -92,7 +93,11 @@ export function AudioPlayerContextProvider({children}) {
 
     useEffect(() => {
         if (audio) {
-            isCurrentTrackPlaying ? audio.play().catch(e => alert(e)) : audio.pause()
+            isCurrentTrackPlaying ?
+                audio.play()
+                    .catch(() => toast.error(`It seems audio is damaged..`))
+
+                : audio.pause()
         }
 
     }, [isCurrentTrackPlaying])

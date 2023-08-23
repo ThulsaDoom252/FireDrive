@@ -1,16 +1,15 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {AiFillPauseCircle, AiFillPlayCircle} from "react-icons/ai";
 import {useContext} from "react";
 import {AudioPlayerContext} from "../../context/AudioPlayerContext";
 import MediaOptions from "../Options/mediaOptions";
-import MediaName from "./MediaName";
 import {formatTime} from "../../common/commonData";
 import {ClipLoader} from "react-spinners";
 import {dayPrimary} from "../../common/themes";
+import toast from "react-hot-toast";
 
 const Audio = ({
                    name,
-                   oldName,
                    url,
                    searchMode,
                    audioIndex = 0,
@@ -23,7 +22,6 @@ const Audio = ({
 
     const audioContext = useContext(AudioPlayerContext)
     const audioRef = useRef(url)
-
     const itemHovered = hoveredMediaIndex === index && !smallScreen
 
     const {
@@ -39,7 +37,6 @@ const Audio = ({
     const currentTrackHovered = hoveredMediaIndex === audioIndex
 
     const isDurationIsNan = isNaN(audioRef?.current?.duration)
-
 
     return (
         <>
@@ -70,8 +67,9 @@ const Audio = ({
                             : (<AiFillPlayCircle size={25} color={currentTheme.color === dayPrimary && 'black'}/>)}
                     </div>
                 </div>
-                <p className={`w-full ${currentTheme.color}`}>{name}</p>
-                <div className={'absolute top-1/2 transform -translate-y-1/2 right-0 z-50 mr-40 '}>
+                <div
+                    className={`w-full  ${currentTheme.color}`}>{name}</div>
+                <div className={'absolute top-1/2 transform -translate-y-1/2 right-0 z-50 mr-40'}>
                     <MediaOptions initialMode={'show'} itemOptionsHovered={itemHovered} {...{
                         name,
                         url,
@@ -79,7 +77,8 @@ const Audio = ({
                         searchMode
                     }}/>
                 </div>
-                <div className={'flex mr-5 '}>
+                <div
+                    className={'flex mr-5'}>
                     <div
                         className={`${currentTheme.color}`}>{currentTrackName === name && `${formatTime(currentDuration)}/`}</div>
                     <div className={`${currentTheme.color}`}>{!isDurationIsNan ? formatTime(audioRef.current.duration) :
