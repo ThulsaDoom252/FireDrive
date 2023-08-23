@@ -31,12 +31,12 @@ const RemoveAllBtnContainer = ({
 
     return (
         <>
-            <ActionBtn label={'Remove all'}
-
-                       isFullWidth={true}
+            <ActionBtn isFullWidth={true}
                        btnStyle={'danger'}
                        switchToIconIfSmallScreen={true}
-                       smallScreenIcon={< GoTrash/>} {...{handleClick, isDisabled, smallScreen}}/>
+                       smallScreenIcon={< GoTrash/>} {...{handleClick, isDisabled, smallScreen}}>
+                Remove All
+            </ActionBtn>
         </>
     )
 

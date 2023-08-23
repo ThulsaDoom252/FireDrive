@@ -35,7 +35,6 @@ import VideoModal from "./modals/VideoModal";
 import ShareModal from "./modals/ShareModal";
 import alertModal from "./modals/AlertModal";
 import userModal from "./modals/UserModal";
-import ActionBtn from "./common/ActionBtn";
 import {BiColorFill} from "react-icons/bi";
 import LogOutContainer from "./ButtonContainers/LogOutContainer";
 import {BiLogOut} from "react-icons/bi";
@@ -44,7 +43,7 @@ import DS from '../images/themeTypes/DS.jpg'
 import NS from '../images/themeTypes/NS.jpg'
 import AdaptiveImage from "./AdaptiveImage";
 import {dayTheme, desertTheme, nightTheme} from "../common/themes";
-import search from "./Search/Search";
+import DropDownBtn from "./common/DropDownBtn";
 
 const Main = ({
                   currentMediaSet,
@@ -53,13 +52,9 @@ const Main = ({
                   toggleSmallScreen,
                   isAuth,
                   setCurrentRoute,
-                  toggleHorizontalMode,
-                  horizontalMode,
                   smallScreen,
                   searchMode,
                   searchResults,
-                  showVideoModal,
-                  showImageModal,
                   currentModalItemUrl,
                   modalType,
                   itemModalType,
@@ -70,6 +65,7 @@ const Main = ({
                   toggleCurrentTheme,
                   showMobileSearch,
                   toggleMobileSearch,
+                  currentThemeName,
               }) => {
 
     const location = useLocation()
@@ -131,7 +127,7 @@ const Main = ({
                 toggleMobileSearch={toggleMobileSearch}
             />
             <main className={'w-full h-full'} id={mainContentId} onClick={hideMobileSearch}>
-                <BurgerMenu smallScreen={smallScreen} onClick = {hideMobileSearch}>
+                <BurgerMenu smallScreen={smallScreen} onClick={hideMobileSearch}>
                     <div className={'mt-5 flex flex-col justify-center'}>
                         <div onClick={() => setModalType(userModal)} className={'mb-5 mx-auto'}><UserAvatar
                         /></div>
@@ -140,20 +136,26 @@ const Main = ({
                             <div className={'mx-auto w-40%'}><RemoveAllBtnContainer/></div>
                         </div>
                         <div className={'bg-gray-100 h-0.5 rounded w-full'}/>
-                        <div
-                            className={`w-full flex ${smallScreen && 'flex-col'} justify-between items-center mt-2 mb-3`}>
-                            <AdaptiveImage url={DAS} onClick={() => toggleCurrentTheme({type: dayTheme})}/>
-                            <AdaptiveImage url={NS} onClick={() => toggleCurrentTheme({type: nightTheme})}/>
-                            <AdaptiveImage url={DS} onClick={() => toggleCurrentTheme({type: desertTheme})}/>
-                        </div>
-                        {/*<div className='mt-3 mb-3'><ActionBtn smallScreenIcon={<BiColorFill/>}*/}
-                        {/*                                      isFullWidth={true}*/}
-                        {/*                                      isDisabled={true}*/}
-                        {/*                                      label={'Change theme'}*/}
-                        {/*                                      smallScreen={smallScreen}*/}
-                        {/*                                      switchToIconIfSmallScreen={true}*/}
 
-                        {/*/></div>*/}
+                        <div className='mt-3 mb-3'>
+                            <DropDownBtn btnLabel={'Change theme'} smallScreenIcon={<BiColorFill/>}>
+                                <AdaptiveImage
+                                    currentThemeName={currentThemeName}
+                                    theme={dayTheme}
+                                    url={DAS}
+                                    onClick={() => toggleCurrentTheme({type: dayTheme})}/>
+                                <AdaptiveImage
+                                    currentThemeName={currentThemeName}
+                                    theme={nightTheme}
+                                    url={NS}
+                                    onClick={() => toggleCurrentTheme({type: nightTheme})}/>
+                                <AdaptiveImage
+                                    currentThemeName={currentThemeName}
+                                    theme={desertTheme}
+                                    url={DS}
+                                    onClick={() => toggleCurrentTheme({type: desertTheme})}/>
+                            </DropDownBtn>
+                        </div>
                         <div className={'mb-5 '}><LogOutContainer
                             label={'logout'}
                             switchToIconIfSmallScreen={true}
@@ -197,6 +199,7 @@ const mapStateToProps = (state) => {
         modalType: state.app.modalType,
         itemModalType: state.app.itemModalType,
         showMobileSearch: state.media.showMobileSearch,
+        currentThemeName: state.app.currentThemeName,
     }
 }
 

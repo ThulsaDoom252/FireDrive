@@ -37,6 +37,7 @@ const appSlice = createSlice({
         showAlertBtn: true,
         currentModalItemIndex: 0,
         itemOptionsHovered: false,
+        currentThemeName: '',
         currentTheme: {
             mainBg: mainNightBg,
             primeBg: primeNightBg,
@@ -49,8 +50,10 @@ const appSlice = createSlice({
             state.smallScreen = action.payload
         },
         toggleCurrentTheme(state, action) {
-            const {type} = action.payload
-            switch (type) {
+            const {type: themeType} = action.payload
+            state.currentThemeName = themeType
+            debugger
+            switch (themeType) {
                 case dayTheme:
                     state.currentTheme.mainBg = mainDayBg
                     state.currentTheme.primeBg = primeDayBg

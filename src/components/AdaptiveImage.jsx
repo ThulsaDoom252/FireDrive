@@ -1,19 +1,31 @@
 import React from 'react';
 
-const AdaptiveImage = ({url, alt = 'image is broken', onClick = () => void 0}) => {
+const AdaptiveImage = ({
+                           url,
+                           alt = 'image is broken',
+                           onClick = () => void 0,
+                           currentThemeName,
+                           theme,
+                       },
+
+) => {
+    const isCurrentTheme = currentThemeName === theme
+
     return (
         <div onClick={onClick} className={'w-fit p-2 relative flex justify-center items-center'}>
             <img
                 style={{height: '85px'}}
-                className='
+                className={`
+
             rounded
             object-cover
             hover:cursor-pointer
              transition-all
-             duration-300
-             '
-                 src={url}
-                 alt={alt}/>
+             duration-100
+           ${isCurrentTheme && 'border-2'}
+             `}
+                src={url}
+                alt={alt}/>
         </div>
     );
 };
