@@ -8,6 +8,7 @@ const BurgerMenu = ({
                         adaptForASmallScreen = true,
                         pageWrapId = wrapperId, contentId = mainContentId,
                         children,
+                        onClick,
                     }) => {
     const ctx = useContext(BurgerMenuContext)
     const {menuOpenState} = ctx

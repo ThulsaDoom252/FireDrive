@@ -12,7 +12,7 @@ import {Routes, Route, Navigate, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
 import {
     listMedia,
-    setCurrentRoute,
+    setCurrentRoute, toggleMobileSearch,
 } from "../redux/mediaSlice";
 import MediaContainer from "./Media/MediaContainer";
 import {
@@ -44,6 +44,7 @@ import DS from '../images/themeTypes/DS.jpg'
 import NS from '../images/themeTypes/NS.jpg'
 import AdaptiveImage from "./AdaptiveImage";
 import {dayTheme, desertTheme, nightTheme} from "../common/themes";
+import search from "./Search/Search";
 
 const Main = ({
                   currentMediaSet,
@@ -67,6 +68,8 @@ const Main = ({
                   handleAlertAction,
                   currentTheme,
                   toggleCurrentTheme,
+                  showMobileSearch,
+                  toggleMobileSearch,
               }) => {
 
     const location = useLocation()
@@ -90,8 +93,14 @@ const Main = ({
             listMedia({mediaType}))
     }, [])
 
+
     const handleResize = () => {
         toggleSmallScreen(window.innerWidth <= smallScreenWidth)
+    }
+
+    const hideMobileSearch = () => {
+        showMobileSearch && toggleMobileSearch(false)
+
     }
 
 
@@ -116,9 +125,13 @@ const Main = ({
                         url={currentModalItemUrl}/>
             <UserModal toggleModal={setModalType}
                        showModal={modalType === userModal}/>
-            <HeaderContainer currentTheme={currentTheme}/>
-            <main className={'w-full h-full'} id={mainContentId}>
-                <BurgerMenu smallScreen={smallScreen}>
+            <HeaderContainer
+                currentTheme={currentTheme}
+                showMobileSearch={showMobileSearch}
+                toggleMobileSearch={toggleMobileSearch}
+            />
+            <main className={'w-full h-full'} id={mainContentId} onClick={hideMobileSearch}>
+                <BurgerMenu smallScreen={smallScreen} onClick = {hideMobileSearch}>
                     <div className={'mt-5 flex flex-col justify-center'}>
                         <div onClick={() => setModalType(userModal)} className={'mb-5 mx-auto'}><UserAvatar
                         /></div>
@@ -183,13 +196,14 @@ const mapStateToProps = (state) => {
         currentModalItemUrl: state.app.currentModalItemUrl,
         modalType: state.app.modalType,
         itemModalType: state.app.itemModalType,
+        showMobileSearch: state.media.showMobileSearch,
     }
 }
 
 export default connect(mapStateToProps, {
     listMedia, setCurrentRoute, toggleSmallScreen,
     setModalType, setItemModalType, handleAlertAction,
-    toggleCurrentTheme,
+    toggleCurrentTheme, toggleMobileSearch
 })(Main);
 
 

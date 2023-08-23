@@ -4,7 +4,7 @@ import {
     audioRoute, byDate, byName, bySize, defaultRef,
     images,
     imagesOnly,
-    imagesRoute, mediaFetchMode,  mediaUploadMode, noModal,
+    imagesRoute, mediaFetchMode, mediaUploadMode, noModal,
     rootRoute, videos,
     videosOnly,
     videosRoute
@@ -34,6 +34,7 @@ const mediaSlice = createSlice({
         sortBy: byDate,
         searchResults: [],
         searchRequest: '',
+        showMobileSearch: false,
         noSearchResults: false,
         searchMode: false,
         sortOptions: [
@@ -53,6 +54,9 @@ const mediaSlice = createSlice({
         isItemRenaming: false,
     },
     reducers: {
+        toggleMobileSearch(state, action) {
+            state.showMobileSearch = action.payload
+        },
         setDeletedItemUrl(state, action) {
             state.deletedItemUrl = action.payload
         },
@@ -300,6 +304,7 @@ export const {
     setLastPlayedAudioNameBeforeSort,
     setOldMediaName,
     toggleIsItemRenaming,
+    toggleMobileSearch,
 } = mediaSlice.actions;
 
 
