@@ -3,10 +3,9 @@ import {CgCloseR} from "react-icons/cg";
 import {connect} from "react-redux";
 import {changeAvatar} from "../../redux/authSlice";
 import CurrentUser from "../user/CurrentUser";
-import MyCustomTransition from "../common/MyCustomTransition";
-import MyModal from "../common/MyModal";
-import ModalContainer from "./ModalContainer";
 import {noModal} from "../../common/commonData";
+import TransitionCommonParrent from "../common/TransitionCommonParrent";
+import ActionBtn from "../common/ActionBtn";
 
 const UserModal = ({
                        toggleModal,
@@ -31,31 +30,28 @@ const UserModal = ({
     const handleClose = () => toggleModal(noModal)
 
     return (
-        <MyCustomTransition show={showModal}>
-            <ModalContainer zIndex={'z-max'} handleClose={handleClose}>
-                <MyModal width={'w-auto'} padding={'p-5'}>
-                    <input type="file" hidden={true} ref={hiddenFileInput} onChange={uploadPhoto}/>
-                    <div className="
+        <TransitionCommonParrent show={showModal} toggleModal={toggleModal} zIndex={'z-max'}>
+            <input type="file" hidden={true} ref={hiddenFileInput} onChange={uploadPhoto}/>
+            <div className="
             absolute
             top-0
             right-0
             "
-                         onClick={handleClose}
-                    ><CgCloseR size={20} color={'gray'}/></div>
-                    <div className={'flex flex-col justify-center items-center'}>
-                        <CurrentUser/>
-                        <hr/>
-                        <div className="w-full flex justify-end">
-                            <button disabled={isAvatarLoading} onClick={uploadPhoto}
-                                    className='disabled:bg-gray-400 mb-3 bg-blue-500 text-white rounded mr-8'>Change
-                                avatar
-                            </button>
-                        </div>
+                 onClick={handleClose}
+            ><CgCloseR size={20} color={'gray'}/></div>
+            <div className={'flex flex-col justify-center items-center'}>
+                <CurrentUser/>
+                <hr/>
+                <div className="w-full flex justify-end">
+                    <ActionBtn handleClick={uploadPhoto}
+                               height={'h-8'}
+                    >
+                        Change Avatar
+                    </ActionBtn>
+                </div>
 
-                    </div>
-                </MyModal>
-            </ModalContainer>
-        </MyCustomTransition>
+            </div>
+        </TransitionCommonParrent>
 
 
     );
