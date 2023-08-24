@@ -1,20 +1,18 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import ReactPlayer from "react-player";
 import {formatTime} from "../../common/commonData";
-import {ClipLoader} from "react-spinners";
 
-const ModalVideoItem = ({item, index, onClick, currentModalItemUrl}) => {
+const ModalVideoItem = ({
+                            item,
+                            index,
+                            onClick,
+                            currentModalItemUrl,
+                            info,
+                            column = false
+                        }) => {
     const videoRef = useRef(null)
-    const [isPlayerReady, setIsPlayerReady] = useState(false)
     const [isPlaying, setIsPlaying] = useState(false)
-    const [currentTime, setCurrentTime] = useState(0);
     const [totalTime, setTotalTime] = useState(0)
-    const current = videoRef.current
-
-
-    // useEffect(() => {
-    //     isPlayerReady && setTotalTime(videoRef.current.getDuration())
-    // }, [isPlayerReady])
 
     const handleMouseEnter = () => {
         setIsPlaying(true);
@@ -30,16 +28,37 @@ const ModalVideoItem = ({item, index, onClick, currentModalItemUrl}) => {
     }
 
     return (
-        <div key={index} className='w-80% h-32 mt-5 mb-4  rounded flex flex-col justify-center items-center'>
+        <div key={index} className={`
+        w-80% 
+        h-32 
+        mt-3 
+        mb-3  
+        rounded 
+        flex 
+        justify-center 
+        ${info === 'center' ? 'items-center' : 'items-start'}
+        ${column && 'flex-col'}
+        `}>
             <div
                 onClick={() => onClick(index)}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
                 className={` relative w-full h-full  bg-black rounded ${item.url === currentModalItemUrl && 'border-4 border-amber-300'} flex items-center justify-center cursor-pointer`}>
-                <ReactPlayer onReady={formatCurrentPlayerTime} ref={videoRef} url={item?.url || ''} height={'98%'}
+                <ReactPlayer onReady={formatCurrentPlayerTime}
+                             volume={0}
+                             playing={isPlaying}
+                             ref={videoRef} url={item?.url || ''} height={'98%'}
                              width={'98%'}/>
                 <div
                     className='absolute bottom-0 left-2 text-white'>{totalTime}</div>
             </div>
-            <div className={'text-black w-full text-center'}>{item?.name || ''}</div>
+            <div className={`
+            text-white
+            w-full 
+            text-center
+            ${info !== 'center' && 'mt-3'}
+            
+            `}>{item?.name || ''}</div>
         </div>
     );
 };

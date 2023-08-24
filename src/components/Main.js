@@ -116,7 +116,10 @@ const Main = ({
             />
             <RenameModal toggleModal={setModalType} showModal={modalType === renameModal}/>
             <ShareModal toggleModal={setModalType} showModal={modalType === shareModal}/>
-            <VideoModal toggleModal={setItemModalType} showModal={itemModalType === videoModal}/>
+            <VideoModal
+                currentTheme={currentTheme}
+                toggleModal={setItemModalType}
+                showModal={itemModalType === videoModal}/>
             <ImageModal toggleModal={setItemModalType} showModal={itemModalType === imageModal}
                         url={currentModalItemUrl}/>
             <UserModal toggleModal={setModalType}

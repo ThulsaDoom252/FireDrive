@@ -12,6 +12,7 @@ import {defaultStyle, transitionStyles} from "../../common/TransitionStyles";
 
 const ImageModal = ({
                         overlayColor = 'bg-gray-900',
+                        animated = true,
                         overlayOpacity = 'opacity-95',
                         showOverlay = true,
                         arrowSize = 30,
@@ -19,6 +20,7 @@ const ImageModal = ({
                         closeIconSize = 30,
                         toggleModal,
                         showModal,
+                        zIndex = 'z-2'
                     }) => {
 
     const modalContext = useContext(ItemsModalContext)
@@ -38,6 +40,7 @@ const ImageModal = ({
         handleShareModal,
         swipeHandlers,
         showMobileSettings,
+        currentModalItemName,
     } = modalContext
 
     const prevArrowDisabled = currentModalItemIndex === 0
@@ -53,6 +56,7 @@ const ImageModal = ({
             {state => (
                 <div
                     onClick={handleCLose}
+                    hidden={!animated ? showModal : false}
                     style={{...defaultStyle, ...transitionStyles[state]}}
                     className={`
                 w-screen 
@@ -62,9 +66,10 @@ const ImageModal = ({
                  items-center 
                  justify-center 
                  flex-col
-                 ${showModal && 'z-1'}
+                 ${showModal && zIndex}
                  `}>
                     {showOverlay && <Overlay bg={overlayColor} opacity={overlayOpacity}/>}
+                    <div className={`text-white mb-2 ${zIndex}`}>{currentModalItemName}</div>
                     <div hidden={fullScreen || !showMobileSettings}
                          className='absolute right-5  top-5 hover:cursor-pointer z-1'
                          onClick={handleCLose}><IoClose
@@ -101,21 +106,26 @@ const ImageModal = ({
                         onClick={stopPropagation}
                         className={`
                     flex
+                    flex-col
                     pl-5
                     pr-5
                     pb-3
-                    justify-between
+                    justify-center
+                    items-center
                      ${smallScreen ? 'w-65vw' : 'w-image-settings'}
                     text-white
                     ${smallScreen ? 'fixed bottom-0' : 'mt-5 relative'}
                     `}>
-                        <ModalDesktopOptions iconSize={20}
-                                             toggleFullScreen={toggleFullScreen}
-                                             handleRenameModal={handleRenameModal}
-                                             handleShareModal={handleShareModal}
-                                             handleDeleteCurrentModalItem={handleDeleteCurrentModalItem}
-                                             smallScreen={smallScreen}
-                        />
+                        <div className={'w-full flex justify-between'}>
+                            <ModalDesktopOptions iconSize={20}
+                                                 toggleFullScreen={toggleFullScreen}
+                                                 handleRenameModal={handleRenameModal}
+                                                 handleShareModal={handleShareModal}
+                                                 handleDeleteCurrentModalItem={handleDeleteCurrentModalItem}
+                                                 smallScreen={smallScreen}
+                            />
+                        </div>
+
                     </div>
                     <button hidden={smallScreen} disabled={prevArrowDisabled}
                             className={`
@@ -140,26 +150,6 @@ const ImageModal = ({
             )}
         </Transition>
     )
-        ;
 };
 
 export default ImageModal;
-
-
-//
-//
-//             onExit={handleExitAnimation}>
-//     {state => (
-//         <div hidden={!animated ? !isDropDownOpen : false}
-//              style={{...defaultStyle, ...transitionStyles[state]}}
-//              className={`
-//                              w-full
-//                              flex
-//                              items-center
-//                              ${!isDropDownOpen && isAnimationExited ? 'absolute' : 'block'}
-//                              ${smallScreen && 'flex-col'}
-//                              `}>
-//             {children}
-//         </div>
-//     )}
-// </Transition>

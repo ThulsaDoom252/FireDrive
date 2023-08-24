@@ -25,7 +25,8 @@ const Header = ({
             w-full  
             justify-between
             items-center  
-            z-10
+            fixed
+            z-1
             ${currentTheme.primeBg}
             
              ${smallScreen ? 'p-4' : ' pr-10  pl-10'}            
