@@ -3,18 +3,19 @@ import ActionBtn from "./ActionBtn";
 import {BiDownArrow, BiUpArrow} from "react-icons/bi";
 import {useSelector} from "react-redux";
 import {Transition} from "react-transition-group";
+import {defaultStyle, transitionStyles} from "../../common/TransitionStyles";
 
 
-const DropDownBtn = ({
-                         switchToSmallScreenIcon = true,
-                         smallScreenIcon,
-                         isFullWidth = true,
-                         animated = true,
-                         duration = 300,
-                         btnLabel = '',
-                         children,
-                         isDisabled,
-                     }) => {
+const DropDownMenu = ({
+                          switchToSmallScreenIcon = true,
+                          smallScreenIcon,
+                          isFullWidth = true,
+                          animated = true,
+                          duration = 300,
+                          btnLabel = '',
+                          children,
+                          isDisabled,
+                      }) => {
     const [isDropDownOpen, setIsDropDownOpen] = useState(false)
     const [isAnimationExited, setIsAnimationExited] = useState(true)
     const smallScreen = useSelector(state => state.app.smallScreen)
@@ -29,18 +30,6 @@ const DropDownBtn = ({
         e.stopPropagation()
         setIsDropDownOpen(!isDropDownOpen)
     }
-
-    const defaultStyle = {
-        transition: `opacity ${duration}ms ease-in-out`,
-        opacity: 0,
-    }
-
-    const transitionStyles = {
-        entering: {opacity: 1},
-        entered: {opacity: 1},
-        exiting: {opacity: 0},
-        exited: {opacity: 0},
-    };
 
     return (
         <div className={`
@@ -85,4 +74,4 @@ const DropDownBtn = ({
     );
 };
 
-export default DropDownBtn;
+export default DropDownMenu;

@@ -1,31 +1,38 @@
 import React from 'react';
 import {Dialog, Transition} from "@headlessui/react";
 import {noModal, stopPropagation} from "../../common/commonData";
+import {IoClose} from "react-icons/io5";
 
-const TransitionCommonParent = ({
-                                    show,
-                                    appear,
-                                    width = 'w-300',
-                                    toggleModal,
-                                    zIndex = 'z-2',
-                                    children,
-                                    position,
+const ItemsModalTransition = ({
+                                  show,
+                                  appear,
+                                  width = 'w-50vw',
+                                  toggleModal,
+                                  zIndex = 'z-2',
+                                  children,
+                              }) => {
+    const handleCloseModal = () => toggleModal(noModal)
 
-                                }) => {
+
     return (
         <Transition appear={appear} show={show}
-                    onClick={() => toggleModal(noModal)}
-                    className={`absolute bg-opacity-50 w-screen h-screen bg-gray-500 ${zIndex}`}>
+                    onClick={handleCloseModal}
+                    className={`absolute 
+                    ${zIndex}`}>
             <Dialog as='div' className={`
+            bg-black
+            bg-opacity-50
                 absolute
-                inset-1/2
-                w-fit
-                h-fit
+                w-screen
+                h-screen
                 rounded
-                transform -translate-x-1/2 -translate-y-1/2 
+                flex
+                justify-center
+                items-center
                 ${zIndex}
                 `}
                     onClose={() => toggleModal(false)}>
+
                 <Transition.Child
                     as={'div'}
                     enter="ease-out duration-300"
@@ -35,10 +42,9 @@ const TransitionCommonParent = ({
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0">
                     <Dialog.Panel className={`
+                       p-2
                     ${zIndex}
-                    ${width}
-                    relative
-                    p-2
+                    ${width} 
                     `}
                                   onClick={stopPropagation}>
                         {children}
@@ -50,4 +56,4 @@ const TransitionCommonParent = ({
 
 };
 
-export default TransitionCommonParent;
+export default ItemsModalTransition;

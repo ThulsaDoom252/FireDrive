@@ -28,7 +28,6 @@ const SignInContainer = ({
     }, [verificationMode]);
 
     if (isAuth) {
-        debugger
         return <Navigate to={rootRoute}/>
     }
 

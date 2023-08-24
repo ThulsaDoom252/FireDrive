@@ -52,7 +52,6 @@ const appSlice = createSlice({
         toggleCurrentTheme(state, action) {
             const {type: themeType} = action.payload
             state.currentThemeName = themeType
-            debugger
             switch (themeType) {
                 case dayTheme:
                     state.currentTheme.mainBg = mainDayBg

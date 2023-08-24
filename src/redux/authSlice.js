@@ -109,17 +109,17 @@ export const handleLogin = createAsyncThunk('login-thunk', async ({email, passwo
         .catch((error) => {
             dispatch(setAuthError(error.code))
         })
-    debugger
+
     dispatch(toggleFetchAuthBtn(false))
 })
 
 export const sendVerificationEmail = createAsyncThunk('send-verification-thunk', async ({resend}, {dispatch}) => {
-    debugger
+
     const auth = getAuth()
     const user = auth.currentUser
     try {
         await sendEmailVerification(user)
-        debugger
+
         toast.success('email send')
     } catch (e) {
         toast.error('error...')
@@ -151,7 +151,7 @@ export const githubAuth = createAsyncThunk('github-auth-thunk', async (_, {dispa
                     email: user.email,
                     avatar: user.photoURL
                 }))
-                debugger
+
             }
         })
         .catch((e) => {
@@ -160,24 +160,24 @@ export const githubAuth = createAsyncThunk('github-auth-thunk', async (_, {dispa
 })
 
 export const authCheck = createAsyncThunk('auth-check-thunk', async (_, {dispatch}) => {
-    debugger
+
     dispatch(toggleInitializing(true))
-    debugger
+
     try {
-        debugger
+
         const auth = await getAuth()
         onAuthStateChanged(auth, async (user) => {
             if (user === null) {
-                debugger
+
                 dispatch(toggleAuthStatus(false))
                 dispatch(setUserData({email: '', username: '', avatar: null}))
             }
             if (user) {
-                debugger
+
                 const {email, displayName, photoURL} = user
                 dispatch(setUserData({email, username: displayName, avatar: photoURL}))
                 if (user.providerData[0].providerId === 'github.com' || user.emailVerified) {
-                    debugger
+
                     dispatch(toggleAuthStatus(true))
                 } else {
                     dispatch(toggleVerificationMode(true))
@@ -194,7 +194,7 @@ export const authCheck = createAsyncThunk('auth-check-thunk', async (_, {dispatc
 
 
 export const handleLogout = createAsyncThunk('logout-thunk', async (_, {dispatch}) => {
-    debugger
+
     const auth = await getAuth()
     if (!auth.currentUser.emailVerified) {
         await dispatch(toggleVerificationMode(false))

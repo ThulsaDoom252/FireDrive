@@ -43,7 +43,7 @@ import DS from '../images/themeTypes/DS.jpg'
 import NS from '../images/themeTypes/NS.jpg'
 import AdaptiveImage from "./AdaptiveImage";
 import {dayTheme, desertTheme, nightTheme} from "../common/themes";
-import DropDownBtn from "./common/DropDownBtn";
+import DropDownMenu from "./common/DropDownMenu";
 
 const Main = ({
                   currentMediaSet,
@@ -138,7 +138,7 @@ const Main = ({
                         <div className={'bg-gray-100 h-0.5 rounded w-full'}/>
 
                         <div className='mt-3 mb-3'>
-                            <DropDownBtn btnLabel={'Change theme'} smallScreenIcon={<BiColorFill/>}>
+                            <DropDownMenu btnLabel={'Change theme'} smallScreenIcon={<BiColorFill/>}>
                                 <AdaptiveImage
                                     currentThemeName={currentThemeName}
                                     theme={dayTheme}
@@ -154,7 +154,7 @@ const Main = ({
                                     theme={desertTheme}
                                     url={DS}
                                     onClick={() => toggleCurrentTheme({type: desertTheme})}/>
-                            </DropDownBtn>
+                            </DropDownMenu>
                         </div>
                         <div className={'mb-5 '}><LogOutContainer
                             label={'logout'}
