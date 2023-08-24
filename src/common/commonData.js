@@ -52,8 +52,6 @@ export const generateRandomString = (length) => {
 }
 
 
-
-
 // containers id's
 export const wrapperId = 'wrapper'
 export const mainContentId = 'content'
@@ -66,11 +64,10 @@ export const bySize = 'by size'
 
 
 //SmallScreenMode
-export const smallScreenWidth = 768
+export const smallScreenWidth = 1024
 
 
 //Modals
-
 //Types
 export const AlertModal = 'ALERT MODAL'
 export const UserModal = 'USER MODAL'

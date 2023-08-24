@@ -23,7 +23,7 @@ export const secDesertBg = 'bg-desert-sec'
 //Colors
 export const dayPrimary = 'text-black'
 export const nightPrimary = 'text-white'
-export const desertPrimary = 'text-red-400'
+export const desertPrimary = 'text-red-800'
 
 
 

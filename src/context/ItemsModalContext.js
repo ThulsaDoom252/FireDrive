@@ -1,4 +1,4 @@
-import React, {createContext,  useState} from 'react';
+import React, {createContext, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {handleAlertModal, setCurrentModalItemIndex, setModalType} from "../redux/appSlice";
 import {handleMediaName} from "../redux/mediaSlice";
@@ -13,7 +13,6 @@ import {useSwipeable} from "react-swipeable";
 
 export const ItemsModalContext = createContext();
 export const ItemsModalContextProvider = ({children}) => {
-
     const dispatch = useDispatch()
     const smallScreen = useSelector(state => state.app.smallScreen)
     const currentMediaSet = useSelector(state => state.media.currentMediaSet)

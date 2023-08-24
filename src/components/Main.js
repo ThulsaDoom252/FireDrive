@@ -1,6 +1,5 @@
 import React, {useContext, useEffect} from 'react';
 import HeaderContainer from "./Header/HeaderContainer";
-import Home from "./Home";
 import {
     imageModal,
     mainContentId,
@@ -44,6 +43,7 @@ import NS from '../images/themeTypes/NS.jpg'
 import AdaptiveImage from "./AdaptiveImage";
 import {dayTheme, desertTheme, nightTheme} from "../common/themes";
 import DropDownMenu from "./common/DropDownMenu";
+import Home from "./Home/Home";
 
 const Main = ({
                   currentMediaSet,
@@ -117,7 +117,6 @@ const Main = ({
             <RenameModal toggleModal={setModalType} showModal={modalType === renameModal}/>
             <ShareModal toggleModal={setModalType} showModal={modalType === shareModal}/>
             <VideoModal
-                currentTheme={currentTheme}
                 toggleModal={setItemModalType}
                 showModal={itemModalType === videoModal}/>
             <ImageModal toggleModal={setItemModalType} showModal={itemModalType === imageModal}
@@ -168,7 +167,7 @@ const Main = ({
                     </div>
                     <div><SortInput/></div>
                 </BurgerMenu>
-                {homePage && <Home/>}
+                {homePage && <Home currentTheme={currentTheme}/>}
                 <Routes>
                     {!homePage && <Route path={currentRoute}
                                          element={<MediaContainer {...{

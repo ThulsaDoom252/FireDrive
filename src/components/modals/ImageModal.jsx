@@ -69,7 +69,8 @@ const ImageModal = ({
                  ${showModal && zIndex}
                  `}>
                     {showOverlay && <Overlay bg={overlayColor} opacity={overlayOpacity}/>}
-                    <div className={`text-white mb-2 ${zIndex}`}>{currentModalItemName}</div>
+                    <div
+                        className={`text-white mb-2 ${zIndex} ${smallScreen && 'absolute top-2'}`}>{currentModalItemName}</div>
                     <div hidden={fullScreen || !showMobileSettings}
                          className='absolute right-5  top-5 hover:cursor-pointer z-1'
                          onClick={handleCLose}><IoClose

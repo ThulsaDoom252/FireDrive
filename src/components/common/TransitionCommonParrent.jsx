@@ -19,6 +19,7 @@ const TransitionCommonParent = ({
             <Dialog as='div' className={`
                 absolute
                 inset-1/2
+                bg-white
                 w-fit
                 h-fit
                 rounded

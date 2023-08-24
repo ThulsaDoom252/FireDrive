@@ -58,6 +58,7 @@ module.exports = {
                 '65vw': '65vw',
                 '90vw': '90vw',
                 '80vw': '80vw',
+                '100vw': '100vw',
                 'modal': '400px',
                 '150': '150px',
                 '200': '200px',
@@ -71,6 +72,7 @@ module.exports = {
                 'image-settings': '400px',
             },
             height: {
+                'homeItemBlock': '160px',
                 '10%': '10%',
                 '15%': '15%',
                 '20%': '20%',
@@ -86,6 +88,7 @@ module.exports = {
                 '90vh': '90vh',
                 '70vh': '70vh',
                 '80vh': '80h',
+                '100vh': '100vh',
                 "45": "45px",
                 "40": "40px",
                 '300': '300px',
@@ -104,6 +107,10 @@ module.exports = {
                 'max': '999999999999'
             },
             maxWidth: {
+                'homeItemBlock': '1024px',
+                'imageListItem': '100px',
+                'videoListItem': '100px',
+                'audioListItem': '50px',
                 '65vw': '65vw',
                 '90screen': '90vw',
                 '95vw': '95vw',

@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useRef} from 'react';
 import ReactPlayer from "react-player";
 import {IoClose} from "react-icons/io5";
 import {ItemsModalContext} from "../../context/ItemsModalContext";
@@ -17,10 +17,10 @@ const VideoModal = ({
                         overlayOpacity = 'opacity-95',
                         zIndex = 'z-2',
                         animated = true,
-                        currentTheme,
                     }) => {
 
     const ModalContext = useContext(ItemsModalContext)
+    const playerRef = useRef(null)
 
     const {
         currentMediaSet,
@@ -31,7 +31,10 @@ const VideoModal = ({
         handleCurrentModalItemIndex,
         smallScreen,
     } = ModalContext
-    const handleClose = () => toggleModal(noModal)
+
+    const handleClose = () => {
+        toggleModal(noModal)
+    }
 
     return (
         <Transition in={showModal} duration={200}>
@@ -72,15 +75,17 @@ const VideoModal = ({
                         <div
                             className={`
                             bg-black 
-                            ${smallScreen 
+                            ${smallScreen
                                 ? 'w-100% h-100% flex justify-center items-center'
                                 : 'w-80% h-90%'}`}>
                             <div className={`w-100% 
                             ${!smallScreen ? 'h-90%' : 'h-100%'}
                             `}>
                                 <ReactPlayer
+                                    ref={playerRef}
                                     height={'100%'}
                                     width={'100%'}
+                                    playing={showModal}
                                     className={'object-cover'}
                                     controls={true}
                                     url={currentModalItemUrl || ''}/>
