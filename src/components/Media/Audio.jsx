@@ -47,17 +47,19 @@ const Audio = ({
             <audio onCanPlay={formattedTotalTime} hidden={true} src={url || ''} ref={audioRef}></audio>
             <div
                 onClick={() => handleSetCurrentAudioIndex({index: audioIndex})}
-                className={`
-                ${(currentTrackPlaying || currentTrackHovered) ? currentTheme.primeBg : currentTheme.secBg}   
-                h-40  
+                className={` 
+                h-45  
                 text-white 
                 flex 
                 justify-between
                 items-center 
-                mb-5  
+                mb-3  
                 relative 
                 rounded 
+                border-b-2
                 cursor-pointer
+                ${(currentTrackPlaying || currentTrackHovered) ? 'bg-opacity-100' : 'bg-opacity-80'}
+                 ${(currentTrackPlaying || currentTrackHovered) ? currentTheme.primeBg : currentTheme.secBg}  
                 
                 `}
                 onMouseEnter={() => setHoveredMediaIndex(audioIndex)}
