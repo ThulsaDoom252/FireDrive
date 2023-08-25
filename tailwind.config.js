@@ -97,7 +97,8 @@ module.exports = {
                 '300': '300px',
                 '200': '200px',
                 '62': '130px',
-                'playerHeight': '40px'
+                'playerHeight': '40px',
+                'mobilePlayerHeight': '70px',
             },
             zIndex: {
                 '1': '1',

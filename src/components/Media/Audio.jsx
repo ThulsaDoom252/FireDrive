@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {AiFillPauseCircle, AiFillPlayCircle} from "react-icons/ai";
 import {useContext} from "react";
 import {AudioPlayerContext} from "../../context/AudioPlayerContext";
@@ -23,6 +23,12 @@ const Audio = ({
     const audioContext = useContext(AudioPlayerContext)
     const audioRef = useRef(url)
     const itemHovered = hoveredMediaIndex === index && !smallScreen
+    const [totalDuration, setTotalDuration] = useState(0)
+
+    const formattedTotalTime = () => {
+        const formattedDuration = formatTime(audioRef.current.duration)
+        setTotalDuration(formattedDuration)
+    }
 
     const {
         currentTrackName,
@@ -36,11 +42,9 @@ const Audio = ({
     const currentTrackPlaying = currentTrackName === name
     const currentTrackHovered = hoveredMediaIndex === audioIndex
 
-    const isDurationIsNan = isNaN(audioRef?.current?.duration)
-
     return (
         <>
-            <audio hidden={true} src={url || ''} ref={audioRef}></audio>
+            <audio onCanPlay={formattedTotalTime} hidden={true} src={url || ''} ref={audioRef}></audio>
             <div
                 onClick={() => handleSetCurrentAudioIndex({index: audioIndex})}
                 className={`
@@ -82,8 +86,8 @@ const Audio = ({
                     className={'flex mr-5 '}>
                     <div
                         className={`${currentTheme.color}`}>{currentTrackName === name && `${formatTime(currentDuration)}/`}</div>
-                    <div className={`${currentTheme.color}`}>{!isDurationIsNan ? formatTime(audioRef.current.duration) :
-                        <ClipLoader color={'orange'} size={20}/>}</div>
+                    <div className={`${currentTheme.color}`}>{totalDuration === 0 ?
+                        <ClipLoader size={25}/> : totalDuration}</div>
                 </div>
 
 

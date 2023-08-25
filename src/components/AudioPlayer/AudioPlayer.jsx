@@ -4,7 +4,6 @@ import {useContext} from "react";
 import DurationSeekBar from "./DurationSeekBar";
 import {setCurrentAudioIndex} from "../../redux/mediaSlice";
 import {AudioPlayerContext} from "../../context/AudioPlayerContext";
-import {formatTime} from "../../common/commonData";
 import AudioPlayerDisabled from "./AudioPlayerDisabled";
 import {LuRepeat, LuRepeat1} from "react-icons/lu";
 import {IoInfinite} from "react-icons/io5";
@@ -13,12 +12,7 @@ import {ImVolumeHigh, ImVolumeMute2} from "react-icons/im";
 const AudioPlayer = ({
                          smallScreenMode,
                          buttonsSize = 28,
-                         shouldTruncate = false,
                          currentTheme,
-                         showTime = false,
-                         height = 'h-playerHeight'
-
-
                      }) => {
 
 
@@ -86,18 +80,14 @@ const AudioPlayer = ({
 
     return (
         <div
-            className={`${!smallScreenMode && 'rounded justify-center'} w-full h-playerHeight flex justify-center items-center `}>
+            className={`${smallScreenMode && 'rounded justify-center'} 
+            w-full 
+            h-full
+            flex
+            justify-center
+            ${smallScreenMode ? 'items-end' : 'items-center'}             
+            `}>
             <div className={'w-player-controls flex flex-col justify-between items-center'}>
-                <div className={'w-full'} hidden={!smallScreenMode}>
-                    <DurationSeekBar
-                        isCurrentTrackPlaying={isCurrentTrackPlaying}
-                        name={currentTrackName}
-                        currentTheme={currentTheme}
-                        value={currentDuration}
-                        max={totalDuration}
-                        smallScreen={smallScreenMode}
-                        onChange={handleSeekBarChange}/>
-                </div>
                 <div className={`w-full  flex items-center justify-between`}>
                     <div className={'flex items-center justify-between'}>
                         <button
@@ -145,8 +135,12 @@ const AudioPlayer = ({
                             <FiSkipForward size={buttonsSize}/>
                         </button>
                     </div>
-                    <div hidden={smallScreenMode} className='w-full mr-5 ml-2'>
+                    <div className={`
+                  w-full
+                  ${smallScreenMode ? 'absolute top-0 right-0' : 'mr-3'}`
+                    }>
                         <DurationSeekBar
+                            smallScreenMode={smallScreenMode}
                             isCurrentTrackPlaying={isCurrentTrackPlaying}
                             name={currentTrackName}
                             currentTheme={currentTheme}
@@ -154,7 +148,6 @@ const AudioPlayer = ({
                             max={totalDuration}
                             onChange={handleSeekBarChange}/>
                     </div>
-
                     <div className={``}>
                         <div className={'w-20 flex justify-between mr-10 relative'}>
                             <button onClick={handleRepeatMode} className={`
@@ -180,10 +173,6 @@ const AudioPlayer = ({
                         </div>
                     </div>
                 </div>
-                {showTime && <div className={'mx-auto'}>
-                    {formatTime(currentDuration)} / {formatTime(totalDuration)}
-                </div>}
-
             </div>
             <div>
                 {/*<span*/}
