@@ -14,7 +14,9 @@ const Video = ({
                    handleInitialModalIndex,
                    hoveredMediaIndex,
                    setHoveredMediaIndex,
-                   itemOptionsHovered, setItemOptionsHovered,
+                   itemOptionsHovered,
+                   setItemOptionsHovered,
+                   noOpenModal,
                }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
@@ -50,8 +52,8 @@ const Video = ({
     }
     return (
         <>
-            <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-                <MyCustomTransition show={isVideoHovered}>
+            <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className={'relative'}>
+                <MyCustomTransition show={isVideoHovered && noOpenModal}>
                     <div className={'absolute top-0 right-0 z-50'}><MediaOptions {...{
                         name,
                         oldName,
@@ -78,7 +80,7 @@ const Video = ({
                         onEnded={() => setIsPlaying(false)}
                         onProgress={handleProgress}
                     />
-                    <div className="absolute bottom-10 text-white left-2 flex justify-between w-full">
+                    <div className="absolute bottom-2 text-white left-2 flex justify-between w-full">
                         <div className={'flex'}>
                             <MyCustomTransition show={isPlaying}>
                                 {formatTime(currentTime)}

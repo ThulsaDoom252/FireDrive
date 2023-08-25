@@ -102,6 +102,7 @@ export const videosRoute = '/videos'
 export const audioRoute = '/audio'
 export const rootRoute = '/'
 export const verificationRoute = '/verification'
+export const restoreRoute = '/restore'
 export const signInRoute = '/signIn'
 export const signUpRoute = '/signUp'
 

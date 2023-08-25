@@ -5,6 +5,7 @@ import {
     getAuth,
     signInWithPopup,
     signInWithEmailAndPassword,
+    sendPasswordResetEmail,
     GoogleAuthProvider,
     GithubAuthProvider,
     onAuthStateChanged,
@@ -13,10 +14,10 @@ import {
 } from 'firebase/auth'
 import {uploadBytes, ref, getDownloadURL} from "firebase/storage";
 import {storage,} from "../firebase";
-import {toggleInitializing} from "./appSlice";
 import toast from "react-hot-toast";
 import {generateRandomString} from "../common/commonData";
-
+import {toggleInitializing} from "./appSlice";
+import {restoreTimerInitialValue, verificationTimerInitialValue} from "../common/Timers";
 
 const authSlice = createSlice({
     name: 'auth-slice',
@@ -25,11 +26,16 @@ const authSlice = createSlice({
         username: '',
         avatar: '',
         isVerificationEmailSend: false,
+        isRestoreEmailSend: false,
         verificationMode: false,
         isAuthorized: false,
         isAuthBtnFetching: false,
         authError: '',
         isAvatarLoading: false,
+        verificationTimerValue: null,
+        restoreTimerValue: null,
+        verificationIntervalId: null,
+        restoreIntervalId: null,
     },
 
     reducers: {
@@ -48,6 +54,9 @@ const authSlice = createSlice({
         toggleVerificationEmailSendStatus(state, action) {
             state.isVerificationEmailSend = action.payload
         },
+        toggleRestoreEmailSendStatus(state, action) {
+            state.isRestoreEmailSend = action.payload
+        },
         toggleAuthStatus(state, action) {
             state.isAuthorized = action.payload
         },
@@ -59,7 +68,19 @@ const authSlice = createSlice({
         },
         toggleVerificationMode(state, action) {
             state.verificationMode = action.payload
-        }
+        },
+        setVerificationTimerValue(state, action) {
+            state.verificationTimerValue = action.payload
+        },
+        setRestoreTimerValue(state, action) {
+            state.restoreTimerValue = action.payload
+        },
+        setVerificationIntervalId(state, action) {
+            state.verificationIntervalId = action.payload
+        },
+        setRestoreIntervalId(state, action) {
+            state.restoreIntervalId = action.payload
+        },
     }
 })
 
@@ -72,7 +93,12 @@ export const {
     toggleFetchAuthBtn,
     setAuthError,
     toggleVerificationEmailSendStatus,
+    toggleRestoreEmailSendStatus,
     toggleVerificationMode,
+    setVerificationTimerValue,
+    setRestoreTimerValue,
+    setVerificationIntervalId,
+    setRestoreIntervalId,
 } = authSlice.actions
 
 export const handleEmailAndPasswordSignUp = createAsyncThunk('email-password-signup-thunk', async ({
@@ -119,12 +145,31 @@ export const sendVerificationEmail = createAsyncThunk('send-verification-thunk',
     const user = auth.currentUser
     try {
         await sendEmailVerification(user)
-
+        dispatch(toggleVerificationEmailSendStatus(true))
+        localStorage.setItem('isVerificationEmailSend', true)
+        localStorage.setItem('verificationCounterValue', verificationTimerInitialValue)
+        dispatch(startVerificationTimer())
         toast.success('email send')
     } catch (e) {
         toast.error('error...')
         console.log(`ERROR SENDING VERIFICATION EMAIL: ${e}`)
     }
+})
+
+export const sendRestoreEmail = createAsyncThunk('send-restore-email-thunk', async (email, {dispatch}) => {
+    const auth = getAuth()
+    try {
+        await sendPasswordResetEmail(auth, email)
+        dispatch(toggleRestoreEmailSendStatus(true))
+        localStorage.setItem('isRestoreEmailSend', true)
+        localStorage.setItem('restoreCounterValue', restoreTimerInitialValue)
+        dispatch(startRestoreTimer())
+        toast.success('email send')
+    } catch (e) {
+        toast.error('Error sending verification email, see console for details')
+        console.log(`Send verification email error (if it persist, contact the developer:  ${e}`)
+    }
+
 })
 
 export const googleAuth = async () => {
@@ -219,8 +264,50 @@ export const changeAvatar = createAsyncThunk('change-avatar-thunk', async ({avat
         dispatch(toggleAvatarLoading(false))
         toast.success('Avatar changed')
     }
-
-
 })
+
+
+/// Start Verification and Restore Timers
+export const startVerificationTimer = createAsyncThunk(
+    'verification-timer-thunk',
+    async (_, {dispatch}) => {
+        let currentTime = localStorage.getItem('verificationCounterValue')
+        const newIntervalId = setInterval(() => {
+            if (currentTime > 0) {
+                currentTime = currentTime - 1
+                dispatch(setVerificationTimerValue(currentTime));
+                localStorage.setItem('verificationCounterValue', currentTime)
+            } else {
+                clearInterval(newIntervalId)
+                dispatch(setVerificationTimerValue(verificationTimerInitialValue))
+                dispatch(toggleVerificationEmailSendStatus(false))
+                localStorage.setItem('isVerificationEmailSend', false)
+            }
+        }, 1000);
+        dispatch(setVerificationIntervalId(newIntervalId));
+    })
+
+
+
+export const startRestoreTimer = createAsyncThunk(
+    'restore-timer-thunk',
+    async (_, {dispatch}) => {
+        let currentTime = localStorage.getItem('restoreCounterValue')
+        const newIntervalId = setInterval(() => {
+            if (currentTime > 0) {
+                currentTime = currentTime - 1
+                dispatch(setRestoreTimerValue(currentTime));
+                localStorage.setItem('restoreCounterValue', currentTime)
+            } else {
+                clearInterval(newIntervalId)
+                dispatch(setRestoreTimerValue(verificationTimerInitialValue))
+                dispatch(toggleRestoreEmailSendStatus(false))
+                localStorage.setItem('isRestoreEmailSend', false)
+            }
+        }, 1000);
+        dispatch(setVerificationIntervalId(newIntervalId));
+    })
+
+
 
 

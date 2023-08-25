@@ -7,4 +7,8 @@ export const getSpecificState = createAsyncThunk('get-state-thunk', async ({slic
 });
 
 
-
+export const getSpecState = createAsyncThunk('helper-thunk', ({sliceName, keyName}, {dispatch, getState}) => {
+    const currentState = getState()
+    const currentValue = currentState.sliceName.keyName
+    return currentValue
+})

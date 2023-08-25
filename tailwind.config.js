@@ -73,6 +73,7 @@ module.exports = {
             },
             height: {
                 'homeItemBlock': '160px',
+                'mobileHomeItemsBlock': '100px',
                 '10%': '10%',
                 '15%': '15%',
                 '20%': '20%',

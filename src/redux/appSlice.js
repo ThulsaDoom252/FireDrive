@@ -27,7 +27,7 @@ const appSlice = createSlice({
         initializing: false,
         smallScreen: window.innerWidth <= smallScreenWidth,
         modalType: '',
-        itemModalType: '',
+        itemModalType: noModal,
         alertTitle: '',
         alertMessage: '',
         alertStyle: '',
@@ -39,10 +39,10 @@ const appSlice = createSlice({
         itemOptionsHovered: false,
         currentThemeName: '',
         currentTheme: {
-            mainBg: mainNightBg,
-            primeBg: primeNightBg,
-            secBg: secNightBg,
-            color: nightPrimary,
+            mainBg: mainDayBg,
+            primeBg: primeDayBg,
+            secBg: secDayBg,
+            color: dayPrimary,
         },
     },
     reducers: {

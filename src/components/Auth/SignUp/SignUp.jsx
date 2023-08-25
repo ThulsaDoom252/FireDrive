@@ -14,15 +14,25 @@ const SignUp = ({emailPasswordSignup, isAuthBtnFetching}) => {
         initialValues: {
             email: testEmail,
             password: testPassword,
+            password2: testPassword,
+            passwordsMismatch: false,
             username: testUserName,
         },
         validationSchema: Yup.object({
             email: Yup.string().email('use email format').required('email required'),
             password: Yup.string().required('password required'),
-            username: Yup.string().min(5).max(20).required('username required')
+            username: Yup.string().min(5).max(20).required('username required'),
+            password2: Yup.string().required(`Can't be empty`),
         }),
         onSubmit: ({email, password, username}) => {
-            emailPasswordSignup({email, password, username})
+            values.passwordsMismatch === true && signUpForm.setValues({passwordsMismatch: false})
+            if (values.password === values.password2) {
+                emailPasswordSignup({email, password, username})
+            } else {
+                signUpForm.setValues({passwordsMismatch: true})
+                values.passwordsMismatch = true
+            }
+
         },
         validateOnChange: false,
         validateOnBlur: false,
@@ -50,20 +60,27 @@ const SignUp = ({emailPasswordSignup, isAuthBtnFetching}) => {
                     <input onChange={handleChange} id={'password'}
                            className={`p-2 w-full h-10 mt-5 rounded text-left bg-customInputColor ${errors.password ? 'border-2 border-rose-600' : ''}`}
                            value={values.password}
-                           type={'text'}
+                           type={'password'}
                            placeholder={'password'}/>
                     {<span className={'text-red-500'}>{errors.password}</span>}
-
+                    <input onChange={handleChange} id={'password2'}
+                           className={`p-2 w-full h-10 mt-5 rounded text-left bg-customInputColor ${errors.password2 ? 'border-2 border-rose-600' : ''}`}
+                           value={values.password2}
+                           type={'password'}
+                           placeholder={'repeat password'}/>
+                    {<span className={'text-red-500'}>{errors.password2}</span>}
                     <input onChange={handleChange} id={'username'}
                            className={`p-2 w-full h-10 rounded  mt-5 text-left bg-customInputColor ${errors.password ? 'border-2 border-rose-600' : ''}`}
                            value={values.username}
                            type={'text'}
                            placeholder={'username'}/>
                     {<span className={'text-red-500'}>{errors.username}</span>}
-                    <button disabled={isAuthBtnFetching} className={'w-full btn btn-success mt-5 mb-5'}
+                    <button disabled={isAuthBtnFetching} className={'w-full btn btn-success mt-5'}
                             type={'submit'}>Sign
                         up
                     </button>
+                    <div
+                        className={'text-center mt-2 text-red-500'}>{values.passwordsMismatch && 'Passwords mismatch'}</div>
                     <div className={'text-center'}>Have an account? <NavLink to={signInRoute}
                                                                              className={'text-blue-300'}>Log in
                         account</NavLink></div>

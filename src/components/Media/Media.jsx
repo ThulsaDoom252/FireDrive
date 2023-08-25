@@ -2,7 +2,6 @@ import React from 'react';
 import {ClipLoader} from "react-spinners";
 import Audio from "./Audio";
 import Paginator from "../Paginator/Paginator";
-import Search from "../Search/Search";
 import NoSearchResults from "../Search/NoSearchResults";
 import Image from "./Image";
 import Video from "./Video";
@@ -27,6 +26,7 @@ const Media = ({
                    itemOptionsHovered,
                    setItemOptionsHovered,
                    currentTheme,
+                   noOpenModal,
                }) => {
     return (
         <section
@@ -68,6 +68,7 @@ const Media = ({
                                 <Video url={video.url} name={video.name} oldName={video.oldName} {...{
                                     searchMode,
                                     index,
+                                    noOpenModal,
                                     handleInitialModalIndex,
                                     hoveredMediaIndex,
                                     setHoveredMediaIndex,
@@ -75,13 +76,15 @@ const Media = ({
                                     currentTheme,
 
                                 }}/>
-                                <p className={`                             
+                                {!smallScreen && <p className={`                             
                                 p-1
                                  m-0 
+                                 overflow-x-hidden
                                  ${currentTheme.secBg}
                                  ${hoveredMediaIndex === index ? 'bg-opacity-100' : 'bg-opacity-50 rounded-b-lg'}
                                 ${currentTheme.color}
-                                `}>{video.name}</p>
+                                `}>{video.name}</p>}
+
                             </div>
                         ) :
                         mediaToShow.map(((audio, index) => {

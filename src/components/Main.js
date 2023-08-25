@@ -158,16 +158,13 @@ const Main = ({
                                     onClick={() => toggleCurrentTheme({type: desertTheme})}/>
                             </DropDownMenu>
                         </div>
-                        <div className={'mb-5 '}><LogOutContainer
-                            label={'logout'}
-                            switchToIconIfSmallScreen={true}
-                            smallScreenIcon={<BiLogOut/>}
-                            isFullWidth={true}
-                        /></div>
+                        <div className={'mb-5 '}><LogOutContainer/></div>
                     </div>
                     <div><SortInput/></div>
                 </BurgerMenu>
-                {homePage && <Home currentTheme={currentTheme}/>}
+                {homePage && <Home
+                    smallScreen={smallScreen}
+                    currentTheme={currentTheme}/>}
                 <Routes>
                     {!homePage && <Route path={currentRoute}
                                          element={<MediaContainer {...{

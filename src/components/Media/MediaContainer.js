@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Media from "./Media";
-import {rootRoute} from "../../common/commonData";
+import {noModal, rootRoute} from "../../common/commonData";
 import {
     clearSearchResults,
     handleCurrentMediaSet,
@@ -18,7 +18,7 @@ const MediaContainer = ({
                             smallScreen, currentMediaSet, currentMediaFetch, searchResults,
                             toggleSearchMode, setSearchRequest, mediaToShow, searchMode, noSearchResults,
                             searchRequest, handleInitialModalIndex, itemOptionsHovered, setItemOptionsHovered,
-                            currentTheme,
+                            currentTheme, itemModalType,
                         }) => {
     const pagesContext = useContext(PagesContext)
     const {imagesPage, videosPage, audioPage} = pagesContext
@@ -36,6 +36,8 @@ const MediaContainer = ({
 
     const noMedia = currentMediaSet.length === 0
     const isPaginatorHidden = noMedia || searchMode || noSearchResults
+
+    const noOpenModal = itemModalType === noModal
 
     //Search logic
     useEffect(() => {
@@ -88,7 +90,8 @@ const MediaContainer = ({
         paginatorProps,
         handleInitialModalIndex,
         itemOptionsHovered,
-        setItemOptionsHovered
+        setItemOptionsHovered,
+        noOpenModal,
     }}/>
 };
 
@@ -102,6 +105,7 @@ const mapStateToProps = (state) => {
         noSearchResults: state.media.noSearchResults,
         searchRequest: state.media.searchRequest,
         itemOptionsHovered: state.app.itemOptionsHovered,
+        itemModalType: state.app.itemModalType,
     }
 }
 

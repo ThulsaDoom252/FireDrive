@@ -1,12 +1,10 @@
 import React from 'react';
 import {connect, useSelector} from "react-redux";
-import ImagesList from "./ImagesList";
-import AudioList from "./AudioList";
-import VideosList from "./VideosList";
 import {NavLink} from "react-router-dom";
-import {audioRoute, imagesRoute, videosRoute} from "../../common/commonData";
+import {audioRoute, images, imagesRoute, videos, videosRoute, audio} from "../../common/commonData";
+import HomeMediaListBlock from "./HomeMediaListBlock";
 
-const Home = ({fetchImages, fetchVideos, fetchAudio, currentTheme}) => {
+const Home = ({fetchImages, fetchVideos, fetchAudio, currentTheme, smallScreen}) => {
 
     const imagesSet = useSelector(state => state.media.imagesSet)
     const videosSet = useSelector(state => state.media.videosSet)
@@ -38,18 +36,33 @@ const Home = ({fetchImages, fetchVideos, fetchAudio, currentTheme}) => {
                 `}>
                     <NavLink to={imagesRoute}
                              className={navClassNames}>
-                        <ImagesList {...{imagesSet, currentTheme, fetchImages}}/>
+                        <HomeMediaListBlock
+                            fetchItems={fetchImages}
+                            currentTheme={currentTheme}
+                            smallScreen={smallScreen}
+                            itemType={images}
+                            itemsList={imagesSet}/>
                     </NavLink>
                     <NavLink to={videosRoute}
                              className={navClassNames}
                     >
-                        <VideosList {...{videosSet, currentTheme, fetchVideos}}/>
+                        <HomeMediaListBlock
+                            fetchItems={fetchVideos}
+                            currentTheme={currentTheme}
+                            smallScreen={smallScreen}
+                            itemType={videos}
+                            itemsList={videosSet}/>
                     </NavLink>
                     <NavLink
                         to={audioRoute}
                         className={navClassNames}
                     >
-                        <AudioList {...{audioSet, currentTheme, fetchAudio}}/>
+                        <HomeMediaListBlock
+                            fetchItems={fetchAudio}
+                            currentTheme={currentTheme}
+                            smallScreen={smallScreen}
+                            itemType={audio}
+                            itemsList={audioSet}/>
                     </NavLink>
                 </div>
             </div>

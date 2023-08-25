@@ -1,20 +1,33 @@
 import React, {useEffect} from 'react'
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {signInRoute, signUpRoute, verificationRoute, wrapperId} from "./common/commonData";
+import {restoreRoute, signInRoute, signUpRoute, verificationRoute, wrapperId} from "./common/commonData";
 import {connect, useSelector} from "react-redux";
 import Main from "./components/Main";
 import SignInContainer from "./components/Auth/SignIn/SignInContainer";
 import SignUpContainer from "./components/Auth/SignUp/SignUpContainer";
 import Initializing from "./components/Initializing";
-import {authCheck} from "./redux/authSlice";
+import {
+    authCheck, startRestoreTimer,
+    startVerificationTimer,
+    toggleRestoreEmailSendStatus,
+    toggleVerificationEmailSendStatus
+} from "./redux/authSlice";
 import {Toaster} from "react-hot-toast";
 import {getAuth} from "firebase/auth";
 import VerificationContainer from "./components/Auth/Verification/VerificationContainer";
 import BG from './images/BG.jpg'
 import DESERT from './images/DESERT.jpg'
 import {mainDayBg} from "./common/themes";
+import RestoreContainer from "./components/Auth/RestoreContainer/RestoreContainer";
 
-const App = ({authCheck, isAuth, currentTheme}) => {
+const App = ({
+                 authCheck,
+                 isAuth,
+                 currentTheme,
+                 startVerificationTimer,
+                 toggleVerificationEmailSendStatus,
+                 toggleRestoreEmailSendStatus,
+             }) => {
 
     const auth = getAuth()
     const user = auth.currentUser
@@ -25,6 +38,25 @@ const App = ({authCheck, isAuth, currentTheme}) => {
         backgroundSize: '100vw 100vh',
         backgroundPosition: 'center',
     }
+    //
+    // useEffect(() => {
+    //     const isVerificationEmailSend = localStorage.getItem('isVerificationEmailSend')
+    //     if (isVerificationEmailSend) {
+    //         toggleVerificationEmailSendStatus(true)
+    //         startVerificationTimer()
+    //     }
+    //
+    //
+    // }, [])
+    //
+    // useEffect(() => {
+    //     const isRestoreEmailSend = localStorage.getItem('isRestoreEmailSend')
+    //     if (isRestoreEmailSend) {
+    //         toggleRestoreEmailSendStatus(true)
+    //         startRestoreTimer()
+    //     }
+    //
+    // }, [])
 
     useEffect(() => {
         authCheck()
@@ -52,6 +84,7 @@ const App = ({authCheck, isAuth, currentTheme}) => {
                     <Route exact path={signInRoute} element={<SignInContainer {...{isAuth}}/>}/>
                     <Route path={signUpRoute} element={<SignUpContainer  {...{isAuth}}/>}/>
                     <Route path={verificationRoute} element={<VerificationContainer/>}/>
+                    <Route path={restoreRoute} element={<RestoreContainer/>}/>
                     <Route path={'*'} element={<Main {...{isAuth, currentTheme}}/>}/>
                 </Routes>
             </div>
@@ -66,7 +99,13 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {authCheck})(App)
+export default connect(mapStateToProps, {
+    authCheck,
+    startVerificationTimer,
+    startRestoreTimer,
+    toggleRestoreEmailSendStatus,
+    toggleVerificationEmailSendStatus
+})(App)
 
 
 

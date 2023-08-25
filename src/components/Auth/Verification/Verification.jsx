@@ -1,12 +1,18 @@
 import React from 'react';
 import ActionBtn from "../../common/ActionBtn";
 
-const Verification = ({sendVerificationEmail, handleLogout, email, username}) => {
+const Verification = ({
+                          sendVerificationEmail,
+                          handleLogout,
+                          email,
+                          username,
+                          isVerificationEmailSend,
+                          verificationTimerValue,
+                      }) => {
 
     const handleSetVerificationEmail = () => {
         sendVerificationEmail({resend: true})
     }
-
 
     return (
         <>
@@ -36,15 +42,17 @@ const Verification = ({sendVerificationEmail, handleLogout, email, username}) =>
                     has to offer.</p>
 
                 <div className={'mt-4 flex flex-col justify-center items-center'}>
+                    <div>{isVerificationEmailSend && `Dont get the link? Request another in: ${verificationTimerValue}`}</div>
                     <div>
-                        <ActionBtn handleClick={handleSetVerificationEmail} label={'resend verification email'}
-                                   btnStyle={'primary'}/>
+                        <ActionBtn
+                            isDisabled={isVerificationEmailSend}
+                            handleClick={handleSetVerificationEmail}
+                            btnStyle={'primary'}>Resend verification link</ActionBtn>
                     </div>
                     <div className={'mt-5'}>
-                        <ActionBtn label={'Return to login page'} handleClick={handleLogout}
-                                   btnStyle={'primary'}/>
+                        <ActionBtn handleClick={handleLogout}
+                                   btnStyle={'primary'}>Return to Login page</ActionBtn>
                     </div>
-
                 </div>
 
                 <p className={'mt-5'}>Thank you for helping us keep FireDrive a safe and secure platform for all of our
