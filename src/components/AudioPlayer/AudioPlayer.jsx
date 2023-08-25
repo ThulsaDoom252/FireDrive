@@ -1,7 +1,7 @@
 import {FiSkipBack, FiSkipForward, FiPlay, FiPause} from 'react-icons/fi';
 import {connect} from "react-redux";
 import {useContext} from "react";
-import SeekBar from "./SeekBar";
+import DurationSeekBar from "./DurationSeekBar";
 import {setCurrentAudioIndex} from "../../redux/mediaSlice";
 import {AudioPlayerContext} from "../../context/AudioPlayerContext";
 import {formatTime} from "../../common/commonData";
@@ -89,7 +89,7 @@ const AudioPlayer = ({
             className={`${!smallScreenMode && 'rounded justify-center'} w-full h-playerHeight flex justify-center items-center `}>
             <div className={'w-player-controls flex flex-col justify-between items-center'}>
                 <div className={'w-full'} hidden={!smallScreenMode}>
-                    <SeekBar
+                    <DurationSeekBar
                         isCurrentTrackPlaying={isCurrentTrackPlaying}
                         name={currentTrackName}
                         currentTheme={currentTheme}
@@ -146,7 +146,7 @@ const AudioPlayer = ({
                         </button>
                     </div>
                     <div hidden={smallScreenMode} className='w-full mr-5 ml-2'>
-                        <SeekBar
+                        <DurationSeekBar
                             isCurrentTrackPlaying={isCurrentTrackPlaying}
                             name={currentTrackName}
                             currentTheme={currentTheme}

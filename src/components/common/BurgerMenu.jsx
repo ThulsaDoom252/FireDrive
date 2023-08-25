@@ -22,7 +22,7 @@ const BurgerMenu = ({
             width={adaptForASmallScreen && smallScreen ? '35%' : void 0}
             isOpen={menuOpenState}
         >
-            <div className={'w-full flex flex-col justify-center'}>
+            <div className={'w-full flex flex-col justify-center pb-40'}>
                 {children}
             </div>
         </Menu>

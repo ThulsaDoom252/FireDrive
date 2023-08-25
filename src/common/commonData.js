@@ -1,6 +1,6 @@
 export const truncate = (name, maxCharacters = 15) => {
     const maxNumber = maxCharacters
-    const mediaLength = name.length
+    const mediaLength = name?.length
     if (mediaLength > maxNumber) {
         let slicedMedia = name.slice(0, maxNumber)
         return slicedMedia + '...'

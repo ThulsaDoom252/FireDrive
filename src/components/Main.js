@@ -36,7 +36,6 @@ import alertModal from "./modals/AlertModal";
 import userModal from "./modals/UserModal";
 import {BiColorFill} from "react-icons/bi";
 import LogOutContainer from "./ButtonContainers/LogOutContainer";
-import {BiLogOut} from "react-icons/bi";
 import DAS from '../images/themeTypes/DAS.jpg'
 import DS from '../images/themeTypes/DS.jpg'
 import NS from '../images/themeTypes/NS.jpg'
@@ -44,6 +43,7 @@ import AdaptiveImage from "./AdaptiveImage";
 import {dayTheme, desertTheme, nightTheme} from "../common/themes";
 import DropDownMenu from "./common/DropDownMenu";
 import Home from "./Home/Home";
+import {CiSettings} from "react-icons/ci";
 
 const Main = ({
                   currentMediaSet,
@@ -128,7 +128,7 @@ const Main = ({
                 showMobileSearch={showMobileSearch}
                 toggleMobileSearch={toggleMobileSearch}
             />
-            <main className={'w-full h-full'} id={mainContentId} onClick={hideMobileSearch}>
+            <main className={'w-full h-full overflow-y-scroll'} id={mainContentId} onClick={hideMobileSearch}>
                 <BurgerMenu smallScreen={smallScreen} onClick={hideMobileSearch}>
                     <div className={'mt-5 flex flex-col justify-center'}>
                         <div onClick={() => setModalType(userModal)} className={'mb-5 mx-auto'}><UserAvatar
@@ -157,6 +157,25 @@ const Main = ({
                                     url={DS}
                                     onClick={() => toggleCurrentTheme({type: desertTheme})}/>
                             </DropDownMenu>
+                            <div className={'mt-3'}>
+                                <DropDownMenu btnLabel={'Settings'} smallScreenIcon={<CiSettings/>}>
+                                    <div className={'bg-gray-600 bg-opacity-50 w-full flex flex-col'}>
+                                        <div className={'w-full flex justify-between items-center mb-4 mt-4'}>
+                                            <div>Pagination</div>
+                                            <div>Enabled</div>
+                                        </div>
+                                        <div className={'w-full flex justify-between items-center mb-4 mt-4'}>
+                                            <div>Items per page</div>
+                                            <div>70</div>
+                                        </div>
+                                        <div className={'w-full flex justify-between items-center mb-4 mt-4'}>
+                                            <div>Animations</div>
+                                            <div>On</div>
+                                        </div>
+                                    </div>
+                                </DropDownMenu>
+                            </div>
+
                         </div>
                         <div className={'mb-5 '}><LogOutContainer/></div>
                     </div>

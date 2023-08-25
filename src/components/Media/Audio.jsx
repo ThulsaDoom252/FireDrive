@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import {AiFillPauseCircle, AiFillPlayCircle} from "react-icons/ai";
 import {useContext} from "react";
 import {AudioPlayerContext} from "../../context/AudioPlayerContext";
@@ -6,7 +6,7 @@ import MediaOptions from "../Options/mediaOptions";
 import {formatTime} from "../../common/commonData";
 import {ClipLoader} from "react-spinners";
 import {dayPrimary} from "../../common/themes";
-import toast from "react-hot-toast";
+import {truncate} from "../../common/commonData";
 
 const Audio = ({
                    name,
@@ -48,6 +48,7 @@ const Audio = ({
                 h-40  
                 text-white 
                 flex 
+                justify-between
                 items-center 
                 mb-5  
                 relative 
@@ -68,7 +69,7 @@ const Audio = ({
                     </div>
                 </div>
                 <div
-                    className={`w-full  ${currentTheme.color}`}>{name}</div>
+                    className={`w-full absolute left-10  ${currentTheme.color}`}>{smallScreen ? truncate(name, 20) : truncate(name, 50)}</div>
                 <div className={'absolute top-1/2 transform -translate-y-1/2 right-0 z-50 mr-40'}>
                     <MediaOptions initialMode={'show'} itemOptionsHovered={itemHovered} {...{
                         name,
@@ -78,7 +79,7 @@ const Audio = ({
                     }}/>
                 </div>
                 <div
-                    className={'flex mr-5'}>
+                    className={'flex mr-5 '}>
                     <div
                         className={`${currentTheme.color}`}>{currentTrackName === name && `${formatTime(currentDuration)}/`}</div>
                     <div className={`${currentTheme.color}`}>{!isDurationIsNan ? formatTime(audioRef.current.duration) :

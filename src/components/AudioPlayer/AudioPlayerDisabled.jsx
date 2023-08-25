@@ -2,7 +2,7 @@ import React from 'react';
 import {FiPlay, FiSkipBack, FiSkipForward} from "react-icons/fi";
 import {LuRepeat} from "react-icons/lu";
 import {ImVolumeHigh} from "react-icons/im";
-import SeekBar from "./SeekBar";
+import DurationSeekBar from "./DurationSeekBar";
 
 const AudioPlayerDisabled = ({buttonsSize, smallScreenMode}) => {
     return (
@@ -10,7 +10,7 @@ const AudioPlayerDisabled = ({buttonsSize, smallScreenMode}) => {
             className={`${!smallScreenMode ? 'rounded' : void 0} w-full h-playerHeight flex justify-center items-center `}>
             <div className={'w-player-controls flex flex-col justify-between items-center'}>
                 <div className={'w-full'} hidden={!smallScreenMode}>
-                    <SeekBar disabled={true}/>
+                    <DurationSeekBar disabled={true}/>
                 </div>
                 <div className={`w-full  flex items-center justify-between`}>
                     <div className={'flex items-center justify-between'}>
@@ -58,7 +58,7 @@ const AudioPlayerDisabled = ({buttonsSize, smallScreenMode}) => {
                         </button>
                     </div>
                     <div hidden={smallScreenMode}>
-                        <SeekBar disabled={true}/>
+                        <DurationSeekBar disabled={true}/>
                     </div>
                     <div>
                         <div className={'w-20 flex justify-between mr-10 relative'}>

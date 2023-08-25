@@ -30,8 +30,19 @@ const Media = ({
                }) => {
     return (
         <section
-            className={`w-full h-full relative  p-10 pb-60 flex overflow-y-scroll flex-col items-center ${noMedia ? 'justify-center' : ''}`}>
-            <div hidden={isPaginatorHidden} className={'mt-2'}><Paginator {...{paginatorProps}}/></div>
+            className={`
+            mx-auto 
+            h-full 
+            relative 
+            pt-20 
+            pb-52 
+            flex  
+            flex-col 
+            items-center 
+             ${noMedia ? 'justify-center' : ''}
+             ${audioPage && smallScreen ? 'w-full' : audioPage ? 'w-1/2' : 'w-full pl-10 pr-10'} 
+             
+             `}>
             {noSearchResults && <div className={'absolute top-custom-50% left-custom-50%'}><NoSearchResults/></div>}
             {noMedia ?
                 <div>{imagesPage ? 'You have no images' : videosPage ? 'You have no videos' : 'You have no audio'}</div> :
@@ -109,6 +120,8 @@ const Media = ({
                         ))
                     }
                 </div>}
+            <div hidden={isPaginatorHidden} className={'mt-20'}><Paginator {...{paginatorProps}}/></div>
+
         </section>
     );
 };

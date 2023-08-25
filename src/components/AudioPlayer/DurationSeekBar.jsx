@@ -3,7 +3,7 @@ import Slider from "rc-slider";
 import 'rc-slider/assets/index.css';
 
 
-const SeekBar = ({
+const DurationSeekBar = ({
                      value,
                      max,
                      name,
@@ -71,4 +71,4 @@ const SeekBar = ({
 };
 
 
-export default SeekBar
+export default DurationSeekBar
