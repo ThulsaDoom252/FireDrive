@@ -54,4 +54,22 @@ Note: Beware of modifying this element as it can break the animations - you shou
     background: rgba(0, 0, 0, 0.3);
 }
 
+
+/*//Animations*/
+/*  */
+/*  //AudioPlayer*/
+@keyframes flash {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-flash {
+    animation: flash 2s infinite;
+}
+
 /*Adaptive module image */

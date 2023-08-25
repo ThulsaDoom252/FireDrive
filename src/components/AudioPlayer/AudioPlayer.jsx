@@ -9,7 +9,6 @@ import AudioPlayerDisabled from "./AudioPlayerDisabled";
 import {LuRepeat, LuRepeat1} from "react-icons/lu";
 import {IoInfinite} from "react-icons/io5";
 import {ImVolumeHigh, ImVolumeMute2} from "react-icons/im";
-import MyCustomTransition from "../common/MyCustomTransition";
 
 const AudioPlayer = ({
                          smallScreenMode,
@@ -45,6 +44,7 @@ const AudioPlayer = ({
         setVolume,
         showVolumeBar,
         toggleVolumeBar,
+        currentTrackName,
     } = audioContext
 
     if (noAudio) {
@@ -86,10 +86,17 @@ const AudioPlayer = ({
 
     return (
         <div
-            className={`${!smallScreenMode ? 'rounded' : void 0} w-full h-playerHeight flex justify-center items-center `}>
+            className={`${!smallScreenMode && 'rounded justify-center'} w-full h-playerHeight flex justify-center items-center `}>
             <div className={'w-player-controls flex flex-col justify-between items-center'}>
                 <div className={'w-full'} hidden={!smallScreenMode}>
-                    <SeekBar value={currentDuration} max={totalDuration} onChange={handleSeekBarChange}/>
+                    <SeekBar
+                        isCurrentTrackPlaying={isCurrentTrackPlaying}
+                        name={currentTrackName}
+                        currentTheme={currentTheme}
+                        value={currentDuration}
+                        max={totalDuration}
+                        smallScreen={smallScreenMode}
+                        onChange={handleSeekBarChange}/>
                 </div>
                 <div className={`w-full  flex items-center justify-between`}>
                     <div className={'flex items-center justify-between'}>
@@ -138,9 +145,16 @@ const AudioPlayer = ({
                             <FiSkipForward size={buttonsSize}/>
                         </button>
                     </div>
-                    <div hidden={smallScreenMode}>
-                        <SeekBar value={currentDuration} max={totalDuration} onChange={handleSeekBarChange}/>
+                    <div hidden={smallScreenMode} className='w-full mr-5 ml-2'>
+                        <SeekBar
+                            isCurrentTrackPlaying={isCurrentTrackPlaying}
+                            name={currentTrackName}
+                            currentTheme={currentTheme}
+                            value={currentDuration}
+                            max={totalDuration}
+                            onChange={handleSeekBarChange}/>
                     </div>
+
                     <div className={``}>
                         <div className={'w-20 flex justify-between mr-10 relative'}>
                             <button onClick={handleRepeatMode} className={`
@@ -155,22 +169,7 @@ const AudioPlayer = ({
 
                             </button>
                             <div>
-                                <MyCustomTransition show={showVolumeBar}>
-                                    <div onMouseLeave={handleMouseExit}
-                                         className='absolute transform -rotate-90 bottom-volumeBar left-volumeBarLeft w-40 h-10  rounded flex justify-center'>
-                                        <input
-                                            className='cursor-pointer'
-                                            type="range"
-                                            min="0"
-                                            max="1"
-                                            step="0.01"
-                                            value={volume}
-                                            onChange={event => handleVolumeChange({event})}
-                                        />
-                                    </div>
-                                </MyCustomTransition>
-
-                                <button onMouseEnter={handleMouseEnter} className={`
+                                <button className={`
                                 disabled:text-gray-400
                    ${iconColor}`}
                                 >

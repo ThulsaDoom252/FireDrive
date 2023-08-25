@@ -178,7 +178,7 @@ const Main = ({
                                          }}/>}/>}
                 </Routes>
                 <div
-                    className={`w-full  bg-opacity-90 ${currentTheme.primeBg} p-2 rounded ${itemModalType !== imageModal && itemModalType !== videoModal && 'fixed-bottom'}`}>
+                    className={`w-full  bg-opacity-90 ${currentTheme.primeBg} p-2 rounded relative ${itemModalType !== imageModal && itemModalType !== videoModal && 'fixed-bottom'}`}>
                     <AudioPlayer currentTheme={currentTheme} smallScreenMode={smallScreen}/></div>
             </main>
         </>

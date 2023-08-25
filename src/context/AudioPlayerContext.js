@@ -71,10 +71,9 @@ export function AudioPlayerContextProvider({children}) {
         handleSetCurrentAudioIndex({index: currentTrackIndex - 1, goToPrev: true})
     }
 
-    const handleSeekBarChange = (event) => {
-        const currentTime = Number(event.target.value);
-        setCurrentDuration(currentTime)
-        audio.currentTime = currentTime;
+    const handleSeekBarChange = (newValue) => {
+        setCurrentDuration(newValue)
+        audio.currentTime = newValue;
     };
 
     const handleTimeUpdate = () => {
