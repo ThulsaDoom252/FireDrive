@@ -1,60 +1,46 @@
 import React, {useState} from 'react';
-import MediaOptions from "../Options/mediaOptions";
-import OpacityTransition from "../common/MyCustomTransition";
-import {ClipLoader} from "react-spinners";
+import {CircleLoader} from "react-spinners";
 
 const Image = ({
                    url,
-                   name,
-                   oldName,
                    index,
-                   hoveredMediaIndex,
-                   setHoveredMediaIndex,
-                   searchMode,
+                   imageIsHovered,
+                   imageIsClickable = true,
                    handleInitialModalIndex,
+                   height = 'h-300',
+                   width = 'w-300',
 
                }) => {
-    const imageHovered = hoveredMediaIndex === index
-    const [itemOptionsHovered, setItemOptionsHovered] = useState(false)
     const [imageIsLoaded, setImageIsLoaded] = useState(false)
 
     const handleLoadImage = () => {
         setImageIsLoaded(true)
     }
 
+    const handleImageLick = () => {
+        imageIsClickable ? handleInitialModalIndex({index}) : void 0
+    }
+
     return (
         <>
-                <div onMouseEnter={() => setHoveredMediaIndex(index)}
-                     onMouseLeave={() => setHoveredMediaIndex(null)}>
-                    <OpacityTransition show={(imageHovered || itemOptionsHovered)}>
-                        <div className={'absolute top-0 right-0'}>
-                            <MediaOptions {...{
-                                name,
-                                oldName,
-                                url,
-                                index,
-                                searchMode,
-                                itemOptionsHovered,
-                                setItemOptionsHovered,
-                            }}/></div>
-                    </OpacityTransition>
-                    <img
-                        onClick={() => handleInitialModalIndex({index})}
-                        className={`
-                w-300 
-                h-300 
+                {!imageIsLoaded && <CircleLoader size={50} color={'white'}/>}
+                <img
+                    onClick={handleImageLick}
+                    className={`
                 object-cover 
                 rounded 
                 cursor-pointer 
-                ${imageHovered && 'hover:border-2 border-blue-300'}          
+                ${!imageIsLoaded && 'hidden'}
+                ${imageIsHovered && 'hover:border-2 border-blue-300'}  
+                ${height}
+                ${width}        
                 transition-all duration-100
                 `}
 
-                        src={imageIsLoaded ? url : 'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/b6e0b072897469.5bf6e79950d23.gif'}
-                        alt="image"
-                        onLoad={handleLoadImage}
-                    />
-                </div>
+                    src={url}
+                    alt="image"
+                    onLoad={handleLoadImage}
+                />
 
         </>
 

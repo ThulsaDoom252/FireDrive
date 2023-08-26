@@ -4,17 +4,14 @@ import {MdLibraryMusic, MdOutlineOndemandVideo} from "react-icons/md";
 import {FaImages} from "react-icons/fa";
 import {ClipLoader} from "react-spinners";
 import ReactPlayer from "react-player";
-import {PiMusicNotesFill} from "react-icons/pi";
+import {PiMusicNotesFill} from "react-icons/pi"
+import Image from "../Media/Image";
+
 
 const HomeMediaListBlock = ({itemsList, fetchItems, smallScreen, currentTheme, itemType, iconSize = 40}) => {
     const imagesList = (itemType === images) && (itemsList.length !== 0)
     const videosList = (itemType === videos) && (itemsList.length !== 0)
     const audioList = (itemType === audio) && (itemsList.length !== 0)
-
-
-    window.video = videosList
-    window.images = imagesList
-    window.audio = audioList
 
     return (
         <div className={`
@@ -55,21 +52,18 @@ const HomeMediaListBlock = ({itemsList, fetchItems, smallScreen, currentTheme, i
                 {fetchItems ? <ClipLoader size={50}
                                           color={currentTheme.color}/>
                     : imagesList ? itemsList.map((image, index) =>
-                            index <= (smallScreen ? 4 : 8) && <div className={`
+                                index <= (smallScreen ? 4 : 8) && <div className={`
                         m-2
                         h-full
                         max-w-imageListItem
                         `}>
-                                <img
-                                    className={`
-                                     rounded
-                                     object-cover
-                                     max-w-full
-                                     h-full               
-                                `}
-                                    src={image.url}
-                                    alt={'broken'}/>
-                            </div>
+                                    <Image
+                                        url={image.url}
+                                        height={'h-full'}
+                                        width={'max-w-full'}
+                                        imageIsClickable={false}
+                                    />
+                                </div>
                         )
                         : videosList ? itemsList.map((video, index) =>
                             index <= (smallScreen ? 4 : 8) &&

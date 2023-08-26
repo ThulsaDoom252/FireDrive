@@ -5,13 +5,14 @@ import Paginator from "../Paginator/Paginator";
 import NoSearchResults from "../Search/NoSearchResults";
 import Image from "./Image";
 import Video from "./Video";
+import OpacityTransition from "../common/MyCustomTransition";
+import MediaOptions from "../Options/mediaOptions";
 
 const Media = ({
                    imagesPage,
                    videosPage,
                    audioPage,
                    currentMediaFetch,
-                   searchRequest,
                    mediaToShow,
                    noMedia,
                    hoveredMediaIndex,
@@ -20,7 +21,6 @@ const Media = ({
                    isPaginatorHidden,
                    paginatorProps,
                    searchMode,
-                   setSearchRequest,
                    smallScreen,
                    handleInitialModalIndex,
                    itemOptionsHovered,
@@ -28,6 +28,7 @@ const Media = ({
                    currentTheme,
                    noOpenModal,
                }) => {
+
     return (
         <section
             className={`
@@ -54,21 +55,35 @@ const Media = ({
                         color={'blue'}
                         size={150}
                     />}
-                    {imagesPage ? mediaToShow.map((media, index) =>
-                        <div key={index} className={'w-fit flex flex-col justify-center relative'}>
-                            <Image url={media.url} name={media.name}
-                                   oldName={media.oldName}
-                                   {...{
-                                       index,
-                                       currentTheme,
-                                       searchMode,
-                                       hoveredMediaIndex,
-                                       setHoveredMediaIndex,
-                                       handleInitialModalIndex,
-                                       itemOptionsHovered, setItemOptionsHovered
-                                   }}/>
-                        </div>) : videosPage ? mediaToShow.map((video, index) =>
-                            <div key={index} className={`
+                    {imagesPage ? mediaToShow.map((media, index) => {
+                            const itemIsHovered = hoveredMediaIndex === index
+                            return (<div key={index}
+                                         onMouseEnter={() => setHoveredMediaIndex(index)}
+                                         onMouseLeave={() => setHoveredMediaIndex(null)}
+                                         className={'w-fit flex justify-center relative'}>
+                                <OpacityTransition show={(itemIsHovered)}>
+                                    <div className={'absolute top-0 right-0'}>
+                                        <MediaOptions name={media.name}
+                                                      oldName={media.oldName}
+                                                      url={media.url}
+                                                      {...{
+                                                          index,
+                                                          searchMode,
+                                                          hoveredMediaIndex,
+                                                          itemOptionsHovered,
+                                                          setItemOptionsHovered,
+                                                      }}/></div>
+                                </OpacityTransition>
+                                <Image url={media.url}
+                                       imageIsHovered={itemIsHovered}
+                                       {...{
+                                           index,
+                                           handleInitialModalIndex,
+                                       }}/>
+                            </div>)
+                        })
+                        : videosPage ? mediaToShow.map((video, index) =>
+                                <div key={index} className={`
                             w-full 
                             relative 
                             flex
@@ -76,18 +91,18 @@ const Media = ({
                              justify-center 
                              text-center   
                              `}>
-                                <Video url={video.url} name={video.name} oldName={video.oldName} {...{
-                                    searchMode,
-                                    index,
-                                    noOpenModal,
-                                    handleInitialModalIndex,
-                                    hoveredMediaIndex,
-                                    setHoveredMediaIndex,
-                                    itemOptionsHovered, setItemOptionsHovered,
-                                    currentTheme,
+                                    <Video url={video.url} name={video.name} oldName={video.oldName} {...{
+                                        searchMode,
+                                        index,
+                                        noOpenModal,
+                                        handleInitialModalIndex,
+                                        hoveredMediaIndex,
+                                        setHoveredMediaIndex,
+                                        itemOptionsHovered, setItemOptionsHovered,
+                                        currentTheme,
 
-                                }}/>
-                                {!smallScreen && <p className={`                             
+                                    }}/>
+                                    {!smallScreen && <p className={`                             
                                 p-1
                                  m-0 
                                  overflow-x-hidden
@@ -96,28 +111,28 @@ const Media = ({
                                 ${currentTheme.color}
                                 `}>{video.name}</p>}
 
-                            </div>
-                        ) :
-                        mediaToShow.map(((audio, index) => {
-                                return (
-                                    <div key={audio.index}>
-                                        <Audio name={audio.name}
-                                               audioIndex={audio.index}
-                                               url={audio.url}
-                                               {...{
-                                                   hoveredMediaIndex,
-                                                   setHoveredMediaIndex,
-                                                   index,
-                                                   searchMode,
-                                                   smallScreen,
-                                                   currentTheme,
-                                               }}/>
-                                    </div>
-                                )
+                                </div>
+                            ) :
+                            mediaToShow.map(((audio, index) => {
+                                    return (
+                                        <div key={audio.index}>
+                                            <Audio name={audio.name}
+                                                   audioIndex={audio.index}
+                                                   url={audio.url}
+                                                   {...{
+                                                       hoveredMediaIndex,
+                                                       setHoveredMediaIndex,
+                                                       index,
+                                                       searchMode,
+                                                       smallScreen,
+                                                       currentTheme,
+                                                   }}/>
+                                        </div>
+                                    )
 
-                            }
+                                }
 
-                        ))
+                            ))
                     }
                 </div>}
             <div hidden={isPaginatorHidden} className={'mt-20'}><Paginator {...{paginatorProps}}/></div>

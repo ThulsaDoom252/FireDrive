@@ -9,9 +9,9 @@ import {delay, renameModal, stopPropagation} from "../../common/commonData";
 import MyCustomTransition from "../common/MyCustomTransition";
 
 
-
 const MediaOptions = ({
                           handleMediaName,
+                          hoveredMediaIndex,
                           deleteCurrentItem,
                           setModalType,
                           name,
@@ -25,8 +25,12 @@ const MediaOptions = ({
                           animate = true, shouldAnimate,
                           initialMode = 'hide',
                           showBg = true,
-                          itemOptionsHovered = true, setItemOptionsHovered
+                          itemOptionsHovered,
+                          setItemOptionsHovered,
                       }) => {
+
+
+    const [showOptions, setShowOptions] = useState(false)
 
 
     const handleRenameModal = async () => {
@@ -37,19 +41,23 @@ const MediaOptions = ({
     }
 
     const handleMouseEnter = () => {
+        index === hoveredMediaIndex && setShowOptions(true)
         setItemOptionsHovered(true)
     }
 
     const handleMouseLeave = () => {
-        initialMode === 'hide' && setItemOptionsHovered(false)
+        if (initialMode === 'hide') {
+            setShowOptions(false)
+            setItemOptionsHovered(false)
+        }
     }
 
     return (
         <div
             onClick={stopPropagation}
-            className={`hover:cursor-pointer p-1 h-fit ${(itemOptionsHovered && showBg) && 'bg-settingsBar'} flex justify-center items-center rounded`}
+            className={`hover:cursor-pointer p-1 h-fit ${(showOptions && showBg) && 'bg-settingsBar'} flex justify-center items-center rounded`}
             onMouseLeave={handleMouseLeave}>
-            <MyCustomTransition shouldAnimate={shouldAnimate} show={itemOptionsHovered}>
+            <MyCustomTransition shouldAnimate={shouldAnimate} show={showOptions}>
                 <div className={'flex'}>
 
                     <TelegramShareButton url={url} title={''}><FaTelegram className={'mx-2'}
@@ -70,7 +78,7 @@ const MediaOptions = ({
                 </div>
             </MyCustomTransition>
             {initialMode === 'hide' &&
-                <div onMouseEnter={handleMouseEnter} className={itemOptionsHovered ? `text-black` : 'text-gray-500'}>
+                <div onMouseEnter={handleMouseEnter} className={showOptions ? `text-black` : 'text-gray-500'}>
                     <BsThreeDots
                         size={25}/></div>}
 
