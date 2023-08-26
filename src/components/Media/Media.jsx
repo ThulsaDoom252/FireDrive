@@ -7,6 +7,7 @@ import Image from "./Image";
 import Video from "./Video";
 import OpacityTransition from "../common/MyCustomTransition";
 import MediaOptions from "../Options/mediaOptions";
+import {truncate} from "../../common/commonData";
 
 const Media = ({
                    imagesPage,
@@ -41,7 +42,7 @@ const Media = ({
             flex-col 
             items-center 
              ${noMedia ? 'justify-center' : ''}
-             ${audioPage && smallScreen ? 'w-full' : audioPage ? 'w-1/2' : 'w-full pl-10 pr-10'} 
+             ${audioPage && smallScreen ? 'w-full' : audioPage ? 'w-1/2' : !audioPage && smallScreen ? 'w-full' : 'w-full pl-10 pr-10'} 
              
              `}>
             {noSearchResults && <div className={'absolute top-custom-50% left-custom-50%'}><NoSearchResults/></div>}
@@ -49,8 +50,8 @@ const Media = ({
                 <div>{imagesPage ? 'You have no images' : videosPage ? 'You have no videos' : 'You have no audio'}</div> :
                 <div hidden={noSearchResults}
                      className={`w-full ${isPaginatorHidden && 'mt-5'} ${currentMediaFetch ? 'flex justify-center items-center' : !audioPage ?
-                         'grid gap-5 sm: grid-cols-2  md:grid-cols-3   ' +
-                         'lg:grid-cols-4 xl:grid-cols-5' : ''}`}>
+                         'grid gap-1 sm: grid-cols-3  md:grid-cols-4   ' +
+                         'lg:grid-cols-5 xl:grid-cols-6' : ''}`}>
                     {currentMediaFetch && <ClipLoader
                         color={'blue'}
                         size={150}
@@ -60,7 +61,7 @@ const Media = ({
                             return (<div key={index}
                                          onMouseEnter={() => setHoveredMediaIndex(index)}
                                          onMouseLeave={() => setHoveredMediaIndex(null)}
-                                         className={'w-fit flex justify-center relative'}>
+                                         className={'flex justify-center max-w-200 max-h-200 relative'}>
                                 <OpacityTransition show={(itemIsHovered)}>
                                     <div className={'absolute top-0 right-0'}>
                                         <MediaOptions name={media.name}
@@ -75,6 +76,8 @@ const Media = ({
                                                       }}/></div>
                                 </OpacityTransition>
                                 <Image url={media.url}
+                                       width={'w-full'}
+                                       height={'h-full'}
                                        imageIsHovered={itemIsHovered}
                                        {...{
                                            index,
@@ -109,7 +112,7 @@ const Media = ({
                                  ${currentTheme.secBg}
                                  ${hoveredMediaIndex === index ? 'bg-opacity-100' : 'bg-opacity-50 rounded-b-lg'}
                                 ${currentTheme.color}
-                                `}>{video.name}</p>}
+                                `}>{truncate(video.name, 15)}</p>}
 
                                 </div>
                             ) :
