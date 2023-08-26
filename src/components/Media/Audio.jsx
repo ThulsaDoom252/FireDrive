@@ -80,6 +80,7 @@ const Audio = ({
                     <MediaOptions initialMode={'show'} itemOptionsHovered={itemHovered} {...{
                         name,
                         url,
+                        hoveredMediaIndex,
                         index,
                         searchMode
                     }}/>

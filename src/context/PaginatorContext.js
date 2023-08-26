@@ -72,6 +72,8 @@ const PaginatorContextProvider = ({children}) => {
         setTotalPages,
         setLastItemIndex,
         currentPage,
+        itemsPerPage,
+        setItemsPerPage,
     }
 
     return (

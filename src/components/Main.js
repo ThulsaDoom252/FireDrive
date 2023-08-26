@@ -3,7 +3,7 @@ import HeaderContainer from "./Header/HeaderContainer";
 import {
     imageModal,
     mainContentId,
-    mediaTypes, renameModal, rootRoute, shareModal,
+    mediaTypes, paginateMode, renameModal, rootRoute, shareModal,
     signInRoute,
     smallScreenWidth, videoModal,
 } from "../common/commonData";
@@ -16,7 +16,7 @@ import {
 import MediaContainer from "./Media/MediaContainer";
 import {
     handleAlertAction,
-    setItemModalType, setModalType, toggleCurrentTheme,
+    setItemModalType, setModalType, toggleCurrentTheme, toggleListMode,
     toggleSmallScreen,
 } from "../redux/appSlice";
 import BurgerMenu from "./common/BurgerMenu";
@@ -44,6 +44,7 @@ import {dayTheme, desertTheme, nightTheme} from "../common/themes";
 import DropDownMenu from "./common/DropDownMenu";
 import Home from "./Home/Home";
 import {CiSettings} from "react-icons/ci";
+import {Input} from "react-select/animated";
 
 const Main = ({
                   currentMediaSet,
@@ -66,6 +67,8 @@ const Main = ({
                   showMobileSearch,
                   toggleMobileSearch,
                   currentThemeName,
+                  listMode,
+                  toggleListMode,
               }) => {
 
     const location = useLocation()
@@ -73,7 +76,7 @@ const Main = ({
     const homePage = pathName === rootRoute
 
     const paginatorContext = useContext(PaginatorContext)
-    const {firstItemIndex, lastItemIndex} = paginatorContext
+    const {firstItemIndex, lastItemIndex, setItemsPerPage, itemsPerPage} = paginatorContext
 
     useEffect(() => {
         window.addEventListener('resize', handleResize)
@@ -96,12 +99,11 @@ const Main = ({
 
     const hideMobileSearch = () => {
         showMobileSearch && toggleMobileSearch(false)
-
     }
 
 
     const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
-    const mediaToShow = searchMode ? searchResults : paginatedMedia
+    const mediaToShow = searchMode ? searchResults : listMode === paginateMode ? paginatedMedia : currentMediaSet
 
 
     if (!isAuth) {
@@ -166,7 +168,15 @@ const Main = ({
                                         </div>
                                         <div className={'w-full flex justify-between items-center mb-4 mt-4'}>
                                             <div>Items per page</div>
-                                            <div>70</div>
+                                            <div className={`flex 
+                                            flex-col 
+                                            justify-center 
+                                            items-center`}>
+                                                <div className={'text-white'}>{itemsPerPage}</div>
+                                                <input type={'range'} value={itemsPerPage} min={5} max={100}
+                                                       onChange={(e) =>
+                                                           setItemsPerPage(e.currentTarget.value)}/>
+                                            </div>
                                         </div>
                                         <div className={'w-full flex justify-between items-center mb-4 mt-4'}>
                                             <div>Animations</div>
@@ -229,13 +239,14 @@ const mapStateToProps = (state) => {
         itemModalType: state.app.itemModalType,
         showMobileSearch: state.media.showMobileSearch,
         currentThemeName: state.app.currentThemeName,
+        listMode: state.app.listMode,
     }
 }
 
 export default connect(mapStateToProps, {
     listMedia, setCurrentRoute, toggleSmallScreen,
     setModalType, setItemModalType, handleAlertAction,
-    toggleCurrentTheme, toggleMobileSearch
+    toggleCurrentTheme, toggleMobileSearch, toggleListMode,
 })(Main);
 
 

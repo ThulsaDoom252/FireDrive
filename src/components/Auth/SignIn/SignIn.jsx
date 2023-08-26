@@ -3,11 +3,11 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 import {NavLink} from "react-router-dom";
 import {restoreRoute, signUpRoute} from "../../../common/commonData";
-import {FcGoogle} from "react-icons/fc";
-import {FaGithub} from "react-icons/fa";
-import ActionBtn from "../../common/ActionBtn";
 import SocialAuth from "../SocialAuth";
 import ActionInput from "../../common/ActionInput";
+import ActionBtn from "../../common/ActionBtn";
+import Logo from "../../../images/logo.png"
+import Image from "../../Media/Image"
 
 const SignIn = ({
                     handleLogin, authError, isAuthBtnFetching, googleAuth,
@@ -57,17 +57,24 @@ const SignIn = ({
             items-center
             rounded'
                   onSubmit={handleSubmit}>
+
                 <div className={'container-fluid max-auto max-w-screen-sm p-2'}>
-                    <h4 className='text-center mb-2 text-2xl'>Welcome guest</h4>
+                    <div className={'w-full h-fit flex justify-center items-center'}>
+                        <Image
+                            height={'h-50'}
+                            width={'w-40'}
+                            url={Logo}
+                            imageIsClickable={false}
+                        />
+                    </div>
                     <ActionInput
-                        type={'text'}
+                        type={'email'}
                         placeholder={'email'}
                         errorType={errors.email}
                         onChange={handleChange}
                         id={'email'}
                         value={values.email}
                     />
-
                     {<span className={'text-red-500'}>{errors.email}</span>}
                     <ActionInput
                         type={'password'}
@@ -79,11 +86,12 @@ const SignIn = ({
                     />
                     {<span className={'text-red-500'}>{errors.password}</span>}
                     <div className='w-full mt-10'>
-                        <button type={"submit"}
-                                className={' btn btn-outline-primary w-full'}
-                                disabled={isAuthBtnFetching}
-                                onClick={handleSubmit}>Log in
-                        </button>
+                        <ActionBtn type={'submit'}
+                                   btnStyle={'auth'}
+                                   isFullWidth={true}
+                                   isDisabled={isAuthBtnFetching}
+                                   handleClick={handleSubmit}>Log in
+                        </ActionBtn>
                     </div>
                     <SocialAuth {...{googleAuth, githubAuth}}/>
                     <hr/>

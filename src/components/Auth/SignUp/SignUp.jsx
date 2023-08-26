@@ -3,6 +3,10 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 import {signInRoute} from "../../../common/commonData";
 import {NavLink} from "react-router-dom";
+import ActionBtn from "../../common/ActionBtn";
+import ActionInput from "../../common/ActionInput";
+import Image from "../../Media/Image";
+import Logo from "../../../images/logo.png";
 
 
 const testEmail = 'thulsaDev@proton.me'
@@ -47,42 +51,59 @@ const SignUp = ({emailPasswordSignup, isAuthBtnFetching}) => {
     return (
         <div
             className={'container-fluid h-screen max-w-xl mx-auto flex flex-col justify-center items-center max-w-2xl'}>
-            <form className={'mx-auto w-full h-fit bg-white flex justify-center items-center rounded'}
+            <form className={'mx-auto w-full h-fit  flex justify-center items-center rounded'}
                   onSubmit={handleSubmit}>
                 <div className={'max-auto max-w-screen-sm p-3 relative'}>
-                    <h5 className={'text-center mb-2 font-mono '}>Create an account</h5>
-                    <input onChange={handleChange} id={'email'}
-                           className={`p-2 w-full  h-10 rounded text-left bg-customInputColor ${errors.email ? 'border-2 border-rose-600' : ''}`}
-                           value={values.email}
-                           type={'text'}
-                           placeholder={'email'}/>
+                    <div className={'w-full h-fit flex justify-center items-center'}>
+                        <Image
+                            height={'h-50'}
+                            width={'w-40'}
+                            url={Logo}
+                            imageIsClickable={false}
+                        />
+                    </div>
+                    <ActionInput
+                        errorType={errors.email}
+                        onChange={handleChange}
+                        id={'email'}
+                        value={values.email}
+                        type={'text'}
+                        placeholder={'email'}/>
                     {<span className={'text-red-500'}>{errors.email}</span>}
-                    <input onChange={handleChange} id={'password'}
-                           className={`p-2 w-full h-10 mt-5 rounded text-left bg-customInputColor ${errors.password ? 'border-2 border-rose-600' : ''}`}
-                           value={values.password}
-                           type={'password'}
-                           placeholder={'password'}/>
+                    <ActionInput
+                        errorType={errors.password}
+                        onChange={handleChange}
+                        id={'password'}
+                        value={values.password}
+                        type={'password'}
+                        placeholder={'password'}/>
                     {<span className={'text-red-500'}>{errors.password}</span>}
-                    <input onChange={handleChange} id={'password2'}
-                           className={`p-2 w-full h-10 mt-5 rounded text-left bg-customInputColor ${errors.password2 ? 'border-2 border-rose-600' : ''}`}
-                           value={values.password2}
-                           type={'password'}
-                           placeholder={'repeat password'}/>
+                    <ActionInput
+                        errorType={errors.password2}
+                        onChange={handleChange}
+                        id={'password2'}
+                        value={values.password2}
+                        type={'password'}
+                        placeholder={'Repeat password'}/>
                     {<span className={'text-red-500'}>{errors.password2}</span>}
-                    <input onChange={handleChange} id={'username'}
-                           className={`p-2 w-full h-10 rounded  mt-5 text-left bg-customInputColor ${errors.password ? 'border-2 border-rose-600' : ''}`}
-                           value={values.username}
-                           type={'text'}
-                           placeholder={'username'}/>
+                    <ActionInput
+                        errorType={errors.username}
+                        onChange={handleChange}
+                        id={'username'}
+                        value={values.username}
+                        type={'text'}
+                        placeholder={'username'}/>
                     {<span className={'text-red-500'}>{errors.username}</span>}
-                    <button disabled={isAuthBtnFetching} className={'w-full btn btn-success mt-5'}
-                            type={'submit'}>Sign
-                        up
-                    </button>
+                    <div className={'mt-5'}>
+                        <ActionBtn isDisabled={isAuthBtnFetching} isFullWidth={true} btnStyle={'auth'}
+                                   type={'submit'}>Sign
+                            up
+                        </ActionBtn>
+                    </div>
                     <div
                         className={'text-center mt-2 text-red-500'}>{values.passwordsMismatch && 'Passwords mismatch'}</div>
-                    <div className={'text-center'}>Have an account? <NavLink to={signInRoute}
-                                                                             className={'text-blue-300'}>Log in
+                    <div className={'text-center mt-5'}>Have an account? <NavLink to={signInRoute}
+                                                                                  className={'text-blue-300'}>Log in
                         account</NavLink></div>
                 </div>
             </form>

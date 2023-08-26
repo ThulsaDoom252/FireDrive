@@ -10,15 +10,10 @@ const Home = ({fetchImages, fetchVideos, fetchAudio, currentTheme, smallScreen})
     const videosSet = useSelector(state => state.media.videosSet)
     const audioSet = useSelector(state => state.media.audioSet)
 
-
-
-
-
     const navClassNames =
         `  no-underline
         w-90%
             z-1`
-
 
     return (
         <section>

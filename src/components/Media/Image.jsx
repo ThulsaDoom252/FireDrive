@@ -4,6 +4,7 @@ import {CircleLoader} from "react-spinners";
 const Image = ({
                    url,
                    index,
+                   isAbsolute,
                    imageIsHovered,
                    imageIsClickable = true,
                    handleInitialModalIndex,
@@ -23,10 +24,10 @@ const Image = ({
 
     return (
         <>
-                {!imageIsLoaded && <CircleLoader size={50} color={'white'}/>}
-                <img
-                    onClick={handleImageLick}
-                    className={`
+            {!imageIsLoaded && <CircleLoader size={50} color={'white'}/>}
+            <img
+                onClick={handleImageLick}
+                className={`
                 object-cover 
                 rounded 
                 cursor-pointer 
@@ -34,13 +35,14 @@ const Image = ({
                 ${imageIsHovered && 'hover:border-2 border-blue-300'}  
                 ${height}
                 ${width}        
+                ${isAbsolute && 'absolute'}
                 transition-all duration-100
                 `}
 
-                    src={url}
-                    alt="image"
-                    onLoad={handleLoadImage}
-                />
+                src={url}
+                alt="image"
+                onLoad={handleLoadImage}
+            />
 
         </>
 

@@ -10,7 +10,7 @@ const SocialAuth = ({googleAuth, githubAuth}) => {
                 type={'button'}
                 onClick={googleAuth}
                 title={'sign up with google'}
-                className={'w-full btn mt-2 mb-2 btn-outline-light '}>
+                className={'w-full btn mt-2 mb-2 btn-outline-light  text-black'}>
                 <div className={'flex items-center justify-center'}>
                     <div><FcGoogle size={20} color={'blue'} className={'mx-auto'}/></div>
                     <div className={'ml-2'}>Sign in with Google</div>

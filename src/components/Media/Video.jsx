@@ -22,11 +22,7 @@ const Video = ({
     const [currentTime, setCurrentTime] = useState(0);
     const [currentVolume, setCurrentVolume] = useState(0)
     const playerRef = useRef(null);
-    const [isVideoLoaded, setIsVideoLoaded] = useState(false)
 
-    const handleLoadVideo = () => {
-        setIsVideoLoaded(true)
-    }
 
     const isVideoHovered = hoveredMediaIndex === index
 
@@ -66,7 +62,8 @@ const Video = ({
                         index,
                         searchMode,
                         itemOptionsHovered,
-                        setItemOptionsHovered
+                        setItemOptionsHovered,
+                        hoveredMediaIndex,
                     }} />
                     </div>
                 </MyCustomTransition>
@@ -81,7 +78,6 @@ const Video = ({
                         width="100%"
                         height="100%"
                         playing={isPlaying}
-                        onReady={handleLoadVideo}
                         volume={currentVolume}
                         onEnded={() => setIsPlaying(false)}
                         onProgress={handleProgress}

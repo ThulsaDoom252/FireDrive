@@ -37,6 +37,7 @@ export const formatTime = (timeInSeconds) => {
     return `${minutes}:${seconds}`;
 };
 
+
 export const stopPropagation = e => e.stopPropagation()
 
 
@@ -56,9 +57,14 @@ export const generateRandomString = (length) => {
 export const wrapperId = 'wrapper'
 export const mainContentId = 'content'
 
+//ListModes
+export const paginateMode = 'PAGINATE'
+export const lazyMode = 'LAZY'
+
 
 //Sort media types
-export const byDate = 'by date'
+    export
+const byDate = 'by date'
 export const byName = 'by name'
 export const bySize = 'by size'
 

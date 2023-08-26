@@ -2,7 +2,7 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {
     delay,
     imageModal,
-    noModal,
+    noModal, paginateMode,
     removeAllItems,
     removeCurrentItem,
     smallScreenWidth,
@@ -24,6 +24,7 @@ import {
 const appSlice = createSlice({
     name: 'app-slice',
     initialState: {
+        listMode: paginateMode,
         initializing: false,
         smallScreen: window.innerWidth <= smallScreenWidth,
         modalType: '',
@@ -90,6 +91,9 @@ const appSlice = createSlice({
         toggleInitializing(state, action) {
             state.initializing = action.payload
         },
+        toggleListMode(state, action) {
+            state.listMode = action.payload
+        },
         setAlertModalContent(state, action) {
             const {message, title, style, btnStyle, btnLabel, actionType, showBtn} = action.payload
             state.alertMessage = message
@@ -117,6 +121,7 @@ export const {
     setModalType,
     setItemModalType,
     toggleCurrentTheme,
+    toggleListMode,
 } = appSlice.actions
 
 export const handleAlertModal = createAsyncThunk('alertModal-thunk', async ({
