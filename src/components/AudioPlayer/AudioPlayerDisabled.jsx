@@ -1,7 +1,5 @@
 import React from 'react';
 import {FiPlay, FiSkipBack, FiSkipForward} from "react-icons/fi";
-import {LuRepeat} from "react-icons/lu";
-import {ImVolumeHigh} from "react-icons/im";
 import DurationSeekBar from "./DurationSeekBar";
 
 const AudioPlayerDisabled = ({buttonsSize, smallScreenMode}) => {
@@ -13,7 +11,7 @@ const AudioPlayerDisabled = ({buttonsSize, smallScreenMode}) => {
                     <DurationSeekBar disabled={true}/>
                 </div>
                 <div className={`w-full  flex items-center justify-between`}>
-                    <div className={'flex items-center justify-between'}>
+                    <div className={'w-40 flex items-center justify-between'}>
                         <button
                             className={`
                             hover:bg-blue-400   
@@ -22,9 +20,8 @@ const AudioPlayerDisabled = ({buttonsSize, smallScreenMode}) => {
                             w-20 rounded 
                             transition 
                             text-2xl 
-                              disabled:text-gray-500 
-
-                             `}
+                              disabled:text-gray-500
+                              `}
                             disabled={true}
                         >
                             <FiSkipBack size={buttonsSize}/>
@@ -57,31 +54,13 @@ const AudioPlayerDisabled = ({buttonsSize, smallScreenMode}) => {
                             <FiSkipForward size={buttonsSize}/>
                         </button>
                     </div>
-                    <div hidden={smallScreenMode}>
-                        <DurationSeekBar disabled={true}/>
+                    <div
+                        style={{fontFamily: 'cursive'}}
+                        className={'font-sans'}>
+                        No music...no life
                     </div>
-                    <div>
-                        <div className={'w-20 flex justify-between mr-10 relative'}>
-                            <button className={`
-                                hover:bg-blue-400 
-                                rounded
-                                disabled:text-gray-400
-                            
-                                 `}
-                                    disabled={true}
-                            >
-                                <LuRepeat size={20}/>
-                            </button>
-                            <div>
-                                <button className={`
-                                disabled:text-gray-400`}
-                                        disabled={true}
-                                >
-                                    <ImVolumeHigh size={20}/>
-                                </button>
-                            </div>
 
-                        </div>
+                    <div>
                     </div>
                 </div>
             </div>

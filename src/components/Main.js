@@ -212,6 +212,8 @@ const Main = ({
                     bg-opacity-90 
                      p-2 rounded 
                      relative 
+                     flex
+                     items-center
                      ${smallScreen ? 'h-mobilePlayerHeight' : 'h-playerHeight'}
                      ${currentTheme.primeBg}
                      ${itemModalType !== imageModal && itemModalType !== videoModal && 'fixed-bottom'

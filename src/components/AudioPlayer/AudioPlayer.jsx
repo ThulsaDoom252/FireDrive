@@ -65,7 +65,6 @@ const AudioPlayer = ({
         }
     }
 
-
     const handleVolumeChange = ({event, mute = false}) => {
         if (mute) {
             audioRef.current.volume = 0
