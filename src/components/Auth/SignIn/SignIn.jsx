@@ -11,7 +11,7 @@ import Image from "../../Media/Image"
 
 const SignIn = ({
                     handleLogin, authError, isAuthBtnFetching, googleAuth,
-                    githubAuth,
+                    githubAuth, smallScreen,
                 }) => {
     const signInForm = useFormik({
         initialValues: {
@@ -35,11 +35,13 @@ const SignIn = ({
     const handleChange = signInForm.handleChange
     const handleSubmit = signInForm.handleSubmit
 
+    const inputContainerStyle = 'relative flex flex-col h-inputContainerHeight mt-3'
+    const errorStyle = 'absolute bottom-0 left-1 text-red-600'
+
     return (
         <div
             className='
             font-sans
-            font-serif
             container-fluid
             h-screen
             mx-auto
@@ -67,35 +69,48 @@ const SignIn = ({
                             imageIsClickable={false}
                         />
                     </div>
-                    <ActionInput
-                        type={'email'}
-                        placeholder={'email'}
-                        errorType={errors.email}
-                        onChange={handleChange}
-                        id={'email'}
-                        value={values.email}
-                    />
-                    {<span className={'text-red-500'}>{errors.email}</span>}
-                    <ActionInput
-                        type={'password'}
-                        placeholder={'password'}
-                        errorType={errors.password}
-                        onChange={handleChange}
-                        id={'password'}
-                        value={values.password}
-                    />
-                    {<span className={'text-red-500'}>{errors.password}</span>}
-                    <div className='w-full mt-10'>
+                    <div className={inputContainerStyle}>
+                        <ActionInput
+                            type={'email'}
+                            placeholder={'email'}
+                            errorType={errors.email}
+                            onChange={handleChange}
+                            id={'email'}
+                            value={values.email}
+                        />
+                        {<span className={errorStyle}>{errors.email}</span>}
+                    </div>
+
+                    <div className={inputContainerStyle}>
+                        <ActionInput
+                            type={'password'}
+                            placeholder={'password'}
+                            errorType={errors.password}
+                            onChange={handleChange}
+                            id={'password'}
+                            value={values.password}
+                        />
+                        {<span className={errorStyle}>{errors.password}</span>}
+                    </div>
+
+                    <div className='w-full mt-3 relative'>
                         <ActionBtn type={'submit'}
                                    btnStyle={'auth'}
                                    isFullWidth={true}
                                    isDisabled={isAuthBtnFetching}
                                    handleClick={handleSubmit}>Log in
                         </ActionBtn>
+                        {<div className={`
+                        text-red-500 
+                        text-center
+                        w-full 
+                        text-lg 
+                        absolute 
+                        top-minus30`}>{authError}</div>}
                     </div>
-                    <SocialAuth {...{googleAuth, githubAuth}}/>
+                    <SocialAuth {...{googleAuth, githubAuth, smallScreen}}/>
                     <hr/>
-                    {<div className={'text-red-500 text-center  text-lg'}>{authError}</div>}
+
                     <div className={'text-center'}>Not registered? <NavLink to={signUpRoute}
                                                                             className={'text-blue-300'}>Create an
                         account</NavLink></div>

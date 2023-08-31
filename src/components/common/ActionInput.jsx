@@ -6,7 +6,6 @@ const ActionInput = ({type, id, onChange, placeholder, errorType, value}) => {
             className={`
             p-2 
             w-full 
-            mt-5 
             h-10 
             rounded-xl 
             text-left 

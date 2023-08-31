@@ -14,6 +14,7 @@ const SignInContainer = ({
                              setAuthError,
                              verificationMode,
                              githubAuth,
+                             smallScreen,
                          }) => {
     useEffect(() => {
         setAuthError('')
@@ -33,7 +34,7 @@ const SignInContainer = ({
 
     return <SignIn {...{
         handleLogin, authError, isAuthBtnFetching, googleAuth,
-        githubAuth,
+        githubAuth, smallScreen,
     }}/>
 };
 

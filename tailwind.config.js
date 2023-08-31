@@ -26,6 +26,7 @@ module.exports = {
                 },
             },
             inset: {
+                'minus30' : '-30px',
                 'volumeBar': '65px',
                 'volumeBarLeft': '-40px',
                 '0.4': '0.01px',
@@ -99,6 +100,7 @@ module.exports = {
                 '62': '130px',
                 'playerHeight': '40px',
                 'mobilePlayerHeight': '70px',
+                 'inputContainerHeight': '63px',
             },
             zIndex: {
                 '1': '1',

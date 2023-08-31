@@ -79,10 +79,6 @@ const Main = ({
     const {firstItemIndex, lastItemIndex, setItemsPerPage, itemsPerPage} = paginatorContext
 
     useEffect(() => {
-        window.addEventListener('resize', handleResize)
-    }, [])
-
-    useEffect(() => {
         setCurrentRoute(pathName)
     }, [pathName])
 
@@ -93,18 +89,12 @@ const Main = ({
     }, [])
 
 
-    const handleResize = () => {
-        toggleSmallScreen(window.innerWidth <= smallScreenWidth)
-    }
-
     const hideMobileSearch = () => {
         showMobileSearch && toggleMobileSearch(false)
     }
 
-
     const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
     const mediaToShow = searchMode ? searchResults : listMode === paginateMode ? paginatedMedia : currentMediaSet
-
 
     if (!isAuth) {
         return <Navigate to={signInRoute}/>
@@ -246,7 +236,7 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {
-    listMedia, setCurrentRoute, toggleSmallScreen,
+    listMedia, setCurrentRoute,
     setModalType, setItemModalType, handleAlertAction,
     toggleCurrentTheme, toggleMobileSearch, toggleListMode,
 })(Main);

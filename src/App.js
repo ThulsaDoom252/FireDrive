@@ -1,6 +1,13 @@
 import React, {useEffect} from 'react'
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import {restoreRoute, signInRoute, signUpRoute, verificationRoute, wrapperId} from "./common/commonData";
+import {
+    restoreRoute,
+    signInRoute,
+    signUpRoute,
+    smallScreenWidth,
+    verificationRoute,
+    wrapperId
+} from "./common/commonData";
 import {connect, useSelector} from "react-redux";
 import Main from "./components/Main";
 import SignInContainer from "./components/Auth/SignIn/SignInContainer";
@@ -19,14 +26,17 @@ import BG from './images/BG.jpg'
 import DESERT from './images/DESERT.jpg'
 import {mainDayBg} from "./common/themes";
 import RestoreContainer from "./components/Auth/RestoreContainer/RestoreContainer";
+import {toggleSmallScreen} from "./redux/appSlice";
 
 const App = ({
                  authCheck,
                  isAuth,
                  currentTheme,
+                 smallScreen,
                  startVerificationTimer,
                  toggleVerificationEmailSendStatus,
                  toggleRestoreEmailSendStatus,
+                 toggleSmallScreen,
              }) => {
 
     const auth = getAuth()
@@ -57,6 +67,13 @@ const App = ({
     //     }
     //
     // }, [])
+    useEffect(() => {
+        window.addEventListener('resize', handleResize)
+    }, [])
+
+    const handleResize = () => {
+        toggleSmallScreen(window.innerWidth <= smallScreenWidth)
+    }
 
     useEffect(() => {
         authCheck()
@@ -81,7 +98,7 @@ const App = ({
              relative 
              overflow-hidden`}>
                 <Routes>
-                    <Route exact path={signInRoute} element={<SignInContainer {...{isAuth}}/>}/>
+                    <Route exact path={signInRoute} element={<SignInContainer {...{isAuth, smallScreen}}/>}/>
                     <Route path={signUpRoute} element={<SignUpContainer  {...{isAuth}}/>}/>
                     <Route path={verificationRoute} element={<VerificationContainer/>}/>
                     <Route path={restoreRoute} element={<RestoreContainer/>}/>
@@ -96,6 +113,7 @@ const mapStateToProps = (state) => {
     return {
         currentTheme: state.app.currentTheme,
         isAuth: state.auth.isAuthorized,
+        smallScreen: state.app.smallScreen,
     }
 }
 
@@ -104,7 +122,8 @@ export default connect(mapStateToProps, {
     startVerificationTimer,
     startRestoreTimer,
     toggleRestoreEmailSendStatus,
-    toggleVerificationEmailSendStatus
+    toggleVerificationEmailSendStatus,
+    toggleSmallScreen,
 })(App)
 
 
