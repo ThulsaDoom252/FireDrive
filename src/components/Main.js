@@ -1,11 +1,11 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import HeaderContainer from "./Header/HeaderContainer";
 import {
-    imageModal,
+    imageModal, lazyMode,
     mainContentId,
     mediaTypes, paginateMode, renameModal, rootRoute, shareModal,
     signInRoute,
-    smallScreenWidth, videoModal,
+    videoModal,
 } from "../common/commonData";
 import {Routes, Route, Navigate, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
@@ -17,7 +17,6 @@ import MediaContainer from "./Media/MediaContainer";
 import {
     handleAlertAction,
     setItemModalType, setModalType, toggleCurrentTheme, toggleListMode,
-    toggleSmallScreen,
 } from "../redux/appSlice";
 import BurgerMenu from "./common/BurgerMenu";
 import SortInput from "./common/SortInput";
@@ -44,7 +43,6 @@ import {dayTheme, desertTheme, nightTheme} from "../common/themes";
 import DropDownMenu from "./common/DropDownMenu";
 import Home from "./Home/Home";
 import {CiSettings} from "react-icons/ci";
-import {Input} from "react-select/animated";
 
 const Main = ({
                   currentMediaSet,
@@ -74,9 +72,17 @@ const Main = ({
     const location = useLocation()
     const pathName = location.pathname
     const homePage = pathName === rootRoute
+    const isPaginatorEnabled = listMode === paginateMode
 
     const paginatorContext = useContext(PaginatorContext)
     const {firstItemIndex, lastItemIndex, setItemsPerPage, itemsPerPage} = paginatorContext
+    const handleListMode = () => {
+        if (listMode === lazyMode) {
+            toggleListMode(paginateMode)
+        } else {
+            toggleListMode(lazyMode)
+        }
+    }
 
     useEffect(() => {
         setCurrentRoute(pathName)
@@ -92,6 +98,9 @@ const Main = ({
     const hideMobileSearch = () => {
         showMobileSearch && toggleMobileSearch(false)
     }
+
+    const [isThemeBlockOpened, setIsThemeBlockOpened] = useState(false)
+    const [isSettingsBlockOpened, setIsSettingsBlockOpened] = useState(false)
 
     const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
     const mediaToShow = searchMode ? searchResults : listMode === paginateMode ? paginatedMedia : currentMediaSet
@@ -132,7 +141,8 @@ const Main = ({
                         <div className={'bg-gray-100 h-0.5 rounded w-full'}/>
 
                         <div className='mt-3 mb-3'>
-                            <DropDownMenu btnLabel={'Change theme'} smallScreenIcon={<BiColorFill/>}>
+                            <DropDownMenu menuType={isThemeBlockOpened} toggleMenu={setIsThemeBlockOpened}
+                                          btnLabel={'Change theme'} smallScreenIcon={<BiColorFill/>}>
                                 <AdaptiveImage
                                     currentThemeName={currentThemeName}
                                     theme={dayTheme}
@@ -150,14 +160,34 @@ const Main = ({
                                     onClick={() => toggleCurrentTheme({type: desertTheme})}/>
                             </DropDownMenu>
                             <div className={'mt-3'}>
-                                <DropDownMenu btnLabel={'Settings'} smallScreenIcon={<CiSettings/>}>
+                                <DropDownMenu
+                                    menuType={isSettingsBlockOpened} toggleMenu={setIsSettingsBlockOpened}
+                                    btnLabel={'Settings'} smallScreenIcon={<CiSettings/>}>
                                     <div className={'bg-gray-600 bg-opacity-50 w-full flex flex-col'}>
-                                        <div className={'w-full flex justify-between items-center mb-4 mt-4'}>
-                                            <div>Pagination</div>
-                                            <div>Enabled</div>
+                                        <div className={`
+                                        w-full 
+                                        flex 
+                                        justify-between 
+                                        items-center 
+                                        mb-4 
+                                        mt-4
+                                        ${smallScreen ? 'flex-col' : ''}
+                                        `}>
+                                            <div className={'text-gray-400'}>List mode</div>
+                                            <div
+                                                className={'cursor-pointer'}
+                                                onClick={handleListMode}>{isPaginatorEnabled ? 'Pagination' : 'Lazy'}</div>
                                         </div>
-                                        <div className={'w-full flex justify-between items-center mb-4 mt-4'}>
-                                            <div>Items per page</div>
+                                        <div className={`
+                                        w-full 
+                                        flex 
+                                        justify-between 
+                                        items-center 
+                                        mb-4 
+                                        mt-4
+                                        ${smallScreen ? 'flex-col' : ''}
+                                        `}>
+                                            <div className={'text-gray-400 text-center'}>Items per page</div>
                                             <div className={`flex 
                                             flex-col 
                                             justify-center 
@@ -168,8 +198,16 @@ const Main = ({
                                                            setItemsPerPage(e.currentTarget.value)}/>
                                             </div>
                                         </div>
-                                        <div className={'w-full flex justify-between items-center mb-4 mt-4'}>
-                                            <div>Animations</div>
+                                        <div className={`
+                                        w-full 
+                                        flex 
+                                        justify-between 
+                                        items-center 
+                                        mb-4 
+                                        mt-4
+                                        ${smallScreen ? 'flex-col' : ''}
+                                        `}>
+                                            <div className={'text-gray-400'}>Animations</div>
                                             <div>On</div>
                                         </div>
                                     </div>
@@ -190,6 +228,7 @@ const Main = ({
                                              currentRoute,
                                              currentMediaSet,
                                              mediaToShow,
+                                             isPaginatorEnabled,
                                              searchMode,
                                              searchResults,
                                              smallScreen,
@@ -238,7 +277,8 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
     listMedia, setCurrentRoute,
     setModalType, setItemModalType, handleAlertAction,
-    toggleCurrentTheme, toggleMobileSearch, toggleListMode,
+    toggleCurrentTheme, toggleMobileSearch,
+    toggleListMode,
 })(Main);
 
 

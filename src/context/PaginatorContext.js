@@ -10,6 +10,7 @@ const PaginatorContextProvider = ({children}) => {
     const [itemsPerPage, setItemsPerPage] = useState(100)
     const [firstItemIndex, setFirstItemIndex] = useState(0)
     const [lastItemIndex, setLastItemIndex] = useState(6)
+    const [isPaginatorEnabled, setIsPaginatorEnabled] = useState(true)
 
     const [portionSize] = useState(4);
     const [portionNumber, setPortionNumber] = useState(1);
@@ -74,6 +75,8 @@ const PaginatorContextProvider = ({children}) => {
         currentPage,
         itemsPerPage,
         setItemsPerPage,
+        isPaginatorEnabled,
+        setIsPaginatorEnabled,
     }
 
     return (

@@ -5,7 +5,6 @@ import {useSelector} from "react-redux";
 import {Transition} from "react-transition-group";
 import {defaultStyle, transitionStyles} from "../../common/TransitionStyles";
 
-
 const DropDownMenu = ({
                           switchToSmallScreenIcon = true,
                           smallScreenIcon,
@@ -15,8 +14,9 @@ const DropDownMenu = ({
                           btnLabel = '',
                           children,
                           isDisabled,
+                          menuType,
+                          toggleMenu,
                       }) => {
-    const [isDropDownOpen, setIsDropDownOpen] = useState(false)
     const [isAnimationExited, setIsAnimationExited] = useState(true)
     const smallScreen = useSelector(state => state.app.smallScreen)
 
@@ -28,7 +28,7 @@ const DropDownMenu = ({
 
     const handleOpenDropDown = e => {
         e.stopPropagation()
-        setIsDropDownOpen(!isDropDownOpen)
+        toggleMenu(!menuType)
     }
 
     return (
@@ -42,7 +42,7 @@ const DropDownMenu = ({
                 handleClick={handleOpenDropDown}
                 isDisabled={isDisabled} isFullWidth={true}>
                 {switchToSmallScreenIcon ? smallScreen ? smallScreenIcon : btnLabel : btnLabel}
-                {!isDropDownOpen ?
+                {!menuType ?
                     <BiDownArrow className='
                 absolute
                 right-2
@@ -52,17 +52,19 @@ const DropDownMenu = ({
                     absolute
                     right-2
                     '/>}</ActionBtn>
-            <div className={'w-full'}>
-                <Transition in={isDropDownOpen} timeout={duration} onEntering={() => setIsAnimationExited(false)}
+            <div className={'w-full'} hidden={!menuType}>
+                <Transition in={menuType}
+                            timeout={duration}
+                            onEntering={() => setIsAnimationExited(false)}
                             onExit={handleExitAnimation}>
                     {state => (
-                        <div hidden={!animated ? !isDropDownOpen : false}
+                        <div hidden={!animated ? !menuType : false}
                              style={{...defaultStyle, ...transitionStyles[state]}}
                              className={`
                              w-full 
                              flex 
                              items-center 
-                             ${!isDropDownOpen && isAnimationExited ? 'absolute' : 'block'} 
+                             ${!menuType && isAnimationExited ? 'absolute' : 'block'} 
                              ${smallScreen && 'flex-col'}
                              `}>
                             {children}

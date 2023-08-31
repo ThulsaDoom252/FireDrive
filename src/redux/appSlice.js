@@ -50,6 +50,9 @@ const appSlice = createSlice({
         toggleSmallScreen(state, action) {
             state.smallScreen = action.payload
         },
+        setButtonMenuType(state, action) {
+            state.buttonMenuType = action.payload
+        },
         toggleCurrentTheme(state, action) {
             const {type: themeType} = action.payload
             state.currentThemeName = themeType

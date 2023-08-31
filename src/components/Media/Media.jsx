@@ -28,6 +28,7 @@ const Media = ({
                    setItemOptionsHovered,
                    currentTheme,
                    noOpenModal,
+                   isPaginatorEnabled,
                }) => {
 
     return (
