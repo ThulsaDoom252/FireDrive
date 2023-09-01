@@ -1,4 +1,4 @@
-import React, {createContext, useRef, useState} from 'react';
+import React, {createContext, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {handleAlertModal, setCurrentModalItemIndex, setModalType} from "../redux/appSlice";
 import {handleMediaName} from "../redux/mediaSlice";
@@ -27,11 +27,43 @@ export const ItemsModalContextProvider = ({children}) => {
     const currentModalItemOldName = searchMode ? searchResults[currentModalItemIndex]?.oldName : currentMediaSet[currentModalItemIndex]?.oldName
 
 
+    const handleFullScreen = () => {
+        if (!fullScreen) {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen();
+            } else if (document.documentElement.mozRequestFullScreen) {
+                document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullscreen) {
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) {
+                document.documentElement.msRequestFullscreen();
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
+
+        toggleFullScreen(!fullScreen);
+    };
+
+
     const handleCurrentModalItemIndex = (index) => {
         dispatch(setCurrentModalItemIndex(index))
     }
 
+    const testObj = {
+        key1: 'string',
+    }
+
     const swipeHandlers = useSwipeable({
+        ...testObj,
         onSwipedLeft: () => handleNextModalItem(),
         onSwipedRight: () => handlePrevModalItem(),
         onTap: () => toggleMobileSettings(!showMobileSettings)
@@ -70,21 +102,20 @@ export const ItemsModalContextProvider = ({children}) => {
         currentMediaSet,
         currentModalItemIndex,
         currentModalItemUrl,
-        currentModalItemName,
         currentModalItemOldName,
         handleNextModalItem,
         handlePrevModalItem,
         handleCurrentModalItemIndex,
-        handleRenameModal,
         handleShareModal,
         handleDeleteCurrentModalItem,
+        handleRenameModal,
         showMobileSettings,
         fullScreen,
-        toggleFullScreen,
         searchMode,
         searchResults,
         smallScreen,
         swipeHandlers,
+        handleFullScreen,
     }
 
 

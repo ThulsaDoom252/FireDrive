@@ -43,6 +43,7 @@ import {dayTheme, desertTheme, nightTheme} from "../common/themes";
 import DropDownMenu from "./common/DropDownMenu";
 import Home from "./Home/Home";
 import {CiSettings} from "react-icons/ci";
+import ImageModalContainer from "./modals/ImageModalContainer";
 
 const Main = ({
                   currentMediaSet,
@@ -99,11 +100,13 @@ const Main = ({
         showMobileSearch && toggleMobileSearch(false)
     }
 
+
     const [isThemeBlockOpened, setIsThemeBlockOpened] = useState(false)
     const [isSettingsBlockOpened, setIsSettingsBlockOpened] = useState(false)
 
     const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
     const mediaToShow = searchMode ? searchResults : listMode === paginateMode ? paginatedMedia : currentMediaSet
+
 
     if (!isAuth) {
         return <Navigate to={signInRoute}/>
@@ -120,8 +123,8 @@ const Main = ({
             <VideoModal
                 toggleModal={setItemModalType}
                 showModal={itemModalType === videoModal}/>
-            <ImageModal toggleModal={setItemModalType} showModal={itemModalType === imageModal}
-                        url={currentModalItemUrl}/>
+            <ImageModalContainer toggleModal={setItemModalType} showModal={itemModalType === imageModal}
+            />
             <UserModal toggleModal={setModalType}
                        showModal={modalType === userModal}/>
             <HeaderContainer

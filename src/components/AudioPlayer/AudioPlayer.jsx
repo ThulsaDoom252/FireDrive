@@ -8,6 +8,7 @@ import AudioPlayerDisabled from "./AudioPlayerDisabled";
 import {LuRepeat, LuRepeat1} from "react-icons/lu";
 import {IoInfinite} from "react-icons/io5";
 import {ImVolumeHigh, ImVolumeMute2} from "react-icons/im";
+import VolumeBar from "./VolumeBar";
 
 const AudioPlayer = ({
                          smallScreenMode,
@@ -160,13 +161,14 @@ const AudioPlayer = ({
                                     <LuRepeat1 size={20}/> : <IoInfinite size={20}/>}
 
                             </button>
-                            <div>
+                            <div className={'flex'}>
                                 <button className={`
                                 disabled:text-gray-400
                    ${iconColor}`}
                                 >
                                     {volume !== 0 ? <ImVolumeHigh size={20}/> : <ImVolumeMute2 size={20}/>}
                                 </button>
+                                <VolumeBar />
                             </div>
 
                         </div>

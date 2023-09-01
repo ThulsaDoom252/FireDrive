@@ -3,7 +3,7 @@ import {BiSolidPencil} from "react-icons/bi";
 import {FaShare, FaTrash} from "react-icons/fa";
 
 const ModalDesktopOptions = ({
-                                 toggleFullScreen,
+                                 handleFullScreen,
                                  handleRenameModal,
                                  handleDeleteCurrentModalItem,
                                  smallScreen,
@@ -14,7 +14,7 @@ const ModalDesktopOptions = ({
     return (
         <>
             <div hidden={smallScreen} className='hover:cursor-pointer'
-                 onClick={() => toggleFullScreen(true)}>FullScreen
+                 onClick={handleFullScreen}>FullScreen
             </div>
             <div className='hover:cursor-pointer' onClick={handleRenameModal}>{smallScreen ?
                 <BiSolidPencil size={iconSize}/> : 'Rename'}</div>

@@ -36,6 +36,8 @@ const VideoModal = ({
         toggleModal(noModal)
     }
 
+    window.playerRef = playerRef
+
     return (
         <Transition in={showModal} duration={200}>
             {state => (
@@ -83,7 +85,7 @@ const VideoModal = ({
                             `}>
                                 <ReactPlayer
                                     ref={playerRef}
-                                    height={'100%'}
+                                    height={smallScreen ? '90%' : '100%'}
                                     width={'100%'}
                                     playing={showModal}
                                     className={'object-cover'}

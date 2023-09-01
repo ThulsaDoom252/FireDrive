@@ -1,14 +1,15 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {IoIosArrowBack, IoIosArrowForward} from 'react-icons/io'
 import {IoClose} from "react-icons/io5";
-import {ItemsModalContext} from "../../context/ItemsModalContext";
 import {AiOutlineFullscreenExit} from "react-icons/ai";
 import Overlay from "../common/Overlay";
-import {noModal, stopPropagation} from "../../common/commonData";
-import ModalDesktopOptions from "../Options/ModalDesktopOptions";
-import MediaQuery from "react-responsive";
+import {stopPropagation} from "../../common/commonData";
+import ModalOptions from "../Options/ModalDesktopOptions";
 import {Transition} from "react-transition-group";
 import {defaultStyle, transitionStyles} from "../../common/TransitionStyles";
+import {Carousel} from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+
 
 const ImageModal = ({
                         overlayColor = 'bg-gray-900',
@@ -18,44 +19,31 @@ const ImageModal = ({
                         arrowSize = 30,
                         closeIconColor = 'white',
                         closeIconSize = 30,
-                        toggleModal,
                         showModal,
-                        zIndex = 'z-2'
+                        carouselSettings,
+                        prevArrowDisabled,
+                        nextArrowDisabled,
+                        handleClose,
+                        swipeHandlers,
+                        smallScreen,
+                        fullScreen,
+                        handleFullScreen,
+                        zIndex = 'z-2',
+                        currentModalItemUrl,
+                        currentMediaSet,
+                        modalOptionsProps,
+                        handlePrevModalItem,
+                        handleNextModalItem,
                     }) => {
 
-    const modalContext = useContext(ItemsModalContext)
-    const {
-        currentMediaSet,
-        currentModalItemUrl,
-        currentModalItemIndex,
-        handleNextModalItem,
-        handlePrevModalItem,
-        handleDeleteCurrentModalItem,
-        fullScreen,
-        toggleFullScreen,
-        searchMode,
-        searchResults,
-        smallScreen,
-        handleRenameModal,
-        handleShareModal,
-        swipeHandlers,
-        showMobileSettings,
-        currentModalItemName,
-    } = modalContext
+    const [handleRenameModal, handleShareModal, handleDeleteCurrentModalItem, showMobileSettings] = modalOptionsProps
 
-    const prevArrowDisabled = currentModalItemIndex === 0
-    const nextArrowDisabled = currentModalItemIndex === (searchMode ? searchResults.length - 1 : currentMediaSet.length - 1)
-
-    const handleCLose = () => {
-        fullScreen && toggleFullScreen(false)
-        toggleModal(noModal)
-    }
 
     return (
         <Transition in={showModal} timeout={200}>
             {state => (
                 <div
-                    onClick={handleCLose}
+                    onClick={handleClose}
                     hidden={!animated ? showModal : false}
                     style={{...defaultStyle, ...transitionStyles[state]}}
                     className={`
@@ -69,41 +57,37 @@ const ImageModal = ({
                  ${showModal && zIndex}
                  `}>
                     {showOverlay && <Overlay bg={overlayColor} opacity={overlayOpacity}/>}
-                    <div
-                        className={`text-white mb-2 ${zIndex} ${smallScreen && 'absolute top-2'}`}>{currentModalItemName}</div>
-                    <div hidden={fullScreen || !showMobileSettings}
+                    {/*<div*/}
+                    {/*    className={`text-white mb-2 ${zIndex} ${smallScreen && 'absolute top-2'}`}>{currentModalItemName}</div>*/}
+                    <div hidden={(fullScreen && !smallScreen) || !showMobileSettings}
                          className='absolute right-5  top-5 hover:cursor-pointer z-1'
-                         onClick={handleCLose}><IoClose
+                         onClick={handleClose}><IoClose
                         size={closeIconSize}
                         color={closeIconColor}/></div>
-                    <div hidden={!fullScreen} className='absolute right-10  top-10 hover:cursor-pointer'
+                    <div hidden={smallScreen || !fullScreen} className='absolute right-10  top-10 hover:cursor-pointer'
                          onClick={e => {
                              e.stopPropagation()
-                             toggleFullScreen(false)
+                             handleFullScreen()
                          }}><AiOutlineFullscreenExit
                         size={closeIconSize}
                         color={closeIconColor}/></div>
-                    <div {...swipeHandlers}
-                         onClick={stopPropagation}
+                    <div {...swipeHandlers} onClick={stopPropagation}
                          className={'relative w-fit h-fit flex items-center justify-center'}>
-                        {smallScreen ? <MediaQuery orientation="landscape">
-                                {(matches) =>
-                                    matches ? (
-                                        <img style={{maxWidth: '100vw', maxHeight: '100vh', borderRadius: '5px'}}
-                                             src={currentModalItemUrl} alt=""/>
-                                    ) : (
-                                        <img style={{maxWidth: '100vw', maxHeight: '100vh', borderRadius: '5px'}}
-                                             className={'rounded'}
-                                             src={currentModalItemUrl} alt=""/>
-                                    )
-                                }
-                            </MediaQuery> :
+                        {smallScreen ?
+                            <Carousel className={'carousel'} {...carouselSettings}>
+                                {currentMediaSet.map((image, index) => (
+                                    <div key={index} className={'h-full  flex items-center'}>
+                                        <img src={image.url} alt={image.name}/>
+                                    </div>
+                                ))}
+                            </Carousel>
+                            :
                             <img
                                 className={`rounded  ${fullScreen ? 'max-h-95vh max-w-95vw' : 'max-h-65vh max-w-65vw'}`}
                                 src={currentModalItemUrl} alt=""/>}
                     </div>
                     <div
-                        hidden={(!smallScreen && fullScreen) || !showMobileSettings}
+                        hidden={!showMobileSettings || (!smallScreen && fullScreen)}
                         onClick={stopPropagation}
                         className={`
                     flex
@@ -118,12 +102,12 @@ const ImageModal = ({
                     ${smallScreen ? 'fixed bottom-0' : 'mt-5 relative'}
                     `}>
                         <div className={'w-full flex justify-between'}>
-                            <ModalDesktopOptions iconSize={20}
-                                                 toggleFullScreen={toggleFullScreen}
-                                                 handleRenameModal={handleRenameModal}
-                                                 handleShareModal={handleShareModal}
-                                                 handleDeleteCurrentModalItem={handleDeleteCurrentModalItem}
-                                                 smallScreen={smallScreen}
+                            <ModalOptions iconSize={20}
+                                          handleFullScreen={handleFullScreen}
+                                          handleRenameModal={handleRenameModal}
+                                          handleShareModal={handleShareModal}
+                                          handleDeleteCurrentModalItem={handleDeleteCurrentModalItem}
+                                          smallScreen={smallScreen}
                             />
                         </div>
 

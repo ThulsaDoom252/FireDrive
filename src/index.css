@@ -55,6 +55,24 @@ Note: Beware of modifying this element as it can break the animations - you shou
 }
 
 
+/*Carousel*/
+
+.carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.carousel .slide img {
+    max-height: 100vh;
+    max-width: 100vw;
+    margin: 0 auto;
+    object-fit: contain;
+
+}
+
+
 /*//Animations*/
 /*  */
 /*  //AudioPlayer*/
