@@ -1,9 +1,10 @@
 import React, {useState, useRef} from 'react';
 import ReactPlayer from "react-player";
 import MediaOptions from "../Options/mediaOptions";
-import {formatTime} from "../../common/commonData";
+import {formatTime, truncate} from "../../common/commonData";
 import MyCustomTransition from "../common/MyCustomTransition";
 import {BiSolidVolume, BiVolumeMute} from "react-icons/bi";
+import {ClipLoader, ClockLoader} from "react-spinners";
 
 const Video = ({
                    url,
@@ -17,12 +18,16 @@ const Video = ({
                    itemOptionsHovered,
                    setItemOptionsHovered,
                    noOpenModal,
+                   smallScreen,
+                   currentTheme,
                }) => {
+    const [isVideoReady, setIsVideoReady] = useState(false)
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentTime, setCurrentTime] = useState(0);
     const [currentVolume, setCurrentVolume] = useState(0)
     const playerRef = useRef(null);
-
+    window.s1 = isVideoReady
+    window.s2 = setIsVideoReady
 
     const isVideoHovered = hoveredMediaIndex === index
 
@@ -53,7 +58,9 @@ const Video = ({
     }
     return (
         <>
-            <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className={'relative'}>
+            {!isVideoReady && <ClockLoader size={20}/>}
+            <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
+                 className={`relative ${isVideoReady ? 'block' : 'hidden'}`}>
                 <MyCustomTransition show={isVideoHovered && noOpenModal}>
                     <div className={'absolute top-0 right-0 z-50'}><MediaOptions {...{
                         name,
@@ -69,7 +76,8 @@ const Video = ({
                 </MyCustomTransition>
                 <div
                     className={`player-container h-200 bg-black 
-                    ${!isVideoHovered && 'rounded-t-lg'} overflow-hidden cursor-pointer`}
+                    ${!isVideoHovered && 'rounded-t-lg'} 
+                    overflow-hidden cursor-pointer`}
                     onClick={() => handleInitialModalIndex({index, modalType: 'video'})}
                 >
                     <ReactPlayer
@@ -77,6 +85,7 @@ const Video = ({
                         url={url}
                         width="100%"
                         height="100%"
+                        onReady={() => setIsVideoReady(true)}
                         playing={isPlaying}
                         volume={currentVolume}
                         onEnded={() => setIsPlaying(false)}
@@ -111,6 +120,14 @@ const Video = ({
                     </div>
                 </div>
             </div>
+            {(!smallScreen && isVideoReady) && <p className={`                             
+                                p-1
+                                 m-0 
+                                 overflow-x-hidden
+                                 ${currentTheme.secBg}
+                                 ${hoveredMediaIndex === index ? 'bg-opacity-100' : 'bg-opacity-50 rounded-b-lg'}
+                                ${currentTheme.color}
+                                `}>{truncate(name, 15)}</p>}
         </>
     );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ClipLoader} from "react-spinners";
 import Audio from "./Audio";
 import Paginator from "../Paginator/Paginator";
@@ -8,6 +8,7 @@ import Video from "./Video";
 import OpacityTransition from "../common/MyCustomTransition";
 import MediaOptions from "../Options/mediaOptions";
 import {truncate} from "../../common/commonData";
+import {handleCurrentMediaSet} from "../../redux/mediaSlice";
 
 const Media = ({
                    imagesPage,
@@ -30,6 +31,8 @@ const Media = ({
                    noOpenModal,
                    isPaginatorEnabled,
                }) => {
+
+    const [isVideoReady, setIsVideoReady] = useState(false)
 
     return (
         <section
@@ -104,17 +107,9 @@ const Media = ({
                                         setHoveredMediaIndex,
                                         itemOptionsHovered, setItemOptionsHovered,
                                         currentTheme,
+                                        smallScreen,
 
                                     }}/>
-                                    {!smallScreen && <p className={`                             
-                                p-1
-                                 m-0 
-                                 overflow-x-hidden
-                                 ${currentTheme.secBg}
-                                 ${hoveredMediaIndex === index ? 'bg-opacity-100' : 'bg-opacity-50 rounded-b-lg'}
-                                ${currentTheme.color}
-                                `}>{truncate(video.name, 15)}</p>}
-
                                 </div>
                             ) :
                             mediaToShow.map(((audio, index) => {

@@ -40,7 +40,7 @@ const RenameModal = ({
                            type='text'
                            onChange={e => setNewMediaName(e.currentTarget.value)}/>
                 </div>
-                <div className={'absolute  bottom-0 right-1'}>
+                <div className={'flex justify-end mt-1 '}>
                     <ActionBtn height={'h-8'}
                                isDisabled={isRenameBtnDisabled}
                                handleClick={handleRenameMedia}>

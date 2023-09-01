@@ -6,6 +6,16 @@ module.exports = {
         "./src/**/*.{js,jsx,ts,tsx}",
     ],
     theme: {
+        animatedSettings: {
+            animatedSpeed: 1000,
+            heartBeatSpeed: 500,
+            hingeSpeed: 2000,
+            bounceInSpeed: 750,
+            bounceOutSpeed: 750,
+            animationDelaySpeed: 500,
+            classes: ['bounce', 'heartBeat']
+        },
+
         extend: {
             colors: {
                 'night': '#f6f6f6',
@@ -26,7 +36,7 @@ module.exports = {
                 },
             },
             inset: {
-                'minus30' : '-30px',
+                'minus30': '-30px',
                 'volumeBar': '65px',
                 'volumeBarLeft': '-40px',
                 '0.4': '0.01px',
@@ -100,7 +110,7 @@ module.exports = {
                 '62': '130px',
                 'playerHeight': '40px',
                 'mobilePlayerHeight': '70px',
-                 'inputContainerHeight': '63px',
+                'inputContainerHeight': '63px',
             },
             zIndex: {
                 '1': '1',
@@ -131,5 +141,6 @@ module.exports = {
 
         },
     },
-    plugins: [],
+    plugins: [
+    ],
 }

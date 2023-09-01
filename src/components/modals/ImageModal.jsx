@@ -64,13 +64,15 @@ const ImageModal = ({
                          onClick={handleClose}><IoClose
                         size={closeIconSize}
                         color={closeIconColor}/></div>
-                    <div hidden={smallScreen || !fullScreen} className='absolute right-10  top-10 hover:cursor-pointer'
-                         onClick={e => {
-                             e.stopPropagation()
-                             handleFullScreen()
-                         }}><AiOutlineFullscreenExit
+                    {smallScreen || !fullScreen ? <div hidden={smallScreen || !fullScreen}
+                                                       className='absolute right-10  top-10 hover:cursor-pointer'
+                                                       onClick={e => {
+                                                           e.stopPropagation()
+                                                           handleFullScreen()
+                                                       }}><AiOutlineFullscreenExit
                         size={closeIconSize}
-                        color={closeIconColor}/></div>
+                        color={closeIconColor}/></div> : void 0}
+
                     <div {...swipeHandlers} onClick={stopPropagation}
                          className={'relative w-fit h-fit flex items-center justify-center'}>
                         {smallScreen ?

@@ -17,6 +17,7 @@ const Header = ({
     return (
         <header
             className={`
+            fade show
             flex 
             pl-3
             pr-3

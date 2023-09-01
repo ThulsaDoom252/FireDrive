@@ -10,9 +10,11 @@ const Image = ({
                    handleInitialModalIndex,
                    height = 'h-300',
                    width = 'w-300',
+                   scrollPos,
 
                }) => {
     const [imageIsLoaded, setImageIsLoaded] = useState(false)
+
 
     const handleLoadImage = () => {
         setImageIsLoaded(true)
@@ -43,7 +45,6 @@ const Image = ({
                 alt="image"
                 onLoad={handleLoadImage}
             />
-
         </>
 
     );
