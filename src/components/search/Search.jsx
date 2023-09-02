@@ -11,7 +11,7 @@ const Search = ({height, searchRequest, setSearchRequest, isDisabled}) => {
                    value={searchRequest}
                    onChange={(e) => setSearchRequest(e.currentTarget.value)}
                    className={'w-full h-full pl-5 rounded-r focus:outline-none focus:ring-1 focus:ring-blue-300 '}
-                   placeholder={'Search media...'}/>
+                   placeholder={'search media...'}/>
         </div>
     );
 };

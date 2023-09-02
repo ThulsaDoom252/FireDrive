@@ -5,7 +5,7 @@ import {signInRoute} from "../../../common/commonData";
 import {NavLink} from "react-router-dom";
 import ActionBtn from "../../common/ActionBtn";
 import ActionInput from "../../common/ActionInput";
-import Image from "../../Media/Image";
+import Image from "../../media/Image";
 import Logo from "../../../images/logo.png";
 
 

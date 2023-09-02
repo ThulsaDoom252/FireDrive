@@ -2,11 +2,13 @@ import React, {useEffect, useRef, useState} from 'react';
 import {AiFillPauseCircle, AiFillPlayCircle} from "react-icons/ai";
 import {useContext} from "react";
 import {AudioPlayerContext} from "../../context/AudioPlayerContext";
-import MediaOptions from "../Options/mediaOptions";
+import ItemOptions from "../options/ItemOptions";
 import {formatTime} from "../../common/commonData";
 import {ClipLoader} from "react-spinners";
 import {dayPrimary} from "../../common/themes";
 import {truncate} from "../../common/commonData";
+import MyCustomTransition from "../common/MyCustomTransition";
+import toast from "react-hot-toast";
 
 const Audio = ({
                    name,
@@ -22,13 +24,17 @@ const Audio = ({
 
     const audioContext = useContext(AudioPlayerContext)
     const audioRef = useRef(url)
-    const itemHovered = hoveredMediaIndex === index && !smallScreen
+    const isAudioHovered = (hoveredMediaIndex === index) && !smallScreen
     const [totalDuration, setTotalDuration] = useState(0)
 
     const formattedTotalTime = () => {
         const formattedDuration = formatTime(audioRef.current.duration)
         setTotalDuration(formattedDuration)
     }
+
+    window.s1 = hoveredMediaIndex
+    window.s2 = audioIndex
+    window.s3 = index
 
     const {
         currentTrackName,
@@ -76,15 +82,21 @@ const Audio = ({
                 </div>
                 <div
                     className={`w-full absolute left-10  ${currentTheme.color}`}>{smallScreen ? truncate(name, 20) : truncate(name, 50)}</div>
-                <div className={'absolute top-1/2 transform -translate-y-1/2 right-0 z-50 mr-40'}>
-                    <MediaOptions initialMode={'show'} itemOptionsHovered={itemHovered} {...{
-                        name,
-                        url,
-                        hoveredMediaIndex,
-                        index,
-                        searchMode
-                    }}/>
-                </div>
+                <MyCustomTransition show={isAudioHovered}>
+                    <div className={'absolute top-1/2 transform -translate-y-1/2 right-0 z-50 mr-40'}>
+                        <ItemOptions
+                            initialMode={'show'}
+                            itemOptionsHovered={isAudioHovered} {...{
+                            name,
+                            url,
+                            hoveredMediaIndex,
+                            index,
+                            searchMode
+                        }}/>
+
+
+                    </div>
+                </MyCustomTransition>
                 <div
                     className={'flex mr-5 '}>
                     <div

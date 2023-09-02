@@ -39,7 +39,7 @@ const MediaContainer = ({
 
     const noOpenModal = itemModalType === noModal
 
-    //Search logic
+    //search logic
     useEffect(() => {
         if (searchRequest !== '') {
             !searchMode && toggleSearchMode(true)

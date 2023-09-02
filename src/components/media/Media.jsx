@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {ClipLoader} from "react-spinners";
 import Audio from "./Audio";
-import Paginator from "../Paginator/Paginator";
-import NoSearchResults from "../Search/NoSearchResults";
+import Paginator from "../paginator/Paginator";
+import NoSearchResults from "../search/NoSearchResults";
 import Image from "./Image";
 import Video from "./Video";
 import OpacityTransition from "../common/MyCustomTransition";
-import MediaOptions from "../Options/mediaOptions";
+import MediaOptions from "../options/ItemOptions";
 import {truncate} from "../../common/commonData";
 import {handleCurrentMediaSet} from "../../redux/mediaSlice";
 
@@ -31,8 +31,6 @@ const Media = ({
                    noOpenModal,
                    isPaginatorEnabled,
                }) => {
-
-    const [isVideoReady, setIsVideoReady] = useState(false)
 
     return (
         <section
@@ -75,7 +73,6 @@ const Media = ({
                                                           index,
                                                           searchMode,
                                                           hoveredMediaIndex,
-                                                          itemOptionsHovered,
                                                           setItemOptionsHovered,
                                                       }}/></div>
                                 </OpacityTransition>
@@ -105,7 +102,7 @@ const Media = ({
                                         handleInitialModalIndex,
                                         hoveredMediaIndex,
                                         setHoveredMediaIndex,
-                                        itemOptionsHovered, setItemOptionsHovered,
+                                        setItemOptionsHovered,
                                         currentTheme,
                                         smallScreen,
 

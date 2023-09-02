@@ -18,6 +18,7 @@ const DurationSeekBar = ({
 
     const handleStyle = {
         opacity: 0,
+        cursor: 'pointer',
     };
 
     const railStyle = {

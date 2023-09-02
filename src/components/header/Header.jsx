@@ -2,7 +2,7 @@ import React from 'react';
 import {useSelector} from "react-redux";
 import BurgerMenuTrigger from "../common/BurgerMenuTrigger";
 import NavItems from "./NavItems";
-import Search from "../Search/Search";
+import Search from "../search/Search";
 
 const Header = ({
                     currentTheme,

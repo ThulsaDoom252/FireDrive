@@ -75,7 +75,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 /*//Animations*/
 /*  */
-/*  //AudioPlayer*/
+/*  //audioPlayer*/
 @keyframes flash {
     0%, 100% {
         opacity: 1;

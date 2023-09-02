@@ -9,7 +9,7 @@ import {delay, renameModal, stopPropagation} from "../../common/commonData";
 import MyCustomTransition from "../common/MyCustomTransition";
 
 
-const MediaOptions = ({
+const ItemOptions = ({
                           handleMediaName,
                           hoveredMediaIndex,
                           deleteCurrentItem,
@@ -25,19 +25,17 @@ const MediaOptions = ({
                           animate = true, shouldAnimate,
                           initialMode = 'hide',
                           showBg = true,
-                          itemOptionsHovered,
                           setItemOptionsHovered,
                       }) => {
 
 
-    const [showOptions, setShowOptions] = useState(false)
+    const [showOptions, setShowOptions] = useState(initialMode !== 'hide')
 
 
     const handleRenameModal = async () => {
         handleMediaName({name, oldName})
         await delay(50)
         setModalType(renameModal)
-        debugger
     }
 
     const handleMouseEnter = () => {
@@ -95,4 +93,4 @@ const mapStateToProps = (state) => {
 }
 
 
-export default connect(mapStateToProps, {handleMediaName, setModalType, deleteCurrentItem})(MediaOptions);
+export default connect(mapStateToProps, {handleMediaName, setModalType, deleteCurrentItem})(ItemOptions);

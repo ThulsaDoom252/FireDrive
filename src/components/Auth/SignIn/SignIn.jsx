@@ -7,7 +7,7 @@ import SocialAuth from "../SocialAuth";
 import ActionInput from "../../common/ActionInput";
 import ActionBtn from "../../common/ActionBtn";
 import Logo from "../../../images/logo.png"
-import Image from "../../Media/Image"
+import Image from "../../media/Image"
 
 const SignIn = ({
                     handleLogin, authError, isAuthBtnFetching, googleAuth,

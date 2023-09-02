@@ -1,10 +1,10 @@
 import React, {useState, useRef} from 'react';
 import ReactPlayer from "react-player";
-import MediaOptions from "../Options/mediaOptions";
+import ItemOptions from "../options/ItemOptions";
 import {formatTime, truncate} from "../../common/commonData";
 import MyCustomTransition from "../common/MyCustomTransition";
 import {BiSolidVolume, BiVolumeMute} from "react-icons/bi";
-import {ClipLoader, ClockLoader} from "react-spinners";
+import {ClockLoader} from "react-spinners";
 
 const Video = ({
                    url,
@@ -62,7 +62,7 @@ const Video = ({
             <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
                  className={`relative ${isVideoReady ? 'block' : 'hidden'}`}>
                 <MyCustomTransition show={isVideoHovered && noOpenModal}>
-                    <div className={'absolute top-0 right-0 z-50'}><MediaOptions {...{
+                    <div className={'absolute top-0 right-0 z-50'}><ItemOptions {...{
                         name,
                         oldName,
                         url,

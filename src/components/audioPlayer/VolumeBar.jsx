@@ -12,10 +12,11 @@ const VolumeBar = ({
 
     const handleStyle = {
         opacity: 0,
+        cursor: 'default',
     };
 
     const railStyle = {
-        backgroundColor:  bgColor,
+        backgroundColor: bgColor,
         height: '100%'
     };
 
@@ -29,7 +30,7 @@ const VolumeBar = ({
     };
 
     return (<>
-             <Slider
+            <Slider
                 min={0}
                 max={1}
                 onChange={handleVolumeChange}

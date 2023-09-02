@@ -5,7 +5,7 @@ import {FaImages} from "react-icons/fa";
 import {ClipLoader} from "react-spinners";
 import ReactPlayer from "react-player";
 import {PiMusicNotesFill} from "react-icons/pi"
-import Image from "../Media/Image";
+import Image from "../media/Image";
 
 
 const HomeMediaListBlock = ({itemsList, fetchItems, smallScreen, currentTheme, itemType, iconSize = 40}) => {

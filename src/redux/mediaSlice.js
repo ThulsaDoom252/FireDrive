@@ -402,7 +402,7 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
             }
         }));
         dispatch(toggleMediaLoading(false))
-        toast.success('Media uploaded')
+        toast.success('media uploaded')
         // dispatch(handleAlert({overlayMode: true, alertContent: mediaUploadedMsg, alertStyle: alertSuccessStyle}))
     }
 });

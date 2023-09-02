@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import HeaderContainer from "./Header/HeaderContainer";
+import HeaderContainer from "./header/HeaderContainer";
 import {
     imageModal, lazyMode,
     mainContentId,
@@ -13,17 +13,17 @@ import {
     listMedia,
     setCurrentRoute, toggleMobileSearch,
 } from "../redux/mediaSlice";
-import MediaContainer from "./Media/MediaContainer";
+import MediaContainer from "./media/MediaContainer";
 import {
     handleAlertAction,
     setItemModalType, setModalType, toggleCurrentTheme, toggleListMode,
 } from "../redux/appSlice";
 import BurgerMenu from "./common/BurgerMenu";
 import SortInput from "./common/SortInput";
-import AudioPlayer from "./AudioPlayer/AudioPlayer";
+import AudioPlayer from "./audioPlayer/AudioPlayer";
 import {PaginatorContext} from "../context/PaginatorContext";
-import UploadContainer from "./ButtonContainers/UploadBtnContainer";
-import RemoveAllBtnContainer from "./ButtonContainers/RemoveAllBtnContainer";
+import UploadContainer from "./btns/UploadBtnContainer";
+import RemoveAllBtnContainer from "./btns/RemoveAllBtnContainer";
 import UserModal from "./modals/UserModal";
 import UserAvatar from "./user/UserAvatar";
 import RenameModal from "./modals/RenameModal";
@@ -34,14 +34,14 @@ import ShareModal from "./modals/ShareModal";
 import alertModal from "./modals/AlertModal";
 import userModal from "./modals/UserModal";
 import {BiColorFill} from "react-icons/bi";
-import LogOutContainer from "./ButtonContainers/LogOutContainer";
+import LogOutContainer from "./btns/LogOutContainer";
 import DAS from '../images/themeTypes/DAS.jpg'
 import DS from '../images/themeTypes/DS.jpg'
 import NS from '../images/themeTypes/NS.jpg'
 import AdaptiveImage from "./AdaptiveImage";
 import {dayTheme, desertTheme, nightTheme} from "../common/themes";
 import DropDownMenu from "./common/DropDownMenu";
-import Home from "./Home/Home";
+import Home from "./home/Home";
 import {CiSettings} from "react-icons/ci";
 import ImageModalContainer from "./modals/ImageModalContainer";
 

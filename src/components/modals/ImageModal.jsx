@@ -4,7 +4,7 @@ import {IoClose} from "react-icons/io5";
 import {AiOutlineFullscreenExit} from "react-icons/ai";
 import Overlay from "../common/Overlay";
 import {stopPropagation} from "../../common/commonData";
-import ModalOptions from "../Options/ModalDesktopOptions";
+import ModalOptions from "../options/ModalDesktopOptions";
 import {Transition} from "react-transition-group";
 import {defaultStyle, transitionStyles} from "../../common/TransitionStyles";
 import {Carousel} from "react-responsive-carousel";
