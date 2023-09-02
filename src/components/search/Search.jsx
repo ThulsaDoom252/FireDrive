@@ -3,7 +3,11 @@ import {FaSearch} from "react-icons/fa";
 
 const Search = ({height, searchRequest, setSearchRequest, isDisabled}) => {
     return (
-        <div className={`w-full  h-${height ? height : 40} flex items-center`}>
+        <div className={`w-full  
+        flex 
+        items-center
+         ${height ? height : 'h-40'} 
+        `}>
             <div className={'bg-blue-300 w-10 h-full flex items-center justify-center rounded-l'}>
                 <FaSearch/>
             </div>
