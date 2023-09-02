@@ -7,6 +7,8 @@ import toast from "react-hot-toast";
 export const AudioPlayerContext = createContext();
 
 export function AudioPlayerContextProvider({children}) {
+    const audioRef = useRef(null)
+
     const audioSet = useSelector(state => state.media.audioSet)
     const [repeatMode, setRepeatMode] = useState('none')
     const [volume, setVolume] = useState(0.5);
@@ -17,14 +19,38 @@ export function AudioPlayerContextProvider({children}) {
     const [isCurrentTrackPlaying, toggleCurrentTrackPlaying] = useState(false)
     let currentTrack = audioSet[currentTrackIndex] || {url: '', name: ''}
     const [currentTrackName, setCurrentTrackName] = useState('')
-    const [showVolumeBar, toggleVolumeBar] = useState(false)
     const noAudio = audioSet.length === 0
-    const audioRef = useRef(null)
     const audio = audioRef.current
     const lastPlayedAudioNameBeforeSort = useSelector(state => state.media.lastPlayedAudioNameBeforeSort)
 
     const isLastTrack = currentTrackIndex === audioSet?.length
 
+    const handleRepeatMode = () => {
+        if (repeatMode === 'none') {
+            setRepeatMode('once')
+        } else if (repeatMode === 'once') {
+            setRepeatMode('infinite')
+        } else if (repeatMode === 'infinite') {
+            setRepeatMode('none')
+        }
+    }
+
+    const handleVolumeChange = (value, mute = false) => {
+        setVolume(value);
+        !mute && localStorage.setItem("currentVolume", value)
+        if (audioRef?.current) {
+            audioRef.current.volume = value;
+        }
+    };
+
+    const toggleMuteVolume = () => {
+        if (volume === 0) {
+            handleVolumeChange(localStorage.getItem('currentVolume'))
+        } else {
+            handleVolumeChange(0, true)
+        }
+
+    }
     const handleChangedTrackPlay = async () => {
         toggleCurrentTrackPlaying(false)
         await delay(100)
@@ -192,12 +218,10 @@ export function AudioPlayerContextProvider({children}) {
 
 
     const audioPlayerState = {
-        currentTrack,
         isCurrentTrackPlaying,
         currentDuration,
         totalDuration,
         setIsCurrentTrackPlaying: toggleCurrentTrackPlaying,
-        currentTrackIndex,
         prevBtnDisabled,
         nextBtnDisabled,
         playBtnDisabled,
@@ -205,16 +229,15 @@ export function AudioPlayerContextProvider({children}) {
         handlePreviousTrack,
         currentTrackName,
         noAudio,
-        handleTimeUpdate,
         handleSeekBarChange,
         handleSetCurrentAudioIndex,
         repeatMode,
+        handleRepeatMode,
+        handleVolumeChange,
         setRepeatMode,
+        toggleMuteVolume,
         audioRef,
         volume,
-        setVolume,
-        showVolumeBar,
-        toggleVolumeBar,
 
     };
 

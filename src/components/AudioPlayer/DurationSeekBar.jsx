@@ -11,6 +11,9 @@ const DurationSeekBar = ({
                              onChange,
                              isCurrentTrackPlaying,
                              smallScreenMode,
+                             trackColor = 'blue',
+                             bgColor = 'bg-black',
+
                          }) => {
 
     const handleStyle = {
@@ -19,20 +22,16 @@ const DurationSeekBar = ({
 
     const railStyle = {
         backgroundColor: 'black',
-        borderBottomLeftRadius: smallScreenMode ? 0 : 2,
     };
 
     const trackStyle = {
         height: '28px',
         position: 'absolute',
         bottom: -7,
-        border: 'none',
-        borderRadius: 'none',
-        backgroundColor: 'blue', // Синий цвет для заполненной части
+        backgroundColor: trackColor, // Синий цвет для заполненной части
     };
 
     const isLoading = isNaN(max)
-
 
     return (<>
         {isLoading ? <ClipLoader size={25}/> : <div className={`
@@ -40,11 +39,11 @@ const DurationSeekBar = ({
         w-full 
         flex 
         items-center 
-        bg-black 
         h-7 
         text-white 
         cursor-pointer
         justify-between
+        ${bgColor}
         ${!smallScreenMode && 'rounded'}
         `}>
             <div className={'absolute left-1 z-1 pointer-events-none'}
@@ -58,8 +57,7 @@ const DurationSeekBar = ({
                  ${!isCurrentTrackPlaying && 'animate-flash'}
                  transform -translate-x-1/2 -translate-y-1/2
                  `}>{truncate(name, 15)}</div>
-            <Slider className={'w-full '}
-                    min={0}
+            <Slider min={0}
                     max={max}
                     value={value}
                     onChange={onChange}

@@ -1,6 +1,6 @@
 import {FiSkipBack, FiSkipForward, FiPlay, FiPause} from 'react-icons/fi';
 import {connect} from "react-redux";
-import {useContext} from "react";
+import {useContext, useRef} from "react";
 import DurationSeekBar from "./DurationSeekBar";
 import {setCurrentAudioIndex} from "../../redux/mediaSlice";
 import {AudioPlayerContext} from "../../context/AudioPlayerContext";
@@ -33,13 +33,11 @@ const AudioPlayer = ({
         noAudio,
         handleSeekBarChange,
         repeatMode,
-        setRepeatMode,
-        audioRef,
         volume,
-        setVolume,
-        showVolumeBar,
-        toggleVolumeBar,
         currentTrackName,
+        handleRepeatMode,
+        handleVolumeChange,
+        toggleMuteVolume,
     } = audioContext
 
     if (noAudio) {
@@ -47,40 +45,10 @@ const AudioPlayer = ({
     }
 
 
-    const handleMouseEnter = () => {
-        toggleVolumeBar(true)
-    }
-
-    const handleMouseExit = () => {
-        toggleVolumeBar(false)
-    }
-
-
-    const handleRepeatMode = () => {
-        if (repeatMode === 'none') {
-            setRepeatMode('once')
-        } else if (repeatMode === 'once') {
-            setRepeatMode('infinite')
-        } else if (repeatMode === 'infinite') {
-            setRepeatMode('none')
-        }
-    }
-
-    const handleVolumeChange = ({event, mute = false}) => {
-        if (mute) {
-            audioRef.current.volume = 0
-            return void 0
-        }
-        const newVolume = parseFloat(event.target.value);
-        setVolume(newVolume);
-        if (audioRef?.current) {
-            audioRef.current.volume = newVolume;
-        }
-    };
-
     return (
         <div
-            className={`${smallScreenMode && 'rounded justify-center'} 
+            className={`${smallScreenMode && 'rounded ' +
+            'justify-center'} 
             w-full 
             h-full
             flex
@@ -88,14 +56,14 @@ const AudioPlayer = ({
             ${smallScreenMode ? 'items-end' : 'items-center'}             
             `}>
             <div className={'w-player-controls flex flex-col justify-between items-center'}>
-                <div className={`w-full  flex items-center justify-between`}>
-                    <div className={'flex items-center justify-between'}>
+                <div className={`w-full  flex items-center justify-between `}>
+                    <div className={'flex items-center  justify-between mr-2'}>
                         <button
                             className={`
                             hover:bg-blue-400   
                             flex justify-center 
                             items-center 
-                            w-20 rounded 
+                            rounded 
                             transition 
                             text-2xl 
                               ${prevBtnDisabled ? 'text-gray-500' : iconColor}
@@ -122,7 +90,6 @@ const AudioPlayer = ({
                         <button
                             className={`
                                  text-center 
-                                w-20  
                                 flex justify-center 
                                 items-center 
                                 hover:bg-blue-400  
@@ -143,13 +110,12 @@ const AudioPlayer = ({
                             smallScreenMode={smallScreenMode}
                             isCurrentTrackPlaying={isCurrentTrackPlaying}
                             name={currentTrackName}
-                            currentTheme={currentTheme}
                             value={currentDuration}
                             max={totalDuration}
                             onChange={handleSeekBarChange}/>
                     </div>
                     <div className={``}>
-                        <div className={'w-20 flex justify-between mr-10 relative'}>
+                        <div className={'w-40 flex justify-start relative'}>
                             <button onClick={handleRepeatMode} className={`
                                 hover:bg-blue-400 
                                 rounded
@@ -161,14 +127,21 @@ const AudioPlayer = ({
                                     <LuRepeat1 size={20}/> : <IoInfinite size={20}/>}
 
                             </button>
-                            <div className={'flex'}>
-                                <button className={`
+                            <div className={'flex relative ml-2'}>
+                                <button
+                                    onClick={toggleMuteVolume}
+                                    className={`
                                 disabled:text-gray-400
                    ${iconColor}`}
                                 >
                                     {volume !== 0 ? <ImVolumeHigh size={20}/> : <ImVolumeMute2 size={20}/>}
                                 </button>
-                                <VolumeBar />
+                                <div className={'w-20 absolute bottom-2 left-7 '}>
+                                    <VolumeBar  volume={volume}
+                                               handleVolumeChange={handleVolumeChange}/>
+                                </div>
+
+
                             </div>
 
                         </div>
