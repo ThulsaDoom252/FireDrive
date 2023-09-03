@@ -116,6 +116,7 @@ export const ItemsModalContextProvider = ({children}) => {
         smallScreen,
         swipeHandlers,
         handleFullScreen,
+        currentModalItemName,
     }
 
 

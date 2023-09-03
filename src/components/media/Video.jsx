@@ -26,8 +26,6 @@ const Video = ({
     const [currentTime, setCurrentTime] = useState(0);
     const [currentVolume, setCurrentVolume] = useState(0)
     const playerRef = useRef(null);
-    window.s1 = isVideoReady
-    window.s2 = setIsVideoReady
 
     const isVideoHovered = hoveredMediaIndex === index
 

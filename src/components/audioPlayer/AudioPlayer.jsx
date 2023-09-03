@@ -1,6 +1,6 @@
 import {FiSkipBack, FiSkipForward, FiPlay, FiPause} from 'react-icons/fi';
 import {connect} from "react-redux";
-import {useContext, useRef} from "react";
+import {useContext} from "react";
 import DurationSeekBar from "./DurationSeekBar";
 import {setCurrentAudioIndex} from "../../redux/mediaSlice";
 import {AudioPlayerContext} from "../../context/AudioPlayerContext";

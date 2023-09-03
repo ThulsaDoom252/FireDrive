@@ -1,13 +1,14 @@
-import React, {useContext, useRef} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import ReactPlayer from "react-player";
 import {IoClose} from "react-icons/io5";
 import {ItemsModalContext} from "../../context/ItemsModalContext";
 import MediaOptions from "../options/ItemOptions";
 import ModalVideoItem from "../media/ModalVideoItem";
 import Overlay from "../common/Overlay";
-import {noModal, stopPropagation} from "../../common/commonData";
+import {formatTime, noModal, stopPropagation} from "../../common/commonData";
 import {Transition} from "react-transition-group";
 import {defaultStyle, transitionStyles} from "../../common/TransitionStyles";
+import CustomControls from "../videoPlayer/CustomControls";
 
 const VideoModal = ({
                         showModal,
@@ -17,10 +18,12 @@ const VideoModal = ({
                         overlayOpacity = 'opacity-95',
                         zIndex = 'z-2',
                         animated = true,
+                        closeIconSize = 30
                     }) => {
 
     const ModalContext = useContext(ItemsModalContext)
     const playerRef = useRef(null)
+    const [currentVideoTime, setCurrentVideoTime] = useState('0:00')
 
     const {
         currentMediaSet,
@@ -36,7 +39,9 @@ const VideoModal = ({
         toggleModal(noModal)
     }
 
-    window.playerRef = playerRef
+    const handleProgress = (progress) => {
+        setCurrentVideoTime(progress.playedSeconds);
+    };
 
     return (
         <Transition in={showModal} duration={200}>
@@ -47,24 +52,24 @@ const VideoModal = ({
                      className={`
                       w-screen
                      h-screen
-                     flex
-                     absolute
-                     items-center
-                     justify-center
-                     flex-col
+                     absolute             
                      ${showModal && zIndex}
                      `}
                 >
 
                     {showOverlay && <Overlay bg={overlayColor} opacity={overlayOpacity}/>}
-                    <button className='absolute
-                    right-5
-                     top-5
+                    <button className={`
+                    absolute
+                
                      text-gray-400
-                     hover:text-white z-1'
+                     hover:text-white z-1
+                     ${smallScreen ? 'left-5 top-3' : 'right-5 top-5'}
+                     
+                     `}
                             onClick={handleClose}>
-                        <IoClose size={30}/>
+                        <IoClose size={closeIconSize}/>
                     </button>
+                    {/*// Both window container*/}
                     <div onClick={stopPropagation}
                          className={`
                          flex 
@@ -72,26 +77,36 @@ const VideoModal = ({
                          rounded 
                          w-100% 
                          h-100% 
-                         justify-center 
-                         items-center`}>
+                         ${smallScreen ? 'flex-col justify-start ' : ' justify-center items-center'}
+                         
+                         `}>
+                        {/*//Vide block container*/}
                         <div
                             className={`
                             bg-black 
                             ${smallScreen
-                                ? 'w-100% h-100% flex justify-center items-center'
+                                ? 'w-100% h-45% flex justify-center items-center mt-5'
                                 : 'w-80% h-90%'}`}>
-                            <div className={`w-100% 
-                            ${!smallScreen ? 'h-90%' : 'h-100%'}
-                            `}>
+                            {/*Video block*/}
+                            <div className={`w-100% h-90% relative overflow-hidden`} onContextMenu={e => e.preventDefault()}>
                                 <ReactPlayer
                                     ref={playerRef}
                                     height={smallScreen ? '90%' : '100%'}
                                     width={'100%'}
                                     playing={showModal}
+                                    onProgress={handleProgress}
                                     className={'object-cover'}
-                                    controls={true}
+                                    controls={false}
                                     url={currentModalItemUrl || ''}/>
+                                <CustomControls playerRef={playerRef}
+                                                smallScreenMode={smallScreen}
+                                                currentVideoTime={currentVideoTime}
+                                                color={!smallScreen ? 'text-white' : 'text-white'}/>
+                                {smallScreen && <hr className={'bg-white h-0.5 rounded-full relative bottom-4'}/>}
+                                {/*{smallScreen &&*/}
+                                {/*    <div className='relative bottom-6 left-2 text-white'>{currentModalItemName}</div>}*/}
                             </div>
+                            {/*//Video info block (under main block)*/}
                             <div
                                 hidden={smallScreen}
                                 className={`
@@ -127,8 +142,10 @@ const VideoModal = ({
                                 </div>
                             </div>
                         </div>
-                        <div hidden={smallScreen}
-                             className={`
+                        {/*//Video list block*/}
+                        <div
+                            hidden={smallScreen}
+                            className={`
                              flex 
                              h-90%
                              flex-col 
