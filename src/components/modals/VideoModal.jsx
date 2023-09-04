@@ -8,7 +8,7 @@ import Overlay from "../common/Overlay";
 import {formatTime, noModal, stopPropagation} from "../../common/commonData";
 import {Transition} from "react-transition-group";
 import {defaultStyle, transitionStyles} from "../../common/TransitionStyles";
-import CustomControls from "../videoPlayer/CustomControls";
+import CustomControls from "../videoPlayer/controls/CustomControls";
 
 const VideoModal = ({
                         showModal,
@@ -24,6 +24,7 @@ const VideoModal = ({
     const ModalContext = useContext(ItemsModalContext)
     const playerRef = useRef(null)
     const [currentVideoTime, setCurrentVideoTime] = useState('0:00')
+    const [isVideoReady, setIsVideoReady] = useState(false)
 
     const {
         currentMediaSet,
@@ -63,7 +64,7 @@ const VideoModal = ({
                 
                      text-gray-400
                      hover:text-white z-1
-                     ${smallScreen ? 'left-5 top-3' : 'right-5 top-5'}
+                     left-5 top-3
                      
                      `}
                             onClick={handleClose}>
@@ -82,27 +83,35 @@ const VideoModal = ({
                          `}>
                         {/*//Vide block container*/}
                         <div
+                            id={'video-block-container'}
                             className={`
-                            bg-black 
                             ${smallScreen
-                                ? 'w-100% h-45% flex justify-center items-center mt-5'
+                                ? 'w-100% h-45% flex justify-center items-center'
                                 : 'w-80% h-90%'}`}>
                             {/*Video block*/}
-                            <div className={`w-100% h-90% relative overflow-hidden`} onContextMenu={e => e.preventDefault()}>
+                            <div
+                                id={'video-container'}
+                                className={`w-100% h-90% relative overflow-hidden bg-black `}
+                                onContextMenu={e => e.preventDefault()}>
                                 <ReactPlayer
                                     ref={playerRef}
-                                    height={smallScreen ? '90%' : '100%'}
+                                    height={'100%'}
                                     width={'100%'}
+                                    onReady={() => setIsVideoReady(true)}
                                     playing={showModal}
                                     onProgress={handleProgress}
                                     className={'object-cover'}
                                     controls={false}
                                     url={currentModalItemUrl || ''}/>
                                 <CustomControls playerRef={playerRef}
+                                                setCurrentVideoTime={setCurrentVideoTime}
+                                                isVideoReady={isVideoReady}
                                                 smallScreenMode={smallScreen}
+                                                url={currentModalItemUrl}
                                                 currentVideoTime={currentVideoTime}
                                                 color={!smallScreen ? 'text-white' : 'text-white'}/>
                                 {smallScreen && <hr className={'bg-white h-0.5 rounded-full relative bottom-4'}/>}
+
                                 {/*{smallScreen &&*/}
                                 {/*    <div className='relative bottom-6 left-2 text-white'>{currentModalItemName}</div>}*/}
                             </div>

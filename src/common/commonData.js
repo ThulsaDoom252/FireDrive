@@ -28,6 +28,12 @@ export const delay = (ms) => {
     })
 }
 
+export const dividedValue = (number) => {
+    const wholeNumb = Math.floor(number / 5)
+    return wholeNumb
+
+}
+
 //Format time in mm:ss format
 export const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
@@ -52,6 +58,11 @@ export const generateRandomString = (length) => {
     return result;
 }
 
+export const formatValueAsPercentage = (value) => {
+    // Преобразовываем число в целое число процентов (умножаем на 100 и округляем)
+    return `${Math.round(value * 100)}%`;
+};
+
 
 // containers id's
 export const wrapperId = 'wrapper'
@@ -63,8 +74,7 @@ export const lazyMode = 'LAZY'
 
 
 //Sort media types
-    export
-const byDate = 'by date'
+export const byDate = 'by date'
 export const byName = 'by name'
 export const bySize = 'by size'
 
