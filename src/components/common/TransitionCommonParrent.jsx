@@ -10,7 +10,6 @@ const TransitionCommonParent = ({
                                     zIndex = 'z-2',
                                     children,
                                     position,
-
                                 }) => {
     return (
         <Transition appear={appear} show={show}

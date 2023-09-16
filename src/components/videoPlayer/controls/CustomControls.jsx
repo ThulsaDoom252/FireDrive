@@ -190,8 +190,7 @@ const CustomControls = ({
 
     //Preview
     const handleMouseMove = (e) => {
-        const currentValue = e.clientX
-        setMouseX(currentValue);
+        setMouseX(e.clientX);
         if (!disablePreview) {
             // Получите координаты мыши относительно слайдера
             const slider = e.currentTarget;
@@ -394,7 +393,7 @@ const CustomControls = ({
                             relative
                             flex 
                             flex-col
-                            items-center 
+                            items-center
                             h-fit
                             hover:cursor-pointer
                             ${smallScreenMode ? 'w-1/3' : 'w-75%'}
@@ -415,32 +414,6 @@ const CustomControls = ({
                             handleMouseLeaveSlider={handleMouseLeaveSlider}
                             handleMouseEnterSlider={handleMouseEnterSlider}
                             handleMouseMove={handleMouseMove}/>
-                        {/*<Slider*/}
-                        {/*    onMouseMove={handleMouseMove}*/}
-                        {/*    className={'relative bottom-1'}*/}
-                        {/*    type={'range'}*/}
-                        {/*    min={0}*/}
-                        {/*    onChange={handleChangeDuration}*/}
-                        {/*    step={0.01}*/}
-                        {/*    max={totalVideoDuration}*/}
-                        {/*    value={currentVideoTime}*/}
-                        {/*    handleStyle={{*/}
-                        {/*        opacity: isSliderHovered ? 1 : 0,*/}
-                        {/*        width: '10px',*/}
-                        {/*        height: '10px',*/}
-                        {/*        top: '10px',*/}
-                        {/*        cursor: 'pointer',*/}
-                        {/*        transition: 'transform 0.2s',*/}
-                        {/*    }}*/}
-                        {/*    trackStyle={{*/}
-                        {/*        borderRadius: 0,*/}
-                        {/*        backgroundColor: '#00adef',*/}
-                        {/*        height: '10px',*/}
-                        {/*        border: 'gray solid thin',*/}
-
-                        {/*    }}*/}
-                        {/*    railStyle={{backgroundColor: 'black', height: '10px', borderRadius: 0, opacity: 0.8}}*/}
-                        {/*/>*/}
                     </div>
                     {/*Right controls block*/}
                     <div className={`
