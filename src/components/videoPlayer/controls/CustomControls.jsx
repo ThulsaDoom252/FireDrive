@@ -1,29 +1,4 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {
-    AiFillSetting,
-    AiOutlineFullscreen,
-    AiOutlineFullscreenExit,
-    AiOutlinePlayCircle,
-} from "react-icons/ai";
-import {FiPause, FiPlay, FiShare2} from "react-icons/fi";
-import {CiVolume, CiVolumeMute} from "react-icons/ci";
-import {BiMobile} from "react-icons/bi";
-import {formatTime, formatValueAsPercentage, stopPropagation} from "../../../common/commonData";
-import {MdKeyboardArrowLeft, MdKeyboardArrowRight} from "react-icons/md";
-import {RxMagnifyingGlass} from "react-icons/rx";
-import {BsSpeedometer} from "react-icons/bs";
-import {HiDotsVertical} from "react-icons/hi";
-import {Transition} from "react-transition-group";
-import Preview from "./components/Preview";
-// import Slider from "rc-slider";
-import {Slider} from "@mui/material";
-import Progress from "./components/Progress";
-import ScaleMenu from "./components/ScaleMenu";
-import SpeedMenu from "./components/SpeedMenu";
-import BottomButtons from "./components/BottomButtons";
-import ScaleBtn from "./components/ScaleBtn";
-import SpeedBtn from "./components/SpeedBtn";
-import VideoContextTransition from "./components/VideoContextTransition";
 import ControlBar from "./components/ControlBar";
 import CentralPlayBtn from "./components/CentralBlayBtn";
 import TopBlock from "./components/TopBlock";
@@ -37,8 +12,6 @@ const CustomControls = ({
                             setCurrentVideoTime,
                             disablePreview,
                             url,
-                            classes,
-
                         },
 ) => {
 

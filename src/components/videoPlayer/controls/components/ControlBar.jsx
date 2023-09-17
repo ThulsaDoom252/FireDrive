@@ -104,7 +104,7 @@ const ControlBar = ({
                             mouseX={mouseX}/>}
                     {/*Progress bar*/}
                     <Progress
-                        handleChangeDuration={handleChangeDuration}
+                        handleChange={handleChangeDuration}
                         currentVideoTime={currentVideoTime}
                         handleMouseLeaveSlider={handleMouseLeaveSlider}
                         handleMouseEnterSlider={handleMouseEnterSlider}
