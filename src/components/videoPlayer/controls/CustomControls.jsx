@@ -246,9 +246,9 @@ const CustomControls = ({
 
     // Change volume
     const handleVideoVolumeChange = (value, isMute) => {
-        localStorage.setItem('currentVideoVolume', value)
-        playerRef.current.getInternalPlayer().volume = value
-        setCurrentVideoVolume(value)
+        localStorage.setItem('currentVideoVolume', value.target.value)
+        playerRef.current.getInternalPlayer().volume = value.target.value
+        setCurrentVideoVolume(value.target.value)
     }
 
     const handleMuteVideoVolume = () => {
@@ -433,36 +433,10 @@ const CustomControls = ({
                             {/*Volume bar block*/}
                             <div hidden={smallScreenMode} className={'w-20 ml-2'}>
                                 {/*Volume bar*/}
-                                <Slider
-                                    className={'bottom-0.5'}
-                                    type={'range'}
-                                    min={0}
-                                    max={1}
-                                    step={0.01}
+                                <Progress
+                                    handleChange={handleVideoVolumeChange}
+                                    maxValue={1}
                                     value={currentVideoVolume}
-                                    onChange={handleVideoVolumeChange}
-                                    handleStyle={{
-                                        opacity: 0,
-                                        width: '10px',
-                                        height: '10px',
-                                        top: '10px',
-                                        cursor: 'pointer'
-                                    }}
-                                    trackStyle={{
-                                        borderRadius: 0,
-                                        backgroundColor: '#00adef',
-                                        height: '10px',
-                                        border: 'gray solid thin',
-
-                                    }}
-                                    railStyle={{
-                                        backgroundColor: 'black',
-                                        height: '10px',
-                                        borderRadius: 0,
-                                        opacity: 0.8
-                                    }}
-
-
                                 />
                             </div>
                         </div>

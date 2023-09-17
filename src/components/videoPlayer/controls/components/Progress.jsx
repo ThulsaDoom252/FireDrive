@@ -21,11 +21,13 @@ const Progress = ({
                       handleMouseEnterSlider,
                       handleMouseLeaveSlider,
                       handleMouseMove,
-                      handleChangeDuration,
-                      totalVideoDuration,
-                      currentVideoTime,
+                      handleChange,
+                      maxValue,
+                      value,
                       classes,
+                      minValue = 0,
                   }) => {
+
 
     return (
         <Slider
@@ -36,11 +38,11 @@ const Progress = ({
             onMouseEnter={handleMouseEnterSlider}
             onMouseLeave={handleMouseLeaveSlider}
             onMouseMove={handleMouseMove}
-            min={0}
-            onChange={handleChangeDuration}
+            min={minValue}
+            onChange={handleChange}
             step={0.01}
-            max={totalVideoDuration}
-            value={currentVideoTime}
+            max={maxValue}
+            value={value}
         />
     );
 };

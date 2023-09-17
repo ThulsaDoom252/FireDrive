@@ -29,7 +29,7 @@ import UserAvatar from "./user/UserAvatar";
 import RenameModal from "./modals/RenameModal";
 import AlertModal from "./modals/AlertModal";
 import ImageModal from "./modals/ImageModal";
-import VideoModal from "./modals/VideoModal";
+import VideoModal from "./videoModal/VideoModal";
 import ShareModal from "./modals/ShareModal";
 import alertModal from "./modals/AlertModal";
 import userModal from "./modals/UserModal";
