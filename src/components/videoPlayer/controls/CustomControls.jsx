@@ -18,6 +18,15 @@ import Preview from "./components/Preview";
 // import Slider from "rc-slider";
 import {Slider} from "@mui/material";
 import Progress from "./components/Progress";
+import ScaleMenu from "./components/ScaleMenu";
+import SpeedMenu from "./components/SpeedMenu";
+import BottomButtons from "./components/BottomButtons";
+import ScaleBtn from "./components/ScaleBtn";
+import SpeedBtn from "./components/SpeedBtn";
+import VideoContextTransition from "./components/VideoContextTransition";
+import ControlBar from "./components/ControlBar";
+import CentralPlayBtn from "./components/CentralBlayBtn";
+import TopBlock from "./components/TopBlock";
 
 const CustomControls = ({
                             playerRef,
@@ -59,7 +68,7 @@ const CustomControls = ({
 
     //Control states
     const [currentMenu, setCurrentMenu] = useState(null)
-    const [currentSubmenu, setCurrentSubMenu] = useState(null)
+    const [currentSubMenu, setCurrentSubMenu] = useState(null)
 
     const [isSliderHovered, setIsSliderHovered] = useState(false)
     const [isVideoPlaying, setIsVideoPlaying] = useState(true)
@@ -83,8 +92,8 @@ const CustomControls = ({
     const previewRef = useRef(null)
     const isShareMenuOpen = currentMenu === shareMenu
     const isCurrentItemMenuOpen = currentMenu === currentItemMenu
-    const isScaleSubMenuOpen = currentSubmenu === scaleSubMenu
-    const isSpeedSubMenuOpen = currentSubmenu === speedSubMenu
+    const isScaleSubMenuOpen = currentSubMenu === scaleSubMenu
+    const isSpeedSubMenuOpen = currentSubMenu === speedSubMenu
     const isVideoMenuOpen = currentMenu === videoMenu
 
 
@@ -309,369 +318,54 @@ const CustomControls = ({
 
         >
             {/*Top menu block*/}
-            <div className={`flex self-start justify-end h-5 w-full mt-1`}>
-                {/*Top end btn block*/}
-                <div className={`
-                mr-3
-                flex 
-                w-28
-                justify-between      
-                `}
-                     onClick={stopPropagation}
-                >
-                    {/*{Share btn}*/}
-                    <div className={topBtnClass}
-                         onClick={handleShareMenu}
-                    >
-                        <FiShare2 size={25}/>
-                    </div>
-                    {/*{Item options btn}*/}
-                    <div className={topBtnClass}
-                         onClick={handleCurrentItemMenu}
-                    >
-                        <HiDotsVertical size={25}/>
-                    </div>
-
-                </div>
-            </div>
+            <TopBlock
+                topBtnClass={topBtnClass}
+                handleShareMenu={handleShareMenu}
+                handleCurrentItemMenu={handleCurrentItemMenu}
+            />
 
             {/*//Center Player Btn*/}
             {!isVideoPlaying &&
-                <div className={`
-            flex
-            absolute inset-0 
-             items-center justify-center`}>
-                    <button className={`flex 
-                            items-center 
-                            justify-center 
-                            bg-blue-300 
-                            rounded
-                            text-white
-                            h-20
-                            w-20
-                            hover:bg-opacity-50
-                            transition-all duration-100
-                            `}><AiOutlinePlayCircle size={50}/></button>
-                </div>}
+                <CentralPlayBtn/>
+            }
             {/*Control Bar*/}
-            <div className='w-full flex justify-between items-center h-10 z-10 self-end' onClick={stopPropagation}>
-                {/*/Play btn block*/}
-                <div className={`bg-gray-800   
-                bg-opacity-80 
-                rounded 
-                flex 
-                justify-center 
-                items-center 
-                w-20 
-                h-full
-                hover:bg-blue-400
-                hover:cursor-pointer
-                transition-all duration-200
-                `}
-                     onClick={handlePlay}>
-                    {isVideoPlaying ? <FiPause size={30}/> : <FiPlay size={30}/>}
-                </div>
-                {/*//Rest control block*/}
-                <div
-                    className={`flex 
-                        justify-between 
-                        w-full
-                        items-center 
-                        bg-gray-800 
-                        bg-opacity-80
-                        h-full rounded 
-                        ml-3
-                        pr-2 
-                        pl-2
-                        `}
-
-                >
-                    {/*//Progress block*/}
-                    <div
-                        className={`                        
-                            rounded 
-                            relative
-                            flex 
-                            flex-col
-                            items-center
-                            h-fit
-                            hover:cursor-pointer
-                            ${smallScreenMode ? 'w-1/3' : 'w-75%'}
-                            
-                            `}>
-
-                        {/*Video Preview*/}
-                        {isSliderHovered && !disablePreview &&
-                            <Preview
-                                smallScreenMode={smallScreenMode}
-                                url={url}
-                                previewRef={previewRef}
-                                previewTime={previewTime}
-                                mouseX={mouseX}/>}
-                        {/*Progress bar*/}
-                        <Progress
-                            handleChangeDuration={handleChangeDuration}
-                            currentVideoTime={currentVideoTime}
-                            handleMouseLeaveSlider={handleMouseLeaveSlider}
-                            handleMouseEnterSlider={handleMouseEnterSlider}
-                            handleMouseMove={handleMouseMove}/>
-                    </div>
-                    {/*Right controls block*/}
-                    <div className={`
-                        ml-5 
-                        w-25% 
-                        flex 
-                        justify-between 
-                        items-center
-                        ${smallScreenMode ? 'w-full' : 'w-25%'}
-                        
-                        `}>
-                        {/*Volume block*/}
-                        <div className={'flex items-center mr-3  hover:cursor-pointer'}>
-                            <div onClick={handleMuteVideoVolume}
-                            >{currentVideoVolume !== 0 ? <CiVolume/> : <CiVolumeMute/>}
-                            </div>
-                            {/*Volume bar block*/}
-                            <div hidden={smallScreenMode} className={'w-20 ml-2'}>
-                                {/*Volume bar*/}
-                                <Progress
-                                    handleChange={handleVideoVolumeChange}
-                                    maxValue={1}
-                                    value={currentVideoVolume}
-                                />
-                            </div>
-                        </div>
-                        {/*Time block*/}
-                        <div
-                            className={'mr-3'}>{`${formatTime(currentVideoTime)} / ${formatTime(totalVideoDuration)}`}</div>
-                        {/*Buttons block*/}
-                        <div className={'flex w-20 justify-between mr-2'}>
-                            <div className={controlBtnAnimation}><BiMobile onClick={handlePiP} size={20}/></div>
-                            <div className={controlBtnAnimation}><AiFillSetting onClick={handleVideoMenu} size={20}/>
-                            </div>
-                            <div className={controlBtnAnimation} onClick={handleFullScreen}>{isFullScreen ?
-                                <AiOutlineFullscreenExit size={20}/> :
-                                <AiOutlineFullscreen size={20}/>}</div>
-                        </div>
-                        {/*{Context Menu}*/}
-                        <Transition in={isVideoMenuOpen} timeout={200}>
-                            {(state) => <div
-                                className={`
-                                            absolute 
-                                            bottom-12 
-                                            right-10 
-                                            border-gray-500
-                                            bg-gray-500
-                                            rounded
-                                            bg-opacity-70 
-                                            border-1 
-                                            flex 
-                                            flex-col 
-                                            justify-end 
-                                            items-start 
-                                            p-2
-                                            ${state === 'entering' || state === 'exiting' ? 'opacity-0' : 'opacity-100'}
-                                            ${state === 'exited' ? 'hidden' : ''}
-                                            transition-opacity duration-200 ease-in-out
-                                            `}>
-                                {currentSubmenu === null &&
-                                    <>
-                                        {/*Scale btn*/}
-                                        <div className={`
-                                          w-full
-                                    flex
-                                    justify-between
-                                    items-center
-                                    mt-2
-                                    cursor-pointer
-                                    bg-opacity-50
-                                    hover:bg-gray-600
-                                    transition-all duration-100
-                                   
-                                        `}
-
-                                             onClick={handleScaleSubMenu}
-                                        >
-                                            <div className={'flex items-center justify-center mr-4'}>
-                                                <RxMagnifyingGlass size={20}/>
-                                                <div className={'ml-1 text-lg'}>Scale</div>
-                                            </div>
-
-                                            <div className={'flex justify-between items-center text-blue-400'}>
-                                                <div>{formatValueAsPercentage(currentScaleValue)}</div>
-                                                <div><MdKeyboardArrowRight/></div>
-
-                                            </div>
-                                        </div>
-                                        {/*Speed btn*/}
-                                        <div className={`
-                                        w-full 
-                                        flex 
-                                        justify-between 
-                                        items-center 
-                                        mt-2 
-                                        cursor-pointer
-                                         hover:bg-gray-600
-                                    transition-all duration-100
-                                        `}
-                                             onClick={handleSpeedSubMenu}
-
-                                        >
-                                            <div className={'flex items-center justify-center'}>
-                                                <BsSpeedometer size={20}/>
-                                                <div className={'ml-1 text-lg'}>Speed</div>
-                                            </div>
-                                            <div className={'flex justify-between items-center text-blue-400'}>
-                                                <div>{currentSpeedValue}</div>
-                                                <div><MdKeyboardArrowRight/></div>
-                                            </div>
-                                        </div>
-                                    </>}
-                                {/*scale menu*/}
-                                {isScaleSubMenuOpen && <div className='
-                            w-full
-                             h-full
-                             flex
-                             flex-col
-                             justify-start
-                             items-center
-                             '>
-                                    <div className='
-                                w-full
-                                flex
-                                justify-between
-                                items-center
-                                border-b
-                                border-b-white
-                                hover:bg-gray-700
-                                hover:cursor-pointer
-                                transition-all duration-100
-                                '
-                                         onClick={handleClearSubMenu}
-                                    >
-                                        <div className={'flex items-center mr-2'}>
-                                            <div>
-                                                <MdKeyboardArrowLeft/>
-                                            </div>
-                                            <div>Scale</div>
-                                        </div>
-                                        <div
-                                            className={'text-blue-300'}>{formatValueAsPercentage(currentScaleValue)}</div>
-                                    </div>
-                                    <div className={'w-full flex flex-col items-end justify-start'}>
-                                        <div className='mt-1  w-full  hover:bg-gray-700 text-right
-                                hover:cursor-pointer
-                                transition-all duration-100'
-                                             onClick={() => changeVideoScale(currentScaleValue + 0.03)}>+3%
-                                        </div>
-                                        <div className='mt-1  w-full hover:bg-gray-700 text-right
-                                hover:cursor-pointer
-                                transition-all duration-100'
-                                             onClick={() => changeVideoScale(currentScaleValue - 0.03)}>-3%
-                                        </div>
-                                        <div className='mt-1 w-full  hover:bg-gray-700 text-right
-                                hover:cursor-pointer
-                                transition-all duration-100' onClick={() => changeVideoScale(1)}>100%
-                                        </div>
-                                    </div>
-                                </div>}
-                                {/*speen menu*/}
-                                {isSpeedSubMenuOpen && <div className='
-                            w-full
-                             h-full
-                             flex
-                             flex-col
-                             justify-start
-                             items-center
-
-                             '>
-                                    <div className='
-
-                                w-full
-                                flex
-                                justify-center
-                                items-center
-                                border-b
-                                border-b-white
-                                hover:bg-gray-700
-                                hover:cursor-pointer
-                                transition-all duration-100
-                                '
-                                         onClick={handleClearSubMenu}
-
-                                    >
-                                        <div>
-                                            <MdKeyboardArrowLeft/>
-                                        </div>
-                                        <div>Speed</div>
-                                    </div>
-                                    <div className={'w-full flex flex-col items-end justify-start'}>
-                                        {playBackValues.map((value, index) => (
-                                            <div key={index} className={`
-                                            mt-1
-                                            hover:bg-gray-700
-                                            hover:cursor-pointer
-                                            transition-all duration-100
-                                            ${currentSpeedValue === value && 'text-blue-400'}
-                                            `}
-                                                 onClick={() => handlePlayBackRate(value)}>
-                                                {value === 1 ? 'Normal' : `${value}x`}
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>}
-                            </div>}
-                        </Transition>
-
-                        {/*Share menu*/}
-                        {isShareMenuOpen && <div className='
-                        absolute
-                        p-2
-                        rounded
-                        left-1/2
-                        bottom-10
-                        text-black
-                        w-28
-                        bg-white
-                        border-1
-                        border-gray-400
-                        flex
-                        flex-col
-                        justify-start
-                        items-center
-                        transform -translate-x-1/2
-                        '>
-                            <div className={'mt-1 border-b'}>Telegram</div>
-                            <div className={'mt-1 border-b'}>Viber</div>
-                            <div className={'mt-1 border-b'}>Facebook</div>
-                        </div>}
-                        {isCurrentItemMenuOpen &&
-                            <div className='
-                        absolute
-                        p-2
-                        rounded
-                        left-1/2
-                        bottom-10
-                        text-black
-                        w-28
-                        bg-white
-                        border-1
-                        border-gray-400
-                        flex
-                        flex-col
-                        justify-start
-                        items-center
-                        transform -translate-x-1/2
-                        '>
-                                <div className={'mt-1 border-b'}>Rename</div>
-                                <div className={'mt-1 border-b'}>Delete</div>
-                            </div>}
-
-
-                    </div>
-
-                </div>
-            </div>
+            <ControlBar {...{
+                isVideoPlaying,
+                smallScreenMode,
+                isSliderHovered,
+                disablePreview,
+                url,
+                previewRef,
+                totalVideoDuration,
+                previewTime,
+                mouseX,
+                currentVideoTime,
+                currentVideoVolume,
+                isFullScreen,
+                controlBtnAnimation,
+                isVideoMenuOpen,
+                currentSubMenu,
+                currentScaleValue,
+                currentSpeedValue,
+                isScaleSubMenuOpen,
+                isSpeedSubMenuOpen,
+                changeVideoScale,
+                playBackValues,
+                handlePlay,
+                handleSpeedSubMenu,
+                handlePlayBackRate,
+                handleClearSubMenu,
+                handleScaleSubMenu,
+                handleVideoMenu,
+                handleFullScreen,
+                handleMuteVideoVolume,
+                handleMouseLeaveSlider,
+                handleMouseEnterSlider,
+                handleMouseMove,
+                handlePiP,
+                handleVideoVolumeChange,
+                handleChangeDuration,
+            }}/>
 
         </div>
     );
