@@ -14,7 +14,7 @@ import {RxMagnifyingGlass} from "react-icons/rx";
 import {BsSpeedometer} from "react-icons/bs";
 import {HiDotsVertical} from "react-icons/hi";
 import {Transition} from "react-transition-group";
-import ProgressPreview from "./components/ProgressPreview";
+import Preview from "./components/Preview";
 // import Slider from "rc-slider";
 import {Slider} from "@mui/material";
 import Progress from "./components/Progress";
@@ -402,7 +402,8 @@ const CustomControls = ({
 
                         {/*Video Preview*/}
                         {isSliderHovered && !disablePreview &&
-                            <ProgressPreview
+                            <Preview
+                                smallScreenMode={smallScreenMode}
                                 url={url}
                                 previewRef={previewRef}
                                 previewTime={previewTime}

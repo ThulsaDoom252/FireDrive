@@ -2,31 +2,27 @@ import React from 'react';
 import ReactPlayer from "react-player";
 import {formatTime} from "../../../../common/commonData";
 
-const ProgressPreview = ({mouseX, previewTime, url, previewRef}) => {
-
-
-    // const formattedValue = dividedValue(mouseX);
+const Preview = ({mouseX, previewTime, url, previewRef, smallScreenMode}) => {
 
     const previewStyle = {
         position: 'absolute',
         bottom: '50px',
         transform: `translateX(${mouseX}px)`,
-        left: '-250px',
+        left: `${smallScreenMode ? '-140px' : '-250px'}`,
     };
-
 
     return (
         <div
             className={`
-                absolute 
-                h-28 
-                w-60 
-                flex 
-                flex-col
-                justify-start
-                items-center
-                bg-transparent
-            `}
+        absolute
+        flex
+        flex-col
+        justify-start
+        items-center
+        bg-transparent
+            ${smallScreenMode ? 'h-20 w-40' : 'h-28 w-60'}
+        `
+            }
             style={previewStyle}
         >
             <ReactPlayer
@@ -42,4 +38,4 @@ const ProgressPreview = ({mouseX, previewTime, url, previewRef}) => {
     );
 };
 
-export default ProgressPreview;
+export default Preview;
