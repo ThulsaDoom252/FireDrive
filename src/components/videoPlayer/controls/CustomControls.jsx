@@ -127,7 +127,6 @@ const CustomControls = ({
         setCurrentSubMenu(null)
     }
 
-
     ///Фуллскрин
     const handleFullScreen = () => {
         const videoBlockContainer = document.getElementById('video-block-container')

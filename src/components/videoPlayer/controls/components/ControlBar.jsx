@@ -85,10 +85,9 @@ const ControlBar = ({
                     className={`                        
                             rounded 
                             relative
-                            flex 
-                            flex-col
-                            items-center
+                            top-1.5
                             h-fit
+                            self-center
                             hover:cursor-pointer
                             ${smallScreenMode ? 'w-1/3' : 'w-75%'}
                             
@@ -122,11 +121,12 @@ const ControlBar = ({
                         `}>
                     {/*Volume block*/}
                     <div className={'flex items-center mr-3  hover:cursor-pointer'}>
+                        {/*Volume icon*/}
                         <div onClick={handleMuteVideoVolume}
                         >{currentVideoVolume !== 0 ? <CiVolume/> : <CiVolumeMute/>}
                         </div>
                         {/*Volume bar block */}
-                        <div hidden={smallScreenMode} className={'w-20 ml-2'}>
+                        <div className={'w-20 ml-2 relative top-1.5'}>
                             {/*Volume bar*/}
                             <Progress
                                 handleChange={handleVideoVolumeChange}
