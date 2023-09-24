@@ -14,8 +14,10 @@ const ItemOptions = ({
                          hoveredMediaIndex,
                          deleteCurrentItem,
                          setModalType,
+                         showIcons = true,
                          iconBgColor,
                          iconBgActiveColor,
+                         displayInCol = false,
                          name,
                          oldName,
                          tgIconColor = 'rgb(77, 171, 247)',
@@ -74,34 +76,54 @@ const ItemOptions = ({
     return (
         <div
             onClick={stopPropagation}
-            className={`hover:cursor-pointer p-1 h-fit ${(showOptions && showBg) && 'bg-settingsBar'} flex justify-center items-center rounded`}
+            className={`
+             p-1 
+             h-fit 
+               flex 
+               justify-center 
+               items-center 
+               rounded
+                hover:cursor-pointer
+             ${(showOptions && showBg) && 'bg-settingsBar'} 
+           `}
             onMouseLeave={handleMouseLeave}>
             <MyCustomTransition shouldAnimate={shouldAnimate} show={showOptions}>
-                <div className={'flex'}>
+                <div className={`flex ${displayInCol && 'flex-col'}`}>
                     <div className={iconBlockClass}>
                         <TelegramShareButton
                             url={url}
-                            title={''}><FaTelegram
-                            title={"share via telegram"}
-                            size={iconsSize}
-                            color={tgIconColor}/></TelegramShareButton>
+                            title={''}>
+                            {showIcons ?
+                                <FaTelegram
+                                    title={"share via telegram"}
+                                    size={iconsSize}
+                                    color={tgIconColor}/> : <p>Share via Telegram</p>}</TelegramShareButton>
                     </div>
 
                     <div className={iconBlockClass}>
-                        <ViberShareButton url={url}><FaViber
-                            title={"share via viber"}
-                            size={iconsSize}
-                            color={vbIconColor}/></ViberShareButton>
+                        <ViberShareButton url={url}>
+                            {showIcons ?
+                                <FaViber
+                                    title={"share via viber"}
+                                    size={iconsSize}
+                                    color={vbIconColor}/> :
+                                <p>Share via Viber</p>}
+
+
+                        </ViberShareButton>
                     </div>
-                    <div className={iconBlockClass}>
-                        <BsPencilFill size={iconsSize}
-                                      title={"edit current item name"}
-                                      color={renameIconColor} onClick={handleRenameModal}/>
+                    <div className={iconBlockClass} onClick={handleRenameModal}>
+                        {showIcons ?
+                            <BsPencilFill size={iconsSize}
+                                          title={"edit current item name"}
+                                          color={renameIconColor}/> : 'Rename item'}
                     </div>
-                    <div className={iconBlockClass}>
-                        < BsTrash title={'delete current item'} size={iconsSize}
-                                  color={deleteIconColor}
-                                  onClick={() => deleteCurrentItem({url, index, searchMode, route: currentRoute})}/>
+                    <div className={iconBlockClass}
+                         onClick={() => deleteCurrentItem({url, index, searchMode, route: currentRoute})}>
+                        {showIcons ?
+                            < BsTrash title={'delete current item'} size={iconsSize}
+                                      color={deleteIconColor}
+                            /> : 'Delete Item'}
                     </div>
                     {/*<BsDownload className="text-gray-200" size={iconsSize}/>*/}
 

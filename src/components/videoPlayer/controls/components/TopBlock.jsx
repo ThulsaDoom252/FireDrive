@@ -1,8 +1,9 @@
 import React from 'react';
-import {FiShare2} from "react-icons/fi";
 import {HiDotsVertical} from "react-icons/hi";
 import {stopPropagation} from "../../../../common/commonData";
 import MediaOptions from "../../../options/ItemOptions";
+import {useDispatch} from "react-redux";
+import {toggleVideoMobileMenu} from "../../../../redux/appSlice";
 
 const TopBlock = ({
                       topBtnClass,
@@ -14,6 +15,13 @@ const TopBlock = ({
                       oldName,
                       index,
                   }) => {
+
+
+    const dispatch = useDispatch()
+    const handleOpenMobileMenu = () => {
+        dispatch(toggleVideoMobileMenu(true))
+    }
+
     return (
         <div className={`flex self-start justify-end h-5 w-full mt-1`}>
             {/*Top end btn block*/}
@@ -26,7 +34,7 @@ const TopBlock = ({
             >
                 {smallScreenMode ?
                     <div className={topBtnClass}
-                         onClick={handleCurrentItemMenu}
+                         onClick={handleOpenMobileMenu}
                     >
                         <HiDotsVertical size={25}/>
                     </div> :

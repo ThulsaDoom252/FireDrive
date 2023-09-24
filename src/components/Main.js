@@ -44,6 +44,7 @@ import DropDownMenu from "./common/DropDownMenu";
 import Home from "./home/Home";
 import {CiSettings} from "react-icons/ci";
 import ImageModalContainer from "./modals/ImageModalContainer";
+import MobileVideoMenu from "./videoModal/MobileVideoMenu";
 
 const Main = ({
                   currentMediaSet,
@@ -118,6 +119,9 @@ const Main = ({
                         showAlertModal={modalType === alertModal}
                         handleAlertAction={handleAlertAction}
             />
+            <div className={'relative bottom-20 z-max'}>
+                <MobileVideoMenu/>
+            </div>
             <RenameModal toggleModal={setModalType} showModal={modalType === renameModal}/>
             <ShareModal toggleModal={setModalType} showModal={modalType === shareModal}/>
             <VideoModal
@@ -238,22 +242,22 @@ const Main = ({
                                              currentTheme,
                                          }}/>}/>}
                 </Routes>
-                <div
-                    className={`
-                    w-full  
-                    bg-opacity-90 
-                     p-2 rounded 
-                     relative 
-                     flex
-                     items-center
-                     ${smallScreen ? 'h-mobilePlayerHeight' : 'h-playerHeight'}
-                     ${currentTheme.primeBg}
-                     ${itemModalType !== imageModal && itemModalType !== videoModal && 'fixed-bottom'
+                {/*<div*/}
+                {/*    className={`*/}
+                {/*    w-full  */}
+                {/*    bg-opacity-90 */}
+                {/*     p-2 rounded */}
+                {/*     relative */}
+                {/*     flex*/}
+                {/*     items-center*/}
+                {/*     ${smallScreen ? 'h-mobilePlayerHeight' : 'h-playerHeight'}*/}
+                {/*     ${currentTheme.primeBg}*/}
+                {/*     ${itemModalType !== imageModal && itemModalType !== videoModal && 'fixed-bottom'*/}
 
-                    }`}>
-                    <AudioPlayer currentTheme={currentTheme}
-                                 smallScreenMode={smallScreen}
-                    /></div>
+                {/*    }`}>*/}
+                {/*    <AudioPlayer currentTheme={currentTheme}*/}
+                {/*                 smallScreenMode={smallScreen}*/}
+                {/*    /></div>*/}
             </main>
         </>
 

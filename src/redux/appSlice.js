@@ -35,6 +35,7 @@ const appSlice = createSlice({
         alertBtnLabel: '',
         alertBtnStyle: '',
         alertActionType: '',
+        showVideoMobileMenu: false,
         showAlertBtn: true,
         currentModalItemIndex: 0,
         itemOptionsHovered: false,
@@ -97,6 +98,9 @@ const appSlice = createSlice({
         toggleListMode(state, action) {
             state.listMode = action.payload
         },
+        toggleVideoMobileMenu(state, action) {
+            state.showVideoMobileMenu = action.payload
+        },
         setAlertModalContent(state, action) {
             const {message, title, style, btnStyle, btnLabel, actionType, showBtn} = action.payload
             state.alertMessage = message
@@ -125,6 +129,7 @@ export const {
     setItemModalType,
     toggleCurrentTheme,
     toggleListMode,
+    toggleVideoMobileMenu,
 } = appSlice.actions
 
 export const handleAlertModal = createAsyncThunk('alertModal-thunk', async ({
