@@ -11,6 +11,9 @@ const CustomControls = ({
                             currentVideoTime,
                             setCurrentVideoTime,
                             disablePreview,
+                            index,
+                            name,
+                            oldName,
                             url,
                         },
 ) => {
@@ -291,8 +294,13 @@ const CustomControls = ({
         >
             {/*Top menu block*/}
             <TopBlock
+                url={url}
+                name={name}
+                oldName={oldName}
+                index={index}
                 topBtnClass={topBtnClass}
                 handleShareMenu={handleShareMenu}
+                smallScreenMode={smallScreenMode}
                 handleCurrentItemMenu={handleCurrentItemMenu}
             />
 

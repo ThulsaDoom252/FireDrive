@@ -10,23 +10,26 @@ import MyCustomTransition from "../common/MyCustomTransition";
 
 
 const ItemOptions = ({
-                          handleMediaName,
-                          hoveredMediaIndex,
-                          deleteCurrentItem,
-                          setModalType,
-                          name,
-                          oldName,
-                          tgIconColor = 'rgb(77, 171, 247)',
-                          vbIconColor = 'rgb(193, 122, 250)',
-                          renameIconColor = 'blue',
-                          deleteIconColor = 'red',
-                          iconsSize = 20,
-                          url, index, searchMode, currentRoute,
-                          animate = true, shouldAnimate,
-                          initialMode = 'hide',
-                          showBg = true,
-                          setItemOptionsHovered,
-                      }) => {
+                         handleMediaName,
+                         hoveredMediaIndex,
+                         deleteCurrentItem,
+                         setModalType,
+                         iconBgColor,
+                         iconBgActiveColor,
+                         name,
+                         oldName,
+                         tgIconColor = 'rgb(77, 171, 247)',
+                         vbIconColor = 'rgb(193, 122, 250)',
+                         renameIconColor = 'blue',
+                         deleteIconColor = 'red',
+                         iconsSize = 20,
+                         url, index, searchMode, currentRoute,
+                         animate = true,
+                         shouldAnimate,
+                         initialMode = 'hide',
+                         showBg = true,
+                         setItemOptionsHovered,
+                     }) => {
 
 
     const [showOptions, setShowOptions] = useState(initialMode !== 'hide')
@@ -50,6 +53,24 @@ const ItemOptions = ({
         }
     }
 
+    const iconBlockClass = `${iconBgColor ? ` 
+    mx-1  
+    bg-opacity-50 
+    rounded md 
+    h-8 
+    w-8
+    flex 
+    justify-center 
+    items-center 
+    transition-all
+    duration-500
+    ${iconBgColor} 
+    ${iconBgActiveColor}
+    hover:cursor-pointer
+    z-10
+    `
+        : void 0}`
+
     return (
         <div
             onClick={stopPropagation}
@@ -57,20 +78,31 @@ const ItemOptions = ({
             onMouseLeave={handleMouseLeave}>
             <MyCustomTransition shouldAnimate={shouldAnimate} show={showOptions}>
                 <div className={'flex'}>
+                    <div className={iconBlockClass}>
+                        <TelegramShareButton
+                            url={url}
+                            title={''}><FaTelegram
+                            title={"share via telegram"}
+                            size={iconsSize}
+                            color={tgIconColor}/></TelegramShareButton>
+                    </div>
 
-                    <TelegramShareButton url={url} title={''}><FaTelegram className={'mx-2'}
-                                                                          title={"share via telegram"}
-                                                                          size={iconsSize}
-                                                                          color={tgIconColor}/></TelegramShareButton>
-                    <ViberShareButton url={url}><FaViber
-                        title={"share via viber"}
-                        className={'mx-2'} size={iconsSize}
-                        color={vbIconColor}/></ViberShareButton>
-                    <BsPencilFill size={iconsSize} className={'mx-2'}
-                                  title={"edit current item name"}
-                                  color={renameIconColor} onClick={handleRenameModal}/>
-                    < BsTrash title={'delete current item'} size={iconsSize} className={'mx-2'} color={deleteIconColor}
-                              onClick={() => deleteCurrentItem({url, index, searchMode, route: currentRoute})}/>
+                    <div className={iconBlockClass}>
+                        <ViberShareButton url={url}><FaViber
+                            title={"share via viber"}
+                            size={iconsSize}
+                            color={vbIconColor}/></ViberShareButton>
+                    </div>
+                    <div className={iconBlockClass}>
+                        <BsPencilFill size={iconsSize}
+                                      title={"edit current item name"}
+                                      color={renameIconColor} onClick={handleRenameModal}/>
+                    </div>
+                    <div className={iconBlockClass}>
+                        < BsTrash title={'delete current item'} size={iconsSize}
+                                  color={deleteIconColor}
+                                  onClick={() => deleteCurrentItem({url, index, searchMode, route: currentRoute})}/>
+                    </div>
                     {/*<BsDownload className="text-gray-200" size={iconsSize}/>*/}
 
                 </div>

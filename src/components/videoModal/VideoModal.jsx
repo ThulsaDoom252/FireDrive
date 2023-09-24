@@ -108,6 +108,9 @@ const VideoModal = ({
                                                 isVideoReady={isVideoReady}
                                                 smallScreenMode={smallScreen}
                                                 url={currentModalItemUrl}
+                                                name={currentModalItemName}
+                                                oldName={currentModalItemOldName}
+                                                index={currentModalItemIndex}
                                                 currentVideoTime={currentVideoTime}
                                                 color={!smallScreen ? 'text-white' : 'text-white'}/>
                                 {smallScreen && <hr className={'bg-white h-0.5 rounded-full relative bottom-4'}/>}
@@ -135,20 +138,20 @@ const VideoModal = ({
                                 <div className='text-center text-lg'>
                                     {currentModalItemName}
                                 </div>
-                                <div><MediaOptions initialMode={'show'}
-                                                   shouldAnimate={false}
-                                                   url={currentModalItemUrl}
-                                                   index={currentModalItemIndex}
-                                                   name={currentModalItemName}
-                                                   oldName={currentModalItemOldName}
-                                                   showBg={false}
-                                                   tgIconColor={'black'}
-                                                   vbIconColor={'black'}
-                                                   deleteIconColor={'black'}
-                                                   renameIconColor={'black'}
+                                {/*<div><MediaOptions initialMode={'show'}*/}
+                                {/*                   shouldAnimate={false}*/}
+                                {/*                   url={currentModalItemUrl}*/}
+                                {/*                   index={currentModalItemIndex}*/}
+                                {/*                   name={currentModalItemName}*/}
+                                {/*                   oldName={currentModalItemOldName}*/}
+                                {/*                   showBg={false}*/}
+                                {/*                   tgIconColor={'black'}*/}
+                                {/*                   vbIconColor={'black'}*/}
+                                {/*                   deleteIconColor={'black'}*/}
+                                {/*                   renameIconColor={'black'}*/}
 
-                                />
-                                </div>
+                                {/*/>*/}
+                                {/*</div>*/}
                             </div>
                         </div>
                         {/*//Video list block*/}
