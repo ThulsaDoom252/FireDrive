@@ -1,19 +1,29 @@
 import React, {useState} from 'react';
-import {CircleLoader} from "react-spinners";
+import {Skeleton, Tooltip} from "@mui/material";
+import OpacityTransition from "../common/MyCustomTransition";
+import MediaOptions from "../options/ItemOptions";
 
 const Image = ({
                    url,
                    index,
+                   name,
+                   oldName,
                    isAbsolute,
-                   imageIsHovered,
                    imageIsClickable = true,
                    handleInitialModalIndex,
                    height = 'h-300',
                    width = 'w-300',
-                   scrollPos,
+                   setHoveredMediaIndex,
+                   searchMode,
+                   hoveredMediaIndex,
+                   setItemOptionsHovered,
+                   showOptions = true
+
 
                }) => {
     const [imageIsLoaded, setImageIsLoaded] = useState(false)
+
+    const imageIsHovered = hoveredMediaIndex === index
 
 
     const handleLoadImage = () => {
@@ -25,8 +35,27 @@ const Image = ({
     }
 
     return (
-        <>
-            {!imageIsLoaded && <CircleLoader size={50} color={'white'}/>}
+        <div key={index}
+             onMouseEnter={() => setHoveredMediaIndex(index)}
+             onMouseLeave={() => setHoveredMediaIndex(null)}
+             className={'flex justify-center max-w-200 max-h-200 relative'}>
+            <OpacityTransition show={(imageIsHovered && imageIsLoaded)}>
+                <div className={'absolute top-0 right-0'} hidden={!showOptions}>
+                    <MediaOptions name={name}
+                                  oldName={oldName}
+                                  url={url}
+                                  {...{
+                                      index,
+                                      searchMode,
+                                      hoveredMediaIndex,
+                                      setItemOptionsHovered,
+                                  }}/></div>
+            </OpacityTransition>
+            {!imageIsLoaded &&
+                <Tooltip title={'image loading'}>
+                    <Skeleton variant="rectangular" width={300} height={300} animation="wave"/>
+                </Tooltip>
+            }
             <img
                 onClick={handleImageLick}
                 className={`
@@ -40,12 +69,11 @@ const Image = ({
                 ${isAbsolute && 'absolute'}
                 transition-all duration-100
                 `}
-
                 src={url}
-                alt="image"
                 onLoad={handleLoadImage}
+                alt=''
             />
-        </>
+        </div>
 
     );
 };

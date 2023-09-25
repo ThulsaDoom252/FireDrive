@@ -14,7 +14,7 @@ import SignInContainer from "./components/Auth/SignIn/SignInContainer";
 import SignUpContainer from "./components/Auth/SignUp/SignUpContainer";
 import Initializing from "./components/Initializing";
 import {
-    authCheck, getRestoreCountDownInfo, startRestoreTimer,
+    authCheck, getRestoreCountDownInfo, getVerificationLinkStatusInfo, startRestoreTimer,
     startVerificationTimer,
     toggleRestoreEmailSendStatus,
     toggleVerificationEmailSendStatus
@@ -73,6 +73,15 @@ const App = ({
     useEffect(() => {
         getRestoreCountDownInfo({dispatch})
     }, []);
+
+    useEffect(() => {
+        if (user && !user?.emailVerified) {
+            const email = user.email
+            getVerificationLinkStatusInfo({email, dispatch})
+                .then(() => void 0)
+        }
+
+    }, [])
 
     useEffect(() => {
         window.addEventListener('resize', handleResize)

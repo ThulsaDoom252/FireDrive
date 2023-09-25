@@ -5,7 +5,7 @@ import {FaImages} from "react-icons/fa";
 import {ClipLoader} from "react-spinners";
 import ReactPlayer from "react-player";
 import {PiMusicNotesFill} from "react-icons/pi"
-import Image from "../media/Image";
+import Image from "../media/Image/Image"
 
 
 const HomeMediaListBlock = ({itemsList, fetchItems, smallScreen, currentTheme, itemType, iconSize = 40}) => {
@@ -56,11 +56,14 @@ const HomeMediaListBlock = ({itemsList, fetchItems, smallScreen, currentTheme, i
                         m-2
                         h-full
                         max-w-imageListItem
+                        overflow-hidden                  
                         `}>
                                     <Image
                                         url={image.url}
                                         height={'h-full'}
                                         width={'max-w-full'}
+                                        skeletonWidth={150}
+                                        skeletonHeight={150}
                                         imageIsClickable={false}
                                     />
                                 </div>

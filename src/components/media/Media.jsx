@@ -9,6 +9,7 @@ import OpacityTransition from "../common/MyCustomTransition";
 import MediaOptions from "../options/ItemOptions";
 import {truncate} from "../../common/commonData";
 import {handleCurrentMediaSet} from "../../redux/mediaSlice";
+import ImageBlock from "./Image/ImageBlock";
 
 const Media = ({
                    imagesPage,
@@ -59,32 +60,20 @@ const Media = ({
                         size={150}
                     />}
                     {imagesPage ? mediaToShow.map((media, index) => {
-                            const itemIsHovered = hoveredMediaIndex === index
-                            return (<div key={index}
-                                         onMouseEnter={() => setHoveredMediaIndex(index)}
-                                         onMouseLeave={() => setHoveredMediaIndex(null)}
-                                         className={'flex justify-center max-w-200 max-h-200 relative'}>
-                                <OpacityTransition show={(itemIsHovered)}>
-                                    <div className={'absolute top-0 right-0'}>
-                                        <MediaOptions name={media.name}
-                                                      oldName={media.oldName}
-                                                      url={media.url}
-                                                      {...{
-                                                          index,
-                                                          searchMode,
-                                                          hoveredMediaIndex,
-                                                          setItemOptionsHovered,
-                                                      }}/></div>
-                                </OpacityTransition>
-                                <Image url={media.url}
-                                       width={'w-full'}
-                                       height={'h-full'}
-                                       imageIsHovered={itemIsHovered}
-                                       {...{
-                                           index,
-                                           handleInitialModalIndex,
-                                       }}/>
-                            </div>)
+                            return <ImageBlock url={media.url}
+                                          width={'w-full'}
+                                          height={'h-full'}
+                                          name={media.name}
+                                          oldName={media.oldName}
+
+                                          {...{
+                                              index,
+                                              handleInitialModalIndex,
+                                              setHoveredMediaIndex,
+                                              searchMode,
+                                              hoveredMediaIndex,
+                                              setItemOptionsHovered,
+                                          }}/>
                         })
                         : videosPage ? mediaToShow.map((video, index) =>
                                 <div key={index} className={`
