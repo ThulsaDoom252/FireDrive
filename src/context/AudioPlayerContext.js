@@ -35,20 +35,23 @@ export function AudioPlayerContextProvider({children}) {
         }
     }
 
-    const handleVolumeChange = (value, mute = false) => {
-        const newValue = value.target.value
+    const handleVolumeChange = (volValue, {mute = false}) => {
+        const newValue = volValue === 0 ? volValue : typeof volValue === 'string' ? parseFloat(volValue) : volValue?.target?.value
         setVolume(newValue);
-        !mute && localStorage.setItem("currentVolume", newValue)
-        if (audioRef?.current) {
+        if (!mute) {
+            localStorage.setItem("currentVolume", newValue)
+        }
+
+        if (audioRef?.current && isFinite(newValue)) {
             audioRef.current.volume = newValue;
         }
     };
 
     const toggleMuteVolume = () => {
         if (volume === 0) {
-            handleVolumeChange(localStorage.getItem('currentVolume'))
+            handleVolumeChange(localStorage.getItem('currentVolume'), {mute: false})
         } else {
-            handleVolumeChange(0, true)
+            handleVolumeChange(0, {mute: true})
         }
 
     }
@@ -99,7 +102,6 @@ export function AudioPlayerContextProvider({children}) {
     }
 
     const handleSeekBarChange = (newValue) => {
-        debugger
         setCurrentDuration(newValue.target.value)
         audio.currentTime = newValue.target.value;
     };
