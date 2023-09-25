@@ -26,6 +26,7 @@ const Progress = ({
                       value,
                       classes,
                       minValue = 0,
+                      step = 0.01
                   }) => {
 
 
@@ -39,7 +40,7 @@ const Progress = ({
             onMouseMove={handleMouseMove}
             min={minValue}
             onChange={handleChange}
-            step={0.01}
+            step={step}
             max={maxValue}
             value={value}
         />

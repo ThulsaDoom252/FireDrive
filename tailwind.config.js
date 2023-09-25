@@ -45,6 +45,7 @@ module.exports = {
                 'custom-20': '85px',
                 'custom-50': '140px',
                 'custom-50%': '50%',
+                'audioPlayerVolumeBar': '0.1px'
             },
             screens: {
                 'alert-sm': '568px',
@@ -118,6 +119,7 @@ module.exports = {
                 'mobilePlayerHeight': '70px',
                 'inputContainerHeight': '63px',
                 'signUpInputContainerHeight': '40px',
+
             },
             zIndex: {
                 '1': '1',

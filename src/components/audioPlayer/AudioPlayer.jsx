@@ -136,8 +136,8 @@ const AudioPlayer = ({
                                 >
                                     {volume !== 0 ? <ImVolumeHigh size={20}/> : <ImVolumeMute2 size={20}/>}
                                 </button>
-                                <div className={'w-20 absolute bottom-2 left-7 '}>
-                                    <VolumeBar  volume={volume}
+                                <div className={'w-20 relative top-1 left-2'}>
+                                    <VolumeBar volume={volume}
                                                handleVolumeChange={handleVolumeChange}/>
                                 </div>
 
