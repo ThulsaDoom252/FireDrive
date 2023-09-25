@@ -4,7 +4,7 @@ import ItemOptions from "../options/ItemOptions";
 import {formatTime, truncate} from "../../common/commonData";
 import MyCustomTransition from "../common/MyCustomTransition";
 import {BiSolidVolume, BiVolumeMute} from "react-icons/bi";
-import {ClockLoader} from "react-spinners";
+import {Skeleton, Tooltip} from "@mui/material";
 
 const Video = ({
                    url,
@@ -56,7 +56,9 @@ const Video = ({
     }
     return (
         <>
-            {!isVideoReady && <ClockLoader size={20}/>}
+            {!isVideoReady && <Tooltip title={'image loading'}>
+                <Skeleton variant="rectangular" width={250} height={200} animation="wave"/>
+            </Tooltip>}
             <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
                  className={`relative ${isVideoReady ? 'block' : 'hidden'}`}>
                 <MyCustomTransition show={isVideoHovered && noOpenModal}>
