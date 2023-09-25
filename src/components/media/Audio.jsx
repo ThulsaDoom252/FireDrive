@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {AiFillPauseCircle, AiFillPlayCircle} from "react-icons/ai";
 import {useContext} from "react";
 import {AudioPlayerContext} from "../../context/AudioPlayerContext";
@@ -8,7 +8,6 @@ import {ClipLoader} from "react-spinners";
 import {dayPrimary} from "../../common/themes";
 import {truncate} from "../../common/commonData";
 import MyCustomTransition from "../common/MyCustomTransition";
-import toast from "react-hot-toast";
 import {Skeleton, Tooltip} from "@mui/material";
 
 const Audio = ({
@@ -69,8 +68,8 @@ const Audio = ({
                 mb-3  
                 relative 
                 rounded 
-                border-b-2
                 cursor-pointer
+                ${!isAudioLoaded ? 'bg-opacity-0' : 'border-b-2'}
                 ${(currentTrackPlaying || currentTrackHovered) ? 'bg-opacity-100' : 'bg-opacity-80'}
                  ${(currentTrackPlaying || currentTrackHovered) ? currentTheme.primeBg : currentTheme.secBg}  
                 
@@ -114,7 +113,7 @@ const Audio = ({
                             <div className={`${currentTheme.color}`}>{totalDuration === 0 ?
                                 <ClipLoader size={25}/> : totalDuration}</div>
                         </div>
-                    </> : <Tooltip title={'image loading'}>
+                    </> : <Tooltip title={'audio loading'}>
                         <Skeleton variant="rectangular" width={skeletonWidth} height={skeletonHeight} animation="wave"
                                   style={{width: '100%', height: '100%'}}/>
                     </Tooltip>}
