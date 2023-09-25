@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import ReactPlayer from "react-player";
 import {IoClose} from "react-icons/io5";
 import {ItemsModalContext} from "../../context/ItemsModalContext";
@@ -34,10 +34,13 @@ const VideoModal = ({
         currentModalItemOldName,
         handleCurrentModalItemIndex,
         smallScreen,
+        toggleVideoMobileSettings,
     } = ModalContext
+
 
     const handleClose = () => {
         toggleModal(noModal)
+        setIsVideoReady(false)
     }
 
     const handleProgress = (progress) => {
@@ -104,15 +107,17 @@ const VideoModal = ({
                                     controls={false}
                                     url={currentModalItemUrl || ''}/>
                                 <CustomControls playerRef={playerRef}
-                                                setCurrentVideoTime={setCurrentVideoTime}
-                                                isVideoReady={isVideoReady}
-                                                smallScreenMode={smallScreen}
-                                                url={currentModalItemUrl}
-                                                name={currentModalItemName}
-                                                oldName={currentModalItemOldName}
-                                                index={currentModalItemIndex}
-                                                currentVideoTime={currentVideoTime}
-                                                color={!smallScreen ? 'text-white' : 'text-white'}/>
+                                                                 setCurrentVideoTime={setCurrentVideoTime}
+                                                                 isVideoReady={isVideoReady}
+                                                                 smallScreenMode={smallScreen}
+                                                                 url={currentModalItemUrl}
+                                                                 name={currentModalItemName}
+                                                                 oldName={currentModalItemOldName}
+                                                                 toggleVideoMobileSettings={toggleVideoMobileSettings}
+                                                                 index={currentModalItemIndex}
+                                                                 currentVideoTime={currentVideoTime}
+                                                                 color={!smallScreen ? 'text-white' : 'text-white'}/>
+
                                 {smallScreen && <hr className={'bg-white h-0.5 rounded-full relative bottom-4'}/>}
 
                                 {/*{smallScreen &&*/}
@@ -138,20 +143,6 @@ const VideoModal = ({
                                 <div className='text-center text-lg'>
                                     {currentModalItemName}
                                 </div>
-                                {/*<div><MediaOptions initialMode={'show'}*/}
-                                {/*                   shouldAnimate={false}*/}
-                                {/*                   url={currentModalItemUrl}*/}
-                                {/*                   index={currentModalItemIndex}*/}
-                                {/*                   name={currentModalItemName}*/}
-                                {/*                   oldName={currentModalItemOldName}*/}
-                                {/*                   showBg={false}*/}
-                                {/*                   tgIconColor={'black'}*/}
-                                {/*                   vbIconColor={'black'}*/}
-                                {/*                   deleteIconColor={'black'}*/}
-                                {/*                   renameIconColor={'black'}*/}
-
-                                {/*/>*/}
-                                {/*</div>*/}
                             </div>
                         </div>
                         {/*//Video list block*/}

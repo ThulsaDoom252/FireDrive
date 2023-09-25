@@ -11,6 +11,7 @@ const CustomControls = ({
                             currentVideoTime,
                             setCurrentVideoTime,
                             disablePreview,
+                            toggleVideoMobileSettings,
                             index,
                             name,
                             oldName,
@@ -51,6 +52,7 @@ const CustomControls = ({
     const [currentVideoVolume, setCurrentVideoVolume] = useState(0.5)
     const [totalVideoDuration, setTotalVideoDuration] = useState(0)
     const [isFullScreen, setIsFullScreen] = useState(false)
+    const [isMobileFullScreen, setIsMobileFullScreen] = useState(false)
 
 
     const [previewTime, setPreviewTime] = useState(false)
@@ -135,8 +137,8 @@ const CustomControls = ({
         const videoBlockContainer = document.getElementById('video-block-container')
         const videoContainer = document.getElementById('video-container')
         if (isVideoReady) {
-            if (isFullScreen) {
-                if (smallScreenMode) {
+            if (isFullScreen || isMobileFullScreen) {
+                if (isMobileFullScreen) {
                     videoBlockContainer.style.width = '100%'
                     videoBlockContainer.style.height = '45%'
                     videoBlockContainer.style.marginTop = '1.25rem'
@@ -147,7 +149,7 @@ const CustomControls = ({
                 }
                 videoContainer.style.width = '100%'
                 videoContainer.style.height = '90%'
-                setIsFullScreen(false)
+                isMobileFullScreen ? setIsMobileFullScreen(false) : setIsFullScreen(false)
                 document.exitFullscreen()
 
             } else {
@@ -156,7 +158,7 @@ const CustomControls = ({
                 videoBlockContainer.style.height = '100%'
                 videoContainer.style.width = '100vw'
                 videoContainer.style.height = '100vh'
-                setIsFullScreen(true)
+                smallScreenMode ? setIsMobileFullScreen(true) : setIsFullScreen(true)
                 document.documentElement.requestFullscreen()
             }
         }
@@ -215,6 +217,30 @@ const CustomControls = ({
             setTotalVideoDuration(totalDuration)
         }
     }, [isVideoReady, currentVideoUrl]);
+
+
+    //Exit fullScreen mode on escape btn pressed
+    useEffect(() => {
+
+        const handleEscapeKeyPress = (event) => {
+            if (event.key === 'Escape') {
+                console.log('Escape key pressed')
+                if (isFullScreen || isMobileFullScreen) {
+                    handleFullScreen()
+                } else {
+                    void 0
+                }
+            }
+        };
+
+        // Добавляем обработчик события keydown при монтировании компонента
+        document.addEventListener('keydown', handleEscapeKeyPress);
+
+        // Удаляем обработчик события keydown при размонтировании компонента
+        return () => {
+            document.removeEventListener('keydown', handleEscapeKeyPress);
+        };
+    }, []);
 
 
     // Play/pause handlers
@@ -299,6 +325,7 @@ const CustomControls = ({
                 oldName={oldName}
                 index={index}
                 topBtnClass={topBtnClass}
+                toggleVideoMobileSettings={toggleVideoMobileSettings}
                 handleShareMenu={handleShareMenu}
                 smallScreenMode={smallScreenMode}
                 handleCurrentItemMenu={handleCurrentItemMenu}
@@ -322,6 +349,7 @@ const CustomControls = ({
                 currentVideoTime,
                 currentVideoVolume,
                 isFullScreen,
+                isMobileFullScreen,
                 controlBtnAnimation,
                 isVideoMenuOpen,
                 currentSubMenu,

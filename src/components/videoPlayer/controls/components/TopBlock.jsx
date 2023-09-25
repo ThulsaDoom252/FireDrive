@@ -10,17 +10,13 @@ const TopBlock = ({
                       handleShareMenu,
                       handleCurrentItemMenu,
                       smallScreenMode,
+                      isMobileFullScreen,
+                      toggleVideoMobileSettings,
                       url,
                       name,
                       oldName,
                       index,
                   }) => {
-
-
-    const dispatch = useDispatch()
-    const handleOpenMobileMenu = () => {
-        dispatch(toggleVideoMobileMenu(true))
-    }
 
     return (
         <div className={`flex self-start justify-end h-5 w-full mt-1`}>
@@ -28,13 +24,13 @@ const TopBlock = ({
             <div className={`
                 flex 
                 justify-between
-                ${!smallScreenMode ? 'mr-8 w-28' : 'mr-2'}      
+                ${!smallScreenMode && !isMobileFullScreen ? 'mr-8 mt-2 ' : 'mr-2'}      
                 `}
                  onClick={stopPropagation}
             >
-                {smallScreenMode ?
+                {smallScreenMode || isMobileFullScreen ?
                     <div className={topBtnClass}
-                         onClick={handleOpenMobileMenu}
+                         onClick={() => toggleVideoMobileSettings(true)}
                     >
                         <HiDotsVertical size={25}/>
                     </div> :

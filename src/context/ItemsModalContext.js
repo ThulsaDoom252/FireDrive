@@ -21,6 +21,7 @@ export const ItemsModalContextProvider = ({children}) => {
     const searchMode = useSelector(state => state.media.searchMode)
     const [fullScreen, toggleFullScreen] = useState(false)
     const [showMobileSettings, toggleMobileSettings] = useState(true)
+    const [showVideoMobileSettings, toggleVideoMobileSettings] = useState(false)
 
     const currentModalItemUrl = searchMode ? searchResults[currentModalItemIndex]?.url : currentMediaSet[currentModalItemIndex]?.url
     const currentModalItemName = searchMode ? searchResults[currentModalItemIndex]?.name : currentMediaSet[currentModalItemIndex]?.name
@@ -116,6 +117,8 @@ export const ItemsModalContextProvider = ({children}) => {
         smallScreen,
         swipeHandlers,
         handleFullScreen,
+        showVideoMobileSettings,
+        toggleVideoMobileSettings,
         currentModalItemName,
     }
 

@@ -117,6 +117,7 @@ module.exports = {
                 'playerHeight': '40px',
                 'mobilePlayerHeight': '70px',
                 'inputContainerHeight': '63px',
+                'signUpInputContainerHeight': '40px',
             },
             zIndex: {
                 '1': '1',

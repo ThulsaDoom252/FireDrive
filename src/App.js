@@ -8,13 +8,13 @@ import {
     verificationRoute,
     wrapperId
 } from "./common/commonData";
-import {connect, useSelector} from "react-redux";
+import {connect, useDispatch, useSelector} from "react-redux";
 import Main from "./components/Main";
 import SignInContainer from "./components/Auth/SignIn/SignInContainer";
 import SignUpContainer from "./components/Auth/SignUp/SignUpContainer";
 import Initializing from "./components/Initializing";
 import {
-    authCheck, startRestoreTimer,
+    authCheck, getRestoreCountDownInfo, startRestoreTimer,
     startVerificationTimer,
     toggleRestoreEmailSendStatus,
     toggleVerificationEmailSendStatus
@@ -48,6 +48,8 @@ const App = ({
         backgroundSize: '100vw 100vh',
         backgroundPosition: 'center',
     }
+
+    const dispatch = useDispatch()
     //
     // useEffect(() => {
     //     const isVerificationEmailSend = localStorage.getItem('isVerificationEmailSend')
@@ -67,6 +69,11 @@ const App = ({
     //     }
     //
     // }, [])
+
+    useEffect(() => {
+        getRestoreCountDownInfo({dispatch})
+    }, []);
+
     useEffect(() => {
         window.addEventListener('resize', handleResize)
     }, [])

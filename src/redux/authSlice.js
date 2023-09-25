@@ -13,11 +13,13 @@ import {
     signOut,
 } from 'firebase/auth'
 import {uploadBytes, ref, getDownloadURL} from "firebase/storage";
-import {storage,} from "../firebase";
+import {database, storage,} from "../firebase";
 import toast from "react-hot-toast";
 import {generateRandomString} from "../common/commonData";
 import {toggleInitializing} from "./appSlice";
 import {restoreTimerInitialValue, verificationTimerInitialValue} from "../common/Timers";
+import {ref as dbRef, set, query, equalTo, get, orderByChild, remove} from 'firebase/database';
+
 
 const authSlice = createSlice({
     name: 'auth-slice',
@@ -36,6 +38,7 @@ const authSlice = createSlice({
         restoreTimerValue: null,
         verificationIntervalId: null,
         restoreIntervalId: null,
+        isRestoreEmailRequested: false
     },
 
     reducers: {
@@ -55,6 +58,7 @@ const authSlice = createSlice({
             state.isVerificationEmailSend = action.payload
         },
         toggleRestoreEmailSendStatus(state, action) {
+            debugger
             state.isRestoreEmailSend = action.payload
         },
         toggleAuthStatus(state, action) {
@@ -159,6 +163,7 @@ export const sendVerificationEmail = createAsyncThunk('send-verification-thunk',
 export const sendRestoreEmail = createAsyncThunk('send-restore-email-thunk', async (email, {dispatch}) => {
     const auth = getAuth()
     try {
+        await createRestoreCountDown()
         await sendPasswordResetEmail(auth, email)
         dispatch(toggleRestoreEmailSendStatus(true))
         localStorage.setItem('isRestoreEmailSend', true)
@@ -288,25 +293,104 @@ export const startVerificationTimer = createAsyncThunk(
     })
 
 
-
 export const startRestoreTimer = createAsyncThunk(
     'restore-timer-thunk',
-    async (_, {dispatch}) => {
+    async (_, {dispatch, getState}) => {
+        const isRestoreEmailSendInStorage = localStorage.getItem('isRestoreEmailSend')
+        const currentState = getState()
+        const isRestoreEmailSend = currentState.auth.isRestoreEmailSend
+        isRestoreEmailSendInStorage === 'true' && !isRestoreEmailSend ? dispatch(toggleRestoreEmailSendStatus(true)) : void 0
+        debugger
         let currentTime = localStorage.getItem('restoreCounterValue')
-        const newIntervalId = setInterval(() => {
+        const newIntervalId = setInterval(async () => {
             if (currentTime > 0) {
+                debugger
                 currentTime = currentTime - 1
                 dispatch(setRestoreTimerValue(currentTime));
                 localStorage.setItem('restoreCounterValue', currentTime)
             } else {
+                debugger
+                await deleteRecordsByCondition()
                 clearInterval(newIntervalId)
                 dispatch(setRestoreTimerValue(verificationTimerInitialValue))
-                dispatch(toggleRestoreEmailSendStatus(false))
                 localStorage.setItem('isRestoreEmailSend', false)
+                dispatch(toggleRestoreEmailSendStatus(false))
             }
         }, 1000);
         dispatch(setVerificationIntervalId(newIntervalId));
     })
+
+
+export const createRestoreCountDown = async () => {
+    debugger
+    const data = {
+        isRestoreEmailRequested: true,
+    };
+
+    set(dbRef(database, `users`), data)
+        .then(() => {
+            console.log('Data has been written to the database.');
+        })
+        .catch((error) => {
+            console.error('Error writing data: ', error);
+        });
+}
+
+
+export const getRestoreCountDownInfo = ({dispatch}) => {
+    debugger
+    const usersRef = dbRef(database, 'users');
+    const queryRef = query(usersRef,
+        orderByChild('isRestoreEmailRequested'),
+    );
+
+    get(queryRef).then((snapshot) => {
+        if (snapshot.exists()) {
+            dispatch(startRestoreTimer())
+            debugger
+        }
+    }).catch((error) => {
+        alert('Get countdown error...: ', error);
+    });
+}
+
+
+export const deleteRecordsByCondition = async () => {
+    const usersRef = dbRef(database, 'users');
+
+    // Создайте запрос, чтобы найти записи, где isRestoreEmailRequested равно true
+    const queryRef = query(usersRef,
+        orderByChild('isRestoreEmailRequested'),
+    );
+
+    // Выполните запрос
+    get(queryRef).then((snapshot) => {
+        if (snapshot.exists()) {
+            // Получите данные (снимок) из запроса
+            const data = snapshot.val();
+
+            // Получите ключи записей, соответствующих вашему условию
+            const keysToDelete = Object.keys(data);
+
+            // Удалите записи по ключам
+            keysToDelete.forEach((key) => {
+                debugger
+                const recordRef = dbRef(database, `users/${key}`);
+                remove(recordRef)
+                    .then(() => {
+                        console.log(`Запись с ключом ${key} удалена.`);
+                    })
+                    .catch((error) => {
+                        console.error(`Ошибка при удалении записи с ключом ${key}: `, error);
+                    });
+            });
+        } else {
+            console.log('Записи с isRestoreEmailRequested=true не найдены.');
+        }
+    }).catch((error) => {
+        console.error('Ошибка при выполнении запроса: ', error);
+    });
+};
 
 
 

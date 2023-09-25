@@ -34,7 +34,6 @@ const Progress = ({
             classes={{
                 root: classes.root,
             }}
-            className={`relative bottom-1`}
             onMouseEnter={handleMouseEnterSlider}
             onMouseLeave={handleMouseLeaveSlider}
             onMouseMove={handleMouseMove}

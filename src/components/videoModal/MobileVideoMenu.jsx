@@ -1,15 +1,9 @@
-import React, {useContext, useState} from 'react';
-import {Button, Menu, MenuItem} from '@mui/material';
-import {MoreVert as MoreVertIcon} from '@mui/icons-material';
-import {useDispatch, useSelector} from "react-redux";
-import {toggleVideoMobileMenu} from "../../redux/appSlice";
+import React, {useContext} from 'react';
+import {Menu} from '@mui/material';
 import MediaOptions from "../options/ItemOptions";
 import {ItemsModalContext} from "../../context/ItemsModalContext";
 
 const MobileVideoMenu = () => {
-
-    const showMenu = useSelector(state => state.app.showVideoMobileMenu)
-    const dispatch = useDispatch()
 
     const ModalContext = useContext(ItemsModalContext)
 
@@ -19,27 +13,20 @@ const MobileVideoMenu = () => {
         currentModalItemIndex,
         currentModalItemName,
         currentModalItemOldName,
+        showVideoMobileSettings,
+        toggleVideoMobileSettings,
     } = ModalContext
 
 
     const handleClose = () => {
-        dispatch(toggleVideoMobileMenu(false))
+        toggleVideoMobileSettings(false)
     }
-    // const [anchorEl, setAnchorEl] = useState(null);
-
-    // const handleClick = (event) => {
-    //     setAnchorEl(event.currentTarget);
-    // };
-    //
-    // const handleClose = () => {
-    //     setAnchorEl(null);
-    // };
 
     return (
-        <div className="fixed bottom-0 w-screen">
+        <div className="fixed bottom-0 w-screen" onClick={handleClose}>
             <Menu
                 id="menu"
-                open={showMenu}
+                open={showVideoMobileSettings}
                 onClose={handleClose}
                 anchorOrigin={{
                     vertical: 'bottom',
@@ -50,6 +37,7 @@ const MobileVideoMenu = () => {
                     horizontal: 'center',
                 }}
             >
+
                 <MediaOptions initialMode={'show'}
                               shouldAnimate={false}
                               showIcons={false}
