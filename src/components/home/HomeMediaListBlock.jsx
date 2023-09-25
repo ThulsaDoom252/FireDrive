@@ -2,10 +2,10 @@ import React from 'react';
 import {images, truncate, videos, audio} from "../../common/commonData";
 import {MdLibraryMusic, MdOutlineOndemandVideo} from "react-icons/md";
 import {FaImages} from "react-icons/fa";
-import {ClipLoader} from "react-spinners";
 import ReactPlayer from "react-player";
 import {PiMusicNotesFill} from "react-icons/pi"
 import Image from "../media/Image/Image"
+import {Skeleton} from "@mui/material";
 
 
 const HomeMediaListBlock = ({itemsList, fetchItems, smallScreen, currentTheme, itemType, iconSize = 40}) => {
@@ -49,8 +49,8 @@ const HomeMediaListBlock = ({itemsList, fetchItems, smallScreen, currentTheme, i
                         justify-center
                         items-center
                         `}>
-                {fetchItems ? <ClipLoader size={50}
-                                          color={currentTheme.color}/>
+                {fetchItems ?
+                    <Skeleton variant="rectangular" width={40} height={40} style={{width: '100%', height: '100%', color: `${currentTheme.color}`}}/>
                     : imagesList ? itemsList.map((image, index) =>
                                 index <= (smallScreen ? 4 : 8) && <div className={`
                         m-2
