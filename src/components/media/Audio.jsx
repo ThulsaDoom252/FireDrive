@@ -9,6 +9,7 @@ import {dayPrimary} from "../../common/themes";
 import {truncate} from "../../common/commonData";
 import MyCustomTransition from "../common/MyCustomTransition";
 import toast from "react-hot-toast";
+import {Skeleton, Tooltip} from "@mui/material";
 
 const Audio = ({
                    name,
@@ -20,21 +21,27 @@ const Audio = ({
                    setHoveredMediaIndex,
                    smallScreen,
                    currentTheme,
+                   skeletonWidth = 40,
+                   skeletonHeight = 40,
                }) => {
 
     const audioContext = useContext(AudioPlayerContext)
     const audioRef = useRef(url)
     const isAudioHovered = (hoveredMediaIndex === index) && !smallScreen
     const [totalDuration, setTotalDuration] = useState(0)
+    const [isAudioLoaded, setIsAudioLoaded] = useState(false)
 
-    const formattedTotalTime = () => {
+    const formatTotalTime = () => {
         const formattedDuration = formatTime(audioRef.current.duration)
         setTotalDuration(formattedDuration)
     }
 
-    window.s1 = hoveredMediaIndex
-    window.s2 = audioIndex
-    window.s3 = index
+
+    const handleLoadAudio = () => {
+        formatTotalTime()
+        setIsAudioLoaded(true)
+    }
+
 
     const {
         currentTrackName,
@@ -50,7 +57,7 @@ const Audio = ({
 
     return (
         <>
-            <audio onCanPlay={formattedTotalTime} hidden={true} src={url || ''} ref={audioRef}></audio>
+            <audio onCanPlay={handleLoadAudio} hidden={true} src={url || ''} ref={audioRef}></audio>
             <div
                 onClick={() => handleSetCurrentAudioIndex({index: audioIndex})}
                 className={` 
@@ -71,39 +78,46 @@ const Audio = ({
                 onMouseEnter={() => setHoveredMediaIndex(audioIndex)}
                 onMouseLeave={() => setHoveredMediaIndex(null)}
             >
-                <div>
-                    <div className={'w-10 text-xl h-full flex justify-center items-center hover:cursor-pointer'}
-                    >
-                        {isTrackFromTheListPlaying ? <AiFillPauseCircle
-                                size={25}
-                                color={currentTheme.color === dayPrimary && 'black'}/>
-                            : (<AiFillPlayCircle size={25} color={currentTheme.color === dayPrimary && 'black'}/>)}
-                    </div>
-                </div>
-                <div
-                    className={`w-full absolute left-10  ${currentTheme.color}`}>{smallScreen ? truncate(name, 20) : truncate(name, 50)}</div>
-                <MyCustomTransition show={isAudioHovered}>
-                    <div className={'absolute top-1/2 transform -translate-y-1/2 right-0 z-50 mr-40'}>
-                        <ItemOptions
-                            initialMode={'show'}
-                            itemOptionsHovered={isAudioHovered} {...{
-                            name,
-                            url,
-                            hoveredMediaIndex,
-                            index,
-                            searchMode
-                        }}/>
+                {isAudioLoaded ?
+                    <>
+                        <div>
+                            <div className={'w-10 text-xl h-full flex justify-center items-center hover:cursor-pointer'}
+                            >
+                                {isTrackFromTheListPlaying ? <AiFillPauseCircle
+                                        size={25}
+                                        color={currentTheme.color === dayPrimary && 'black'}/>
+                                    : (<AiFillPlayCircle size={25}
+                                                         color={currentTheme.color === dayPrimary && 'black'}/>)}
+                            </div>
+                        </div>
+                        <div
+                            className={`w-full absolute left-10  ${currentTheme.color}`}>{smallScreen ? truncate(name, 20) : truncate(name, 50)}</div>
+                        <MyCustomTransition show={isAudioHovered}>
+                            <div className={'absolute top-1/2 transform -translate-y-1/2 right-0 z-50 mr-40'}>
+                                <ItemOptions
+                                    initialMode={'show'}
+                                    itemOptionsHovered={isAudioHovered} {...{
+                                    name,
+                                    url,
+                                    hoveredMediaIndex,
+                                    index,
+                                    searchMode
+                                }}/>
 
 
-                    </div>
-                </MyCustomTransition>
-                <div
-                    className={'flex mr-5 '}>
-                    <div
-                        className={`${currentTheme.color}`}>{currentTrackName === name && `${formatTime(currentDuration)}/`}</div>
-                    <div className={`${currentTheme.color}`}>{totalDuration === 0 ?
-                        <ClipLoader size={25}/> : totalDuration}</div>
-                </div>
+                            </div>
+                        </MyCustomTransition>
+                        <div
+                            className={'flex mr-5 '}>
+                            <div
+                                className={`${currentTheme.color}`}>{currentTrackName === name && `${formatTime(currentDuration)}/`}</div>
+                            <div className={`${currentTheme.color}`}>{totalDuration === 0 ?
+                                <ClipLoader size={25}/> : totalDuration}</div>
+                        </div>
+                    </> : <Tooltip title={'image loading'}>
+                        <Skeleton variant="rectangular" width={skeletonWidth} height={skeletonHeight} animation="wave"
+                                  style={{width: '100%', height: '100%'}}/>
+                    </Tooltip>}
 
 
             </div>

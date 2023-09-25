@@ -6,6 +6,7 @@ import ReactPlayer from "react-player";
 import {PiMusicNotesFill} from "react-icons/pi"
 import Image from "../media/Image/Image"
 import {Skeleton} from "@mui/material";
+import HomeVideoPlayer from "./VideoList/HomeVideoPlayer";
 
 
 const HomeMediaListBlock = ({itemsList, fetchItems, smallScreen, currentTheme, itemType, iconSize = 40}) => {
@@ -50,7 +51,8 @@ const HomeMediaListBlock = ({itemsList, fetchItems, smallScreen, currentTheme, i
                         items-center
                         `}>
                 {fetchItems ?
-                    <Skeleton variant="rectangular" width={40} height={40} style={{width: '100%', height: '100%', color: `${currentTheme.color}`}}/>
+                    <Skeleton variant="rectangular" width={40} height={40}
+                              style={{width: '100%', height: '100%', color: `${currentTheme.color}`}}/>
                     : imagesList ? itemsList.map((image, index) =>
                                 index <= (smallScreen ? 4 : 8) && <div className={`
                         m-2
@@ -69,24 +71,7 @@ const HomeMediaListBlock = ({itemsList, fetchItems, smallScreen, currentTheme, i
                                 </div>
                         )
                         : videosList ? itemsList.map((video, index) =>
-                            index <= (smallScreen ? 4 : 8) &&
-                            <div className={`
-                    flex
-                    m-2
-                    justify-center
-                    items-center
-                    rounded
-                    bg-black
-                    h-90%
-                    max-w-videoListItem
-                    overflow-y-hidden
-                    `}>
-                                <ReactPlayer
-                                    height={'full'}
-                                    width={'full'}
-                                    url={video.url}
-                                    alt={'broken'}/>
-                            </div>
+                            <HomeVideoPlayer index={index} url={video.url} smallScreen={smallScreen}/>
                         ) : audioList ? itemsList.map((audio, index) =>
                                 index <= (smallScreen ? 3 : 6) && <div className={`
                     flex
