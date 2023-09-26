@@ -1,11 +1,10 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import ReactPlayer from 'react-player';
 import {IoClose} from 'react-icons/io5';
 import {ItemsModalContext} from '../../context/ItemsModalContext';
-import MediaOptions from '../options/ItemOptions';
 import ModalVideoItem from '../media/ModalVideoItem';
 import Overlay from '../common/Overlay';
-import {formatTime, noModal, stopPropagation} from '../../common/commonData';
+import {noModal, stopPropagation} from '../../common/commonData';
 import CustomControls from '../videoPlayer/controls/CustomControls';
 import {makeStyles} from '@material-ui/core/styles';
 import {Backdrop, Fade, Modal} from '@material-ui/core';
@@ -41,7 +40,21 @@ const VideoModal = ({
     const [isVideoPlaying, setIsVideoPlaying] = useState(false)
     const classes = useStyles();
 
-    window.isVideoReady = isVideoReady
+    const [isControlsVisible, setIsControlsVisible] = useState(false)
+    const [controlInitialVisibilityValue, setControlInitialVisibilityValue] = useState(10000)
+
+    const handleVisibility = () => {
+        setControlInitialVisibilityValue(prevValue => prevValue + 5000)
+        if (!isControlsVisible) {
+            setIsControlsVisible(true)
+            setTimeout(() => {
+                setIsControlsVisible(false)
+                setControlInitialVisibilityValue(10000)
+            }, [controlInitialVisibilityValue])
+        }
+
+
+    }
 
     const handleVideoIsReady = () => {
         setIsVideoReady(true)
@@ -128,6 +141,8 @@ const VideoModal = ({
                                 id="video-container"
                                 className={`w-100% h-90% relative overflow-hidden bg-black relative `}
                                 onContextMenu={(e) => e.preventDefault()}
+                                onMouseMove={handleVisibility}
+                                onClick={handleVisibility}
                             >
                                 {!isVideoReady && <div className={'absolute inset-0 flex items-center justify-center'}>
                                     <ClipLoader size={150} color={'white'}/>
@@ -143,7 +158,7 @@ const VideoModal = ({
                                     controls={false}
                                     url={currentModalItemUrl || ''}
                                 />
-                                {isVideoReady &&
+                                {isVideoReady && isControlsVisible &&
                                     <CustomControls
                                         playerRef={playerRef}
                                         setCurrentVideoTime={setCurrentVideoTime}
@@ -153,6 +168,7 @@ const VideoModal = ({
                                         setIsVideoPlaying={setIsVideoPlaying}
                                         url={currentModalItemUrl}
                                         name={currentModalItemName}
+                                        isVisible={isControlsVisible}
                                         oldName={currentModalItemOldName}
                                         toggleVideoMobileSettings={toggleVideoMobileSettings}
                                         index={currentModalItemIndex}

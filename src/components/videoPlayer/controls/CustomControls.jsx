@@ -17,6 +17,7 @@ const CustomControls = ({
                             oldName,
                             url,
                             isVideoPlaying,
+                            isVisible,
                             setIsVideoPlaying,
                         },
 ) => {
@@ -288,7 +289,10 @@ const CustomControls = ({
 
     return (
         // Menu Container
-        <div className={`
+        <div
+            style={{ visibility: isVisible ? "visible" : "hidden" }}
+
+            className={`
         w-full 
         h-full 
         flex
