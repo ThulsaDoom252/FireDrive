@@ -26,6 +26,7 @@ const Progress = ({
                       handleMouseLeaveSlider,
                       handleMouseMove,
                       handleChange,
+    handleTouchMove,
                       maxValue,
                       smallScreenMode,
                       value,
@@ -42,6 +43,9 @@ const Progress = ({
             }}
             onMouseEnter={handleMouseEnterSlider}
             onMouseLeave={handleMouseLeaveSlider}
+            onTouchStart = {handleMouseEnterSlider}
+            onTouchEnd={handleMouseLeaveSlider}
+            onTouchMove={handleTouchMove}
             onMouseMove={handleMouseMove}
             min={minValue}
             onChange={handleChange}

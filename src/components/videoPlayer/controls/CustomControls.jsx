@@ -56,6 +56,7 @@ const CustomControls = ({
 
     const [previewTime, setPreviewTime] = useState(false)
     const [mouseX, setMouseX] = useState(null)
+    const [touchX, setTouchX] = useState(null)
 
     const playBackValues = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]
 
@@ -185,6 +186,25 @@ const CustomControls = ({
         }
     }
 
+    const handleTouchMove = (e) => {
+        setTouchX(e.touches[0].clientX);
+        if (!disablePreview) {
+            // receiving touch coordinates related to the slider
+            const slider = e.currentTarget;
+            const rect = slider.getBoundingClientRect();
+            const x = e.touches[0].clientX - rect.left;
+
+            // Calculate progress in %
+            const progress = (x / slider.offsetWidth) * 100;
+
+            // Convert progress into slider value
+            const minValue = 0;
+            const maxValue = totalVideoDuration; // Максимальное значение слайдера
+            const value = (progress / 100) * (maxValue - minValue) + minValue;
+            setPreviewTime(value);
+        }
+    };
+
     const changeVideoScale = (scale) => {
         if (playerRef.current) {
             const playerElement = playerRef.current.getInternalPlayer();
@@ -308,6 +328,7 @@ const CustomControls = ({
                 totalVideoDuration,
                 previewTime,
                 mouseX,
+                touchX,
                 currentVideoTime,
                 currentVideoVolume,
                 isFullScreen,
@@ -329,6 +350,7 @@ const CustomControls = ({
                 handleVideoMenu,
                 handleFullScreen: requestFullScreen,
                 handleMuteVideoVolume,
+                handleTouchMove,
                 handleMouseLeaveSlider,
                 handleMouseEnterSlider,
                 handleMouseMove,

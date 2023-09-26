@@ -2,13 +2,13 @@ import React from 'react';
 import ReactPlayer from "react-player";
 import {formatTime} from "../../../../common/commonData";
 
-const Preview = ({mouseX, previewTime, url, previewRef, smallScreenMode}) => {
+const Preview = ({mouseX, previewTime, url, previewRef, smallScreenMode, touchX}) => {
 
     const previewStyle = {
         position: 'absolute',
         bottom: '50px',
-        transform: `translateX(${mouseX}px)`,
-        left: `${smallScreenMode ? '-140px' : '-250px'}`,
+        transform: smallScreenMode ? `translateX(${touchX}px)` : `translateX(${mouseX}px)`,
+        left: `${smallScreenMode ? '-50px' : '-250px'}`,
     };
 
     return (

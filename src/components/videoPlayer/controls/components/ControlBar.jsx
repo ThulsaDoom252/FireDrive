@@ -23,6 +23,7 @@ const ControlBar = ({
                         totalVideoDuration,
                         previewTime,
                         mouseX,
+                        touchX,
                         isMobileFullScreen,
                         currentVideoTime,
                         currentVideoVolume,
@@ -41,6 +42,7 @@ const ControlBar = ({
                         handlePlayBackRate,
                         handleClearSubMenu,
                         handleScaleSubMenu,
+                        handleTouchMove,
                         handleVideoMenu,
                         handleFullScreen,
                         handleMuteVideoVolume,
@@ -91,10 +93,12 @@ const ControlBar = ({
                             <Preview
                                 smallScreenMode={smallScreenMode}
                                 url={url}
+                                touchX={touchX}
                                 previewRef={previewRef}
                                 previewTime={previewTime}
                                 mouseX={mouseX}/>}
                         <Progress
+                            handleTouchMove={handleTouchMove}
                             smallScreenMode={smallScreenMode}
                             value={currentVideoTime}
                             maxValue={totalVideoDuration}
@@ -218,6 +222,7 @@ const ControlBar = ({
                                     url={url}
                                     previewRef={previewRef}
                                     previewTime={previewTime}
+                                    touchX={touchX}
                                     mouseX={mouseX}/>}
                             {/*Progress bar*/}
                             <Progress
@@ -226,7 +231,10 @@ const ControlBar = ({
                                 handleChange={handleChangeDuration}
                                 handleMouseLeaveSlider={handleMouseLeaveSlider}
                                 handleMouseEnterSlider={handleMouseEnterSlider}
-                                handleMouseMove={handleMouseMove}/>
+                                handleMouseMove={handleMouseMove}
+                                handleTouchMove={handleTouchMove}
+
+                            />
                         </div>
                         {/*Right controls block*/}
                         <div className={`
