@@ -11,6 +11,7 @@ import SpeedBtn from "./SpeedBtn";
 import ScaleMenu from "./ScaleMenu";
 import SpeedMenu from "./SpeedMenu";
 import BottomButtonsContainer from "./BottomButtonsContainer";
+import VolumeBar from "../../../audioPlayer/VolumeBar";
 
 const ControlBar = ({
                         isVideoPlaying,
@@ -50,6 +51,25 @@ const ControlBar = ({
                         handleVideoVolumeChange,
                         handleChangeDuration,
                     }) => {
+
+    const videoVolumeMarks = [
+        {
+            value: 0.2,
+        },
+        {
+            value: 0.4,
+        },
+        {
+            value: 0.6,
+        },
+        {
+            value: 0.8,
+        },
+        {
+            value: 1,
+        },
+    ];
+
     return (
         <>
             {smallScreenMode || isMobileFullScreen ?
@@ -59,15 +79,14 @@ const ControlBar = ({
         flex-col
         h-12
         z-10
-        pr-2
-        pl-2
+
         pb-2
         bg-gray-800
         bg-opacity-80'
                      onClick={stopPropagation}
                 >
                     {/*//Mobile Progress */}
-                    <div className={'w-full h-4 relative bottom-3'}>
+                    <div className={'w-full h-4 relative bottom-4'}>
                         {isSliderHovered && !disablePreview &&
                             <Preview
                                 smallScreenMode={smallScreenMode}
@@ -76,6 +95,7 @@ const ControlBar = ({
                                 previewTime={previewTime}
                                 mouseX={mouseX}/>}
                         <Progress
+                            smallScreenMode={smallScreenMode}
                             value={currentVideoTime}
                             maxValue={totalVideoDuration}
                             handleChange={handleChangeDuration}
@@ -106,10 +126,12 @@ const ControlBar = ({
                                 {/*Volume bar block */}
                                 <div className={'w-10 ml-2 relative top-1'}>
                                     {/*Volume bar*/}
-                                    <Progress
-                                        handleChange={handleVideoVolumeChange}
+                                    <VolumeBar
+                                        barWidth={5}
+                                        customMarks={videoVolumeMarks}
+                                        handleVolumeChange={handleVideoVolumeChange}
                                         maxValue={1}
-                                        value={currentVideoVolume}
+                                        volume={currentVideoVolume}
                                     />
                                 </div>
                             </div>

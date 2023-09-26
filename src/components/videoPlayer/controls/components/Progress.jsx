@@ -1,21 +1,25 @@
 import React from 'react';
 import {Slider} from "@mui/material";
-import {withStyles} from "@mui/styles";
+import {makeStyles, withStyles} from "@mui/styles";
 
 
-const styles = () => ({
-    root: {
+const useStyles = makeStyles((theme) => ({
+    root: ({smallScreenMode}) =>({
         '& .MuiSlider-track': {
             visibility: 'visible',
+            height: `${smallScreenMode && '10px'}`,
+            borderRadius: `${smallScreenMode && 0}`,
         },
         '& .MuiSlider-rail': {
             visibility: 'visible',
+            height: `${smallScreenMode && '10px'}`,
+            borderRadius: `${smallScreenMode && 0}`,
         },
         '& .MuiSlider-thumb': {
             display: 'none',
         },
-    },
-});
+    }),
+}));
 
 const Progress = ({
                       handleMouseEnterSlider,
@@ -23,11 +27,12 @@ const Progress = ({
                       handleMouseMove,
                       handleChange,
                       maxValue,
+                      smallScreenMode,
                       value,
-                      classes,
                       minValue = 0,
                       step = 0.01
                   }) => {
+    const classes = useStyles({smallScreenMode });
 
 
     return (
@@ -47,4 +52,4 @@ const Progress = ({
     );
 };
 
-export default withStyles(styles)(Progress);
+export default Progress;

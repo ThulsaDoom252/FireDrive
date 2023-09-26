@@ -1,9 +1,9 @@
 import {Slider} from "@mui/material";
-import {withStyles} from "@mui/styles";
+import {makeStyles} from "@mui/styles";
 
 
-const styles = () => ({
-    root: {
+const useStyles = makeStyles((theme) => ({
+    root: ({barWidth = 5, barColor = 'gray', barActiveColor = 'blue'}) => ({
         "& .MuiSlider-rail": {
             display: 'none'
         },
@@ -14,28 +14,27 @@ const styles = () => ({
             display: "none",
         },
         "& .MuiSlider-mark": {
-            width: 5, // Ширина отметки
+            width: barWidth, // Ширина отметки
             height: '50%', // Высота отметки
-            backgroundColor: "gray", // Цвет отметки по умолчанию (неактивной)
+            backgroundColor: `${barColor}`, // Цвет отметки по умолчанию (неактивной)
             "&.MuiSlider-markActive": {
-                backgroundColor: "blue", // Цвет активной отметки
-            },
-            "&.first-mark": {
-                color: 'yellow',
-                width: 30,
-                backgroundColor: "gray", // Цвет первой метки (неактивной)
+                backgroundColor: `${barActiveColor}`, // Цвет активной отметки
             },
         },
-    },
-});
+    }),
+}));
 
 const VolumeBar = ({
                        volume,
-                       classes,
+                       barWidth,
+                       customMarks,
                        handleVolumeChange,
                        step = 0.1
 
                    }) => {
+
+    const classes = useStyles({barWidth});
+
     const marks = [
         {
             value: 0.1,
@@ -75,7 +74,7 @@ const VolumeBar = ({
                     root: classes.root,
                 }}
                 min={0}
-                marks={marks}
+                marks={customMarks || marks}
                 max={1}
                 onChange={handleVolumeChange}
                 value={volume}
@@ -88,4 +87,4 @@ const VolumeBar = ({
 };
 
 
-export default withStyles(styles)(VolumeBar)
+export default VolumeBar

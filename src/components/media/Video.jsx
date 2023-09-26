@@ -56,7 +56,7 @@ const Video = ({
     }
     return (
         <>
-            {!isVideoReady && <Tooltip title={'image loading'}>
+            {!isVideoReady && <Tooltip title={'video loading'}>
                 <Skeleton variant="rectangular" width={250} height={200} animation="wave"/>
             </Tooltip>}
             <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}
