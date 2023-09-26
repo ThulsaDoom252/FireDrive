@@ -2,13 +2,9 @@ import React from 'react';
 import {HiDotsVertical} from "react-icons/hi";
 import {stopPropagation} from "../../../../common/commonData";
 import MediaOptions from "../../../options/ItemOptions";
-import {useDispatch} from "react-redux";
-import {toggleVideoMobileMenu} from "../../../../redux/appSlice";
 
 const TopBlock = ({
                       topBtnClass,
-                      handleShareMenu,
-                      handleCurrentItemMenu,
                       smallScreenMode,
                       isMobileFullScreen,
                       toggleVideoMobileSettings,

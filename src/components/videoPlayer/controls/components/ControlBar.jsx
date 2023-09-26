@@ -245,10 +245,11 @@ const ControlBar = ({
                                 {/*Volume bar block */}
                                 <div className={'w-20 ml-2 relative top-1'}>
                                     {/*Volume bar*/}
-                                    <Progress
-                                        handleChange={handleVideoVolumeChange}
+                                    <VolumeBar
+                                        barWidth={5}
+                                        handleVolumeChange={handleVideoVolumeChange}
                                         maxValue={1}
-                                        value={currentVideoVolume}
+                                        volume={currentVideoVolume}
                                     />
                                 </div>
                             </div>

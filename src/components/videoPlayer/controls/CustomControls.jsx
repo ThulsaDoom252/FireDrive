@@ -16,6 +16,8 @@ const CustomControls = ({
                             name,
                             oldName,
                             url,
+                            isVideoPlaying,
+                            setIsVideoPlaying,
                         },
 ) => {
 
@@ -35,8 +37,6 @@ const CustomControls = ({
                     ${mainBtnAnimation}`
 
     // Menu types
-    const shareMenu = 'SHARE_MENU'
-    const currentItemMenu = 'CURRENT_ITEM_MENU'
     const videoMenu = 'VIDEO_MENU'
 
     //Sub menu types
@@ -48,7 +48,7 @@ const CustomControls = ({
     const [currentSubMenu, setCurrentSubMenu] = useState(null)
 
     const [isSliderHovered, setIsSliderHovered] = useState(false)
-    const [isVideoPlaying, setIsVideoPlaying] = useState(true)
+    // const [isVideoPlaying, setIsVideoPlaying] = useState(true)
     const [currentVideoVolume, setCurrentVideoVolume] = useState(0.5)
     const [totalVideoDuration, setTotalVideoDuration] = useState(0)
     const [isFullScreen, setIsFullScreen] = useState(false)
@@ -67,8 +67,6 @@ const CustomControls = ({
     const currentVideoUrl = playerRef.current?.props?.url
 
     const previewRef = useRef(null)
-    const isShareMenuOpen = currentMenu === shareMenu
-    const isCurrentItemMenuOpen = currentMenu === currentItemMenu
     const isScaleSubMenuOpen = currentSubMenu === scaleSubMenu
     const isSpeedSubMenuOpen = currentSubMenu === speedSubMenu
     const isVideoMenuOpen = currentMenu === videoMenu
@@ -83,6 +81,37 @@ const CustomControls = ({
 
     }, [previewTime]);
 
+    useEffect(() => {
+        const videoBlockContainer = document.getElementById('video-block-container')
+        const videoContainer = document.getElementById('video-container')
+        const fullscreenChangeHandler = () => {
+            if (document.fullscreenElement) {
+                videoBlockContainer.style.marginTop = '0'
+                videoBlockContainer.style.width = '100%'
+                videoBlockContainer.style.height = '100%'
+                videoContainer.style.width = '100vw'
+                videoContainer.style.height = '100vh'
+            } else {
+                if (isMobileFullScreen) {
+                    videoBlockContainer.style.width = '100%'
+                    videoBlockContainer.style.height = '45%'
+                    videoBlockContainer.style.marginTop = '1.25rem'
+                } else {
+                    videoBlockContainer.style.width = '80%'
+                    videoBlockContainer.style.height = '90%'
+                }
+                videoContainer.style.width = '100%'
+                videoContainer.style.height = '90%'
+            }
+        };
+
+        document.addEventListener('fullscreenchange', fullscreenChangeHandler);
+
+        return () => {
+            document.removeEventListener('fullscreenchange', fullscreenChangeHandler);
+        };
+    }, []);
+
 
     //Close all menu's if open, play video
     const handleMainClick = () => {
@@ -95,22 +124,7 @@ const CustomControls = ({
         }
     }
 
-    // menu handlers
-    const handleCurrentItemMenu = () => {
-        if (currentMenu !== currentItemMenu) {
-            setCurrentMenu(currentItemMenu)
-        } else {
-            setCurrentMenu(null)
-        }
-    }
-    const handleShareMenu = () => {
-        if (currentMenu !== shareMenu) {
-            setCurrentMenu(shareMenu)
-        } else {
-            setCurrentMenu(null)
-        }
-    }
-
+    // Custom menu handlers
     const handleVideoMenu = () => {
         if (currentMenu !== videoMenu) {
             setCurrentMenu(videoMenu)
@@ -131,41 +145,19 @@ const CustomControls = ({
         setCurrentSubMenu(null)
     }
 
-    ///Фуллскрин
-    const handleFullScreen = () => {
-        const videoBlockContainer = document.getElementById('video-block-container')
-        const videoContainer = document.getElementById('video-container')
-        if (isVideoReady) {
-            if (isFullScreen || isMobileFullScreen) {
-                if (isMobileFullScreen) {
-                    videoBlockContainer.style.width = '100%'
-                    videoBlockContainer.style.height = '45%'
-                    videoBlockContainer.style.marginTop = '1.25rem'
 
-                } else {
-                    videoBlockContainer.style.width = '80%'
-                    videoBlockContainer.style.height = '90%'
-                }
-                videoContainer.style.width = '100%'
-                videoContainer.style.height = '90%'
-                isMobileFullScreen ? setIsMobileFullScreen(false) : setIsFullScreen(false)
-                document.exitFullscreen()
-
-            } else {
-                videoBlockContainer.style.marginTop = '0'
-                videoBlockContainer.style.width = '100%'
-                videoBlockContainer.style.height = '100%'
-                videoContainer.style.width = '100vw'
-                videoContainer.style.height = '100vh'
-                smallScreenMode ? setIsMobileFullScreen(true) : setIsFullScreen(true)
-                document.documentElement.requestFullscreen()
-            }
+    //FullScreen handler
+    const requestFullScreen = () => {
+        if (!document.fullscreenElement) {
+            smallScreenMode ? setIsMobileFullScreen(true) : setIsFullScreen(true)
+            document.documentElement.requestFullscreen()
+        } else {
+            smallScreenMode ? setIsMobileFullScreen(false) : setIsFullScreen(false)
+            document.exitFullscreen()
         }
     };
 
-
-    //Изменяем скорость воспроизведения
-    const handlePlayBackRate = (value) => {
+    const handlePlaySpeed = (value) => {
         if (playerRef.current) {
             playerRef.current.getInternalPlayer().playbackRate = value
             setCurrentSpeedValue(value)
@@ -173,28 +165,26 @@ const CustomControls = ({
 
     }
 
-    //Preview
+    //Preview logic
     const handleMouseMove = (e) => {
         setMouseX(e.clientX);
         if (!disablePreview) {
-            // Получите координаты мыши относительно слайдера
+            // receiving mouse coordinated related to the slider
             const slider = e.currentTarget;
             const rect = slider.getBoundingClientRect();
             const x = e.clientX - rect.left;
 
-            // Вычислите прогресс в процентах
+            // Calculate progress in %
             const progress = (x / slider.offsetWidth) * 100;
 
-            // Преобразуйте прогресс в значение слайдера
+            // Convert progress into slider value
             const minValue = 0;
             const maxValue = totalVideoDuration; // Максимальное значение слайдера
             const value = (progress / 100) * (maxValue - minValue) + minValue;
             setPreviewTime(value);
         }
-
     }
 
-    //Изменяем масштаб
     const changeVideoScale = (scale) => {
         if (playerRef.current) {
             const playerElement = playerRef.current.getInternalPlayer();
@@ -218,31 +208,6 @@ const CustomControls = ({
     }, [isVideoReady, currentVideoUrl]);
 
 
-    //Exit fullScreen mode on escape btn pressed
-    useEffect(() => {
-
-        const handleEscapeKeyPress = (event) => {
-            if (event.key === 'Escape') {
-                console.log('Escape key pressed')
-                if (isFullScreen || isMobileFullScreen) {
-                    handleFullScreen()
-                } else {
-                    void 0
-                }
-            }
-        };
-
-        // Добавляем обработчик события keydown при монтировании компонента
-        document.addEventListener('keydown', handleEscapeKeyPress);
-
-        // Удаляем обработчик события keydown при размонтировании компонента
-        return () => {
-            document.removeEventListener('keydown', handleEscapeKeyPress);
-        };
-    }, []);
-
-
-    // Play/pause handlers
     const handlePlay = () => {
         if (isVideoPlaying) {
             playerRef?.current?.getInternalPlayer()?.pause()
@@ -253,8 +218,8 @@ const CustomControls = ({
         }
     }
 
-    // Change volume
-    const handleVideoVolumeChange = (value, isMute) => {
+    //Volume logic
+    const handleVideoVolumeChange = (value) => {
         localStorage.setItem('currentVideoVolume', value.target.value)
         playerRef.current.getInternalPlayer().volume = value.target.value
         setCurrentVideoVolume(value.target.value)
@@ -284,7 +249,7 @@ const CustomControls = ({
         setCurrentVideoTime(value.target.value)
     }
 
-    // Handle picture in picture mode
+    //Picture in picture mode
     const handlePiP = async () => {
         if (document.pictureInPictureElement) {
             // Если уже активен режим PiP, выходим из него
@@ -325,9 +290,7 @@ const CustomControls = ({
                 index={index}
                 topBtnClass={topBtnClass}
                 toggleVideoMobileSettings={toggleVideoMobileSettings}
-                handleShareMenu={handleShareMenu}
                 smallScreenMode={smallScreenMode}
-                handleCurrentItemMenu={handleCurrentItemMenu}
             />
 
             {/*//Center Player Btn*/}
@@ -360,11 +323,11 @@ const CustomControls = ({
                 playBackValues,
                 handlePlay,
                 handleSpeedSubMenu,
-                handlePlayBackRate,
+                handlePlayBackRate: handlePlaySpeed,
                 handleClearSubMenu,
                 handleScaleSubMenu,
                 handleVideoMenu,
-                handleFullScreen,
+                handleFullScreen: requestFullScreen,
                 handleMuteVideoVolume,
                 handleMouseLeaveSlider,
                 handleMouseEnterSlider,

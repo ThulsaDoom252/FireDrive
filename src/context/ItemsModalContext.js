@@ -59,12 +59,8 @@ export const ItemsModalContextProvider = ({children}) => {
         dispatch(setCurrentModalItemIndex(index))
     }
 
-    const testObj = {
-        key1: 'string',
-    }
 
     const swipeHandlers = useSwipeable({
-        ...testObj,
         onSwipedLeft: () => handleNextModalItem(),
         onSwipedRight: () => handlePrevModalItem(),
         onTap: () => toggleMobileSettings(!showMobileSettings)

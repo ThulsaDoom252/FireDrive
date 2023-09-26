@@ -127,6 +127,7 @@ const Main = ({
             <VideoModal
                 toggleModal={setItemModalType}
                 showModal={itemModalType === videoModal}/>
+
             <ImageModalContainer toggleModal={setItemModalType} showModal={itemModalType === imageModal}
             />
             <UserModal toggleModal={setModalType}
