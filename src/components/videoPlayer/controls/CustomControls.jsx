@@ -54,7 +54,6 @@ const CustomControls = ({
     const [isFullScreen, setIsFullScreen] = useState(false)
     const [isMobileFullScreen, setIsMobileFullScreen] = useState(false)
 
-
     const [previewTime, setPreviewTime] = useState(false)
     const [mouseX, setMouseX] = useState(null)
 

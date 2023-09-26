@@ -141,6 +141,7 @@ const ControlBar = ({
                                 handleVideoMenu={handleVideoMenu}
                                 handleFullScreen={handleFullScreen}
                                 isFullScreen={isFullScreen}
+                                isMobileFullScreen={isMobileFullScreen}
                                 handleScaleSubMenu={handleScaleSubMenu}
                                 currentScaleValue={currentScaleValue}
                                 handleSpeedSubMenu={handleSpeedSubMenu}
@@ -159,6 +160,8 @@ const ControlBar = ({
 
                 </div>
                 :
+                //Desktop layout
+                //Main container
                 <div className='
         w-full
         flex
