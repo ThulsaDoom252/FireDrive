@@ -29,7 +29,7 @@ import UserAvatar from "./user/UserAvatar";
 import RenameModal from "./modals/RenameModal";
 import AlertModal from "./modals/AlertModal";
 import ImageModal from "./modals/ImageModal";
-import VideoModal from "./videoModal/VideoModal";
+import VideoModal from "./modals/Video/VideoModal";
 import ShareModal from "./modals/ShareModal";
 import alertModal from "./modals/AlertModal";
 import userModal from "./modals/UserModal";
@@ -44,7 +44,8 @@ import DropDownMenu from "./common/DropDownMenu";
 import Home from "./home/Home";
 import {CiSettings} from "react-icons/ci";
 import ImageModalContainer from "./modals/ImageModalContainer";
-import MobileVideoMenu from "./videoModal/MobileVideoMenu";
+import MobileVideoMenu from "./modals/Video/MobileVideoMenu";
+import VideoModalContainer from "./modals/Video/VideoModalContainer";
 
 const Main = ({
                   currentMediaSet,
@@ -124,7 +125,7 @@ const Main = ({
             </div>
             <RenameModal toggleModal={setModalType} showModal={modalType === renameModal}/>
             <ShareModal toggleModal={setModalType} showModal={modalType === shareModal}/>
-            <VideoModal
+            <VideoModalContainer
                 toggleModal={setItemModalType}
                 showModal={itemModalType === videoModal}/>
 

@@ -1,92 +1,45 @@
-import React, {useContext, useRef, useState} from 'react';
+import React from 'react';
 import ReactPlayer from 'react-player';
 import {IoClose} from 'react-icons/io5';
-import {ItemsModalContext} from '../../context/ItemsModalContext';
-import ModalVideoItem from '../media/ModalVideoItem';
-import Overlay from '../common/Overlay';
-import {noModal, stopPropagation} from '../../common/commonData';
-import CustomControls from '../videoPlayer/controls/CustomControls';
-import {makeStyles} from '@material-ui/core/styles';
+import ModalVideoItem from '../../media/ModalVideoItem';
+import Overlay from '../../common/Overlay';
+import {stopPropagation} from '../../../common/commonData';
+import CustomControls from '../../videoPlayer/controls/CustomControls';
 import {Backdrop, Fade, Modal} from '@material-ui/core';
 import {ClipLoader} from "react-spinners";
 
-const useStyles = makeStyles((theme) => ({
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    paper: {
-        backgroundColor: 'transparent',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
-}));
-
 const VideoModal = ({
                         showModal,
-                        toggleModal,
                         showOverlay = true,
                         overlayColor = 'bg-gray-900',
                         overlayOpacity = 'opacity-95',
                         zIndex = 'z-2',
                         animated = true,
                         closeIconSize = 30,
+                        currentMediaSet,
+                        currentModalItemUrl,
+                        currentModalItemIndex,
+                        currentModalItemName,
+                        currentModalItemOldName,
+                        smallScreen,
+                        toggleVideoMobileSettings,
+                        playerRef,
+                        isControlsVisible,
+                        setCurrentVideoTime,
+                        currentVideoTime,
+                        isVideoReady,
+                        isVideoPlaying,
+                        classes,
+                        handleVisibility,
+                        handleVideoIsReady,
+                        handleVideoFromListClick,
+                        handleClose,
+                        handleProgress,
+                        customControlsProps,
+                        listedVideoProps,
+                        videoBlockContainerRef,
+                        videoContainerRef,
                     }) => {
-    const ModalContext = useContext(ItemsModalContext);
-    const playerRef = useRef(null);
-    const [currentVideoTime, setCurrentVideoTime] = useState('0:00');
-    const [isVideoReady, setIsVideoReady] = useState(false);
-    const [isVideoPlaying, setIsVideoPlaying] = useState(false)
-    const classes = useStyles();
-
-    const [isControlsVisible, setIsControlsVisible] = useState(false)
-    const [controlInitialVisibilityValue, setControlInitialVisibilityValue] = useState(10000)
-
-    const handleVisibility = () => {
-        setControlInitialVisibilityValue(prevValue => prevValue + 5000)
-        if (!isControlsVisible) {
-            setIsControlsVisible(true)
-            setTimeout(() => {
-                setIsControlsVisible(false)
-                setControlInitialVisibilityValue(10000)
-            }, [controlInitialVisibilityValue])
-        }
-
-
-    }
-
-    const handleVideoIsReady = () => {
-        setIsVideoReady(true)
-    }
-
-    const handleVideoFromListClick = (index) => {
-        handleCurrentModalItemIndex(index)
-        setIsVideoReady(false)
-        setIsVideoPlaying(false)
-    }
-
-    const handleClose = () => {
-        toggleModal(noModal);
-        setIsVideoReady(false);
-    };
-
-    const handleProgress = (progress) => {
-        setCurrentVideoTime(progress.playedSeconds);
-    };
-
-
-    const {
-        currentMediaSet,
-        currentModalItemUrl,
-        currentModalItemIndex,
-        currentModalItemName,
-        currentModalItemOldName,
-        handleCurrentModalItemIndex,
-        smallScreen,
-        toggleVideoMobileSettings,
-    } = ModalContext;
-
 
     return (
         <Modal
@@ -132,13 +85,13 @@ const VideoModal = ({
             `}
                     >
                         <div
-                            id="video-block-container"
+                            ref={videoBlockContainerRef}
                             className={`
-                ${smallScreen ? 'w-100% h-45% flex justify-center items-center' : 'w-80% h-90%'}
+                ${smallScreen ? 'w-100% h-45%  flex flex-col justify-center items-center' : 'w-80% h-90%'}
               `}
                         >
                             <div
-                                id="video-container"
+                                ref={videoContainerRef}
                                 className={`w-100% h-90% relative overflow-hidden bg-black relative `}
                                 onContextMenu={(e) => e.preventDefault()}
                                 onMouseMove={handleVisibility}
@@ -165,7 +118,6 @@ const VideoModal = ({
                                         isVideoReady={isVideoReady}
                                         smallScreenMode={smallScreen}
                                         isVideoPlaying={isVideoPlaying}
-                                        setIsVideoPlaying={setIsVideoPlaying}
                                         url={currentModalItemUrl}
                                         name={currentModalItemName}
                                         isVisible={isControlsVisible}
@@ -174,25 +126,26 @@ const VideoModal = ({
                                         index={currentModalItemIndex}
                                         currentVideoTime={currentVideoTime}
                                         color={!smallScreen ? 'text-white' : 'text-white'}
+                                        {...{customControlsProps}}
                                     />}
                                 {smallScreen && <hr className={'bg-white h-0.5 rounded-full relative bottom-4'}/>}
                             </div>
                             <div
                                 hidden={smallScreen}
                                 className={`
-                  w-full
-                  h-10%
-                  bottom-0
-                  r-5 pl-5
-                  flex
-                  justify-between
-                  items-center
-                  bg-white
-                  rounded-b-2xl
-                  border-r-2
-                  border-black
-                  text-base
-                `}
+                              w-full
+                              h-10%
+                              bottom-0
+                              r-5 pl-5
+                              flex
+                              justify-between
+                              items-center
+                              bg-white
+                              rounded-b-2xl
+                              border-r-2
+                              border-black
+                              text-base
+                            `}
                             >
                                 <div className="text-center text-lg">{currentModalItemName}</div>
                             </div>
@@ -214,6 +167,7 @@ const VideoModal = ({
                                     onClick={handleVideoFromListClick}
                                     index={index}
                                     currentModalItemUrl={currentModalItemUrl}
+                                    {...{listedVideoProps}}
                                 />
                             ))}
                         </div>

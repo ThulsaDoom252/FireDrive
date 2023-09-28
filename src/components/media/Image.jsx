@@ -34,23 +34,38 @@ const Image = ({
         imageIsClickable ? handleInitialModalIndex({index}) : void 0
     }
 
+    const handleMouseEnter = () => {
+        if (showOptions) {
+            setHoveredMediaIndex(index)
+        }
+
+    }
+
+    const handleMouseLeave = () => {
+        if (showOptions) {
+            setHoveredMediaIndex(null)
+
+        }
+    }
+
     return (
         <div key={index}
-             onMouseEnter={() => setHoveredMediaIndex(index)}
-             onMouseLeave={() => setHoveredMediaIndex(null)}
+             onMouseEnter={handleMouseEnter}
+             onMouseLeave={handleMouseLeave}
              className={'flex justify-center max-w-200 max-h-200 relative'}>
-            <OpacityTransition show={(imageIsHovered && imageIsLoaded)}>
-                <div className={'absolute top-0 right-0'} hidden={!showOptions}>
-                    <MediaOptions name={name}
-                                  oldName={oldName}
-                                  url={url}
-                                  {...{
-                                      index,
-                                      searchMode,
-                                      hoveredMediaIndex,
-                                      setItemOptionsHovered,
-                                  }}/></div>
-            </OpacityTransition>
+            {showOptions &&
+                <OpacityTransition show={(imageIsHovered && imageIsLoaded)}>
+                    <div className={'absolute top-0 right-0'}>
+                        <MediaOptions name={name}
+                                      oldName={oldName}
+                                      url={url}
+                                      {...{
+                                          index,
+                                          searchMode,
+                                          hoveredMediaIndex,
+                                          setItemOptionsHovered,
+                                      }}/></div>
+                </OpacityTransition>}
             {!imageIsLoaded &&
                 <Tooltip title={'image loading'}>
                     <Skeleton variant="rectangular" width={300} height={300} animation="wave"/>

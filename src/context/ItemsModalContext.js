@@ -1,4 +1,4 @@
-import React, {createContext, useEffect, useState} from 'react';
+import React, {createContext, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {handleAlertModal, setCurrentModalItemIndex, setModalType} from "../redux/appSlice";
 import {handleMediaName} from "../redux/mediaSlice";
@@ -61,9 +61,16 @@ export const ItemsModalContextProvider = ({children}) => {
 
 
     const swipeHandlers = useSwipeable({
-        onSwipedLeft: () => handleNextModalItem(),
-        onSwipedRight: () => handlePrevModalItem(),
-        onTap: () => toggleMobileSettings(!showMobileSettings)
+        onSwipedUp: () => {
+            if (currentModalItemIndex < currentMediaSet.length - 1) {
+                setCurrentModalItemIndex(currentModalItemIndex + 1);
+            }
+        },
+        onSwipedDown: () => {
+            if (currentModalItemIndex > 0) {
+                setCurrentModalItemIndex(currentModalItemIndex - 1);
+            }
+        },
     });
 
     const handleNextModalItem = (e) => {

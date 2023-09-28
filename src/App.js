@@ -84,12 +84,14 @@ const App = ({
     }, [])
 
     useEffect(() => {
+        const handleResize = () => {
+            toggleSmallScreen(window.innerWidth
+                <=
+                smallScreenWidth
+            )
+        }
         window.addEventListener('resize', handleResize)
     }, [])
-
-    const handleResize = () => {
-        toggleSmallScreen(window.innerWidth <= smallScreenWidth)
-    }
 
     useEffect(() => {
         authCheck()

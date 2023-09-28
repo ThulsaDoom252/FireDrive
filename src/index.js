@@ -12,22 +12,24 @@ import {BurgerMenuContextProvider} from "./context/BurgerMenuContext";
 import PaginatorContextProvider from "./context/PaginatorContext";
 import {ItemsModalContextProvider} from "./context/ItemsModalContext";
 import 'bootstrap/dist/css/bootstrap.min.css'
-
+import {VideoControlsContextProvider} from "./context/VideoControlsContext";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Provider store={store}>
         <AudioPlayerContextProvider>
-            <PagesContextProvider>
-                <BurgerMenuContextProvider>
-                    <PaginatorContextProvider>
-                        <ItemsModalContextProvider>
-                            <App/>
-                        </ItemsModalContextProvider>
-                    </PaginatorContextProvider>
-                </BurgerMenuContextProvider>
-            </PagesContextProvider>
+            <VideoControlsContextProvider>
+                <PagesContextProvider>
+                    <BurgerMenuContextProvider>
+                        <PaginatorContextProvider>
+                            <ItemsModalContextProvider>
+                                <App/>
+                            </ItemsModalContextProvider>
+                        </PaginatorContextProvider>
+                    </BurgerMenuContextProvider>
+                </PagesContextProvider>
+            </VideoControlsContextProvider>
         </AudioPlayerContextProvider>
     </Provider>
 );

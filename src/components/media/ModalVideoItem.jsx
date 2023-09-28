@@ -1,6 +1,5 @@
-import React, {useRef, useState} from 'react';
+import React from 'react';
 import ReactPlayer from "react-player";
-import {formatTime} from "../../common/commonData";
 import {ClipLoader} from "react-spinners";
 import {Skeleton} from "@mui/material";
 
@@ -10,27 +9,21 @@ const ModalVideoItem = ({
                             onClick,
                             currentModalItemUrl,
                             info,
-                            column = false
+                            column = false,
+                            listedVideoProps,
                         }) => {
-    const videoRef = useRef(null)
-    const [isPlaying, setIsPlaying] = useState(false)
-    const [totalTime, setTotalTime] = useState(0)
-    const [isReady, setIsReady] = useState(false)
-
-    const handleMouseEnter = () => {
-        setIsPlaying(true);
-    };
-
-    const handleMouseLeave = () => {
-        setIsPlaying(false);
-        videoRef.current.seekTo(0);
-    };
 
 
-    const handleReadyModalItem = () => {
-        setTotalTime(formatTime(videoRef.current.getDuration()))
-        setIsReady(true)
-    }
+    const [
+        listedVideoInModalRef,
+        isListedVideoPlaying,
+        listedVideoTotalTime,
+        isListedVideoReady,
+        handleListedVideoMouseEnter,
+        handleListedVideoMouseLeave,
+        handleReadyListedVideo,
+    ] = listedVideoProps
+
 
     return (
         <div key={index} className={`
@@ -46,19 +39,19 @@ const ModalVideoItem = ({
         `}>
             <div
                 onClick={() => onClick(index)}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
+                onMouseEnter={handleListedVideoMouseEnter}
+                onMouseLeave={handleListedVideoMouseLeave}
                 className={` relative w-full h-full  bg-black rounded ${item.url === currentModalItemUrl && 'border-4 border-amber-300'} flex items-center justify-center cursor-pointer`}>
-                {!isReady && <div className={'absolute inset-0 flex items-center justify-center'}>
+                {!isListedVideoReady && <div className={'absolute inset-0 flex items-center justify-center'}>
                     <ClipLoader size={50} color={'white'}/>
                 </div>}
-                <ReactPlayer onReady={handleReadyModalItem}
+                <ReactPlayer onReady={handleReadyListedVideo}
                              volume={0}
-                             playing={isPlaying}
-                             ref={videoRef} url={item?.url || ''} height={'98%'}
+                             playing={isListedVideoPlaying}
+                             ref={listedVideoInModalRef} url={item?.url || ''} height={'98%'}
                              width={'98%'}/>
                 <div
-                    className='absolute bottom-0 left-2 text-white'>{isReady && totalTime}</div>
+                    className='absolute bottom-0 left-2 text-white'>{isListedVideoReady && listedVideoTotalTime}</div>
             </div>
             <div className={`
             text-white
@@ -66,7 +59,7 @@ const ModalVideoItem = ({
             text-center
             ${info !== 'center' && 'mt-3'}
             
-            `}>{isReady ? item.name :
+            `}>{isListedVideoReady ? item.name :
                 <Skeleton animation={'wave'} variant="rectangular" style={{width: '100%'}} height={10}/>}</div>
         </div>
     );

@@ -74,6 +74,7 @@ const SignIn = ({
                             <Image
                                 height={'h-50'}
                                 width={'w-40'}
+                                showOptions={false}
                                 url={Logo}
                                 imageIsClickable={false}
                             />
@@ -91,7 +92,7 @@ const SignIn = ({
                                        }}
                                        onChange={handleChange}
                                        value={values.email}
-                                       // sx={authInput.textField}
+                                // sx={authInput.textField}
                             />
                             {/*<ActionInput*/}
                             {/*    type={'email'}*/}

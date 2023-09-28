@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {Menu} from '@mui/material';
-import MediaOptions from "../options/ItemOptions";
-import {ItemsModalContext} from "../../context/ItemsModalContext";
+import MediaOptions from "../../options/ItemOptions";
+import {ItemsModalContext} from "../../../context/ItemsModalContext";
 
 const MobileVideoMenu = () => {
 
