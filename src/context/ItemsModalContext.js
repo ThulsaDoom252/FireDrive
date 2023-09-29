@@ -6,7 +6,7 @@ import {
     delay,
     removeCurrentItem,
     removeCurrentItemTitle,
-    removeCurrentMsg,
+    removeCurrentItemMsg,
     renameModal, shareModal
 } from "../common/commonData";
 import {useSwipeable} from "react-swipeable";
@@ -83,14 +83,6 @@ export const ItemsModalContextProvider = ({children}) => {
         currentModalItemIndex !== 0 && dispatch(setCurrentModalItemIndex(currentModalItemIndex - 1))
     }
 
-    const handleDeleteCurrentModalItem = () => {
-        dispatch(handleAlertModal({
-            title: removeCurrentItemTitle,
-            message: removeCurrentMsg,
-            actionType: removeCurrentItem
-        }))
-    }
-
     const handleRenameModal = async () => {
         dispatch(handleMediaName({name: currentModalItemName, oldName: currentModalItemOldName}))
         await delay(50)
@@ -111,7 +103,6 @@ export const ItemsModalContextProvider = ({children}) => {
         handlePrevModalItem,
         handleCurrentModalItemIndex,
         handleShareModal,
-        handleDeleteCurrentModalItem,
         handleRenameModal,
         showMobileSettings,
         fullScreen,

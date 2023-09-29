@@ -1,7 +1,7 @@
 import React from 'react';
 import {HiDotsVertical} from "react-icons/hi";
 import {stopPropagation} from "../../../../common/commonData";
-import MediaOptions from "../../../options/ItemOptions";
+import ItemOptions from "../../../options/ItemOptions";
 
 const TopBlock = ({
                       topBtnClass,
@@ -12,6 +12,7 @@ const TopBlock = ({
                       name,
                       oldName,
                       index,
+    confirm,
                   }) => {
 
     return (
@@ -30,7 +31,7 @@ const TopBlock = ({
                     >
                         <HiDotsVertical size={25}/>
                     </div> :
-                    <div><MediaOptions initialMode={'show'}
+                    <div><ItemOptions initialMode={'show'}
                                        shouldAnimate={false}
                                        url={url}
                                        iconBgColor={'bg-gray-600'}
@@ -43,6 +44,7 @@ const TopBlock = ({
                                        vbIconColor={'black'}
                                        deleteIconColor={'black'}
                                        renameIconColor={'black'}
+                                       confirm={confirm}
 
                     />
                     </div>}

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Skeleton, Tooltip} from "@mui/material";
 import OpacityTransition from "../common/MyCustomTransition";
-import MediaOptions from "../options/ItemOptions";
+import ItemOptions from "../options/ItemOptions";
 
 const Image = ({
                    url,
@@ -56,15 +56,15 @@ const Image = ({
             {showOptions &&
                 <OpacityTransition show={(imageIsHovered && imageIsLoaded)}>
                     <div className={'absolute top-0 right-0'}>
-                        <MediaOptions name={name}
-                                      oldName={oldName}
-                                      url={url}
-                                      {...{
-                                          index,
-                                          searchMode,
-                                          hoveredMediaIndex,
-                                          setItemOptionsHovered,
-                                      }}/></div>
+                        <ItemOptions name={name}
+                                     oldName={oldName}
+                                     url={url}
+                                     {...{
+                                         index,
+                                         searchMode,
+                                         hoveredMediaIndex,
+                                         setItemOptionsHovered,
+                                     }}/></div>
                 </OpacityTransition>}
             {!imageIsLoaded &&
                 <Tooltip title={'image loading'}>

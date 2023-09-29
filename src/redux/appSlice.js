@@ -3,13 +3,9 @@ import {
     delay,
     imageModal,
     noModal, paginateMode,
-    removeAllItems,
-    removeCurrentItem,
     smallScreenWidth,
     videoModal
 } from "../common/commonData";
-import {deleteAllMedia, deleteCurrentItem} from "./mediaSlice";
-import alertModal from "../components/modals/AlertModal";
 import {
     dayPrimary, dayTheme, desertPrimary, desertTheme,
     mainDayBg,
@@ -31,10 +27,6 @@ const appSlice = createSlice({
         itemModalType: noModal,
         alertTitle: '',
         alertMessage: '',
-        alertStyle: '',
-        alertBtnLabel: '',
-        alertBtnStyle: '',
-        alertActionType: '',
         showVideoMobileMenu: false,
         showAlertBtn: true,
         currentModalItemIndex: 0,
@@ -142,30 +134,9 @@ export const handleAlertModal = createAsyncThunk('alertModal-thunk', async ({
                                                                                 actionType,
                                                                             }, {dispatch}) => {
     await dispatch(setAlertModalContent({type, title, message, btnStyle, btnLabel, showBtn, actionType}))
-    dispatch(setModalType(alertModal))
 })
 
 
-export const handleAlertAction = createAsyncThunk('alert-action-thunk', async ({
-                                                                                   actionType,
-                                                                                   route, url, index, searchMode,
-                                                                               }, {dispatch}) => {
-
-    switch (actionType) {
-        case removeAllItems:
-            await dispatch(deleteAllMedia())
-            dispatch(setModalType(noModal))
-            break
-        case removeCurrentItem:
-            await dispatch(deleteCurrentItem({route, url, index, searchMode}))
-            dispatch(setModalType(noModal))
-            break;
-        default:
-            void 0
-            break;
-
-    }
-})
 
 export const handleInitialModalItem = createAsyncThunk('modal-item-initial-url-thunk', async ({
                                                                                                   index,

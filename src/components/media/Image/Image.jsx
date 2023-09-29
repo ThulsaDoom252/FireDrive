@@ -12,7 +12,7 @@ const Image = ({
                    width = 'w-300',
                    skeletonHeight = 300,
                    skeletonWidth = 300,
-                   setIsShowOptions
+                   setIsShowOptions,
                }) => {
     const [imageIsLoaded, setImageIsLoaded] = useState(false)
 

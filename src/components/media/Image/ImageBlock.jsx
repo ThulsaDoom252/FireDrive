@@ -1,22 +1,22 @@
 import React, {useState} from 'react';
-import {Skeleton, Tooltip} from "@mui/material";
 import OpacityTransition from "../../common/MyCustomTransition";
 import MediaOptions from "../../options/ItemOptions";
 import Image from "./Image";
 
 const ImageBlock = ({
-                   url,
-                   index,
-                   name,
-                   oldName,
-                   handleInitialModalIndex,
-                   setHoveredMediaIndex,
-                   searchMode,
-                   hoveredMediaIndex,
-                   setItemOptionsHovered,
+                        url,
+                        index,
+                        name,
+                        oldName,
+                        handleInitialModalIndex,
+                        setHoveredMediaIndex,
+                        searchMode,
+                        hoveredMediaIndex,
+                        setItemOptionsHovered,
+                        confirm,
 
 
-               }) => {
+                    }) => {
     const imageIsHovered = hoveredMediaIndex === index
     const [showOptions, setIsShowOptions] = useState(false)
 
@@ -36,14 +36,16 @@ const ImageBlock = ({
                                       searchMode,
                                       hoveredMediaIndex,
                                       setItemOptionsHovered,
+                                      confirm,
                                   }}/></div>
             </OpacityTransition>
-            <Image  {...{ url,
+            <Image  {...{
+                url,
                 setIsShowOptions,
                 index,
                 handleInitialModalIndex,
                 imageIsHovered,
-                }}/>
+            }}/>
         </div>
 
     );

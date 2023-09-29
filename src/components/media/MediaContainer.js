@@ -18,7 +18,7 @@ const MediaContainer = ({
                             smallScreen, currentMediaSet, currentMediaFetch, searchResults,
                             toggleSearchMode, mediaToShow, searchMode, noSearchResults,
                             searchRequest, handleInitialModalIndex, itemOptionsHovered, setItemOptionsHovered,
-                            currentTheme, itemModalType, isPaginatorEnabled,
+                            currentTheme, itemModalType, isPaginatorEnabled, confirm,
                         }) => {
     const pagesContext = useContext(PagesContext)
     const {imagesPage, videosPage, audioPage} = pagesContext
@@ -90,6 +90,7 @@ const MediaContainer = ({
         itemOptionsHovered,
         setItemOptionsHovered,
         noOpenModal,
+        confirm,
     }}/>
 };
 

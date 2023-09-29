@@ -31,6 +31,7 @@ const Media = ({
                    currentTheme,
                    noOpenModal,
                    isPaginatorEnabled,
+                   confirm,
                }) => {
 
     return (
@@ -61,19 +62,20 @@ const Media = ({
                     />}
                     {imagesPage ? mediaToShow.map((media, index) => {
                             return <ImageBlock url={media.url}
-                                          width={'w-full'}
-                                          height={'h-full'}
-                                          name={media.name}
-                                          oldName={media.oldName}
+                                               width={'w-full'}
+                                               height={'h-full'}
+                                               name={media.name}
+                                               oldName={media.oldName}
 
-                                          {...{
-                                              index,
-                                              handleInitialModalIndex,
-                                              setHoveredMediaIndex,
-                                              searchMode,
-                                              hoveredMediaIndex,
-                                              setItemOptionsHovered,
-                                          }}/>
+                                               {...{
+                                                   index,
+                                                   handleInitialModalIndex,
+                                                   setHoveredMediaIndex,
+                                                   searchMode,
+                                                   hoveredMediaIndex,
+                                                   setItemOptionsHovered,
+                                                   confirm,
+                                               }}/>
                         })
                         : videosPage ? mediaToShow.map((video, index) =>
                                 <div key={index} className={`

@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const VideoModalContainer = ({showModal, toggleModal}) => {
+const VideoModalContainer = ({showModal, toggleModal, confirm}) => {
 
     const CustomControlsContext = useContext(VideoControlsContext)
     const ModalContext = useContext(ItemsModalContext);
@@ -130,6 +130,7 @@ const VideoModalContainer = ({showModal, toggleModal}) => {
         currentSubMenu,
         handlePlay,
         handleMuteVideoVolume,
+        confirm,
     ]
 
     //Video modal handlers

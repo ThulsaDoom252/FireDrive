@@ -56,6 +56,7 @@ const CustomControls = ({
         currentSubMenu,
         handlePlay,
         handleMuteVideoVolume,
+        confirm,
     ] = customControlsProps
 
 
@@ -87,6 +88,7 @@ const CustomControls = ({
                 topBtnClass={topBtnClass}
                 toggleVideoMobileSettings={toggleVideoMobileSettings}
                 smallScreenMode={smallScreenMode}
+                confirm={confirm}
             />
 
             {/*//Center Player Btn*/}

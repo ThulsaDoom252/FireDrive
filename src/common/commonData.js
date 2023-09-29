@@ -106,8 +106,7 @@ export const removeCurrentItemTitle = 'Delete item'
 
 //Messages
 export const removeAllMsg = 'This will delete all media on current page. Sure you want to continue?'
-export const removeCurrentMsg = 'This will delete current item. Sure you want to continue?'
-
+export const removeCurrentItemMsg = 'This will delete current item. Sure you want to continue?'
 //Actions
 export const removeCurrentItem = 'REMOVE CURRENT ITEM'
 export const removeAllItems = 'REMOVE ALL'

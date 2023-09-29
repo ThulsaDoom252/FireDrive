@@ -15,7 +15,6 @@ import {
 } from "../redux/mediaSlice";
 import MediaContainer from "./media/MediaContainer";
 import {
-    handleAlertAction,
     setItemModalType, setModalType, toggleCurrentTheme, toggleListMode,
 } from "../redux/appSlice";
 import BurgerMenu from "./common/BurgerMenu";
@@ -27,11 +26,7 @@ import RemoveAllBtnContainer from "./btns/RemoveAllBtnContainer";
 import UserModal from "./modals/UserModal";
 import UserAvatar from "./user/UserAvatar";
 import RenameModal from "./modals/RenameModal";
-import AlertModal from "./modals/AlertModal";
-import ImageModal from "./modals/ImageModal";
-import VideoModal from "./modals/Video/VideoModal";
 import ShareModal from "./modals/ShareModal";
-import alertModal from "./modals/AlertModal";
 import userModal from "./modals/UserModal";
 import {BiColorFill} from "react-icons/bi";
 import LogOutContainer from "./btns/LogOutContainer";
@@ -46,23 +41,21 @@ import {CiSettings} from "react-icons/ci";
 import ImageModalContainer from "./modals/ImageModalContainer";
 import MobileVideoMenu from "./modals/Video/MobileVideoMenu";
 import VideoModalContainer from "./modals/Video/VideoModalContainer";
+import useConfirm from "./hooks/useConfirm";
 
 const Main = ({
                   currentMediaSet,
                   currentRoute,
                   listMedia,
-                  toggleSmallScreen,
                   isAuth,
                   setCurrentRoute,
                   smallScreen,
                   searchMode,
                   searchResults,
-                  currentModalItemUrl,
                   modalType,
                   itemModalType,
                   setModalType,
                   setItemModalType,
-                  handleAlertAction,
                   currentTheme,
                   toggleCurrentTheme,
                   showMobileSearch,
@@ -70,12 +63,19 @@ const Main = ({
                   currentThemeName,
                   listMode,
                   toggleListMode,
+                  alertTitle,
+                  alertMessage,
               }) => {
 
     const location = useLocation()
     const pathName = location.pathname
     const homePage = pathName === rootRoute
     const isPaginatorEnabled = listMode === paginateMode
+
+    const [Dialog, confirm] = useConfirm(
+        alertTitle,
+        alertMessage,
+    )
 
     const paginatorContext = useContext(PaginatorContext)
     const {firstItemIndex, lastItemIndex, setItemsPerPage, itemsPerPage} = paginatorContext
@@ -116,10 +116,8 @@ const Main = ({
 
     return (
         <>
-            <AlertModal toggleModal={setModalType}
-                        showAlertModal={modalType === alertModal}
-                        handleAlertAction={handleAlertAction}
-            />
+            <Dialog/>
+
             <div className={'relative bottom-20 z-max'}>
                 <MobileVideoMenu/>
             </div>
@@ -127,9 +125,12 @@ const Main = ({
             <ShareModal toggleModal={setModalType} showModal={modalType === shareModal}/>
             <VideoModalContainer
                 toggleModal={setItemModalType}
-                showModal={itemModalType === videoModal}/>
+                showModal={itemModalType === videoModal}
+                confirm={confirm}
+            />
 
             <ImageModalContainer toggleModal={setItemModalType} showModal={itemModalType === imageModal}
+                                 confirm={confirm}
             />
             <UserModal toggleModal={setModalType}
                        showModal={modalType === userModal}/>
@@ -145,7 +146,7 @@ const Main = ({
                         /></div>
                         <div className={'flex justify-between items-center mb-2'}>
                             <div className={'mx-auto w-40%'}><UploadContainer/></div>
-                            <div className={'mx-auto w-40%'}><RemoveAllBtnContainer/></div>
+                            <div className={'mx-auto w-40%'}><RemoveAllBtnContainer confirm={confirm}/></div>
                         </div>
                         <div className={'bg-gray-100 h-0.5 rounded w-full'}/>
 
@@ -242,6 +243,7 @@ const Main = ({
                                              searchResults,
                                              smallScreen,
                                              currentTheme,
+                                             confirm,
                                          }}/>}/>}
                 </Routes>
                 <div
@@ -274,18 +276,19 @@ const mapStateToProps = (state) => {
         audioSet: state.media.audioSet,
         searchMode: state.media.searchMode,
         searchResults: state.media.searchResults,
-        currentModalItemUrl: state.app.currentModalItemUrl,
         modalType: state.app.modalType,
         itemModalType: state.app.itemModalType,
         showMobileSearch: state.media.showMobileSearch,
         currentThemeName: state.app.currentThemeName,
         listMode: state.app.listMode,
+        alertMessage: state.app.alertMessage,
+        alertTitle: state.app.alertTitle,
     }
 }
 
 export default connect(mapStateToProps, {
     listMedia, setCurrentRoute,
-    setModalType, setItemModalType, handleAlertAction,
+    setModalType, setItemModalType,
     toggleCurrentTheme, toggleMobileSearch,
     toggleListMode,
 })(Main);

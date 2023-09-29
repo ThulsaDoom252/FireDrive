@@ -4,8 +4,14 @@ import {deleteCurrentItem, handleMediaName} from "../../redux/mediaSlice";
 import {BsDownload, BsPencilFill, BsThreeDots, BsTrash} from "react-icons/bs";
 import {TelegramShareButton, ViberShareButton} from "react-share";
 import {FaTelegram, FaViber} from "react-icons/fa";
-import {setModalType} from "../../redux/appSlice";
-import {delay, renameModal, stopPropagation} from "../../common/commonData";
+import {handleAlertModal, setModalType} from "../../redux/appSlice";
+import {
+    delay,
+    removeCurrentItemMsg,
+    removeCurrentItemTitle,
+    renameModal,
+    stopPropagation
+} from "../../common/commonData";
 import MyCustomTransition from "../common/MyCustomTransition";
 
 
@@ -31,6 +37,8 @@ const ItemOptions = ({
                          initialMode = 'hide',
                          showBg = true,
                          setItemOptionsHovered,
+                         handleAlertModal,
+    confirm,
                      }) => {
 
 
@@ -43,6 +51,7 @@ const ItemOptions = ({
         setModalType(renameModal)
     }
 
+
     const handleMouseEnter = () => {
         index === hoveredMediaIndex && setShowOptions(true)
         setItemOptionsHovered(true)
@@ -53,6 +62,18 @@ const ItemOptions = ({
             setShowOptions(false)
             setItemOptionsHovered(false)
         }
+    }
+
+
+    const handleDeleteCurrentItem = async () => {
+        await handleAlertModal({message: removeCurrentItemMsg, title: removeCurrentItemTitle})
+        const userAction = await confirm()
+        if (userAction) {
+            deleteCurrentItem({url, index, searchMode, route: currentRoute})
+        }
+
+
+
     }
 
     const iconBlockClass = `${iconBgColor ? ` 
@@ -119,7 +140,7 @@ const ItemOptions = ({
                                           color={renameIconColor}/> : 'Rename item'}
                     </div>
                     <div className={iconBlockClass}
-                         onClick={() => deleteCurrentItem({url, index, searchMode, route: currentRoute})}>
+                         onClick={handleDeleteCurrentItem}>
                         {showIcons ?
                             < BsTrash title={'delete current item'} size={iconsSize}
                                       color={deleteIconColor}
@@ -147,4 +168,9 @@ const mapStateToProps = (state) => {
 }
 
 
-export default connect(mapStateToProps, {handleMediaName, setModalType, deleteCurrentItem})(ItemOptions);
+export default connect(mapStateToProps, {
+    handleMediaName,
+    setModalType,
+    deleteCurrentItem,
+    handleAlertModal
+})(ItemOptions);
