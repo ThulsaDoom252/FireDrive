@@ -54,6 +54,9 @@ export const VideoControlsContextProvider = ({children}) => {
     const [isFullScreen, setIsFullScreen] = useState(false)
     const [isMobileFullScreen, setIsMobileFullScreen] = useState(false)
 
+    const [isControlsVisible, setIsControlsVisible] = useState(false)
+    const [controlInitialVisibilityValue, setControlInitialVisibilityValue] = useState(10000)
+
     const [previewTime, setPreviewTime] = useState(false)
     const [mouseX, setMouseX] = useState(null)
     const [touchX, setTouchX] = useState(null)
@@ -292,6 +295,17 @@ export const VideoControlsContextProvider = ({children}) => {
         }
     };
 
+    const handleVideoControlsVisibility = () => {
+        setControlInitialVisibilityValue(prevValue => prevValue + 5000)
+        if (!isControlsVisible) {
+            setIsControlsVisible(true)
+            setTimeout(() => {
+                setIsControlsVisible(false)
+                setControlInitialVisibilityValue(10000)
+            }, [controlInitialVisibilityValue])
+        }
+    }
+
 
     const videoControlsValues = {
         playerRef,
@@ -336,6 +350,8 @@ export const VideoControlsContextProvider = ({children}) => {
         handleMuteVideoVolume,
         videoBlockContainerRef,
         videoContainerRef,
+        handleVideoControlsVisibility,
+        isControlsVisible,
 
 
     }

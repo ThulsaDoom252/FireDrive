@@ -6,6 +6,7 @@ import VideoModal from "./VideoModal";
 import {VideoControlsContext} from "../../../context/VideoControlsContext";
 
 
+//Modal mui styles
 const useStyles = makeStyles((theme) => ({
     modal: {
         display: 'flex',
@@ -20,15 +21,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const VideoModalContainer = ({showModal, toggleModal}) => {
+
     const CustomControlsContext = useContext(VideoControlsContext)
     const ModalContext = useContext(ItemsModalContext);
 
     const [isVideoReady, setIsVideoReady] = useState(false);
     const classes = useStyles();
-
-    const [isControlsVisible, setIsControlsVisible] = useState(false)
-    const [controlInitialVisibilityValue, setControlInitialVisibilityValue] = useState(10000)
-
 
 
     // listed video in modal ref and state
@@ -80,8 +78,21 @@ const VideoModalContainer = ({showModal, toggleModal}) => {
         setCurrentVideoTime,
         videoBlockContainerRef,
         videoContainerRef,
+        handleVideoControlsVisibility,
+        isControlsVisible,
     } = CustomControlsContext
 
+
+    const {
+        currentMediaSet,
+        currentModalItemUrl,
+        currentModalItemIndex,
+        currentModalItemName,
+        currentModalItemOldName,
+        handleCurrentModalItemIndex,
+        smallScreen,
+        toggleVideoMobileSettings,
+    } = ModalContext;
 
     const customControlsProps = [
         controlBtnAnimation,
@@ -121,37 +132,9 @@ const VideoModalContainer = ({showModal, toggleModal}) => {
         handleMuteVideoVolume,
     ]
 
-    const {
-        currentMediaSet,
-        currentModalItemUrl,
-        currentModalItemIndex,
-        currentModalItemName,
-        currentModalItemOldName,
-        handleCurrentModalItemIndex,
-        smallScreen,
-        toggleVideoMobileSettings,
-    } = ModalContext;
-
-
-    const handleVisibility = () => {
-        setControlInitialVisibilityValue(prevValue => prevValue + 5000)
-        if (!isControlsVisible) {
-            setIsControlsVisible(true)
-            setTimeout(() => {
-                setIsControlsVisible(false)
-                setControlInitialVisibilityValue(10000)
-            }, [controlInitialVisibilityValue])
-        }
-    }
-
+    //Video modal handlers
     const handleVideoIsReady = () => {
         setIsVideoReady(true)
-    }
-
-    const handleVideoFromListClick = (index) => {
-        handleCurrentModalItemIndex(index)
-        setIsVideoReady(false)
-        setIsVideoPlaying(false)
     }
 
     const handleClose = () => {
@@ -162,7 +145,6 @@ const VideoModalContainer = ({showModal, toggleModal}) => {
     const handleProgress = (progress) => {
         setCurrentVideoTime(progress.playedSeconds);
     };
-
 
 
 // Listed videos in modal handlers
@@ -179,6 +161,12 @@ const VideoModalContainer = ({showModal, toggleModal}) => {
     const handleReadyListedVideo = () => {
         setListedVideoTotalTime(formatTime(listedVideoInModalRef.current.getDuration()))
         setIsListedVideoReady(true)
+    }
+
+    const handleVideoFromListClick = (index) => {
+        handleCurrentModalItemIndex(index)
+        setIsVideoReady(false)
+        setIsVideoPlaying(false)
     }
 
     const listedVideoProps = [
@@ -207,7 +195,7 @@ const VideoModalContainer = ({showModal, toggleModal}) => {
         isVideoReady,
         isVideoPlaying,
         classes,
-        handleVisibility,
+        handleVisibility: handleVideoControlsVisibility,
         handleVideoIsReady,
         handleVideoFromListClick,
         handleClose,
