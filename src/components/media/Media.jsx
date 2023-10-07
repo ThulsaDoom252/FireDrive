@@ -1,14 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {ClipLoader} from "react-spinners";
 import Audio from "./Audio";
 import Paginator from "../paginator/Paginator";
 import NoSearchResults from "../search/NoSearchResults";
-import Image from "./Image";
 import Video from "./Video";
-import OpacityTransition from "../common/MyCustomTransition";
-import MediaOptions from "../options/ItemOptions";
-import {truncate} from "../../common/commonData";
-import {handleCurrentMediaSet} from "../../redux/mediaSlice";
 import ImageBlock from "./Image/ImageBlock";
 
 const Media = ({
@@ -26,11 +21,9 @@ const Media = ({
                    searchMode,
                    smallScreen,
                    handleInitialModalIndex,
-                   itemOptionsHovered,
                    setItemOptionsHovered,
                    currentTheme,
                    noOpenModal,
-                   isPaginatorEnabled,
                    confirm,
                }) => {
 

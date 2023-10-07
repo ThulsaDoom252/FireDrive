@@ -87,7 +87,6 @@ const MediaContainer = ({
         isPaginatorHidden,
         paginatorProps,
         handleInitialModalIndex,
-        itemOptionsHovered,
         setItemOptionsHovered,
         noOpenModal,
         confirm,

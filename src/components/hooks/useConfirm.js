@@ -2,12 +2,13 @@ import {
     Button, Dialog, DialogActions,
     DialogContent, DialogContentText, DialogTitle,
 } from '@mui/material';
-import { useState } from 'react';
+import {useState} from 'react';
+
 const useConfirm = (title, message) => {
     const [promise, setPromise] = useState(null);
 
     const confirm = () => new Promise((resolve, reject) => {
-        setPromise({ resolve });
+        setPromise({resolve});
     });
 
     const handleClose = () => {
@@ -26,6 +27,7 @@ const useConfirm = (title, message) => {
     // You could replace the Dialog with your library's version
     const ConfirmationDialog = () => (
         <Dialog
+            onClick={handleCancel}
             open={promise !== null}
             fullWidth
         >
