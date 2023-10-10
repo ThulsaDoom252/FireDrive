@@ -25,7 +25,7 @@ const ImageBlock = ({
         <div key={index}
              onMouseEnter={() => setHoveredMediaIndex(index)}
              onMouseLeave={() => setHoveredMediaIndex(null)}
-             className={'flex justify-center max-w-200 max-h-200 relative'}>
+             className={'flex justify-center w-full h-full relative'}>
             <OpacityTransition show={(imageIsHovered && showOptions)}>
                 <div className={'absolute top-0 right-0'}>
                     <MediaOptions name={name}

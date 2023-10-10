@@ -14,7 +14,7 @@ import SignInContainer from "./components/Auth/SignIn/SignInContainer";
 import SignUpContainer from "./components/Auth/SignUp/SignUpContainer";
 import Initializing from "./components/Initializing";
 import {
-    authCheck, getRestoreCountDownInfo, getVerificationLinkStatusInfo, startRestoreTimer,
+    authCheck, getRestoreLinkStatus, getVerificationLinkStatusInfo, startRestoreTimer,
     startVerificationTimer,
     toggleRestoreEmailSendStatus,
     toggleVerificationEmailSendStatus
@@ -27,6 +27,7 @@ import DESERT from './images/DESERT.jpg'
 import {mainDayBg} from "./common/themes";
 import RestoreContainer from "./components/Auth/RestoreContainer/RestoreContainer";
 import {toggleSmallScreen} from "./redux/appSlice";
+import AuthContainer from "./components/Auth/AuthContainer";
 
 const App = ({
                  authCheck,
@@ -70,18 +71,18 @@ const App = ({
     //
     // }, [])
 
-    useEffect(() => {
-        getRestoreCountDownInfo({dispatch})
-    }, []);
-
-    useEffect(() => {
-        if (user && !user?.emailVerified) {
-            const email = user.email
-            getVerificationLinkStatusInfo({email, dispatch})
-                .then(() => void 0)
-        }
-
-    }, [])
+    // useEffect(() => {
+    //     getRestoreCountDownInfo({dispatch})
+    // }, []);
+    //
+    // useEffect(() => {
+    //     if (user && !user?.emailVerified) {
+    //         const email = user.email
+    //         getVerificationLinkStatusInfo({email, dispatch})
+    //             .then(() => void 0)
+    //     }
+    //
+    // }, [])
 
     useEffect(() => {
         const handleResize = () => {
@@ -114,12 +115,12 @@ const App = ({
              w-screen 
              h-screen 
              relative 
-             overflow-hidden`}>
+             overflow-y-scroll`}>
                 <Routes>
-                    <Route exact path={signInRoute} element={<SignInContainer {...{isAuth, smallScreen}}/>}/>
-                    <Route path={signUpRoute} element={<SignUpContainer  {...{isAuth}}/>}/>
-                    <Route path={verificationRoute} element={<VerificationContainer/>}/>
-                    <Route path={restoreRoute} element={<RestoreContainer/>}/>
+                    <Route exact path={signInRoute} element={<AuthContainer {...{isAuth, smallScreen}}/>}/>
+                    {/*<Route path={signUpRoute} element={<SignUpContainer  {...{isAuth}}/>}/>*/}
+                    {/*<Route path={verificationRoute} element={<VerificationContainer/>}/>*/}
+                    {/*<Route path={restoreRoute} element={<RestoreContainer/>}/>*/}
                     <Route path={'*'} element={<Main {...{isAuth, currentTheme}}/>}/>
                 </Routes>
             </div>

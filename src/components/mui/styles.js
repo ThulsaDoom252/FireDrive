@@ -8,6 +8,25 @@ export const useStyles = makeStyles((theme) => ({
         margin: '2px',
         borderColor: "gray"
     },
+    mediaNavBtn: {
+        borderRadius: '10px',
+        color: 'black',
+        "&:hover": {
+            color: 'white',
+            backgroundColor: "rgba(0, 0, 139, 0.5)", // Тут определяется полупрозрачный цвет
+        },
+    },
+    // modal: {
+    //     display: "flex",
+    //     alignItems: "center",
+    //     justifyContent: "center",
+    // },
+    // modalContent: {
+    //     backgroundColor: "white",
+    //     borderRadius: "10px",
+    //     outline: "none",
+    //     padding: "20px",
+    // },
 }));
 
 

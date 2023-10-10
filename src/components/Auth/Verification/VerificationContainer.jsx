@@ -20,7 +20,6 @@ const VerificationContainer = ({
 
                                }) => {
 
-
     if (!verificationMode) {
         return <Navigate to={signInRoute}/>
     }
@@ -39,9 +38,7 @@ const VerificationContainer = ({
 const mapStateToProps = state => {
     return {
         isVerificationEmailSend: state.auth.isVerificationEmailSend,
-        email: state.auth.email,
         verificationMode: state.auth.verificationMode,
-        username: state.auth.username,
         verificationTimerValue: state.auth.verificationTimerValue,
     }
 }

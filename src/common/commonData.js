@@ -9,6 +9,14 @@ export const truncate = (name, maxCharacters = 15) => {
     }
 }
 
+export const extractUsernameFromEmail = (email) => {
+    const atIndex = email.indexOf('@');
+    if (atIndex !== -1) {
+        const slicedEmail = email.slice(0, atIndex)
+        return slicedEmail.toLowerCase()
+    }
+}
+
 
 export const setLocalStorageItem = (key, value) => {
     localStorage.setItem(`${key}`, `${value}`)

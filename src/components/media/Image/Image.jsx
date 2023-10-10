@@ -8,8 +8,8 @@ const Image = ({
                    imageIsHovered,
                    isAbsolute,
                    imageIsClickable = true,
-                   height = 'h-300',
-                   width = 'w-300',
+                   height = 'h-full',
+                   width = 'w-full',
                    skeletonHeight = 300,
                    skeletonWidth = 300,
                    setIsShowOptions,
@@ -38,6 +38,8 @@ const Image = ({
                 object-cover 
                 rounded 
                 cursor-pointer 
+                w-full
+                h-full
                 ${!imageIsLoaded && 'hidden'}
                 ${imageIsHovered && 'hover:border-2 border-blue-300'}  
                 ${height}

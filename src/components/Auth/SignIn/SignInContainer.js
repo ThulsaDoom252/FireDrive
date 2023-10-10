@@ -15,6 +15,7 @@ const SignInContainer = ({
                              verificationMode,
                              githubAuth,
                              smallScreen,
+
                          }) => {
     useEffect(() => {
         setAuthError('')

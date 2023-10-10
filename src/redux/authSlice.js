@@ -15,10 +15,11 @@ import {
 import {uploadBytes, ref, getDownloadURL} from "firebase/storage";
 import {database, storage,} from "../firebase";
 import toast from "react-hot-toast";
-import {generateRandomString} from "../common/commonData";
+import {extractUsernameFromEmail, generateRandomString} from "../common/commonData";
 import {toggleInitializing} from "./appSlice";
 import {restoreTimerInitialValue, verificationTimerInitialValue} from "../common/Timers";
 import {ref as dbRef, set, query, equalTo, get, orderByChild, remove, update} from 'firebase/database';
+import {signInMode, verificationMode} from "../components/Auth/types";
 
 
 const authSlice = createSlice({
@@ -27,6 +28,9 @@ const authSlice = createSlice({
         email: '',
         username: '',
         avatar: '',
+        lastRestoreLinkSentTo: '',
+        isVerificationCheckBtnFetching: false,
+        authMode: signInMode,
         isVerificationEmailSend: false,
         isRestoreEmailSend: false,
         verificationMode: false,
@@ -57,9 +61,18 @@ const authSlice = createSlice({
         toggleVerificationEmailSendStatus(state, action) {
             state.isVerificationEmailSend = action.payload
         },
+        setLastRestoreLinkSendTo(state, action) {
+            state.lastRestoreLinkSentTo = action.payload
+        },
         toggleRestoreEmailSendStatus(state, action) {
-            debugger
             state.isRestoreEmailSend = action.payload
+        },
+        toggleVerificationBtnFetch(state, action) {
+            state.isVerificationCheckBtnFetching = action.payload
+        },
+        setAuthMode(state, action) {
+            debugger
+            state.authMode = action.payload
         },
         toggleAuthStatus(state, action) {
             state.isAuthorized = action.payload
@@ -101,8 +114,11 @@ export const {
     toggleVerificationMode,
     setVerificationTimerValue,
     setRestoreTimerValue,
+    toggleVerificationBtnFetch,
     setVerificationIntervalId,
+    setLastRestoreLinkSendTo,
     setRestoreIntervalId,
+    setAuthMode,
 } = authSlice.actions
 
 export const handleEmailAndPasswordSignUp = createAsyncThunk('email-password-signup-thunk', async ({
@@ -113,13 +129,14 @@ export const handleEmailAndPasswordSignUp = createAsyncThunk('email-password-sig
     dispatch(toggleFetchAuthBtn(true))
     const auth = getAuth()
     try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password).catch(e => dispatch(setAuthError(e.code)))
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+            .catch(e => dispatch(setAuthError(e.code)))
         const user = userCredential.user
         await updateProfile(user, {
             displayName: username
         })
-        await createNewUser({username, email, isVerified: user.emailVerified})
-        dispatch(handleLogin({email, password}))
+        await createUserInDb({username, email, isVerified: user.emailVerified})
+        await dispatch(handleLogin({email, password, isSignedUp: true}))
         dispatch(sendVerificationEmail({}))
     } catch (e) {
         alert('Error in creating new account - see console for details')
@@ -128,62 +145,58 @@ export const handleEmailAndPasswordSignUp = createAsyncThunk('email-password-sig
     dispatch(toggleFetchAuthBtn(false))
 });
 
-export const handleLogin = createAsyncThunk('login-thunk', async ({email, password}, {dispatch}) => {
+export const handleLogin = createAsyncThunk('login-thunk', async ({
+                                                                      email,
+                                                                      password,
+                                                                      isSignedUp = false
+                                                                  }, {dispatch}) => {
     const auth = getAuth()
     dispatch(toggleFetchAuthBtn(true))
     await signInWithEmailAndPassword(auth, email, password)
-        .then(() => !auth.currentUser.emailVerified && getVerificationLinkStatusInfo())
+        .then(() => {
+            dispatch(setUserData({email, username: auth.currentUser.displayName}))
+            !isSignedUp && getVerificationLinkStatusInfo(auth.currentUser.email)
+        })
         .catch((error) => {
             dispatch(setAuthError(error.code))
         })
-
     dispatch(toggleFetchAuthBtn(false))
 })
 
-export const sendVerificationEmail = createAsyncThunk('send-verification-thunk', async ({resend}, {dispatch}) => {
+export const sendVerificationEmail = createAsyncThunk('send-verification-thunk', async ({isVerificationMode}, {dispatch}) => {
     const auth = getAuth()
     const user = auth.currentUser
-    debugger
     try {
         await sendEmailVerification(user)
-        debugger
         await updateVerificationLinkStatus(user.email, true)
-        debugger
-
         dispatch(toggleVerificationEmailSendStatus(true))
-        debugger
-
-        localStorage.setItem('isVerificationEmailSend', true)
-        debugger
-
+        !isVerificationMode && dispatch(setAuthMode(verificationMode))
         localStorage.setItem('verificationCounterValue', verificationTimerInitialValue)
-        debugger
-
         dispatch(startVerificationTimer())
-        debugger
-
-        toast.success('email send')
     } catch (e) {
-        toast.error('error...')
         console.log(`ERROR SENDING VERIFICATION EMAIL: ${e}`)
     }
 })
 
 export const sendRestoreEmail = createAsyncThunk('send-restore-email-thunk', async (email, {dispatch}) => {
     const auth = getAuth()
-    try {
-        await createRestoreCountDown()
-        await sendPasswordResetEmail(auth, email)
-        dispatch(toggleRestoreEmailSendStatus(true))
-        localStorage.setItem('isRestoreEmailSend', true)
-        localStorage.setItem('restoreCounterValue', restoreTimerInitialValue)
-        dispatch(startRestoreTimer())
-        toast.success('email send')
-    } catch (e) {
-        toast.error('Error sending verification email, see console for details')
-        console.log(`Send verification email error (if it persist, contact the developer:  ${e}`)
+    const isExist = await isUserExist(email)
+    if (isExist) {
+        try {
+            await sendPasswordResetEmail(auth, email)
+            dispatch(setAuthError(''))
+            localStorage.setItem('isRestoreEmailSend', true)
+            dispatch(toggleRestoreEmailSendStatus(true))
+            localStorage.setItem('restoreCounterValue', restoreTimerInitialValue)
+            dispatch(startRestoreTimer())
+            dispatch(setLastRestoreLinkSendTo(email))
+        } catch (e) {
+            toast.error('Error sending verification email, see console for details')
+            console.log(`Send verification email error (if it persist, contact the developer:  ${e}`)
+        }
+    } else {
+        dispatch(setAuthError('Email no found'))
     }
-
 })
 
 export const googleAuth = async () => {
@@ -219,30 +232,32 @@ export const githubAuth = createAsyncThunk('github-auth-thunk', async (_, {dispa
 })
 
 export const authCheck = createAsyncThunk('auth-check-thunk', async (_, {dispatch}) => {
-
     dispatch(toggleInitializing(true))
-
+    const isRestoreEmailRequested = localStorage.getItem('isRestoreEmailSend')
+    if (isRestoreEmailRequested === "true") {
+        dispatch(toggleRestoreEmailSendStatus(true))
+        dispatch(startRestoreTimer())
+    }
     try {
-
         const auth = await getAuth()
         onAuthStateChanged(auth, async (user) => {
             if (user === null) {
-
                 dispatch(toggleAuthStatus(false))
                 dispatch(setUserData({email: '', username: '', avatar: null}))
             }
             if (user) {
-
                 const {email, displayName, photoURL} = user
                 dispatch(setUserData({email, username: displayName, avatar: photoURL}))
                 if (user.providerData[0].providerId === 'github.com' || user.emailVerified) {
-
                     dispatch(toggleAuthStatus(true))
                 } else {
-                    dispatch(toggleVerificationMode(true))
+                    dispatch(setAuthMode(verificationMode))
+                    const isEmailSent = await getVerificationLinkStatusInfo(user.email)
+                    if (isEmailSent)
+                        dispatch(toggleVerificationEmailSendStatus(true))
+                    dispatch(startVerificationTimer())
                 }
             }
-
             dispatch(toggleInitializing(false))
 
         })
@@ -250,6 +265,21 @@ export const authCheck = createAsyncThunk('auth-check-thunk', async (_, {dispatc
         console.log(`AUTH CHECK ERROR: ${e}`)
     }
 })
+
+export const checkUserVerification = createAsyncThunk(
+    'check-verification-thunk', async (_, {dispatch}) => {
+        dispatch(toggleVerificationBtnFetch(true))
+        const auth = getAuth()
+        const user = auth.currentUser
+        await user.reload()
+        if (user.emailVerified) {
+            dispatch(toggleAuthStatus(true))
+            dispatch(setAuthMode(signInMode))
+        } else {
+            toast.error('email is not verified!')
+        }
+        dispatch(toggleVerificationBtnFetch(false))
+    })
 
 
 export const handleLogout = createAsyncThunk('logout-thunk', async (_, {dispatch}) => {
@@ -281,13 +311,13 @@ export const changeAvatar = createAsyncThunk('change-avatar-thunk', async ({avat
 })
 
 
-/// Start Verification and Restore Timers
+/// Verification / Restore Timers
 export const startVerificationTimer = createAsyncThunk(
     'verification-timer-thunk',
     async (_, {dispatch}) => {
         const auth = getAuth()
         const currentUser = auth.currentUser
-        let currentTime = localStorage.getItem('verificationCounterValue')
+        let currentTime = (localStorage.getItem('verificationCounterValue') || 60)
         const newIntervalId = setInterval(async () => {
             if (currentTime > 0) {
                 currentTime = currentTime - 1
@@ -298,7 +328,6 @@ export const startVerificationTimer = createAsyncThunk(
                 clearInterval(newIntervalId)
                 dispatch(setVerificationTimerValue(verificationTimerInitialValue))
                 dispatch(toggleVerificationEmailSendStatus(false))
-                localStorage.setItem('isVerificationEmailSend', false)
             }
         }, 1000);
         dispatch(setVerificationIntervalId(newIntervalId));
@@ -307,22 +336,14 @@ export const startVerificationTimer = createAsyncThunk(
 
 export const startRestoreTimer = createAsyncThunk(
     'restore-timer-thunk',
-    async (_, {dispatch, getState}) => {
-        const isRestoreEmailSendInStorage = localStorage.getItem('isRestoreEmailSend')
-        const currentState = getState()
-        const isRestoreEmailSend = currentState.auth.isRestoreEmailSend
-        isRestoreEmailSendInStorage === 'true' && !isRestoreEmailSend ? dispatch(toggleRestoreEmailSendStatus(true)) : void 0
-        debugger
+    async (_, {dispatch}) => {
         let currentTime = localStorage.getItem('restoreCounterValue')
         const newIntervalId = setInterval(async () => {
             if (currentTime > 0) {
-                debugger
                 currentTime = currentTime - 1
                 dispatch(setRestoreTimerValue(currentTime));
                 localStorage.setItem('restoreCounterValue', currentTime)
             } else {
-                debugger
-                await deleteRecordsByCondition()
                 clearInterval(newIntervalId)
                 dispatch(setRestoreTimerValue(verificationTimerInitialValue))
                 localStorage.setItem('isRestoreEmailSend', false)
@@ -332,154 +353,56 @@ export const startRestoreTimer = createAsyncThunk(
         dispatch(setVerificationIntervalId(newIntervalId));
     })
 
-//DALL
-export const createRestoreCountDown = async () => {
-    debugger
-    const data = {
-        isRestoreEmailRequested: true,
-    };
 
-    set(dbRef(database, `users`), data)
-        .then(() => {
-            console.log('Data has been written to the database.');
-        })
-        .catch((error) => {
-            console.error('Error writing data: ', error);
-        });
-}
-
-
-export const getRestoreCountDownInfo = ({dispatch}) => {
-    debugger
-    const usersRef = dbRef(database, 'users');
-    const queryRef = query(usersRef
-
-        // orderByChild('isRestoreEmailRequested'),
-    );
-
-    get(queryRef).then((snapshot) => {
-        debugger
-        if (snapshot.exists()) {
-            dispatch(startRestoreTimer())
-            debugger
-        }
-    }).catch((error) => {
-        debugger
-        alert('Get countdown error...: ', error);
-    });
-}
-
-
-export const deleteRecordsByCondition = async () => {
-    const usersRef = dbRef(database, 'users');
-
-    // Создайте запрос, чтобы найти записи, где isRestoreEmailRequested равно true
-    const queryRef = query(usersRef,
-        orderByChild('isRestoreEmailRequested'),
-    );
-
-    // Выполните запрос
-    get(queryRef).then((snapshot) => {
-        if (snapshot.exists()) {
-            // Получите данные (снимок) из запроса
-            const data = snapshot.val();
-
-            // Получите ключи записей, соответствующих вашему условию
-            const keysToDelete = Object.keys(data);
-
-            // Удалите записи по ключам
-            keysToDelete.forEach((key) => {
-                debugger
-                const recordRef = dbRef(database, `users/${key}`);
-                remove(recordRef)
-                    .then(() => {
-                        console.log(`Запись с ключом ${key} удалена.`);
-                    })
-                    .catch((error) => {
-                        console.error(`Ошибка при удалении записи с ключом ${key}: `, error);
-                    });
-            });
-        } else {
-            console.log('Записи с isRestoreEmailRequested=true не найдены.');
-        }
-    }).catch((error) => {
-        console.error('Ошибка при выполнении запроса: ', error);
-    });
-};
-
-
-export const createNewUser = async ({username, email, isVerified}) => {
+//Database
+export const createUserInDb = async ({username, email, isVerified}) => {
     const data = {
         username,
         email,
-        isVerified,
-        isRestoreLinkSend: false,
         isVerificationLinkSend: false,
         currentTheme: 'day',
     };
 
-    set(dbRef(database, `users`), data)
-        .then(() => {
-            toast.success('New user db had been created')
-        })
+    const emailKey = extractUsernameFromEmail(email)
+
+    set(dbRef(database, `users/` + emailKey), data)
         .catch((error) => {
             toast.error('Error creating new user...', error);
         });
 }
 
-export const getVerificationLinkStatusInfo = async ({email, dispatch}) => {
-    debugger
-    const usersRef = dbRef(database, 'users');
-    const queryRef = query(usersRef,
-        orderByChild('email'), equalTo(email)
-    );
 
-    get(queryRef)
-        .then((snapshot) => {
-            debugger
-            if (snapshot.exists()) {
-                debugger
-                const userData = snapshot.val()[Object.keys(snapshot.val())[0]]; // Получить данные пользователя
-                const isVerificationLinkSend = userData.isVerificationLinkSend === true; // Проверить значение ключа isVerificationLinkSend
-                if (isVerificationLinkSend) {
-                    dispatch(toggleVerificationEmailSendStatus(true))
-                    dispatch(startVerificationTimer());
-                }
+export const isUserExist = async (email) => {
+    const emailKey = extractUsernameFromEmail(email)
+    const userRef = dbRef(database, 'users/' + emailKey)
+    return await get(userRef).then((result) => result.exists())
+}
+
+export const getVerificationLinkStatusInfo = async (email) => {
+    const emailKey = extractUsernameFromEmail(email)
+    const userRef = dbRef(database, `users/` + emailKey)
+    return get(userRef)
+        .then((result) => {
+            if (result.exists()) {
+                return result.val().isVerificationLinkSend
             } else {
-                toast.error('user not found..')
+                console.log(`${email} not found in db`)
             }
         })
-        .catch((error) => {
-            debugger
-            alert('Get countdown error...: ', error);
-        });
 };
 
 export const updateVerificationLinkStatus = async (email, status) => {
-    debugger
-    const userRef = dbRef(database, `users`);
-    const queryRef = query(userRef, orderByChild('email'), equalTo(email));
-
-    try {
-        get(queryRef).then(async (snapshot) => {
-            if (snapshot.exists()) {
-                debugger
-                const userKey = Object.keys(snapshot.val())[0]; // Получить ключ пользователя
-                const userToUpdateRef = dbRef(database, `users/${userKey}`);
-
-                await update(userToUpdateRef, {isVerificationEmailSend: status});
-
-                toast.success('User verification status updated');
-            } else {
-                debugger
-                toast.error('User not found with the specified email');
-            }
-        });
-
-    } catch (error) {
-        debugger
-        toast.error('Error updating user verification status', error);
+    const emailKey = extractUsernameFromEmail(email)
+    const userRef = dbRef(database, `users/` + emailKey)
+    const updates = {
+        isVerificationLinkSend: status
     }
+
+    return update(userRef, updates)
+        .catch(() => {
+            toast.error('error updating verification link status')
+        })
+
 };
 
 

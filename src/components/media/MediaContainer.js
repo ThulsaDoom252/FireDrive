@@ -11,6 +11,7 @@ import {PagesContext} from "../../context/PagesContext";
 import {PaginatorContext} from "../../context/PaginatorContext";
 import {connect} from "react-redux";
 import {handleInitialModalItem, setItemOptionsHovered} from "../../redux/appSlice";
+import {useStyles} from "../mui/styles";
 
 const MediaContainer = ({
                             currentRoute, handleCurrentMediaSet, handleSearchMedia,
@@ -23,6 +24,7 @@ const MediaContainer = ({
     const pagesContext = useContext(PagesContext)
     const {imagesPage, videosPage, audioPage} = pagesContext
     const [hoveredMediaIndex, setHoveredMediaIndex] = useState(null)
+    const classes = useStyles();
 
     const paginatorContext = useContext(PaginatorContext)
     const {
@@ -81,6 +83,7 @@ const MediaContainer = ({
         smallScreen,
         mediaToShow,
         noMedia,
+        classes,
         hoveredMediaIndex,
         setHoveredMediaIndex,
         noSearchResults,

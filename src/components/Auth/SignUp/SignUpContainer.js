@@ -5,13 +5,19 @@ import {Navigate} from "react-router-dom"
 import {handleEmailAndPasswordSignUp, setAuthError} from "../../../redux/authSlice";
 import {connect} from "react-redux";
 
-const SignUpContainer = ({isAuth, emailPasswordSignup, isAuthBtnFetching, setAuthError, verificationMode}) => {
+const SignUpContainer = ({
+                             isAuth,
+                             emailPasswordSignup,
+                             isAuthBtnFetching,
+                             setAuthError,
+                             verificationMode
+
+}) => {
     useEffect(() => {
         setAuthError('')
     }, [])
 
     if (verificationMode) {
-        debugger
         return <Navigate to={verificationRoute}/>
     }
 

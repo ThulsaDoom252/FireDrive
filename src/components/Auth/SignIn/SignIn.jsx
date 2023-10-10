@@ -1,75 +1,75 @@
-import React, {useState} from 'react';
-import {useFormik} from "formik";
-import * as Yup from "yup";
-import {NavLink} from "react-router-dom";
-import {restoreRoute, signUpRoute} from "../../../common/commonData";
+import React from 'react';
 import SocialAuth from "../SocialAuth";
-import ActionInput from "../../common/ActionInput";
-import ActionBtn from "../../common/ActionBtn";
 import Logo from "../../../images/logo.png"
 import Image from "../../media/Image"
 import {Button, IconButton, TextField, Tooltip} from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
-import LockIcon from "@mui/icons-material/Lock";
-import {LockOpen, Visibility, VisibilityOff} from "@mui/icons-material";
-import {authInput, useStyles} from "../../mui/styles";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {authInput} from "../../mui/styles";
+import {restoreMode, signInMode, signUpMode} from "../types";
 
 const SignIn = ({
-                    handleLogin, authError, isAuthBtnFetching, googleAuth,
-                    githubAuth, smallScreen,
+                    authError,
+                    isAuthBtnFetching,
+                    googleAuth,
+                    githubAuth,
+                    smallScreen,
+                    isSignInMode,
+                    isSignUpMode,
+                    isVerificationMode,
+                    isRestoreMode,
+                    setAuthMode,
+                    handleLogout,
+                    username,
+                    email,
+                    isVerificationEmailSend,
+                    verificationTimerValue,
+                    handleSubmit,
+                    errors,
+                    handleChange,
+                    values,
+                    showPassword,
+                    setShowPassword,
+                    isRestoreEmailSend,
+                    isVerificationCheckBtnFetching,
+                    checkUserVerification,
+                    restoreTimerValue,
+
                 }) => {
 
-        const [showPassword, setShowPassword] = useState(false)
-
-        const signInForm = useFormik({
-            initialValues: {
-                email: '',
-                password: '',
-            },
-            validationSchema: Yup.object({
-                email: Yup.string().email('use email format').required('email required'),
-                password: Yup.string().min(10, 'Password must contain minimum 10 characters').required('password required'),
-            }),
-            onSubmit: ({email, password}) => {
-                handleLogin({email, password})
-            },
-
-            validateOnChange: false,
-            validateOnBlur: false,
-        })
-
-        const values = signInForm.values
-        const errors = signInForm.errors
-        const handleChange = signInForm.handleChange
-        const handleSubmit = signInForm.handleSubmit
-
-        const classes = useStyles()
-
         const inputContainerStyle = 'mt-4 h-inputContainerHeight'
+
+
+        const handleMode = () => {
+            debugger
+            if (isSignUpMode || isVerificationMode || isRestoreMode) {
+                debugger
+                setAuthMode(signInMode)
+                return
+            }
+
+
+            if (isSignInMode) {
+                debugger
+                setAuthMode(signUpMode)
+            }
+
+        }
 
         return (
             <div
                 className='
             font-sans
             container-fluid
-            h-screen
-            mx-auto
-            flex
-            flex-col
-            justify-center
-            items-center
-            max-w-lg'>
-                <form className='
-            mx-auto
-            w-full
-            h-fit
-            flex
-            justify-center
-            items-center
-            rounded'
-                      onSubmit={handleSubmit}>
-
-                    <div className={'container-fluid max-auto max-w-screen-sm p-2'}>
+            mt-5
+            pb-2
+            rounded-md
+            bg-gray-200
+            bg-opacity-80
+            max-w-lg
+            '>
+                <form onSubmit={handleSubmit}>
+                    <div className={'container-fluid max-auto  max-w-screen-sm p-2'}>
                         <div className={'w-full h-fit flex justify-center items-center'}>
                             <Image
                                 height={'h-50'}
@@ -79,100 +79,179 @@ const SignIn = ({
                                 imageIsClickable={false}
                             />
                         </div>
-                        <div className={inputContainerStyle}>
-                            <TextField id="email"
-                                       fullWidth
-                                       className={classes.input}
-                                       label="Email"
-                                       error={errors.email || authError}
-                                       helperText={errors.email}
-                                       variant="outlined"
-                                       InputLabelProps={{
-                                           shrink: false,
-                                       }}
-                                       onChange={handleChange}
-                                       value={values.email}
-                                // sx={authInput.textField}
-                            />
-                            {/*<ActionInput*/}
-                            {/*    type={'email'}*/}
-                            {/*    placeholder={'email'}*/}
-                            {/*    errorType={errors.email}*/}
-                            {/*    onChange={handleChange}*/}
-                            {/*    id={'email'}*/}
-                            {/*    value={values.email}*/}
-                            {/*/>*/}
-                            {/*{<span className={errorStyle}>{errors.email}</span>}*/}
-                        </div>
+                        {isVerificationMode &&
+                            <div className={`
+                        w-full 
+                        flex 
+                        flex-col 
+                        justify-center 
+                        items-center`}>
+                                <h4 className='
+                mt-2
+                '>Welcome {username}</h4>
+                                <h4 className='
+                mt-2
+                text-center
+                '>Confirm link has been send to {email}</h4>
+                                <p className='
+                text-lg
+                mt-2
+                '>
+                                    To ensure the security of our platform and protect our users from spam and bot
+                                    registrations, we
+                                    require
+                                    all new users to verify their email address before they can access the full features of
+                                    our
+                                    site.
 
-                        <div className={inputContainerStyle}>
-                            <TextField id="password"
-                                       label="Password"
-                                       fullWidth
-                                       InputProps={{
-                                           endAdornment: (
-                                               <InputAdornment position="end">
-                                                   <Tooltip title={showPassword ? "Hide password" : "Show password"}>
-                                                       <IconButton onClick={() => setShowPassword(!showPassword)}>
-                                                           {showPassword ? <VisibilityOff/> :
-                                                               <Visibility/>}
-                                                       </IconButton>
-                                                   </Tooltip>
-                                               </InputAdornment>
-                                           ),
-                                           classes: {
-                                               input: "text-base border-2 border-blue-500 bg-gray-500", // Установите размер шрифта для текстового поля
-                                           },
-                                       }}
-                                       FormHelperTextProps={{
-                                           classes: {
-                                               root: "text-base", // Установите размер шрифта для helperText
-                                           },
-                                       }}
-                                       error={errors.password || authError}
-                                       helperText={errors.password}
-                                       type={showPassword ? 'text' : 'password'}
-                                       variant="outlined"
-                                       sx={authInput.textField}
-                                       onChange={handleChange}
-                                       value={values.password}/>
-                            {/*<ActionInput*/}
-                            {/*    type={'password'}*/}
-                            {/*    placeholder={'password'}*/}
-                            {/*    errorType={errors.password}*/}
-                            {/*    onChange={handleChange}*/}
-                            {/*    id={'password'}*/}
-                            {/*    value={values.password}*/}
-                            {/*/>*/}
-                            {/*{<span className={errorStyle}>{errors.password}</span>}*/}
-                        </div>
+                                    To get started, please check your email inbox for a message from FireDrive containing
+                                    your
+                                    verification
+                                    link. If you don't see the email, please check your spam folder or contact our support
+                                    team for
+                                    assistance.
 
-                        <div className='w-full mt-4 relative'>
-                            <Button variant="contained" color="primary" type={'submit'} className={'w-full'}
-                                    disabled={isAuthBtnFetching}>
-                                Login
+                                    Once you have received your verification link, simply click on it to complete the
+                                    verification process. You will then be able to access all of the features and services
+                                    that
+                                    FireDrive
+                                    has to offer.</p>
+                                <div>{isVerificationEmailSend && verificationTimerValue && `Dont get the link? Request another in: ${verificationTimerValue}`}</div>
+                                <Button disabled={isVerificationCheckBtnFetching} onClick={checkUserVerification}>Check
+                                    verification</Button>
+                            </div>}
+
+                        {!isVerificationMode &&
+                            <div className={inputContainerStyle}>
+                                <TextField id="email"
+                                           disabled={isRestoreMode && isRestoreEmailSend}
+                                           fullWidth
+                                           label="Email"
+                                           error={errors.email || authError}
+                                           helperText={errors.email}
+                                           variant="outlined"
+                                           onChange={handleChange}
+                                           sx={authInput.textField}
+                                           value={values.email}
+                                />
+                            </div>}
+                        {(isSignInMode || isSignUpMode) &&
+                            <div className={inputContainerStyle}>
+                                <TextField id="password"
+                                           label="Password"
+                                           fullWidth
+                                           InputProps={{
+                                               endAdornment: (
+                                                   <InputAdornment position="end">
+                                                       <Tooltip title={showPassword ? "Hide password" : "Show password"}>
+                                                           <IconButton onClick={() => setShowPassword(!showPassword)}>
+                                                               {showPassword ? <VisibilityOff/> :
+                                                                   <Visibility/>}
+                                                           </IconButton>
+                                                       </Tooltip>
+                                                   </InputAdornment>
+                                               ),
+                                               classes: {
+                                                   input: "text-base border-2 border-blue-500 bg-gray-500", // Установите размер шрифта для текстового поля
+                                               },
+                                           }}
+                                           FormHelperTextProps={{
+                                               classes: {
+                                                   root: "text-base", // Установите размер шрифта для helperText
+                                               },
+                                           }}
+                                           error={errors.password || authError}
+                                           helperText={errors.password}
+                                           type={showPassword ? 'text' : 'password'}
+                                           variant="outlined"
+                                           sx={authInput.textField}
+                                           onChange={handleChange}
+                                           value={values.password}/>
+                            </div>}
+                        {isSignUpMode && <>
+                            <div className={inputContainerStyle}>
+                                <TextField id="password2"
+                                           label="Repeat password"
+                                           fullWidth
+                                           error={errors.password2 || errors.passwordsMismatch}
+                                           helperText={errors.password2}
+                                           type={showPassword ? 'text' : 'password'}
+                                           variant="outlined"
+                                           sx={authInput.textField}
+                                           onChange={handleChange}
+                                           value={values.password2}/>
+                            </div>
+                            <div className={inputContainerStyle}>
+                                <TextField id="username"
+                                           fullWidth
+                                           label="Username"
+                                           error={errors.username}
+                                           helperText={errors.username}
+                                           variant="outlined"
+                                           onChange={handleChange}
+                                           value={values.username}
+                                           sx={authInput.textField}
+                                />
+                            </div>
+                        </>}
+                        {isRestoreMode && <div className={'w-full flex flex-col justify-center items-center'}>
+                            {isRestoreEmailSend && <>
+                                <div className={'text-green-500'}>Restoration link has been sent</div>
+                                <div>Dont receive it? You can request another in: {restoreTimerValue}</div>
+                            </>}
+                        </div>}
+
+                        <div className='w-full mt-5 relative'>
+                            <Button variant="contained"
+                                    color="primary"
+                                    type={'submit'}
+                                    className={'w-full'}
+                                    disabled={isVerificationMode ? isVerificationEmailSend : isRestoreMode ? isRestoreEmailSend : isAuthBtnFetching}>
+                                {isSignUpMode ? 'Sign up'
+                                    : (isVerificationMode || isRestoreMode) ? 'Send email'
+                                        : 'Log in'}
                             </Button>
-                            {<div className={`
+                            <div className={`
                         text-red-500 
                         text-center
                         w-full 
                         text-lg 
                         absolute 
-                        top-minus30`}>{authError}</div>}
+                        top-minus30`}>{authError}</div>
                         </div>
-                        <SocialAuth {...{googleAuth, githubAuth, smallScreen}}/>
-                        <hr/>
-
-                        <div className={'text-center'}>Not registered? <NavLink to={signUpRoute}
-                                                                                className={'text-blue-300'}>Create an
-                            account</NavLink></div>
-                        <div className={'text-center mt-3'}>
-                            <NavLink to={restoreRoute} className={'no-underline'}>
-                                Forgot login/password?
-                            </NavLink>
-                        </div>
+                        {!isVerificationMode && <>
+                            <SocialAuth {...{googleAuth, githubAuth, smallScreen}}/>
+                            <hr/>
+                        </>}
                     </div>
                 </form>
+                <div className={'text-center flex justify-center items-center w-full mt-2'}>
+                    <div hidden={isVerificationMode || isRestoreMode}>
+                        {isSignUpMode ? 'Have an account?' : "Not with us yet?"}
+                    </div>
+                    <Button className={'text-blue-300 ml-2 cursor-pointer'}
+                            onClick={handleMode}>
+                        {isSignUpMode ? 'Login' : (isVerificationMode || isRestoreMode) ? 'Go back to login page' : 'Create an account'}
+                    </Button>
+                </div>
+                {isSignInMode &&
+                    <div className={`
+                w-full 
+                flex 
+                mt-2
+                justify-center 
+                items-center`}>
+                        <div>Forgot password?</div>
+                        <Button
+                            onClick={() => setAuthMode(restoreMode)}
+                            className={`
+                    ml-2 
+                    text-blue-300 
+                    cursor-pointer`}>
+                            Restore
+                        </Button>
+                    </div>}
+
             </div>
 
         );
