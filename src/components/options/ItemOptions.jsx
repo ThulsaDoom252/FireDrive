@@ -12,7 +12,7 @@ import {
     renameModal,
     stopPropagation
 } from "../../common/commonData";
-import MyCustomTransition from "../common/MyCustomTransition";
+import {Fade} from "@mui/material";
 
 
 const ItemOptions = ({
@@ -32,8 +32,6 @@ const ItemOptions = ({
                          deleteIconColor = 'black',
                          iconsSize = 20,
                          url, index, searchMode, currentRoute,
-                         animate = true,
-                         shouldAnimate,
                          initialMode = 'hide',
                          showBg = true,
                          setItemOptionsHovered,
@@ -41,16 +39,13 @@ const ItemOptions = ({
                          confirm,
                      }) => {
 
-
     const [showOptions, setShowOptions] = useState(initialMode !== 'hide')
-
 
     const handleRenameModal = async () => {
         handleMediaName({name, oldName})
         await delay(50)
         setModalType(renameModal)
     }
-
 
     const handleMouseEnter = () => {
         index === hoveredMediaIndex && setShowOptions(true)
@@ -63,7 +58,6 @@ const ItemOptions = ({
             setItemOptionsHovered(false)
         }
     }
-
 
     const handleDeleteCurrentItem = async () => {
         await handleAlertModal({message: removeCurrentItemMsg, title: removeCurrentItemTitle})
@@ -91,7 +85,7 @@ const ItemOptions = ({
     hover:cursor-pointer
     z-10
     `
-        :'mx-1'}`
+        : 'mx-1'}`
 
     return (
         <div
@@ -107,7 +101,7 @@ const ItemOptions = ({
              ${(showOptions && showBg) && 'bg-settingsBar'} 
            `}
             onMouseLeave={handleMouseLeave}>
-            <MyCustomTransition shouldAnimate={shouldAnimate} show={showOptions}>
+            <Fade in={showOptions} timeout={200}>
                 <div className={`flex ${displayInCol && 'flex-col'}`}>
                     <div className={iconBlockClass}>
                         <TelegramShareButton
@@ -148,7 +142,7 @@ const ItemOptions = ({
                     {/*<BsDownload className="text-gray-200" size={iconsSize}/>*/}
 
                 </div>
-            </MyCustomTransition>
+            </Fade>
             {initialMode === 'hide' &&
                 <div onMouseEnter={handleMouseEnter} className={showOptions ? `text-black` : 'text-gray-500'}>
                     <BsThreeDots

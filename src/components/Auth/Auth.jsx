@@ -1,7 +1,7 @@
 import React from 'react';
 import SocialAuth from "./SocialAuth";
 import Logo from "../../images/logo.png"
-import Image from "../media/Image"
+import Image from "../media/Image/Image"
 import {Button, IconButton, TextField, Tooltip} from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import {Visibility, VisibilityOff} from "@mui/icons-material";

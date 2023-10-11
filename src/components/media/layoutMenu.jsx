@@ -43,6 +43,7 @@ const LayoutMenu = ({audioPage, layoutMenu, layoutNumbs, gridIndex, handleLayout
                         justify-center 
                         h-10 
                         border-2
+                        cursor-pointer
                         rounded-md
                         hover:border-black  
                         transition-all

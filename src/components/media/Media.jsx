@@ -41,7 +41,7 @@ const Media = ({
     return (
         <>
             {layoutMenu &&
-                <Overlay opacity={'bg-transparent'} height={'h-screen'} zIndex={'z-10'} width={'w-screen'}
+                <Overlay opacity={'bg-transparent'} height={'h-screen'} zIndex={'z-1'} width={'w-screen'}
                          toggleModal={handleLayoutMenu} position={'fixed'}/>}
             <section
                 className={`

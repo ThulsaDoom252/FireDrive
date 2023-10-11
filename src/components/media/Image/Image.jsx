@@ -11,7 +11,6 @@ const Image = ({
                    skeletonHeight = 300,
                    skeletonWidth = 300,
                    setIsShowOptions,
-                   animate = true,
                    handleImageClick,
                }) => {
     const [imageIsLoaded, setImageIsLoaded] = useState(false)
@@ -38,7 +37,7 @@ const Image = ({
                 ${height}
                 ${width}        
                 ${isAbsolute && 'absolute'}
-                transition-all duration-300
+                transition-all duration-100
                 ${imageIsLoaded ? 'opacity-100' : 'opacity-0'}
                 `}
                 src={url}

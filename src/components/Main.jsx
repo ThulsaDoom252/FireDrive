@@ -75,7 +75,6 @@ const Main = ({
     const [isSettingsBlockOpened, setIsSettingsBlockOpened] = useState(false)
     const isVideoModalMounted = mountedModal === videoModal
     const isImageModalMounted = mountedModal === imageModal
-    const isVideoModalOpened = itemModalType === videoModal
     const animateImageModal = itemModalType === imageModal
     const animateVideoModal = itemModalType === videoModal
 
@@ -139,7 +138,6 @@ const Main = ({
             }
         }
     }
-
 
     const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
     const mediaToShow = searchMode ? searchResults : listMode === paginateMode ? paginatedMedia : currentMediaSet
@@ -282,6 +280,7 @@ const Main = ({
                                              currentTheme,
                                              confirm,
                                              handleItemModal,
+                                             itemModalType,
                                          }}/>}/>}
                 </Routes>
                 <div

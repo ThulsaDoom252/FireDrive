@@ -7,7 +7,7 @@ import {stopPropagation} from "../../common/commonData";
 import ModalOptions from "../options/ModalDesktopOptions";
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import {Fade} from "@mui/material"; // requires a loader
+import {Fade} from "@mui/material";
 
 const ImageItemsModal = ({
                         overlayColor = 'bg-gray-900',

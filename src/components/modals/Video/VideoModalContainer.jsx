@@ -6,6 +6,7 @@ import VideoModal from "./VideoModal";
 import {VideoControlsContext} from "../../../context/VideoControlsContext";
 
 
+
 //Modal mui styles
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -181,7 +182,6 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
 
 // Listed videos in modal handlers
     const handleListedVideoMouseEnter = (index) => {
-        debugger
         setListedVideoHoveredIndex(index);
     };
 

@@ -7,7 +7,7 @@ import {formatTime} from "../../common/commonData";
 import {ClipLoader} from "react-spinners";
 import {dayPrimary} from "../../common/themes";
 import {truncate} from "../../common/commonData";
-import MyCustomTransition from "../common/MyCustomTransition";
+import {Fade} from "@mui/material";
 import {Skeleton, Tooltip} from "@mui/material";
 
 const Audio = ({
@@ -91,7 +91,7 @@ const Audio = ({
                         </div>
                         <div
                             className={`w-full absolute left-10  ${currentTheme.color}`}>{smallScreen ? truncate(name, 20) : truncate(name, 50)}</div>
-                        <MyCustomTransition show={isAudioHovered}>
+                        <Fade in={isAudioHovered} timeout={100}>
                             <div className={'absolute top-1/2 transform -translate-y-1/2 right-0 z-50 mr-40'}>
                                 <ItemOptions
                                     initialMode={'show'}
@@ -105,7 +105,7 @@ const Audio = ({
 
 
                             </div>
-                        </MyCustomTransition>
+                        </Fade>
                         <div
                             className={'flex mr-5 '}>
                             <div
