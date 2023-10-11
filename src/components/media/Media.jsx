@@ -36,6 +36,7 @@ const Media = ({
                    gridIndex,
                    handleVideoClick,
                    handleImageClick,
+                   handleModal,
                }) => {
 
     return (
@@ -96,6 +97,7 @@ const Media = ({
                                                                                 setItemOptionsHovered,
                                                                                 confirm,
                                                                                 handleImageClick,
+                                                                                handleModal,
                                                                             }}/></Grid>
                             })
                             : videosPage ? mediaToShow.map((video, index) =>
@@ -121,6 +123,7 @@ const Media = ({
                                                        currentTheme,
                                                        smallScreen,
                                                        handleVideoClick,
+                                                       handleModal,
 
                                                    }}/>
                                         </div>

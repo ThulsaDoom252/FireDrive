@@ -28,6 +28,7 @@ const appSlice = createSlice({
         gridIndex: 5,
         itemModalType: noModal,
         mountedModal: noModal,
+        mountedItemModal: noModal,
         alertTitle: '',
         alertMessage: '',
         showVideoMobileMenu: false,
@@ -80,6 +81,9 @@ const appSlice = createSlice({
         },
         setAlertActionType(state, action) {
             state.alertActionType = action.payload
+        },
+        setMountedItemModal(state, action) {
+            state.mountedItemModal = action.payload
         },
         setMountedModal(state, action) {
             state.mountedModal = action.payload
@@ -137,6 +141,7 @@ export const {
     toggleVideoMobileMenu,
     setGridSize,
     setGridIndex,
+    setMountedItemModal,
     setMountedModal,
 } = appSlice.actions
 

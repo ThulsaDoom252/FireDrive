@@ -1,9 +1,9 @@
 import React, {createContext, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {setCurrentModalItemIndex, setModalType} from "../redux/appSlice";
+import {setCurrentModalItemIndex, setModalType, setMountedModal} from "../redux/appSlice";
 import {handleMediaName} from "../redux/mediaSlice";
 import {
-    delay,
+    delay, noModal,
     renameModal, shareModal
 } from "../common/commonData";
 import {useSwipeable} from "react-swipeable";
@@ -14,6 +14,7 @@ export const ItemsModalContextProvider = ({children}) => {
     const smallScreen = useSelector(state => state.app.smallScreen)
     const currentMediaSet = useSelector(state => state.media.currentMediaSet)
     const searchResults = useSelector(state => state.media.searchResults)
+    const mountedModal = useSelector(state => state.app.mountedModal)
     const currentModalItemIndex = useSelector(state => state.app.currentModalItemIndex)
     const searchMode = useSelector(state => state.media.searchMode)
     const [fullScreen, toggleFullScreen] = useState(false)
@@ -23,6 +24,7 @@ export const ItemsModalContextProvider = ({children}) => {
     const currentModalItemUrl = searchMode ? searchResults[currentModalItemIndex]?.url : currentMediaSet[currentModalItemIndex]?.url
     const currentModalItemName = searchMode ? searchResults[currentModalItemIndex]?.name : currentMediaSet[currentModalItemIndex]?.name
     const currentModalItemOldName = searchMode ? searchResults[currentModalItemIndex]?.oldName : currentMediaSet[currentModalItemIndex]?.oldName
+    const isRenameModalMounted = mountedModal === renameModal
 
 
     const handleFullScreen = () => {
@@ -81,9 +83,18 @@ export const ItemsModalContextProvider = ({children}) => {
     }
 
     const handleRenameModal = async () => {
-        dispatch(handleMediaName({name: currentModalItemName, oldName: currentModalItemOldName}))
-        await delay(50)
-        dispatch(setModalType(renameModal))
+        if (isRenameModalMounted) {
+            dispatch(handleMediaName({name: currentModalItemName, oldName: currentModalItemOldName}))
+            await delay(100)
+            dispatch(setMountedModal(renameModal))
+            await delay(100)
+            dispatch(setModalType(renameModal))
+        } else {
+            dispatch(setModalType(noModal))
+            await delay(200)
+            dispatch(setMountedModal(noModal))
+        }
+
     }
 
     const handleShareModal = e => {

@@ -20,6 +20,7 @@ const Video = ({
                    smallScreen,
                    currentTheme,
                    handleVideoClick,
+                    handleModal,
                }) => {
     const [isVideoReady, setIsVideoReady] = useState(false)
     const [isPlaying, setIsPlaying] = useState(false);
@@ -91,6 +92,7 @@ const Video = ({
                         itemOptionsHovered,
                         setItemOptionsHovered,
                         hoveredMediaIndex,
+                        handleModal,
                     }} />
                     </div>
                 </Fade>}

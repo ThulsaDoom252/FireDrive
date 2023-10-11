@@ -39,7 +39,6 @@ const Auth = ({
 
         const inputContainerStyle = 'mt-4 h-inputContainerHeight'
 
-
         const handleMode = () => {
             debugger
             if (isSignUpMode || isVerificationMode || isRestoreMode) {
@@ -48,12 +47,10 @@ const Auth = ({
                 return
             }
 
-
             if (isSignInMode) {
                 debugger
                 setAuthMode(signUpMode)
             }
-
         }
 
         return (

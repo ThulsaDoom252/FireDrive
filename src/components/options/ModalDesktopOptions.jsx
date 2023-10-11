@@ -8,7 +8,7 @@ const ModalDesktopOptions = ({
                                  handleDeleteCurrentModalItem,
                                  smallScreen,
                                  handleShareModal,
-                                 iconSize = 30
+                                 iconSize = 30,
                              }) => {
 
     return (

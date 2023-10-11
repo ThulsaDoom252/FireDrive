@@ -1,9 +1,10 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {handleMediaName, renameMedia, setNewMediaName} from "../../redux/mediaSlice";
-import {Dialog} from "@headlessui/react";
-import ActionBtn from "../common/ActionBtn";
-import TransitionCommonParrent from "../common/TransitionCommonParrent";
+import {Button, Fade} from "@mui/material";
+import TextField from '@mui/material/TextField';
+import Overlay from "../common/Overlay";
+import {stopPropagation} from "../../common/commonData";
 
 const RenameModal = ({
                          oldName,
@@ -25,30 +26,52 @@ const RenameModal = ({
     const isRenameBtnDisabled = isItemRenaming || newName === editingName || newName === ''
 
     return (
-        <>
-            <TransitionCommonParrent appear={showModal} show={showModal} toggleModal={toggleModal}>
-                <Dialog.Title className={'underline text-lg'}>
-                    Rename item
-                </Dialog.Title>
-                <div>
-                    <input className='border-b-2
-                                rounded-b
-                            border-gray-300
-                            focus:outline-none'
-                           value={newName}
-                           autoFocus={true}
-                           type='text'
-                           onChange={e => setNewMediaName(e.currentTarget.value)}/>
+        <Fade in={showModal}>
+            <div className='
+            w-screen
+            h-screen
+             absolute
+             z-10
+             flex
+             justify-center
+             items-center
+             '>
+                <Overlay toggleModal={toggleModal}/>
+                <div className='
+                bg-white
+                relative
+                w-80
+                h-36
+                flex
+                flex-col
+                p-3
+                rounded-md'
+                     onClick={stopPropagation}>
+                    <h6 className={'mx-auto'}>Rename item</h6>
+                    <TextField
+                        placeholder={'Enter name'}
+                        className={'w-'}
+                        id="outlined-basic"
+                        variant="outlined"
+                        autoFocus={true}
+                        value={newName}
+                        type={'text'}
+                        onChange={e => setNewMediaName(e.currentTarget.value)}
+
+                    />
+                    <div className='w-20  absolute right-5 bottom-1'>
+                        <Button
+                            variant={'contained'}
+                            color={'primary'}
+                            disabled={isRenameBtnDisabled}
+                            onClick={handleRenameMedia}>
+                            Rename
+                        </Button>
+                    </div>
+
                 </div>
-                <div className={'flex justify-end mt-1 '}>
-                    <ActionBtn height={'h-8'}
-                               isDisabled={isRenameBtnDisabled}
-                               handleClick={handleRenameMedia}>
-                        Rename
-                    </ActionBtn>
-                </div>
-            </TransitionCommonParrent>
-        </>
+            </div>
+        </Fade>
     );
 };
 

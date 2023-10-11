@@ -15,6 +15,7 @@ const ImageBlock = ({
                         setItemOptionsHovered,
                         confirm,
                         handleImageClick,
+                        handleModal,
                     }) => {
     const imageIsHovered = hoveredMediaIndex === index
     const [showOptions, setIsShowOptions] = useState(false)
@@ -51,6 +52,7 @@ const ImageBlock = ({
                                           hoveredMediaIndex,
                                           setItemOptionsHovered,
                                           confirm,
+                                          handleModal,
                                       }}/></div>
                 </Fade>}
             <Image  {...{

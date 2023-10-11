@@ -11,12 +11,13 @@ import {
 import {Routes, Route, Navigate, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
 import {
+    handleMediaName,
     listMedia,
     setCurrentRoute, toggleMobileSearch,
 } from "../redux/mediaSlice";
 import MediaContainer from "./media/MediaContainer";
 import {
-    setItemModalType, setModalType, setMountedModal, toggleCurrentTheme, toggleListMode,
+    setItemModalType, setModalType, setMountedItemModal, setMountedModal, toggleCurrentTheme, toggleListMode,
 } from "../redux/appSlice";
 import BurgerMenu from "./common/BurgerMenu";
 import SortInput from "./common/SortInput";
@@ -66,15 +67,20 @@ const Main = ({
                   toggleListMode,
                   alertTitle,
                   alertMessage,
-                  mountedModal,
+                  mountedItemModal,
+                  setMountedItemModal,
                   setMountedModal,
+                  mountedModal,
+                  handleMediaName,
               }) => {
 
     const location = useLocation()
     const [isThemeBlockOpened, setIsThemeBlockOpened] = useState(false)
     const [isSettingsBlockOpened, setIsSettingsBlockOpened] = useState(false)
-    const isVideoModalMounted = mountedModal === videoModal
-    const isImageModalMounted = mountedModal === imageModal
+    const isVideoModalMounted = mountedItemModal === videoModal
+    const isImageModalMounted = mountedItemModal === imageModal
+    const isRenameModalMounted = mountedModal === renameModal
+    const animateRenameModal = modalType === renameModal
     const animateImageModal = itemModalType === imageModal
     const animateVideoModal = itemModalType === videoModal
 
@@ -115,27 +121,44 @@ const Main = ({
     const handleItemModal = async (modalType) => {
         if (modalType === imageModal) {
             if (!isImageModalMounted) {
-                setMountedModal(imageModal)
+                setMountedItemModal(imageModal)
                 await delay(100)
                 setItemModalType(imageModal)
             } else {
                 setItemModalType(noModal)
                 await delay(200)
-                setMountedModal(noModal)
+                setMountedItemModal(noModal)
             }
             return
         }
 
         if (modalType === videoModal) {
             if (!isVideoModalMounted) {
-                setMountedModal(videoModal)
+                setMountedItemModal(videoModal)
                 await delay(100)
                 setItemModalType(videoModal)
             } else {
                 setItemModalType(noModal)
                 await delay(200)
+                setMountedItemModal(noModal)
+            }
+        }
+    }
+
+    const handleModal = async ({modalType, name, oldName}) => {
+        if (modalType === renameModal) {
+            if (!isRenameModalMounted) {
+                handleMediaName({name, oldName})
+                await delay(100)
+                setMountedModal(renameModal)
+                await delay(100)
+                setModalType(renameModal)
+            } else {
+                setModalType(noModal)
+                await delay(200)
                 setMountedModal(noModal)
             }
+            return
         }
     }
 
@@ -154,7 +177,8 @@ const Main = ({
             <div className={'relative bottom-20 z-max'}>
                 <MobileVideoMenu/>
             </div>
-            <RenameModal toggleModal={setModalType} showModal={modalType === renameModal}/>
+            {isRenameModalMounted &&
+                <RenameModal toggleModal={setModalType} showModal={animateRenameModal}/>}
             <ShareModal toggleModal={setModalType} showModal={modalType === shareModal}/>
             {isVideoModalMounted && <VideoModalContainer
                 handleCurrentModal={handleItemModal}
@@ -165,7 +189,7 @@ const Main = ({
 
             {isImageModalMounted &&
                 <ImageModalContainer toggleModal={setItemModalType} animateModal={animateImageModal}
-                                     confirm={confirm} handleCurrentModal={handleItemModal}
+                                     confirm={confirm} handleCurrentModal={handleItemModal} handleModal={handleModal}
                 />}
             <UserModal toggleModal={setModalType}
                        showModal={modalType === userModal}/>
@@ -280,6 +304,7 @@ const Main = ({
                                              currentTheme,
                                              confirm,
                                              handleItemModal,
+                                             handleModal,
                                              itemModalType,
                                          }}/>}/>}
                 </Routes>
@@ -293,7 +318,7 @@ const Main = ({
                      items-center
                      ${smallScreen ? 'h-mobilePlayerHeight' : 'h-playerHeight'}
                      ${currentTheme.primeBg}
-                     ${itemModalType !== imageModal && itemModalType !== videoModal && 'fixed-bottom'
+                     ${!isImageModalMounted && !isVideoModalMounted && 'fixed-bottom'
 
                     }`}>
                     <AudioPlayer currentTheme={currentTheme}
@@ -320,6 +345,7 @@ const mapStateToProps = (state) => {
         listMode: state.app.listMode,
         alertMessage: state.app.alertMessage,
         alertTitle: state.app.alertTitle,
+        mountedItemModal: state.app.mountedItemModal,
         mountedModal: state.app.mountedModal,
     }
 }
@@ -328,7 +354,8 @@ export default connect(mapStateToProps, {
     listMedia, setCurrentRoute,
     setModalType, setItemModalType,
     toggleCurrentTheme, toggleMobileSearch,
-    toggleListMode, setMountedModal
+    toggleListMode, setMountedItemModal,
+    setMountedModal, handleMediaName,
 })(Main);
 
 

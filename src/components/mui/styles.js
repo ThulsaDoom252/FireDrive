@@ -8,6 +8,10 @@ export const useStyles = makeStyles((theme) => ({
         margin: '2px',
         borderColor: "gray"
     },
+    actionBtn: {
+        backgroundColor: 'blue',
+        color: 'white',
+    }
     // modal: {
     //     display: "flex",
     //     alignItems: "center",

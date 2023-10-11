@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
 import {connect} from "react-redux";
-import {deleteCurrentItem, handleMediaName} from "../../redux/mediaSlice";
+import {deleteCurrentItem} from "../../redux/mediaSlice";
 import {BsDownload, BsPencilFill, BsThreeDots, BsTrash} from "react-icons/bs";
 import {TelegramShareButton, ViberShareButton} from "react-share";
 import {FaTelegram, FaViber} from "react-icons/fa";
-import {handleAlertModal, setModalType} from "../../redux/appSlice";
+import {handleAlertModal} from "../../redux/appSlice";
 import {
-    delay,
     removeCurrentItemMsg,
     removeCurrentItemTitle,
     renameModal,
@@ -16,10 +15,8 @@ import {Fade} from "@mui/material";
 
 
 const ItemOptions = ({
-                         handleMediaName,
                          hoveredMediaIndex,
                          deleteCurrentItem,
-                         setModalType,
                          showIcons = true,
                          iconBgColor,
                          iconBgActiveColor,
@@ -37,15 +34,10 @@ const ItemOptions = ({
                          setItemOptionsHovered,
                          handleAlertModal,
                          confirm,
+                         handleModal,
                      }) => {
 
     const [showOptions, setShowOptions] = useState(initialMode !== 'hide')
-
-    const handleRenameModal = async () => {
-        handleMediaName({name, oldName})
-        await delay(50)
-        setModalType(renameModal)
-    }
 
     const handleMouseEnter = () => {
         index === hoveredMediaIndex && setShowOptions(true)
@@ -126,7 +118,7 @@ const ItemOptions = ({
 
                         </ViberShareButton>
                     </div>
-                    <div className={iconBlockClass} onClick={handleRenameModal}>
+                    <div className={iconBlockClass} onClick={() => handleModal({modalType: renameModal, name, oldName})}>
                         {showIcons ?
                             <BsPencilFill size={iconsSize}
                                           title={"edit current item name"}
@@ -162,8 +154,6 @@ const mapStateToProps = (state) => {
 
 
 export default connect(mapStateToProps, {
-    handleMediaName,
-    setModalType,
     deleteCurrentItem,
     handleAlertModal
 })(ItemOptions);

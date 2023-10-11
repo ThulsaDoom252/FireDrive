@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {ItemsModalContext} from "../../context/ItemsModalContext";
-import {imageModal, imagesRoute,  removeCurrentItemMsg, removeCurrentItemTitle} from "../../common/commonData";
+import {imageModal, imagesRoute, removeCurrentItemMsg, removeCurrentItemTitle} from "../../common/commonData";
 import ImageItemsModal from "./ImageItemsModal";
 import {handleAlertModal} from "../../redux/appSlice";
 import {useDispatch} from "react-redux";

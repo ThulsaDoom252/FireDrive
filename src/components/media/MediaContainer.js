@@ -51,7 +51,8 @@ const MediaContainer = ({
                             gridSize,
                             setGridSize,
                             setCurrentModalItemIndex,
-                            handleItemModal
+                            handleItemModal,
+                            handleModal,
                         }) => {
     const pagesContext = useContext(PagesContext)
     const {imagesPage, videosPage, audioPage} = pagesContext
@@ -153,7 +154,6 @@ const MediaContainer = ({
     ]
 
     const handleImageClick = (index) => {
-        debugger
         setCurrentModalItemIndex(index)
         handleItemModal(imageModal)
     }
@@ -207,6 +207,7 @@ const MediaContainer = ({
         gridIndex,
         handleImageClick,
         handleVideoClick,
+        handleModal,
     }}/>
 };
 
