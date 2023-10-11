@@ -26,10 +26,10 @@ const ItemOptions = ({
                          displayInCol = false,
                          name,
                          oldName,
-                         tgIconColor = 'rgb(77, 171, 247)',
-                         vbIconColor = 'rgb(193, 122, 250)',
-                         renameIconColor = 'blue',
-                         deleteIconColor = 'red',
+                         tgIconColor = 'black',
+                         vbIconColor = 'black',
+                         renameIconColor = 'black',
+                         deleteIconColor = 'black',
                          iconsSize = 20,
                          url, index, searchMode, currentRoute,
                          animate = true,
@@ -38,7 +38,7 @@ const ItemOptions = ({
                          showBg = true,
                          setItemOptionsHovered,
                          handleAlertModal,
-    confirm,
+                         confirm,
                      }) => {
 
 
@@ -73,12 +73,11 @@ const ItemOptions = ({
         }
 
 
-
     }
 
     const iconBlockClass = `${iconBgColor ? ` 
-    mx-1  
-    bg-opacity-50 
+    mx-2  
+    bg-opacity-5
     rounded md 
     h-8 
     w-8
@@ -92,7 +91,7 @@ const ItemOptions = ({
     hover:cursor-pointer
     z-10
     `
-        : void 0}`
+        :'mx-1'}`
 
     return (
         <div

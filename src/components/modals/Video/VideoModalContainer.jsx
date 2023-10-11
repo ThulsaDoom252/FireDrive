@@ -1,6 +1,6 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {ItemsModalContext} from "../../../context/ItemsModalContext";
-import {formatTime, noModal} from "../../../common/commonData";
+import {formatTime, videoModal} from "../../../common/commonData";
 import {makeStyles} from "@material-ui/core/styles";
 import VideoModal from "./VideoModal";
 import {VideoControlsContext} from "../../../context/VideoControlsContext";
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const VideoModalContainer = ({showModal, toggleModal, confirm}) => {
+const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentModal}) => {
 
     const CustomControlsContext = useContext(VideoControlsContext)
     const ModalContext = useContext(ItemsModalContext);
@@ -133,13 +133,44 @@ const VideoModalContainer = ({showModal, toggleModal, confirm}) => {
         confirm,
     ]
 
+    useEffect(() => {
+        const videoBlockContainer = videoBlockContainerRef?.current
+        const videoContainer = videoContainerRef?.current
+        const fullscreenChangeHandler = () => {
+            if (document.fullscreenElement) {
+                videoBlockContainer.style.marginTop = '0'
+                videoBlockContainer.style.width = '100%'
+                videoBlockContainer.style.height = '100%'
+                videoContainer.style.width = '100vw'
+                videoContainer.style.height = '100vh'
+            } else {
+                if (isMobileFullScreen) {
+                    videoBlockContainer.style.width = '100%'
+                    videoBlockContainer.style.height = '45%'
+                    videoBlockContainer.style.marginTop = '1.25rem'
+                } else {
+                    videoBlockContainer.style.width = '80%'
+                    videoBlockContainer.style.height = '90%'
+                }
+                videoContainer.style.width = '100%'
+                videoContainer.style.height = '90%'
+            }
+        };
+
+        document.addEventListener('fullscreenchange', fullscreenChangeHandler);
+
+        return () => {
+            document.removeEventListener('fullscreenchange', fullscreenChangeHandler);
+        };
+    }, [isFullScreen]);
+
     //Video modal handlers
     const handleVideoIsReady = () => {
         setIsVideoReady(true)
     }
 
     const handleClose = () => {
-        toggleModal(noModal);
+        handleCurrentModal(videoModal)
         setIsVideoReady(false);
     };
 
@@ -183,7 +214,7 @@ const VideoModalContainer = ({showModal, toggleModal, confirm}) => {
     ]
 
     return <VideoModal {...{
-        showModal,
+        animateModal,
         currentMediaSet,
         currentModalItemUrl,
         currentModalItemIndex,

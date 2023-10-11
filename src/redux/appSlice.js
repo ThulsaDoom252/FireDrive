@@ -27,6 +27,7 @@ const appSlice = createSlice({
         gridSize: 2,
         gridIndex: 5,
         itemModalType: noModal,
+        mountedModal: noModal,
         alertTitle: '',
         alertMessage: '',
         showVideoMobileMenu: false,
@@ -79,6 +80,9 @@ const appSlice = createSlice({
         },
         setAlertActionType(state, action) {
             state.alertActionType = action.payload
+        },
+        setMountedModal(state, action) {
+            state.mountedModal = action.payload
         },
         setGridIndex(state, action) {
             state.gridIndex = action.payload
@@ -133,6 +137,7 @@ export const {
     toggleVideoMobileMenu,
     setGridSize,
     setGridIndex,
+    setMountedModal,
 } = appSlice.actions
 
 export const handleAlertModal = createAsyncThunk('alertModal-thunk', async ({

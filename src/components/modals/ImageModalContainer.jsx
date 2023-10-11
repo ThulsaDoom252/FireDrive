@@ -1,12 +1,12 @@
 import React, {useContext, useEffect} from 'react';
 import {ItemsModalContext} from "../../context/ItemsModalContext";
-import {imagesRoute, noModal, removeCurrentItemMsg, removeCurrentItemTitle} from "../../common/commonData";
-import ImageModal from "./ImageModal";
+import {imageModal, imagesRoute,  removeCurrentItemMsg, removeCurrentItemTitle} from "../../common/commonData";
+import ImageItemsModal from "./ImageItemsModal";
 import {handleAlertModal} from "../../redux/appSlice";
 import {useDispatch} from "react-redux";
 import {deleteCurrentItem} from "../../redux/mediaSlice";
 
-const ImageModalContainer = ({toggleModal, showModal, confirm}) => {
+const ImageModalContainer = ({toggleModal, animateModal, confirm, handleCurrentModal}) => {
     const modalContext = useContext(ItemsModalContext)
 
     const dispatch = useDispatch()
@@ -29,10 +29,10 @@ const ImageModalContainer = ({toggleModal, showModal, confirm}) => {
     } = modalContext
 
     useEffect(() => {
-        if (showModal && smallScreen) {
+        if (animateModal && smallScreen) {
             handleFullScreen()
         }
-    }, [showModal]);
+    }, [animateModal]);
 
     const handleDeleteCurrentModalItem = async () => {
         await dispatch(handleAlertModal({message: removeCurrentItemMsg, title: removeCurrentItemTitle}))
@@ -50,9 +50,9 @@ const ImageModalContainer = ({toggleModal, showModal, confirm}) => {
     const prevArrowDisabled = currentModalItemIndex === 0
     const nextArrowDisabled = currentModalItemIndex === (searchMode ? searchResults.length - 1 : currentMediaSet.length - 1)
 
-    const handleCLose = () => {
+    const handleClose = () => {
         fullScreen && handleFullScreen()
-        toggleModal(noModal)
+        handleCurrentModal(imageModal)
     }
 
     const carouselSettings = {
@@ -65,8 +65,8 @@ const ImageModalContainer = ({toggleModal, showModal, confirm}) => {
 
     const modalOptionsProps = [handleRenameModal, handleShareModal, handleDeleteCurrentModalItem, showMobileSettings]
 
-    return <ImageModal
-        showModal={showModal}
+    return <ImageItemsModal
+        animateModal={animateModal}
         toggleModal={toggleModal}
         currentMediaSet={currentMediaSet}
         fullScreen={fullScreen}
@@ -78,7 +78,7 @@ const ImageModalContainer = ({toggleModal, showModal, confirm}) => {
         prevArrowDisabled={prevArrowDisabled}
         nextArrowDisabled={nextArrowDisabled}
         carouselSettings={carouselSettings}
-        handleClose={handleCLose}
+        handleClose={handleClose}
         smallScreen={smallScreen}
         modalOptionsProps={modalOptionsProps}
         {...confirm}

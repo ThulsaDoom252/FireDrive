@@ -1,9 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import HeaderContainer from "./header/HeaderContainer";
 import {
+    delay,
     imageModal, lazyMode,
     mainContentId,
-    mediaTypes, paginateMode, renameModal, rootRoute, shareModal,
+    mediaTypes, noModal, paginateMode, renameModal, rootRoute, shareModal,
     signInRoute,
     videoModal,
 } from "../common/commonData";
@@ -15,7 +16,7 @@ import {
 } from "../redux/mediaSlice";
 import MediaContainer from "./media/MediaContainer";
 import {
-    setItemModalType, setModalType, toggleCurrentTheme, toggleListMode,
+    setItemModalType, setModalType, setMountedModal, toggleCurrentTheme, toggleListMode,
 } from "../redux/appSlice";
 import BurgerMenu from "./common/BurgerMenu";
 import SortInput from "./common/SortInput";
@@ -65,9 +66,19 @@ const Main = ({
                   toggleListMode,
                   alertTitle,
                   alertMessage,
+                  mountedModal,
+                  setMountedModal,
               }) => {
 
     const location = useLocation()
+    const [isThemeBlockOpened, setIsThemeBlockOpened] = useState(false)
+    const [isSettingsBlockOpened, setIsSettingsBlockOpened] = useState(false)
+    const isVideoModalMounted = mountedModal === videoModal
+    const isImageModalMounted = mountedModal === imageModal
+    const isVideoModalOpened = itemModalType === videoModal
+    const animateImageModal = itemModalType === imageModal
+    const animateVideoModal = itemModalType === videoModal
+
     const pathName = location.pathname
     const homePage = pathName === rootRoute
     const isPaginatorEnabled = listMode === paginateMode
@@ -102,9 +113,33 @@ const Main = ({
         showMobileSearch && toggleMobileSearch(false)
     }
 
+    const handleItemModal = async (modalType) => {
+        if (modalType === imageModal) {
+            if (!isImageModalMounted) {
+                setMountedModal(imageModal)
+                await delay(100)
+                setItemModalType(imageModal)
+            } else {
+                setItemModalType(noModal)
+                await delay(200)
+                setMountedModal(noModal)
+            }
+            return
+        }
 
-    const [isThemeBlockOpened, setIsThemeBlockOpened] = useState(false)
-    const [isSettingsBlockOpened, setIsSettingsBlockOpened] = useState(false)
+        if (modalType === videoModal) {
+            if (!isVideoModalMounted) {
+                setMountedModal(videoModal)
+                await delay(100)
+                setItemModalType(videoModal)
+            } else {
+                setItemModalType(noModal)
+                await delay(200)
+                setMountedModal(noModal)
+            }
+        }
+    }
+
 
     const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
     const mediaToShow = searchMode ? searchResults : listMode === paginateMode ? paginatedMedia : currentMediaSet
@@ -123,15 +158,17 @@ const Main = ({
             </div>
             <RenameModal toggleModal={setModalType} showModal={modalType === renameModal}/>
             <ShareModal toggleModal={setModalType} showModal={modalType === shareModal}/>
-            <VideoModalContainer
+            {isVideoModalMounted && <VideoModalContainer
+                handleCurrentModal={handleItemModal}
                 toggleModal={setItemModalType}
-                showModal={itemModalType === videoModal}
+                animateModal={animateVideoModal}
                 confirm={confirm}
-            />
+            />}
 
-            <ImageModalContainer toggleModal={setItemModalType} showModal={itemModalType === imageModal}
-                                 confirm={confirm}
-            />
+            {isImageModalMounted &&
+                <ImageModalContainer toggleModal={setItemModalType} animateModal={animateImageModal}
+                                     confirm={confirm} handleCurrentModal={handleItemModal}
+                />}
             <UserModal toggleModal={setModalType}
                        showModal={modalType === userModal}/>
             <HeaderContainer
@@ -244,6 +281,7 @@ const Main = ({
                                              smallScreen,
                                              currentTheme,
                                              confirm,
+                                             handleItemModal,
                                          }}/>}/>}
                 </Routes>
                 <div
@@ -283,6 +321,7 @@ const mapStateToProps = (state) => {
         listMode: state.app.listMode,
         alertMessage: state.app.alertMessage,
         alertTitle: state.app.alertTitle,
+        mountedModal: state.app.mountedModal,
     }
 }
 
@@ -290,7 +329,7 @@ export default connect(mapStateToProps, {
     listMedia, setCurrentRoute,
     setModalType, setItemModalType,
     toggleCurrentTheme, toggleMobileSearch,
-    toggleListMode,
+    toggleListMode, setMountedModal
 })(Main);
 
 

@@ -85,39 +85,6 @@ export const VideoControlsContextProvider = ({children}) => {
 
     }, [previewTime]);
 
-    useEffect(() => {
-        debugger
-        const videoBlockContainer = videoBlockContainerRef?.current
-        const videoContainer = videoContainerRef?.current
-        debugger
-        const fullscreenChangeHandler = () => {
-            if (document.fullscreenElement) {
-                videoBlockContainer.style.marginTop = '0'
-                videoBlockContainer.style.width = '100%'
-                videoBlockContainer.style.height = '100%'
-                videoContainer.style.width = '100vw'
-                videoContainer.style.height = '100vh'
-            } else {
-                if (isMobileFullScreen) {
-                    videoBlockContainer.style.width = '100%'
-                    videoBlockContainer.style.height = '45%'
-                    videoBlockContainer.style.marginTop = '1.25rem'
-                } else {
-                    videoBlockContainer.style.width = '80%'
-                    videoBlockContainer.style.height = '90%'
-                }
-                videoContainer.style.width = '100%'
-                videoContainer.style.height = '90%'
-            }
-        };
-
-        document.addEventListener('fullscreenchange', fullscreenChangeHandler);
-
-        return () => {
-            document.removeEventListener('fullscreenchange', fullscreenChangeHandler);
-        };
-    }, [isFullScreen]);
-
 
     //Close all menu's if open, play video
     const handleMainClick = () => {

@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Media from "./Media";
-import {noModal, rootRoute} from "../../common/commonData";
+import {imageModal, noModal, rootRoute, videoModal} from "../../common/commonData";
 import {
     clearSearchResults,
     handleCurrentMediaSet,
@@ -10,8 +10,12 @@ import {
 import {PagesContext} from "../../context/PagesContext";
 import {PaginatorContext} from "../../context/PaginatorContext";
 import {connect} from "react-redux";
-import {handleInitialModalItem, setGridIndex, setGridSize, setItemOptionsHovered} from "../../redux/appSlice";
-import {useStyles} from "../mui/styles";
+import {
+    setCurrentModalItemIndex,
+    setGridIndex,
+    setGridSize,
+    setItemOptionsHovered
+} from "../../redux/appSlice";
 import first from "./layout/numbers/1.png"
 import second from "./layout/numbers/2.png"
 import third from "./layout/numbers/3.png"
@@ -20,13 +24,34 @@ import fives from "./layout/numbers/5.png"
 import sixth from "./layout/numbers/6.png"
 
 const MediaContainer = ({
-                            currentRoute, handleCurrentMediaSet, handleSearchMedia,
-                            gridIndex, setGridIndex,
-                            toggleNoSearchResults, clearSearchResults, imagesSet, videosSet, audioSet,
-                            smallScreen, currentMediaSet, currentMediaFetch, searchResults,
-                            toggleSearchMode, mediaToShow, searchMode, noSearchResults,
-                            searchRequest, handleInitialModalIndex, itemOptionsHovered, setItemOptionsHovered,
-                            currentTheme, itemModalType, isPaginatorEnabled, confirm, gridSize, setGridSize,
+                            currentRoute,
+                            handleCurrentMediaSet,
+                            handleSearchMedia,
+                            gridIndex,
+                            setGridIndex,
+                            toggleNoSearchResults,
+                            clearSearchResults,
+                            imagesSet,
+                            videosSet,
+                            audioSet,
+                            smallScreen,
+                            currentMediaSet,
+                            currentMediaFetch,
+                            searchResults,
+                            toggleSearchMode,
+                            mediaToShow,
+                            searchMode,
+                            noSearchResults,
+                            searchRequest,
+                            setItemOptionsHovered,
+                            currentTheme,
+                            itemModalType,
+                            isPaginatorEnabled,
+                            confirm,
+                            gridSize,
+                            setGridSize,
+                            setCurrentModalItemIndex,
+                            handleItemModal
                         }) => {
     const pagesContext = useContext(PagesContext)
     const {imagesPage, videosPage, audioPage} = pagesContext
@@ -127,6 +152,17 @@ const MediaContainer = ({
         {img: sixth, number: 2},
     ]
 
+    const handleImageClick = (index) => {
+        debugger
+        setCurrentModalItemIndex(index)
+        handleItemModal(imageModal)
+    }
+
+    const handleVideoClick = (index) => {
+        setCurrentModalItemIndex(index)
+        handleItemModal(videoModal)
+    }
+
 
     const gridWidths = !smallScreen && gridSize === (6 || 5) ? '100%' :
         !smallScreen && gridSize === (4 || 3) ? '70%' :
@@ -159,7 +195,6 @@ const MediaContainer = ({
         noSearchResults,
         isPaginatorHidden,
         paginatorProps,
-        handleInitialModalIndex,
         setItemOptionsHovered,
         noOpenModal,
         confirm,
@@ -170,6 +205,8 @@ const MediaContainer = ({
         layoutMenu: gridLayoutMenu,
         gridNumb: gridSize,
         gridIndex,
+        handleImageClick,
+        handleVideoClick,
     }}/>
 };
 
@@ -184,8 +221,6 @@ const mapStateToProps = (state) => {
         currentMediaFetch: state.media.fetchCurrentMedia,
         noSearchResults: state.media.noSearchResults,
         searchRequest: state.media.searchRequest,
-        itemOptionsHovered: state.app.itemOptionsHovered,
-        itemModalType: state.app.itemModalType,
     }
 }
 
@@ -197,7 +232,7 @@ export default connect(mapStateToProps, {
     setGridIndex,
     clearSearchResults,
     setSearchRequest,
-    handleInitialModalIndex: handleInitialModalItem,
+    setCurrentModalItemIndex,
     setItemOptionsHovered,
     setGridSize,
 })(MediaContainer)

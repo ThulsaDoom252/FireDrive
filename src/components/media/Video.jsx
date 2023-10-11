@@ -12,7 +12,6 @@ const Video = ({
                    oldName,
                    searchMode,
                    index,
-                   handleInitialModalIndex,
                    hoveredMediaIndex,
                    setHoveredMediaIndex,
                    itemOptionsHovered,
@@ -20,6 +19,7 @@ const Video = ({
                    noOpenModal,
                    smallScreen,
                    currentTheme,
+                   handleVideoClick,
                }) => {
     const [isVideoReady, setIsVideoReady] = useState(false)
     const [isPlaying, setIsPlaying] = useState(false);
@@ -78,7 +78,7 @@ const Video = ({
                     className={`h-200 bg-black 
                     ${!isVideoHovered && 'rounded-t-lg'} 
                     overflow-hidden cursor-pointer`}
-                    onClick={() => handleInitialModalIndex({index, modalType: 'video'})}
+                    onClick={() => handleVideoClick(index)}
                 >
                     <ReactPlayer
                         ref={playerRef}

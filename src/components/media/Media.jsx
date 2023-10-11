@@ -7,7 +7,7 @@ import Video from "./Video";
 import ImageBlock from "./Image/ImageBlock";
 import {Grid} from "@mui/material";
 import LayoutMenu from "./layoutMenu";
-import Overlay from "../Overlay";
+import Overlay from "../common/Overlay";
 
 const Media = ({
                    imagesPage,
@@ -23,7 +23,6 @@ const Media = ({
                    paginatorProps,
                    searchMode,
                    smallScreen,
-                   handleInitialModalIndex,
                    setItemOptionsHovered,
                    currentTheme,
                    noOpenModal,
@@ -35,8 +34,9 @@ const Media = ({
                    layoutMenu,
                    gridNumb,
                    gridIndex,
+                   handleVideoClick,
+                   handleImageClick,
                }) => {
-
 
     return (
         <>
@@ -56,15 +56,15 @@ const Media = ({
              ${audioPage && smallScreen ? 'w-full' : audioPage ? 'w-1/2' : !audioPage && smallScreen ? 'w-full' : 'w-full pl-10 pr-10'} 
              
              `}>
-                {/*// layout btn*/}
-                <LayoutMenu {...{
-                    audioPage,
-                    layoutMenu,
-                    layoutNumbs,
-                    gridIndex,
-                    handleLayoutMenu,
-                    handleCollValue
-                }}/>
+                {/*// layout btn*/}<LayoutMenu {...{
+                audioPage,
+                layoutMenu,
+                layoutNumbs,
+                gridIndex,
+                handleLayoutMenu,
+                handleCollValue
+            }}/>
+
                 {noSearchResults && <div className={'absolute top-custom-50% left-custom-50%'}><NoSearchResults/></div>}
                 {noMedia ?
                     <div>{imagesPage ? 'You have no images' : videosPage ? 'You have no videos' : 'You have no audio'}</div> :
@@ -90,12 +90,12 @@ const Media = ({
 
                                                                             {...{
                                                                                 index,
-                                                                                handleInitialModalIndex,
                                                                                 setHoveredMediaIndex,
                                                                                 searchMode,
                                                                                 hoveredMediaIndex,
                                                                                 setItemOptionsHovered,
                                                                                 confirm,
+                                                                                handleImageClick,
                                                                             }}/></Grid>
                             })
                             : videosPage ? mediaToShow.map((video, index) =>
@@ -115,12 +115,12 @@ const Media = ({
                                                        searchMode,
                                                        index,
                                                        noOpenModal,
-                                                       handleInitialModalIndex,
                                                        hoveredMediaIndex,
                                                        setHoveredMediaIndex,
                                                        setItemOptionsHovered,
                                                        currentTheme,
                                                        smallScreen,
+                                                       handleVideoClick,
 
                                                    }}/>
                                         </div>

@@ -8,18 +8,17 @@ const ImageBlock = ({
                         index,
                         name,
                         oldName,
-                        handleInitialModalIndex,
                         setHoveredMediaIndex,
                         searchMode,
                         hoveredMediaIndex,
                         setItemOptionsHovered,
                         confirm,
+                        handleImageClick,
 
 
                     }) => {
     const imageIsHovered = hoveredMediaIndex === index
     const [showOptions, setIsShowOptions] = useState(false)
-
 
     return (
         <div key={index}
@@ -43,8 +42,8 @@ const ImageBlock = ({
                 url,
                 setIsShowOptions,
                 index,
-                handleInitialModalIndex,
                 imageIsHovered,
+                handleImageClick,
             }}/>
         </div>
 

@@ -1,12 +1,9 @@
 import React, {createContext, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {handleAlertModal, setCurrentModalItemIndex, setModalType} from "../redux/appSlice";
+import {setCurrentModalItemIndex, setModalType} from "../redux/appSlice";
 import {handleMediaName} from "../redux/mediaSlice";
 import {
     delay,
-    removeCurrentItem,
-    removeCurrentItemTitle,
-    removeCurrentItemMsg,
     renameModal, shareModal
 } from "../common/commonData";
 import {useSwipeable} from "react-swipeable";

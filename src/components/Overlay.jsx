@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Overlay = ({
-                     zIndex = 'z-max',
+                     zIndex = 'z-30',
                      toggleModal,
                      color = 'bg-black',
                      opacity = 'bg-opacity-50',

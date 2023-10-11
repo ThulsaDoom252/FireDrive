@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {BsFillGridFill} from "react-icons/bs";
-import {Button, Collapse} from "@mui/material";
+import {Button} from "@mui/material";
 import {Transition} from "@headlessui/react";
 
 const LayoutMenu = ({audioPage, layoutMenu, layoutNumbs, gridIndex, handleLayoutMenu, handleCollValue}) => {
 
     return (
         <>
-            {!audioPage && <div className={'absolute right-0 flex flex-col items-end top-14 w-40 h-40 z-20'}>
+            {!audioPage && <div className={'absolute right-0 flex flex-col items-end top-14 w-40 h-40 z-1'}>
                 <Button size={'large'}
                         onClick={handleLayoutMenu}
                         className={`hover:text-white ${layoutMenu ? 'text-white' : 'text-blue-500'}`}>

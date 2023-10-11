@@ -4,25 +4,21 @@ import {Skeleton, Tooltip} from "@mui/material";
 const Image = ({
                    url,
                    index,
-                   handleInitialModalIndex,
                    imageIsHovered,
                    isAbsolute,
-                   imageIsClickable = true,
                    height = 'h-full',
                    width = 'w-full',
                    skeletonHeight = 300,
                    skeletonWidth = 300,
                    setIsShowOptions,
+                   animate = true,
+                   handleImageClick,
                }) => {
     const [imageIsLoaded, setImageIsLoaded] = useState(false)
 
     const handleLoadImage = () => {
         setImageIsLoaded(true)
         setIsShowOptions && setIsShowOptions(true)
-    }
-
-    const handleImageLick = () => {
-        imageIsClickable ? handleInitialModalIndex({index}) : void 0
     }
 
     return (
@@ -33,17 +29,17 @@ const Image = ({
                 </Tooltip>
             }
             <img
-                onClick={handleImageLick}
+                onClick={() => handleImageClick ? handleImageClick(index) : void 0}
                 className={`
                 object-cover 
                 rounded 
                 cursor-pointer
-                ${!imageIsLoaded && 'hidden'}
                 ${imageIsHovered && 'hover:border-2 border-blue-300'}  
                 ${height}
                 ${width}        
                 ${isAbsolute && 'absolute'}
-                transition-all duration-100
+                transition-all duration-300
+                ${imageIsLoaded ? 'opacity-100' : 'opacity-0'}
                 `}
                 src={url}
                 onLoad={handleLoadImage}

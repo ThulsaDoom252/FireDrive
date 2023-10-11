@@ -9,7 +9,7 @@ import {Backdrop, Fade, Modal} from '@material-ui/core';
 import {ClipLoader} from "react-spinners";
 
 const VideoModal = ({
-                        showModal,
+                        animateModal,
                         showOverlay = true,
                         overlayColor = 'bg-gray-900',
                         overlayOpacity = 'opacity-95',
@@ -44,7 +44,7 @@ const VideoModal = ({
 
     return (
         <Modal
-            open={showModal}
+            open={animateModal}
             onClose={handleClose}
             className={classes.modal}
             closeAfterTransition
@@ -53,13 +53,13 @@ const VideoModal = ({
                 timeout: 500,
             }}
         >
-            <Fade in={showModal}>
+            <Fade in={animateModal}>
                 <div
                     className={`
             w-screen
             h-screen
             absolute
-            ${showModal && zIndex}
+            ${animateModal && zIndex}
           `}
                 >
                     {showOverlay && <Overlay bg={overlayColor} opacity={overlayOpacity}/>}
@@ -93,7 +93,7 @@ const VideoModal = ({
                         >
                             <div
                                 ref={videoContainerRef}
-                                className={`w-100% h-90% relative overflow-hidden bg-black relative `}
+                                className={`w-100% h-90% relative overflow-hidden bg-black`}
                                 onContextMenu={(e) => e.preventDefault()}
                                 onMouseMove={handleVisibility}
                                 onClick={handleVisibility}
