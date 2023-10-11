@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Navigate} from "react-router-dom";
 import {delay, rootRoute} from "../../common/commonData";
-import SignIn from "./SignIn/SignIn";
+import Auth from "./Auth";
 import {
     checkUserVerification,
     githubAuth,
@@ -14,7 +14,7 @@ import {
 import {connect} from "react-redux";
 import {useFormik} from "formik";
 import * as Yup from "yup";
-import {restoreMode, signInMode, signUpMode, verificationMode} from "./types";
+import {restoreMode, signInMode, signUpMode, verificationMode} from "./authTypes";
 
 const AuthContainer = ({
                            isAuth,
@@ -125,7 +125,7 @@ const AuthContainer = ({
 
     return (
         <>
-            <SignIn {...{
+            <Auth {...{
                 email: currentUserEmail,
                 authError,
                 isAuthBtnFetching,

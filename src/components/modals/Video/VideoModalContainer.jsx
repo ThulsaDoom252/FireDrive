@@ -31,7 +31,7 @@ const VideoModalContainer = ({showModal, toggleModal, confirm}) => {
 
     // listed video in modal ref and state
     const listedVideoInModalRef = useRef(null)
-    const [isListedVideoPlaying, setIsListedVideoPlaying] = useState(false)
+    const [listedVideoHoveredIndex, setListedVideoHoveredIndex] = useState(null)
     const [listedVideoTotalTime, setListedVideoTotalTime] = useState(0)
     const [isListedVideoReady, setIsListedVideoReady] = useState(false)
 
@@ -149,12 +149,13 @@ const VideoModalContainer = ({showModal, toggleModal, confirm}) => {
 
 
 // Listed videos in modal handlers
-    const handleListedVideoMouseEnter = () => {
-        setIsListedVideoPlaying(true);
+    const handleListedVideoMouseEnter = (index) => {
+        debugger
+        setListedVideoHoveredIndex(index);
     };
 
     const handleListedVideoMouseLeave = () => {
-        setIsListedVideoPlaying(false);
+        setListedVideoHoveredIndex(null);
         listedVideoInModalRef.current.seekTo(0);
     };
 
@@ -172,12 +173,13 @@ const VideoModalContainer = ({showModal, toggleModal, confirm}) => {
 
     const listedVideoProps = [
         listedVideoInModalRef,
-        isListedVideoPlaying,
+        listedVideoHoveredIndex,
         listedVideoTotalTime,
         isListedVideoReady,
         handleListedVideoMouseEnter,
         handleListedVideoMouseLeave,
         handleReadyListedVideo,
+        listedVideoHoveredIndex,
     ]
 
     return <VideoModal {...{

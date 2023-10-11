@@ -1,10 +1,26 @@
 import React from 'react';
 
-const Overlay = ({zIndexValue = 'max', toggleModal, color = 'black', opacity = '50'}) => {
+const Overlay = ({
+                     zIndex = 'z-max',
+                     toggleModal,
+                     color = 'bg-black',
+                     opacity = 'bg-opacity-50',
+                     width = 'w-full',
+                     height = 'h-full',
+                     position = 'absolute'
+                 }) => {
     const handleClose = () => toggleModal ? toggleModal(false) : void 0
     return (
         <div onClick={handleClose}
-             className={`h-full w-full absolute bg-${color} bg-opacity-${opacity} z-${zIndexValue} ${toggleModal && 'cursor-pointer'}`}/>
+             className={`
+             ${position}
+             ${zIndex} 
+             ${toggleModal && 'cursor-pointer'}
+             ${width}
+             ${height}
+             ${color}
+             ${opacity}                   
+             `}/>
     );
 };
 

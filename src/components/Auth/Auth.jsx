@@ -1,14 +1,14 @@
 import React from 'react';
-import SocialAuth from "../SocialAuth";
-import Logo from "../../../images/logo.png"
-import Image from "../../media/Image"
+import SocialAuth from "./SocialAuth";
+import Logo from "../../images/logo.png"
+import Image from "../media/Image"
 import {Button, IconButton, TextField, Tooltip} from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
-import {authInput} from "../../mui/styles";
-import {restoreMode, signInMode, signUpMode} from "../types";
+import {authInput} from "../mui/styles";
+import {restoreMode, signInMode, signUpMode} from "./authTypes";
 
-const SignIn = ({
+const Auth = ({
                     authError,
                     isAuthBtnFetching,
                     googleAuth,
@@ -258,4 +258,4 @@ const SignIn = ({
     }
 ;
 
-export default SignIn;
+export default Auth;

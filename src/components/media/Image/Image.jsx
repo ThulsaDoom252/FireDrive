@@ -37,9 +37,7 @@ const Image = ({
                 className={`
                 object-cover 
                 rounded 
-                cursor-pointer 
-                w-full
-                h-full
+                cursor-pointer
                 ${!imageIsLoaded && 'hidden'}
                 ${imageIsHovered && 'hover:border-2 border-blue-300'}  
                 ${height}

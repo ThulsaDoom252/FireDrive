@@ -16,13 +16,18 @@ const ModalVideoItem = ({
 
     const [
         listedVideoInModalRef,
-        isListedVideoPlaying,
+        listedVideoHoveredIndex,
         listedVideoTotalTime,
         isListedVideoReady,
         handleListedVideoMouseEnter,
         handleListedVideoMouseLeave,
         handleReadyListedVideo,
     ] = listedVideoProps
+
+    const shouldPreviewPlay = index === listedVideoHoveredIndex
+
+    window.s1 = index
+    window.s2 = listedVideoHoveredIndex
 
 
     return (
@@ -39,7 +44,7 @@ const ModalVideoItem = ({
         `}>
             <div
                 onClick={() => onClick(index)}
-                onMouseEnter={handleListedVideoMouseEnter}
+                onMouseEnter={() => handleListedVideoMouseEnter(index)}
                 onMouseLeave={handleListedVideoMouseLeave}
                 className={` relative w-full h-full  bg-black rounded ${item.url === currentModalItemUrl && 'border-4 border-amber-300'} flex items-center justify-center cursor-pointer`}>
                 {!isListedVideoReady && <div className={'absolute inset-0 flex items-center justify-center'}>
@@ -47,7 +52,7 @@ const ModalVideoItem = ({
                 </div>}
                 <ReactPlayer onReady={handleReadyListedVideo}
                              volume={0}
-                             playing={isListedVideoPlaying}
+                             playing={shouldPreviewPlay}
                              ref={listedVideoInModalRef} url={item?.url || ''} height={'98%'}
                              width={'98%'}/>
                 <div

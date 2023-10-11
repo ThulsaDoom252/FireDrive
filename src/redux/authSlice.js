@@ -19,7 +19,7 @@ import {extractUsernameFromEmail, generateRandomString} from "../common/commonDa
 import {toggleInitializing} from "./appSlice";
 import {restoreTimerInitialValue, verificationTimerInitialValue} from "../common/Timers";
 import {ref as dbRef, set, query, equalTo, get, orderByChild, remove, update} from 'firebase/database';
-import {signInMode, verificationMode} from "../components/Auth/types";
+import {signInMode, verificationMode} from "../components/Auth/authTypes";
 
 
 const authSlice = createSlice({

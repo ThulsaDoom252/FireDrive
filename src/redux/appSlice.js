@@ -24,6 +24,8 @@ const appSlice = createSlice({
         initializing: false,
         smallScreen: window.innerWidth <= smallScreenWidth,
         modalType: '',
+        gridSize: 2,
+        gridIndex: 5,
         itemModalType: noModal,
         alertTitle: '',
         alertMessage: '',
@@ -78,8 +80,15 @@ const appSlice = createSlice({
         setAlertActionType(state, action) {
             state.alertActionType = action.payload
         },
+        setGridIndex(state, action) {
+            state.gridIndex = action.payload
+
+        },
         setModalType(state, action) {
             state.modalType = action.payload
+        },
+        setGridSize(state, action) {
+            state.gridSize = action.payload
         },
         setItemModalType(state, action) {
             state.itemModalType = action.payload
@@ -122,6 +131,8 @@ export const {
     toggleCurrentTheme,
     toggleListMode,
     toggleVideoMobileMenu,
+    setGridSize,
+    setGridIndex,
 } = appSlice.actions
 
 export const handleAlertModal = createAsyncThunk('alertModal-thunk', async ({
@@ -135,7 +146,6 @@ export const handleAlertModal = createAsyncThunk('alertModal-thunk', async ({
                                                                             }, {dispatch}) => {
     await dispatch(setAlertModalContent({type, title, message, btnStyle, btnLabel, showBtn, actionType}))
 })
-
 
 
 export const handleInitialModalItem = createAsyncThunk('modal-item-initial-url-thunk', async ({

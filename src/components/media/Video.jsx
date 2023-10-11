@@ -75,7 +75,7 @@ const Video = ({
                     </div>
                 </MyCustomTransition>
                 <div
-                    className={`player-container h-200 bg-black 
+                    className={`h-200 bg-black 
                     ${!isVideoHovered && 'rounded-t-lg'} 
                     overflow-hidden cursor-pointer`}
                     onClick={() => handleInitialModalIndex({index, modalType: 'video'})}
