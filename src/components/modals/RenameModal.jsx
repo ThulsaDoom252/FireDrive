@@ -4,7 +4,7 @@ import {handleMediaName, renameMedia, setNewMediaName} from "../../redux/mediaSl
 import {Button, Fade} from "@mui/material";
 import TextField from '@mui/material/TextField';
 import Overlay from "../common/Overlay";
-import {stopPropagation} from "../../common/commonData";
+import {renameModal, stopPropagation} from "../../common/commonData";
 
 const RenameModal = ({
                          oldName,
@@ -36,7 +36,7 @@ const RenameModal = ({
              justify-center
              items-center
              '>
-                <Overlay toggleModal={toggleModal}/>
+                <Overlay toggleModal={() => toggleModal({modalType: renameModal})}/>
                 <div className='
                 bg-white
                 relative

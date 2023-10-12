@@ -6,7 +6,7 @@ import {handleAlertModal} from "../../redux/appSlice";
 import {useDispatch} from "react-redux";
 import {deleteCurrentItem} from "../../redux/mediaSlice";
 
-const ImageModalContainer = ({toggleModal, animateModal, confirm, handleCurrentModal}) => {
+const ImageModalContainer = ({toggleModal, animateModal, confirm, handleCurrentModal, handleModal}) => {
     const modalContext = useContext(ItemsModalContext)
 
     const dispatch = useDispatch()
@@ -21,11 +21,11 @@ const ImageModalContainer = ({toggleModal, animateModal, confirm, handleCurrentM
         searchMode,
         searchResults,
         smallScreen,
-        handleRenameModal,
-        handleShareModal,
         swipeHandlers,
         showMobileSettings,
         handleFullScreen,
+        currentModalItemName,
+        currentModalOldName,
     } = modalContext
 
     useEffect(() => {
@@ -63,7 +63,7 @@ const ImageModalContainer = ({toggleModal, animateModal, confirm, handleCurrentM
         showIndicators: false,
     }
 
-    const modalOptionsProps = [handleRenameModal, handleShareModal, handleDeleteCurrentModalItem, showMobileSettings]
+    const modalOptionsProps = [handleDeleteCurrentModalItem, showMobileSettings, handleModal]
 
     return <ImageItemsModal
         animateModal={animateModal}
@@ -81,6 +81,8 @@ const ImageModalContainer = ({toggleModal, animateModal, confirm, handleCurrentM
         handleClose={handleClose}
         smallScreen={smallScreen}
         modalOptionsProps={modalOptionsProps}
+        currentModalItemName={currentModalItemName}
+        currentModalOldName={currentModalOldName}
         {...confirm}
 
     />

@@ -4,37 +4,39 @@ import {IoClose} from "react-icons/io5";
 import {AiOutlineFullscreenExit} from "react-icons/ai";
 import Overlay from "../common/Overlay";
 import {stopPropagation} from "../../common/commonData";
-import ModalOptions from "../options/ModalDesktopOptions";
+import ModalOptions from "../options/ModalOptions";
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {Fade} from "@mui/material";
 
 const ImageItemsModal = ({
-                        overlayColor = 'bg-gray-900',
-                        animated = true,
-                        overlayOpacity = 'bg-opacity-95',
-                        showOverlay = true,
-                        arrowSize = 30,
-                        closeIconColor = 'white',
-                        closeIconSize = 30,
-                        animateModal,
-                        carouselSettings,
-                        prevArrowDisabled,
-                        nextArrowDisabled,
-                        handleClose,
-                        swipeHandlers,
-                        smallScreen,
-                        fullScreen,
-                        handleFullScreen,
-                        zIndex = 'z-2',
-                        currentModalItemUrl,
-                        currentMediaSet,
-                        modalOptionsProps,
-                        handlePrevModalItem,
-                        handleNextModalItem,
-                    }) => {
+                             overlayColor = 'bg-gray-900',
+                             animated = true,
+                             overlayOpacity = 'bg-opacity-95',
+                             showOverlay = true,
+                             arrowSize = 30,
+                             closeIconColor = 'white',
+                             closeIconSize = 30,
+                             animateModal,
+                             carouselSettings,
+                             prevArrowDisabled,
+                             nextArrowDisabled,
+                             handleClose,
+                             swipeHandlers,
+                             smallScreen,
+                             fullScreen,
+                             handleFullScreen,
+                             zIndex = 'z-2',
+                             currentModalItemUrl,
+                             currentMediaSet,
+                             modalOptionsProps,
+                             handlePrevModalItem,
+                             handleNextModalItem,
+                             currentModalItemName,
+                             currentModalOldName,
+                         }) => {
 
-    const [handleRenameModal, handleShareModal, handleDeleteCurrentModalItem, showMobileSettings] = modalOptionsProps
+    const [handleDeleteCurrentModalItem, showMobileSettings, handleModal] = modalOptionsProps
 
 
     return (
@@ -102,10 +104,11 @@ const ImageItemsModal = ({
                     <div className={'w-full flex justify-between'}>
                         <ModalOptions iconSize={20}
                                       handleFullScreen={handleFullScreen}
-                                      handleRenameModal={handleRenameModal}
-                                      handleShareModal={handleShareModal}
                                       handleDeleteCurrentModalItem={handleDeleteCurrentModalItem}
                                       smallScreen={smallScreen}
+                                      handleModal={handleModal}
+                                      currentModalItemName={currentModalItemName}
+                                      currentModalOldName={currentModalOldName}
                         />
                     </div>
 

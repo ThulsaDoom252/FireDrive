@@ -80,9 +80,11 @@ const Main = ({
     const isVideoModalMounted = mountedItemModal === videoModal
     const isImageModalMounted = mountedItemModal === imageModal
     const isRenameModalMounted = mountedModal === renameModal
+    const isShareModalMounted = mountedModal === shareModal
     const animateRenameModal = modalType === renameModal
     const animateImageModal = itemModalType === imageModal
     const animateVideoModal = itemModalType === videoModal
+    const animateShareModal = modalType === shareModal
 
     const pathName = location.pathname
     const homePage = pathName === rootRoute
@@ -118,29 +120,42 @@ const Main = ({
         showMobileSearch && toggleMobileSearch(false)
     }
 
+    const nullMountedModal = async (time = 200) => {
+        setModalType(noModal)
+        await delay(time)
+        setMountedModal(noModal)
+    }
+
+    const nullItemModal = async (time = 200) => {
+        setItemModalType(noModal)
+        await delay(200)
+        setMountedItemModal(noModal)
+    }
+
     const handleItemModal = async (modalType) => {
         if (modalType === imageModal) {
             if (!isImageModalMounted) {
                 setMountedItemModal(imageModal)
                 await delay(100)
                 setItemModalType(imageModal)
+
             } else {
-                setItemModalType(noModal)
-                await delay(200)
-                setMountedItemModal(noModal)
+
+                nullItemModal().then(() => void 0)
             }
             return
         }
 
         if (modalType === videoModal) {
+
             if (!isVideoModalMounted) {
+
                 setMountedItemModal(videoModal)
                 await delay(100)
                 setItemModalType(videoModal)
             } else {
-                setItemModalType(noModal)
-                await delay(200)
-                setMountedItemModal(noModal)
+
+                nullItemModal().then(() => void 0)
             }
         }
     }
@@ -154,11 +169,19 @@ const Main = ({
                 await delay(100)
                 setModalType(renameModal)
             } else {
-                setModalType(noModal)
-                await delay(200)
-                setMountedModal(noModal)
+                nullMountedModal().then(() => void 0)
             }
             return
+        }
+
+        if (modalType === shareModal) {
+            if (!isShareModalMounted) {
+                setMountedModal(shareModal)
+                await delay(100)
+                setModalType(shareModal)
+            } else {
+                nullMountedModal().then(() => void 0)
+            }
         }
     }
 
@@ -173,16 +196,15 @@ const Main = ({
     return (
         <>
             <Dialog/>
-
-            <div className={'relative bottom-20 z-max'}>
-                <MobileVideoMenu/>
-            </div>
+            {/*<div className={'relative bottom-20 z-max'}>*/}
+            {/*    <MobileVideoMenu/>*/}
+            {/*</div>*/}
             {isRenameModalMounted &&
-                <RenameModal toggleModal={setModalType} showModal={animateRenameModal}/>}
-            <ShareModal toggleModal={setModalType} showModal={modalType === shareModal}/>
+                <RenameModal toggleModal={handleModal} showModal={animateRenameModal}/>}
+            {isShareModalMounted && <ShareModal toggleModal={handleModal} animateModal={animateShareModal}/>}
             {isVideoModalMounted && <VideoModalContainer
                 handleCurrentModal={handleItemModal}
-                toggleModal={setItemModalType}
+                toggleModal={handleModal}
                 animateModal={animateVideoModal}
                 confirm={confirm}
             />}

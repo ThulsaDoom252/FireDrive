@@ -1,11 +1,6 @@
 import React, {createContext, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {setCurrentModalItemIndex, setModalType, setMountedModal} from "../redux/appSlice";
-import {handleMediaName} from "../redux/mediaSlice";
-import {
-    delay, noModal,
-    renameModal, shareModal
-} from "../common/commonData";
+import {setCurrentModalItemIndex} from "../redux/appSlice";
 import {useSwipeable} from "react-swipeable";
 
 export const ItemsModalContext = createContext();
@@ -14,7 +9,6 @@ export const ItemsModalContextProvider = ({children}) => {
     const smallScreen = useSelector(state => state.app.smallScreen)
     const currentMediaSet = useSelector(state => state.media.currentMediaSet)
     const searchResults = useSelector(state => state.media.searchResults)
-    const mountedModal = useSelector(state => state.app.mountedModal)
     const currentModalItemIndex = useSelector(state => state.app.currentModalItemIndex)
     const searchMode = useSelector(state => state.media.searchMode)
     const [fullScreen, toggleFullScreen] = useState(false)
@@ -24,7 +18,6 @@ export const ItemsModalContextProvider = ({children}) => {
     const currentModalItemUrl = searchMode ? searchResults[currentModalItemIndex]?.url : currentMediaSet[currentModalItemIndex]?.url
     const currentModalItemName = searchMode ? searchResults[currentModalItemIndex]?.name : currentMediaSet[currentModalItemIndex]?.name
     const currentModalItemOldName = searchMode ? searchResults[currentModalItemIndex]?.oldName : currentMediaSet[currentModalItemIndex]?.oldName
-    const isRenameModalMounted = mountedModal === renameModal
 
 
     const handleFullScreen = () => {
@@ -82,25 +75,6 @@ export const ItemsModalContextProvider = ({children}) => {
         currentModalItemIndex !== 0 && dispatch(setCurrentModalItemIndex(currentModalItemIndex - 1))
     }
 
-    const handleRenameModal = async () => {
-        if (isRenameModalMounted) {
-            dispatch(handleMediaName({name: currentModalItemName, oldName: currentModalItemOldName}))
-            await delay(100)
-            dispatch(setMountedModal(renameModal))
-            await delay(100)
-            dispatch(setModalType(renameModal))
-        } else {
-            dispatch(setModalType(noModal))
-            await delay(200)
-            dispatch(setMountedModal(noModal))
-        }
-
-    }
-
-    const handleShareModal = e => {
-        e.stopPropagation()
-        dispatch(setModalType(shareModal))
-    }
 
     const values = {
         currentMediaSet,
@@ -110,8 +84,6 @@ export const ItemsModalContextProvider = ({children}) => {
         handleNextModalItem,
         handlePrevModalItem,
         handleCurrentModalItemIndex,
-        handleShareModal,
-        handleRenameModal,
         showMobileSettings,
         fullScreen,
         searchMode,

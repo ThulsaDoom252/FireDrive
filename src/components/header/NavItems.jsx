@@ -5,6 +5,8 @@ import {AiFillPicture, AiOutlineHome} from "react-icons/ai";
 import {RiMovieLine} from "react-icons/ri";
 import {BiMusic, BiSearch} from "react-icons/bi";
 import {connect} from "react-redux";
+import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 
 
 const NavItems = ({
@@ -13,29 +15,30 @@ const NavItems = ({
                       currentTheme,
                       toggleMobileSearch,
                   }) => {
-    const isActiveStyle = `${smallScreen && 'text-2xl'} mr-5 text-white transition-transform duration-300`;
-    const inactiveStyle = `${smallScreen && 'text-2xl'}  ${currentTheme.color} mr-5 no-underline !important hover:text-white transition-all duration-300'}`;
+    const isActiveStyle = `${smallScreen && 'text-2xl'}  transition-all duration-300 text-white transition-transform duration-300`;
+    const inactiveStyle = `${smallScreen && 'text-2xl'} transition-all duration-300 ${currentTheme.color}  no-underline !important hover:text-white '}`;
 
+    const navItemsList = [
+        {path: rootRoute, icon: <AiOutlineHome/>, label: 'Home'},
+        {path: imagesRoute, icon: <AiFillPicture/>, label: 'Images'},
+        {path: videosRoute, icon: <RiMovieLine/>, label: 'Video'},
+        {path: audioRoute, icon: <BiMusic/>, label: 'Music'},
+    ]
     const handleMobileSearch = () => {
-        debugger
         toggleMobileSearch(true)
     }
 
     return (
         <>
-            <NavLink to={rootRoute}
-                     className={navData => navData.isActive ? isActiveStyle : inactiveStyle}>{smallScreen ?
-                <AiOutlineHome/> : 'Home'}</NavLink>
-            <NavLink to={imagesRoute}
-                     className={navData => navData.isActive ? isActiveStyle : inactiveStyle}>{smallScreen ?
-                <AiFillPicture/> : 'Images'}</NavLink>
-            <NavLink to={videosRoute}
-                     className={navData => navData.isActive ? isActiveStyle : inactiveStyle}>{smallScreen ?
-                <RiMovieLine/> : 'Videos'}</NavLink>
-            <NavLink to={audioRoute}
-                     className={navData => navData.isActive ? isActiveStyle : inactiveStyle}>{smallScreen ?
-                <BiMusic/> : 'Audio'}</NavLink>
-            {smallScreen && <button
+            {navItemsList.map((navItem, index) =>   <Button>
+                <NavLink to={navItem.path}
+                         className={navData => navData.isActive ? isActiveStyle : inactiveStyle}>
+                    {smallScreen ?
+                        navItem.icon : navItem.label}
+
+                </NavLink>
+            </Button>)}
+            {smallScreen && <IconButton
                 onClick={handleMobileSearch}
                 disabled={isSearchBtnDisabled}
                 className={`
@@ -43,7 +46,7 @@ const NavItems = ({
             `
 
                 }>
-                <BiSearch size={24}/></button>}
+                <BiSearch size={24}/></IconButton>}
 
         </>
     );
