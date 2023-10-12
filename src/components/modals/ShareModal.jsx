@@ -4,6 +4,8 @@ import {FacebookShareButton, TelegramShareButton, ViberShareButton} from "react-
 import {shareModal, stopPropagation} from "../../common/commonData";
 import {SiFacebook, SiTelegram, SiViber} from "react-icons/si";
 import {Fade} from "@mui/material";
+import Button from '@mui/material/Button';
+
 
 const ShareModal = ({animateModal, toggleModal}) => {
     const itemsModal = useContext(ItemsModalContext)
@@ -31,20 +33,20 @@ const ShareModal = ({animateModal, toggleModal}) => {
             rounded-md
             w-60
             '>
-                    <div title={'share via telegram'}>
+                    <Button title={'share via telegram'}>
                         <TelegramShareButton url={currentModalItemUrl} title={''}><SiTelegram
                             size={30}/></TelegramShareButton>
-                    </div>
-                    <div>
+                    </Button>
+                    <Button>
                         <FacebookShareButton url={currentModalItemUrl} title={''}>
                             <SiFacebook size={30}/>
                         </FacebookShareButton>
-                    </div>
-                    <div title={'share via viber'}>
+                    </Button>
+                    <Button title={'share via viber'}>
                         <ViberShareButton url={currentModalItemUrl} title={''}>
                             <SiViber size={30}/>
                         </ViberShareButton>
-                    </div>
+                    </Button>
                 </div>
             </div>
         </Fade>
