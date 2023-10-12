@@ -29,7 +29,6 @@ const VideoModal = ({
                         currentVideoTime,
                         isVideoReady,
                         isVideoPlaying,
-                        classes,
                         handleVisibility,
                         handleVideoIsReady,
                         handleVideoFromListClick,

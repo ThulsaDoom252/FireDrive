@@ -11,18 +11,20 @@ export const useStyles = makeStyles((theme) => ({
     actionBtn: {
         backgroundColor: 'blue',
         color: 'white',
-    }
-    // modal: {
-    //     display: "flex",
-    //     alignItems: "center",
-    //     justifyContent: "center",
-    // },
-    // modalContent: {
-    //     backgroundColor: "white",
-    //     borderRadius: "10px",
-    //     outline: "none",
-    //     padding: "20px",
-    // },
+    },
+    gridItemBtn: {
+        width: '50px',
+        display: 'flex',
+        backgroundColor: 'lightgray',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: '5px',
+        height: '50px',
+        borderRadius: '10px',
+        "&:hover": {
+            backgroundColor: 'white'
+        },
+    },
 }));
 
 
@@ -36,9 +38,7 @@ export const authInput = {
                     borderWidth: '1px'
                 },
             },
-
             "&:hover fieldset": {
-                // backgroundColor: "rgba(255, 255, 255, 0.5)",
                 borderColor: "blue", // Цвет бордера при наведении (красный)
                 transition: "all 0.3s ease-in-out",
             },
@@ -49,4 +49,5 @@ export const authInput = {
         },
     },
 };
+
 

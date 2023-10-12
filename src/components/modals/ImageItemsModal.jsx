@@ -101,11 +101,12 @@ const ImageItemsModal = ({
                     text-white
                     ${smallScreen ? 'fixed bottom-0' : 'mt-5 relative'}
                     `}>
-                    <div className={'w-full flex justify-between'}>
+                    <div className={'w-full flex justify-center'}>
                         <ModalOptions iconSize={20}
                                       handleFullScreen={handleFullScreen}
                                       handleDeleteCurrentModalItem={handleDeleteCurrentModalItem}
                                       smallScreen={smallScreen}
+                                      fullScreen={fullScreen}
                                       handleModal={handleModal}
                                       currentModalItemName={currentModalItemName}
                                       currentModalOldName={currentModalOldName}

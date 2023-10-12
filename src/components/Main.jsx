@@ -44,6 +44,7 @@ import ImageModalContainer from "./modals/ImageModalContainer";
 import MobileVideoMenu from "./modals/Video/MobileVideoMenu";
 import VideoModalContainer from "./modals/Video/VideoModalContainer";
 import useConfirm from "./hooks/useConfirm";
+import {useStyles} from "./mui/styles";
 
 const Main = ({
                   currentMediaSet,
@@ -97,6 +98,7 @@ const Main = ({
 
     const paginatorContext = useContext(PaginatorContext)
     const {firstItemIndex, lastItemIndex, setItemsPerPage, itemsPerPage} = paginatorContext
+    const classes = useStyles()
     const handleListMode = () => {
         if (listMode === lazyMode) {
             toggleListMode(paginateMode)
@@ -207,6 +209,7 @@ const Main = ({
                 toggleModal={handleModal}
                 animateModal={animateVideoModal}
                 confirm={confirm}
+                classes={classes}
             />}
 
             {isImageModalMounted &&
@@ -328,6 +331,7 @@ const Main = ({
                                              handleItemModal,
                                              handleModal,
                                              itemModalType,
+                                             classes,
                                          }}/>}/>}
                 </Routes>
                 <div

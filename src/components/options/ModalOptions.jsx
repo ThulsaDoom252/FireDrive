@@ -3,6 +3,8 @@ import {BiSolidPencil} from "react-icons/bi";
 import {FaShare, FaTrash} from "react-icons/fa";
 import {renameModal, shareModal} from "../../common/commonData";
 import Button from '@mui/material/Button';
+import {BsFullscreen} from "react-icons/bs";
+import {AiOutlineFullscreenExit} from "react-icons/ai";
 
 const ModalOptions = ({
                           handleFullScreen,
@@ -12,11 +14,13 @@ const ModalOptions = ({
                           handleModal,
                           currentModalItemName,
                           currentModalOldName,
+                          fullScreen,
                       }) => {
     return (
         <>
-            <Button className='text-white' hidden={smallScreen}
-                    onClick={handleFullScreen}>FullScreen
+            <Button className='text-white'
+                    onClick={handleFullScreen}>{smallScreen ? (!fullScreen ? <BsFullscreen size={iconSize}/> :
+                <AiOutlineFullscreenExit size={iconSize}/>) : 'FullScreen'}
             </Button>
             <Button className='text-white' onClick={() => handleModal({
                 modalType: renameModal,

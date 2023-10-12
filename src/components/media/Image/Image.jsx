@@ -8,7 +8,7 @@ const Image = ({
                    isAbsolute,
                    height = 'h-full',
                    width = 'w-full',
-                   skeletonHeight = 300,
+                   skeletonHeight = 100,
                    skeletonWidth = 300,
                    setIsShowOptions,
                    handleImageClick,

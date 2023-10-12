@@ -1,25 +1,9 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {ItemsModalContext} from "../../../context/ItemsModalContext";
 import {formatTime, videoModal} from "../../../common/commonData";
-import {makeStyles} from "@material-ui/core/styles";
 import VideoModal from "./VideoModal";
 import {VideoControlsContext} from "../../../context/VideoControlsContext";
 
-
-
-//Modal mui styles
-const useStyles = makeStyles((theme) => ({
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    paper: {
-        backgroundColor: 'transparent',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
-}));
 
 const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentModal}) => {
 
@@ -27,8 +11,6 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
     const ModalContext = useContext(ItemsModalContext);
 
     const [isVideoReady, setIsVideoReady] = useState(false);
-    const classes = useStyles();
-
 
     // listed video in modal ref and state
     const listedVideoInModalRef = useRef(null)
@@ -228,7 +210,6 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
         isControlsVisible,
         isVideoReady,
         isVideoPlaying,
-        classes,
         handleVisibility: handleVideoControlsVisibility,
         handleVideoIsReady,
         handleVideoFromListClick,

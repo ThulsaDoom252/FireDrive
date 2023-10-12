@@ -6,7 +6,7 @@ import NoSearchResults from "../search/NoSearchResults";
 import Video from "./Video";
 import ImageBlock from "./Image/ImageBlock";
 import {Grid} from "@mui/material";
-import LayoutMenu from "./layoutMenu";
+import ItemsLayoutMenu from "./itemsLayoutMenu";
 import Overlay from "../common/Overlay";
 
 const Media = ({
@@ -37,6 +37,7 @@ const Media = ({
                    handleVideoClick,
                    handleImageClick,
                    handleModal,
+                   classes,
                }) => {
 
     return (
@@ -57,13 +58,14 @@ const Media = ({
              ${audioPage && smallScreen ? 'w-full' : audioPage ? 'w-1/2' : !audioPage && smallScreen ? 'w-full' : 'w-full pl-10 pr-10'} 
              
              `}>
-                {/*// layout btn*/}<LayoutMenu {...{
+                {/*// layout btn*/}<ItemsLayoutMenu {...{
                 audioPage,
                 layoutMenu,
                 layoutNumbs,
                 gridIndex,
                 handleLayoutMenu,
-                handleCollValue
+                handleCollValue,
+                classes,
             }}/>
 
                 {noSearchResults && <div className={'absolute top-custom-50% left-custom-50%'}><NoSearchResults/></div>}

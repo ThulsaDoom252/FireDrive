@@ -18,9 +18,10 @@ const RenameModal = ({
                          showModal,
                      }) => {
 
-    const handleRenameMedia = () => {
+    const handleRenameMedia = async () => {
         handleMediaName({name: null, oldName: null})
-        renameMedia({newName, editingName, originalName: oldName})
+        await renameMedia({newName, editingName, originalName: oldName})
+        toggleModal({modalType: renameModal})
     }
 
     const isRenameBtnDisabled = isItemRenaming || newName === editingName || newName === ''

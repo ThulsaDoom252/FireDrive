@@ -11,7 +11,7 @@ import {
     renameModal,
     stopPropagation
 } from "../../common/commonData";
-import {Fade} from "@mui/material";
+import {Button, Fade} from "@mui/material";
 
 
 const ItemOptions = ({
@@ -57,16 +57,11 @@ const ItemOptions = ({
         if (userAction) {
             deleteCurrentItem({url, index, searchMode, route: currentRoute})
         }
-
-
     }
 
     const iconBlockClass = `${iconBgColor ? ` 
-    mx-2  
     bg-opacity-5
     rounded md 
-    h-8 
-    w-8
     flex 
     justify-center 
     items-center 
@@ -77,7 +72,7 @@ const ItemOptions = ({
     hover:cursor-pointer
     z-10
     `
-        : 'mx-1'}`
+        : ''}`
 
     return (
         <div
@@ -95,7 +90,7 @@ const ItemOptions = ({
             onMouseLeave={handleMouseLeave}>
             <Fade in={showOptions} timeout={200}>
                 <div className={`flex ${displayInCol && 'flex-col'}`}>
-                    <div className={iconBlockClass}>
+                    <Button className={iconBlockClass}>
                         <TelegramShareButton
                             url={url}
                             title={''}>
@@ -104,9 +99,8 @@ const ItemOptions = ({
                                     title={"share via telegram"}
                                     size={iconsSize}
                                     color={tgIconColor}/> : <p>Share via Telegram</p>}</TelegramShareButton>
-                    </div>
-
-                    <div className={iconBlockClass}>
+                    </Button>
+                    <Button className={iconBlockClass}>
                         <ViberShareButton url={url}>
                             {showIcons ?
                                 <FaViber
@@ -114,23 +108,22 @@ const ItemOptions = ({
                                     size={iconsSize}
                                     color={vbIconColor}/> :
                                 <p>Share via Viber</p>}
-
-
                         </ViberShareButton>
-                    </div>
-                    <div className={iconBlockClass} onClick={() => handleModal({modalType: renameModal, name, oldName})}>
+                    </Button>
+                    <Button className={iconBlockClass}
+                            onClick={() => handleModal({modalType: renameModal, name, oldName})}>
                         {showIcons ?
                             <BsPencilFill size={iconsSize}
                                           title={"edit current item name"}
                                           color={renameIconColor}/> : 'Rename item'}
-                    </div>
-                    <div className={iconBlockClass}
-                         onClick={handleDeleteCurrentItem}>
+                    </Button>
+                    <Button className={iconBlockClass}
+                            onClick={handleDeleteCurrentItem}>
                         {showIcons ?
                             < BsTrash title={'delete current item'} size={iconsSize}
                                       color={deleteIconColor}
                             /> : 'Delete Item'}
-                    </div>
+                    </Button>
                     {/*<BsDownload className="text-gray-200" size={iconsSize}/>*/}
 
                 </div>
@@ -139,8 +132,6 @@ const ItemOptions = ({
                 <div onMouseEnter={handleMouseEnter} className={showOptions ? `text-black` : 'text-gray-500'}>
                     <BsThreeDots
                         size={25}/></div>}
-
-
         </div>
     );
 };

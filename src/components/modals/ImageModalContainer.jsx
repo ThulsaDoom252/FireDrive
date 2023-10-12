@@ -30,7 +30,7 @@ const ImageModalContainer = ({toggleModal, animateModal, confirm, handleCurrentM
 
     useEffect(() => {
         if (animateModal && smallScreen) {
-            handleFullScreen()
+            // handleFullScreen()
         }
     }, [animateModal]);
 

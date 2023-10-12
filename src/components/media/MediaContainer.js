@@ -53,13 +53,13 @@ const MediaContainer = ({
                             setCurrentModalItemIndex,
                             handleItemModal,
                             handleModal,
+                            classes,
                         }) => {
     const pagesContext = useContext(PagesContext)
     const {imagesPage, videosPage, audioPage} = pagesContext
     const [hoveredMediaIndex, setHoveredMediaIndex] = useState(null)
     const [gridLayoutMenu, toggleGridLayoutMenu] = useState(false)
     const [gridWidth, setGridWidth] = useState('100%')
-
 
     const paginatorContext = useContext(PaginatorContext)
     const {
@@ -179,7 +179,6 @@ const MediaContainer = ({
         setGridSize(number)
     }
 
-
     return <Media {...{
         currentTheme,
         imagesPage,
@@ -208,6 +207,7 @@ const MediaContainer = ({
         handleImageClick,
         handleVideoClick,
         handleModal,
+        classes,
     }}/>
 };
 
