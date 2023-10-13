@@ -32,27 +32,21 @@ const ImageModalContainer = ({toggleModal, animateModal, confirm, handleCurrentM
         } = modalContext
 
         useEffect(() => {
-            if (animateModal && smallScreen) {
-                // handleFullScreen()
-            }
-        }, [animateModal]);
-
-        useEffect(() => {
-                document.addEventListener('fullscreenchange', handleFullScreenState);
+            document.addEventListener('fullscreenchange', handleFullScreenState);
 
                 return () => {
                     document.removeEventListener('fullscreenchange', handleFullScreenState);
                 };
+                //eslint-disable-next-line
             }, [fullScreen]
         )
-
 
         useEffect(() => {
             const handleLandScapeMode = () => {
                 if (window.innerWidth > window.innerHeight) {
                     if (!fullScreen) {
-                        if(!document.fullscreenElement)
-                        document.documentElement.requestFullscreen()
+                        if (!document.fullscreenElement)
+                            document.documentElement.requestFullscreen().then(() => void 0)
                     }
                 }
             };
@@ -66,7 +60,7 @@ const ImageModalContainer = ({toggleModal, animateModal, confirm, handleCurrentM
             return () => {
                 window.removeEventListener('resize', handleLandScapeMode)
             }
-
+            //eslint-disable-next-line
         }, [smallScreen]);
 
 // binding keys to current modal handlers
@@ -93,6 +87,7 @@ const ImageModalContainer = ({toggleModal, animateModal, confirm, handleCurrentM
             return () => {
                 window.removeEventListener('keydown', handleArrowKey)
             }
+            //eslint-disable-next-line
         }, [handlePrevModalItem, handleNextModalItem]);
 
         const handleDeleteCurrentModalItem = async () => {

@@ -54,21 +54,22 @@ const Media = ({
             flex  
             flex-col 
             items-center 
-             ${noMedia ? 'justify-center' : ''}
+             ${(noMedia || noSearchResults) ? 'justify-center h-screen w-screen ' : ''}
              ${audioPage && smallScreen ? 'w-full' : audioPage ? 'w-1/2' : !audioPage && smallScreen ? 'w-full' : 'w-full pl-10 pr-10'} 
              
              `}>
-                {/*// layout btn*/}<ItemsLayoutMenu {...{
-                audioPage,
-                layoutMenu,
-                layoutNumbs,
-                gridIndex,
-                handleLayoutMenu,
-                handleCollValue,
-                classes,
-            }}/>
+                {(!noMedia && !noSearchResults) &&
+                    <ItemsLayoutMenu {...{
+                        audioPage,
+                        layoutMenu,
+                        layoutNumbs,
+                        gridIndex,
+                        handleLayoutMenu,
+                        handleCollValue,
+                        classes,
+                    }}/>}
 
-                {noSearchResults && <div className={'absolute top-custom-50% left-custom-50%'}><NoSearchResults/></div>}
+                {noSearchResults && <div><NoSearchResults/></div>}
                 {noMedia ?
                     <div>{imagesPage ? 'You have no images' : videosPage ? 'You have no videos' : 'You have no audio'}</div> :
                     <Grid
