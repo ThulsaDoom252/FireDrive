@@ -45,6 +45,7 @@ import MobileVideoMenu from "./modals/Video/MobileVideoMenu";
 import VideoModalContainer from "./modals/Video/VideoModalContainer";
 import useConfirm from "./hooks/useConfirm";
 import {useStyles} from "./mui/styles";
+import toast from "react-hot-toast";
 
 const Main = ({
                   currentMediaSet,
@@ -116,7 +117,6 @@ const Main = ({
         mediaTypes.forEach(mediaType =>
             listMedia({mediaType}))
     }, [])
-
 
     const hideMobileSearch = () => {
         showMobileSearch && toggleMobileSearch(false)

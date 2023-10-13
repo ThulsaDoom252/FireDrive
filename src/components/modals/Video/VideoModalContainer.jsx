@@ -4,7 +4,6 @@ import {formatTime, videoModal} from "../../../common/commonData";
 import VideoModal from "./VideoModal";
 import {VideoControlsContext} from "../../../context/VideoControlsContext";
 
-
 const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentModal}) => {
 
     const CustomControlsContext = useContext(VideoControlsContext)

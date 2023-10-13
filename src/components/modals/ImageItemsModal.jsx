@@ -4,7 +4,7 @@ import {IoClose} from "react-icons/io5";
 import {AiOutlineFullscreenExit} from "react-icons/ai";
 import Overlay from "../common/Overlay";
 import {stopPropagation} from "../../common/commonData";
-import ModalOptions from "../options/ModalOptions";
+import ImageModalOptions from "../options/ImageModalOptions";
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {Fade} from "@mui/material";
@@ -34,10 +34,10 @@ const ImageItemsModal = ({
                              handleNextModalItem,
                              currentModalItemName,
                              currentModalOldName,
+
                          }) => {
 
-    const [handleDeleteCurrentModalItem, showMobileSettings, handleModal] = modalOptionsProps
-
+    const [handleDeleteCurrentModalItem, showMobileSettings, handleModal, showImageSettingsInSmallScreen, toggleImageSettingInSmallScreen] = modalOptionsProps
 
     return (
         <Fade in={animateModal} timeout={200}>
@@ -45,23 +45,24 @@ const ImageItemsModal = ({
                 onClick={handleClose}
                 hidden={!animated ? animateModal : false}
                 className={`
-                w-screen 
-                h-screen 
+                inset-0
                 flex
                  absolute 
                  items-center 
                  justify-center 
-                 flex-col
+                 ${!smallScreen && 'flex-col'}
                  ${animateModal && zIndex}
                  `}>
                 {showOverlay && <Overlay bg={overlayColor} opacity={overlayOpacity}/>}
                 {/*<div*/}
                 {/*    className={`text-white mb-2 ${zIndex} ${smallScreen && 'absolute top-2'}`}>{currentModalItemName}</div>*/}
-                <div hidden={(fullScreen && !smallScreen) || !showMobileSettings}
-                     className='absolute right-5  top-5 hover:cursor-pointer z-1'
-                     onClick={handleClose}><IoClose
-                    size={closeIconSize}
-                    color={closeIconColor}/></div>
+                {(!smallScreen || showImageSettingsInSmallScreen) &&
+                    <div hidden={(fullScreen && !smallScreen) || !showMobileSettings}
+                         className='absolute right-5  top-5 hover:cursor-pointer z-1'
+                         onClick={handleClose}><IoClose
+                        size={closeIconSize}
+                        color={closeIconColor}/></div>}
+
                 {smallScreen || !fullScreen ? <div hidden={smallScreen || !fullScreen}
                                                    className='absolute right-10  top-10 hover:cursor-pointer'
                                                    onClick={e => {
@@ -72,13 +73,15 @@ const ImageItemsModal = ({
                     color={closeIconColor}/></div> : void 0}
 
                 <div {...swipeHandlers} onClick={stopPropagation}
-                     className={'relative w-fit h-fit flex items-center justify-center'}>
+                     className={`relative ${smallScreen && !fullScreen && 'bottom-6'}`}>
                     {smallScreen ?
-                        <Carousel className={'carousel'} {...carouselSettings}>
+                        <Carousel onClickItem={() => toggleImageSettingInSmallScreen(!showImageSettingsInSmallScreen)}
+                                  className={'carousel'} {...carouselSettings}>
                             {currentMediaSet.map((image, index) => (
-                                <div key={index} className={'h-full  flex items-center'}>
+                                <div key={index} className={'h-full flex items-center'}>
                                     <img src={image.url} alt={image.name}/>
                                 </div>
+
                             ))}
                         </Carousel>
                         :
@@ -101,17 +104,18 @@ const ImageItemsModal = ({
                     text-white
                     ${smallScreen ? 'fixed bottom-0' : 'mt-5 relative'}
                     `}>
-                    <div className={'w-full flex justify-center'}>
-                        <ModalOptions iconSize={20}
-                                      handleFullScreen={handleFullScreen}
-                                      handleDeleteCurrentModalItem={handleDeleteCurrentModalItem}
-                                      smallScreen={smallScreen}
-                                      fullScreen={fullScreen}
-                                      handleModal={handleModal}
-                                      currentModalItemName={currentModalItemName}
-                                      currentModalOldName={currentModalOldName}
-                        />
-                    </div>
+                    {(!smallScreen || showImageSettingsInSmallScreen) &&
+                        <div className={'w-full flex justify-center'}>
+                            <ImageModalOptions iconSize={20}
+                                               handleFullScreen={handleFullScreen}
+                                               handleDeleteCurrentModalItem={handleDeleteCurrentModalItem}
+                                               smallScreen={smallScreen}
+                                               fullScreen={fullScreen}
+                                               handleModal={handleModal}
+                                               currentModalItemName={currentModalItemName}
+                                               currentModalOldName={currentModalOldName}
+                            />
+                        </div>}
 
                 </div>
                 <button hidden={smallScreen} disabled={prevArrowDisabled}

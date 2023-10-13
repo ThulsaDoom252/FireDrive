@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import {BsFullscreen} from "react-icons/bs";
 import {AiOutlineFullscreenExit} from "react-icons/ai";
 
-const ModalOptions = ({
+const ImageModalOptions = ({
                           handleFullScreen,
                           handleDeleteCurrentModalItem,
                           smallScreen,
@@ -16,6 +16,7 @@ const ModalOptions = ({
                           currentModalOldName,
                           fullScreen,
                       }) => {
+
     return (
         <>
             <Button className='text-white'
@@ -35,4 +36,4 @@ const ModalOptions = ({
     );
 };
 
-export default ModalOptions;
+export default ImageModalOptions;
