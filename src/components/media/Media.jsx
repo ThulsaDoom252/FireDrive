@@ -8,6 +8,9 @@ import ImageBlock from "./Image/ImageBlock";
 import {Grid} from "@mui/material";
 import ItemsLayoutMenu from "./itemsLayoutMenu";
 import Overlay from "../common/Overlay";
+import noImages from "./noImages.jpg"
+import noVideo from "./noVideo.jpg"
+import noAudio from "./noAudio.png"
 
 const Media = ({
                    imagesPage,
@@ -71,7 +74,9 @@ const Media = ({
 
                 {noSearchResults && <div><NoSearchResults/></div>}
                 {noMedia ?
-                    <div>{imagesPage ? 'You have no images' : videosPage ? 'You have no videos' : 'You have no audio'}</div> :
+                    <div><img className={`mx-auto w-1/2 rounded-md opacity-80 bg-white`}
+                              src={(imagesPage ? noImages : videosPage ? noVideo : noAudio)}
+                              alt={'No images'}/></div> :
                     <Grid
                         style={{width: gridWidth}}
                         container
