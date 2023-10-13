@@ -91,6 +91,7 @@ const Main = ({
     const pathName = location.pathname
     const homePage = pathName === rootRoute
     const isPaginatorEnabled = listMode === paginateMode
+    const noMedia = currentMediaSet.length === 0
 
     const [Dialog, confirm] = useConfirm(
         alertTitle,
@@ -222,6 +223,7 @@ const Main = ({
                 currentTheme={currentTheme}
                 showMobileSearch={showMobileSearch}
                 toggleMobileSearch={toggleMobileSearch}
+                noMedia={noMedia}
             />
             <main className={'w-full h-full overflow-y-scroll'} id={mainContentId} onClick={hideMobileSearch}>
                 <BurgerMenu smallScreen={smallScreen} onClick={hideMobileSearch}>
@@ -332,6 +334,7 @@ const Main = ({
                                              handleModal,
                                              itemModalType,
                                              classes,
+                                             noMedia,
                                          }}/>}/>}
                 </Routes>
                 <div

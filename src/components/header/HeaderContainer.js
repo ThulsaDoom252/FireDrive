@@ -10,15 +10,19 @@ const HeaderContainer = ({
                              setSearchRequest,
                              toggleMobileSearch,
                              showMobileSearch,
+                             noMedia,
                          }) => {
 
     const pages = useContext(PagesContext)
-    const {rootPage} = pages
+    const {rootPage, imagesPage, videosPage, audioPage} = pages
+
+    const isSearchBtnDisabled = rootPage || (imagesPage && noMedia) || (videosPage && noMedia) || (audioPage && noMedia)
 
     return <Header
         rootPage={rootPage}
         currentTheme={currentTheme}
         searchRequest={searchRequest}
+        isSearchBtnDisabled={isSearchBtnDisabled}
         setSearchRequest={setSearchRequest}
         toggleMobileSearch={toggleMobileSearch}
         showMobileSearch={showMobileSearch}

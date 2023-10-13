@@ -8,9 +8,9 @@ const Header = ({
                     currentTheme,
                     searchRequest,
                     setSearchRequest,
-                    rootPage,
                     toggleMobileSearch,
                     showMobileSearch,
+                    isSearchBtnDisabled,
                 }) => {
     const smallScreen = useSelector(state => state.app.smallScreen)
 
@@ -39,7 +39,7 @@ const Header = ({
                 mr-10`}>
                     <NavItems
                         toggleMobileSearch={toggleMobileSearch}
-                        isSearchBtnDisabled={rootPage}
+                        isSearchBtnDisabled={isSearchBtnDisabled}
                         currentTheme={currentTheme}
                     />
                 </div>}
@@ -49,7 +49,7 @@ const Header = ({
                         className={'w-full'}>
                         <Search
                             searchRequest={searchRequest}
-                            isDisabled={rootPage}
+                            isDisabled={isSearchBtnDisabled}
                             setSearchRequest={setSearchRequest}/></div>
                 </div>
 

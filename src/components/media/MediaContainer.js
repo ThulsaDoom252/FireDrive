@@ -54,6 +54,7 @@ const MediaContainer = ({
                             handleItemModal,
                             handleModal,
                             classes,
+                            noMedia,
                         }) => {
     const pagesContext = useContext(PagesContext)
     const {imagesPage, videosPage, audioPage} = pagesContext
@@ -71,7 +72,7 @@ const MediaContainer = ({
     const paginatorProps = [handleNextClick, handlePrevClick, disablePrevButton, disableNextButton, handlePageClick, pages,
         currentPage]
 
-    const noMedia = currentMediaSet.length === 0
+
     const isPaginatorHidden = !isPaginatorEnabled || noMedia || searchMode || noSearchResults
 
     const noOpenModal = itemModalType === noModal
