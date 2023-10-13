@@ -1,8 +1,9 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import Header from "./Header";
 import {connect} from "react-redux";
 import {setSearchRequest} from "../../redux/mediaSlice";
 import {PagesContext} from "../../context/PagesContext"
+import {useStyles} from "../mui/styles";
 
 const HeaderContainer = ({
                              currentTheme,
@@ -11,10 +12,12 @@ const HeaderContainer = ({
                              toggleMobileSearch,
                              showMobileSearch,
                              noMedia,
+                             classes,
                          }) => {
 
     const pages = useContext(PagesContext)
     const {rootPage, imagesPage, videosPage, audioPage} = pages
+    const [isSearchFocused, setIsSearchFocused] = useState(false)
 
     const isSearchBtnDisabled = rootPage || (imagesPage && noMedia) || (videosPage && noMedia) || (audioPage && noMedia)
 
@@ -26,6 +29,9 @@ const HeaderContainer = ({
         setSearchRequest={setSearchRequest}
         toggleMobileSearch={toggleMobileSearch}
         showMobileSearch={showMobileSearch}
+        classes={classes}
+        isSearchFocused={isSearchFocused}
+        setIsSearchFocused={setIsSearchFocused}
 
 
     />

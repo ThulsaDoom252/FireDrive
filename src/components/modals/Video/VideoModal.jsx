@@ -141,7 +141,6 @@ const VideoModal = ({
                         </div>
                     </div>
                     <div
-                        hidden={smallScreen}
                         className={`
                 flex
                 h-90%
@@ -149,11 +148,14 @@ const VideoModal = ({
                 justify-start
                 items-center
                 overflow-y-scroll
+                mb-5
               `}
                     >
                         {currentMediaSet.map((video, index) => (
                             <ModalVideoItem
+                                column={smallScreen}
                                 item={video}
+                                currentModalItemIndex={currentModalItemIndex}
                                 onClick={handleVideoFromListClick}
                                 index={index}
                                 currentModalItemUrl={currentModalItemUrl}

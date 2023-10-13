@@ -11,6 +11,7 @@ const ModalVideoItem = ({
                             info,
                             column = false,
                             listedVideoProps,
+                            currentModalItemIndex,
                         }) => {
 
 
@@ -26,13 +27,11 @@ const ModalVideoItem = ({
 
     const shouldPreviewPlay = index === listedVideoHoveredIndex
 
-    window.s1 = index
-    window.s2 = listedVideoHoveredIndex
-
-
     return (
-        <div key={index} className={`
-        w-80% 
+        <div
+            key={index}
+            hidden={currentModalItemIndex === index}
+            className={`
         h-32 
         mt-3 
         mb-3  
@@ -40,7 +39,7 @@ const ModalVideoItem = ({
         flex 
         justify-center 
         ${info === 'center' ? 'items-center' : 'items-start'}
-        ${column && 'flex-col'}
+        ${column ? 'flex-col w-full' : 'w-80%'}
         `}>
             <div
                 onClick={() => onClick(index)}
@@ -61,6 +60,8 @@ const ModalVideoItem = ({
             <div className={`
             text-white
             w-full 
+            relative
+            ${column && 'bottom-2'}
             text-center
             ${info !== 'center' && 'mt-3'}
             

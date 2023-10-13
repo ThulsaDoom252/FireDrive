@@ -5,7 +5,7 @@ import Image from "../media/Image/Image"
 import {Button, IconButton, TextField, Tooltip} from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
-import {authInput} from "../mui/styles";
+import {customInput} from "../mui/styles";
 import {restoreMode, signInMode, signUpMode} from "./authTypes";
 
 const Auth = ({
@@ -128,7 +128,7 @@ const Auth = ({
                                            helperText={errors.email}
                                            variant="outlined"
                                            onChange={handleChange}
-                                           sx={authInput.textField}
+                                           sx={customInput.authField}
                                            value={values.email}
                                 />
                             </div>}
@@ -161,7 +161,7 @@ const Auth = ({
                                            helperText={errors.password}
                                            type={showPassword ? 'text' : 'password'}
                                            variant="outlined"
-                                           sx={authInput.textField}
+                                           sx={customInput.authField}
                                            onChange={handleChange}
                                            value={values.password}/>
                             </div>}
@@ -174,7 +174,7 @@ const Auth = ({
                                            helperText={errors.password2}
                                            type={showPassword ? 'text' : 'password'}
                                            variant="outlined"
-                                           sx={authInput.textField}
+                                           sx={customInput.authField}
                                            onChange={handleChange}
                                            value={values.password2}/>
                             </div>
@@ -187,7 +187,7 @@ const Auth = ({
                                            variant="outlined"
                                            onChange={handleChange}
                                            value={values.username}
-                                           sx={authInput.textField}
+                                           sx={customInput.authField}
                                 />
                             </div>
                         </>}

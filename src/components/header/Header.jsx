@@ -11,6 +11,9 @@ const Header = ({
                     toggleMobileSearch,
                     showMobileSearch,
                     isSearchBtnDisabled,
+                    isSearchFocused,
+                    setIsSearchFocused,
+                    classes,
                 }) => {
     const smallScreen = useSelector(state => state.app.smallScreen)
 
@@ -32,7 +35,7 @@ const Header = ({
              ${smallScreen ? 'p-4' : ' pr-10  pl-10'}            
             `}>
             <div className={`${smallScreen ? 'w-11/12' : 'w-full'} flex justify-center items-center`}>
-                {!showMobileSearch && <div className={`
+                {(!showMobileSearch && !isSearchFocused) && <div className={`
                 ${smallScreen ? 'w-full' : 'w-300'} 
                 flex 
                 justify-between 
@@ -50,7 +53,10 @@ const Header = ({
                         <Search
                             searchRequest={searchRequest}
                             isDisabled={isSearchBtnDisabled}
-                            setSearchRequest={setSearchRequest}/></div>
+                            setSearchRequest={setSearchRequest}
+                            classes={classes}
+                            setIsSearchFocused={setIsSearchFocused}
+                        /></div>
                 </div>
 
 

@@ -224,6 +224,7 @@ const Main = ({
                 showMobileSearch={showMobileSearch}
                 toggleMobileSearch={toggleMobileSearch}
                 noMedia={noMedia}
+                classes={classes}
             />
             <main className={'w-full h-full overflow-y-scroll'} id={mainContentId} onClick={hideMobileSearch}>
                 <BurgerMenu smallScreen={smallScreen} onClick={hideMobileSearch}>
