@@ -19,25 +19,33 @@ const NavItems = ({
     const inactiveStyle = `${smallScreen && 'text-2xl'} transition-all duration-300 ${currentTheme.color}  no-underline !important hover:text-white '}`;
 
     const navItemsList = [
-        {path: rootRoute, icon: <AiOutlineHome/>, label: 'Home'},
-        {path: imagesRoute, icon: <AiFillPicture/>, label: 'Images'},
-        {path: videosRoute, icon: <RiMovieLine/>, label: 'Video'},
-        {path: audioRoute, icon: <BiMusic/>, label: 'Music'},
+        {path: rootRoute, icon: <AiOutlineHome size={25}/>, label: 'Home'},
+        {path: imagesRoute, icon: <AiFillPicture size={25}/>, label: 'Images'},
+        {path: videosRoute, icon: <RiMovieLine size={25}/>, label: 'Video'},
+        {path: audioRoute, icon: <BiMusic size={25}/>, label: 'Music'},
     ]
     const handleMobileSearch = () => {
         toggleMobileSearch(true)
     }
 
+    const commonNavClass = {
+        maxWidth: 'fit-content',
+        minWidth: 'fit-content',
+        minHeight: 'fit-content',
+        maxHeight: 'fit-content'
+    }
+
     return (
         <>
-            {navItemsList.map((navItem, index) =>   <Button>
+            {navItemsList.map((navItem, index) =>
                 <NavLink to={navItem.path}
                          className={navData => navData.isActive ? isActiveStyle : inactiveStyle}>
-                    {smallScreen ?
-                        navItem.icon : navItem.label}
-
+                    <Button sx={commonNavClass}>
+                        {smallScreen ?
+                            navItem.icon : navItem.label}
+                    </Button>
                 </NavLink>
-            </Button>)}
+            )}
             {smallScreen && <IconButton
                 onClick={handleMobileSearch}
                 disabled={isSearchBtnDisabled}

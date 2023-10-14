@@ -85,6 +85,18 @@ export const customBtns = {
         minWidth: '45px',
         maxWidth: '45px',
         maxHeight: '35px',
+    },
+    audioTrackBtn: {
+        margin: 0,
+        padding: 0,
+        height: 'fit-content',
+        minHeight: '35px',
+        minWidth: '45px',
+        maxWidth: '45px',
+        maxHeight: '35px',
+        position: 'relative',
+        right: '2px',
+
     }
 }
 

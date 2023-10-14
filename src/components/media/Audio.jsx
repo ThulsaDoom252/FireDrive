@@ -9,6 +9,8 @@ import {dayPrimary} from "../../common/themes";
 import {truncate} from "../../common/commonData";
 import {Fade} from "@mui/material";
 import {Skeleton, Tooltip} from "@mui/material";
+import Button from "@mui/material/Button";
+import {customBtns} from "../mui/styles";
 
 const Audio = ({
                    name,
@@ -60,6 +62,8 @@ const Audio = ({
             <div
                 onClick={() => handleSetCurrentAudioIndex({index: audioIndex})}
                 className={` 
+                transition-all
+                duration-200
                 h-45  
                 text-white 
                 flex 
@@ -80,14 +84,17 @@ const Audio = ({
                 {isAudioLoaded ?
                     <>
                         <div>
-                            <div className={'w-10 text-xl h-full flex justify-center items-center hover:cursor-pointer'}
+                            <Button
+                                className={`relative right-3`}
+                                sx={customBtns.autdioTrackBtn}
+                                // className={'w-10 text-xl h-full flex justify-center items-center hover:cursor-pointer'}
                             >
                                 {isTrackFromTheListPlaying ? <AiFillPauseCircle
                                         size={25}
                                         color={currentTheme.color === dayPrimary && 'black'}/>
                                     : (<AiFillPlayCircle size={25}
                                                          color={currentTheme.color === dayPrimary && 'black'}/>)}
-                            </div>
+                            </Button>
                         </div>
                         <div
                             className={`w-full absolute left-10  ${currentTheme.color}`}>{smallScreen ? truncate(name, 20) : truncate(name, 50)}</div>
