@@ -9,10 +9,12 @@ import {LuRepeat, LuRepeat1} from "react-icons/lu";
 import {IoInfinite} from "react-icons/io5";
 import {ImVolumeHigh, ImVolumeMute2} from "react-icons/im";
 import VolumeBar from "./VolumeBar";
+import Button from "@mui/material/Button";
+import {customBtns} from "../mui/styles";
 
 const AudioPlayer = ({
                          smallScreenMode,
-                         buttonsSize = 28,
+                         buttonsSize: iconSize = 28,
                          currentTheme,
                      }) => {
 
@@ -41,7 +43,7 @@ const AudioPlayer = ({
     } = audioContext
 
     if (noAudio) {
-        return <AudioPlayerDisabled buttonsSize={buttonsSize}/>
+        return <AudioPlayerDisabled buttonsSize={iconSize}/>
     }
 
 
@@ -52,55 +54,32 @@ const AudioPlayer = ({
             w-full 
             h-full
             flex
+            
             justify-center
             ${smallScreenMode ? 'items-end' : 'items-center'}             
             `}>
             <div className={'w-player-controls flex flex-col justify-between items-center'}>
                 <div className={`w-full  flex items-center justify-between `}>
-                    <div className={'flex items-center  justify-between mr-2'}>
-                        <button
-                            className={`
-                            hover:bg-blue-400   
-                            flex justify-center 
-                            items-center 
-                            rounded 
-                            transition 
-                            text-2xl 
-                              ${prevBtnDisabled ? 'text-gray-500' : iconColor}
-                             `}
-                            disabled={prevBtnDisabled}
-                            onClick={handlePreviousTrack}>
-                            <FiSkipBack size={buttonsSize}/>
-                        </button>
-                        <button disabled={playBtnDisabled}
-                                className={`
-                                 text-center 
-                                w-20  
-                                flex justify-center 
-                                items-center 
-                                hover:bg-blue-400  
-                                rounded 
-                                text-4xl    
-                        
-                                 ${playBtnDisabled ? 'text-gray-500' : iconColor}                   
-                               `}
-                                onClick={() => setIsCurrentTrackPlaying(!isCurrentTrackPlaying)}>
-                            {isCurrentTrackPlaying ? <FiPause size={buttonsSize}/> : <FiPlay size={buttonsSize}/>}
-                        </button>
-                        <button
-                            className={`
-                                 text-center 
-                                flex justify-center 
-                                items-center 
-                                hover:bg-blue-400  
-                                rounded 
-                                text-4xl    
-                                  ${nextBtnDisabled ? 'text-gray-500' : iconColor}                  
-                               `}
+                    <div className={`flex  items-center justify-between mr-2 ${smallScreenMode && 'relative top-2'}`}>
+                        <Button sx={customBtns.audioPlayerPlayBtn}
+                                className={`${prevBtnDisabled ? 'text-gray' : iconColor}`}
+                                disabled={prevBtnDisabled}
+                                onClick={handlePreviousTrack}>
+                            <FiSkipBack size={iconSize}
+                            />
+                        </Button>
+                        <Button sx={customBtns.audioPlayerPlayBtn}
+                                className={`${playBtnDisabled ? 'text-gray' : iconColor}`}
+                                onClick={() => setIsCurrentTrackPlaying(!isCurrentTrackPlaying)}
+                                disabled={playBtnDisabled}>{isCurrentTrackPlaying ? <FiPause size={iconSize}/> :
+                            <FiPlay size={iconSize}/>} </Button>
+                        <Button
+                            sx={customBtns.audioPlayerPlayBtn}
                             disabled={nextBtnDisabled}
+                            className={`${nextBtnDisabled ? 'text-gray' : iconColor}`}
                             onClick={handleNextTrack}>
-                            <FiSkipForward size={buttonsSize}/>
-                        </button>
+                            <FiSkipForward size={iconSize}/>
+                        </Button>
                     </div>
                     <div className={`
                   w-full
@@ -114,29 +93,31 @@ const AudioPlayer = ({
                             max={totalDuration}
                             onChange={handleSeekBarChange}/>
                     </div>
-                    <div className={``}>
-                        <div className={'w-40 flex justify-start relative'}>
-                            <button onClick={handleRepeatMode} className={`
-                                hover:bg-blue-400 
-                                rounded
-                                ${iconColor}
-                              
-                                 `}
+                    <div>
+                        <div
+                            className={`w-40 flex justify-center items-center ${smallScreenMode && 'relative top-2'} `}>
+                            <Button
+                                className={iconColor}
+                                sx={customBtns.audioPlayerBtn}
+                                onClick={handleRepeatMode}
                             >
                                 {repeatMode === 'none' ? <LuRepeat size={20}/> : repeatMode === 'once' ?
                                     <LuRepeat1 size={20}/> : <IoInfinite size={20}/>}
 
-                            </button>
+                            </Button>
                             <div className={'flex relative ml-2'}>
-                                <button
+                                <Button
+                                    sx={customBtns.audioPlayerBtn}
                                     onClick={toggleMuteVolume}
                                     className={`
+                                    relative
                                 disabled:text-gray-400
+                                ${smallScreenMode ? 'top-3' : 'top-1'}
                    ${iconColor}`}
                                 >
                                     {volume !== 0 ? <ImVolumeHigh size={20}/> : <ImVolumeMute2 size={20}/>}
-                                </button>
-                                <div className={'w-20 relative top-1 left-2'}>
+                                </Button>
+                                <div className={'w-20 relative top-0.5'}>
                                     <VolumeBar volume={volume}
                                                handleVolumeChange={handleVolumeChange}/>
                                 </div>
@@ -155,7 +136,8 @@ const AudioPlayer = ({
 
         </div>
 
-    );
+    )
+        ;
 };
 
 const mapStateToProps = (state) => {

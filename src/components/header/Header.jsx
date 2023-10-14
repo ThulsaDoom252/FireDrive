@@ -35,7 +35,7 @@ const Header = ({
              ${smallScreen ? 'p-4' : ' pr-10  pl-10'}            
             `}>
             <div className={`${smallScreen ? 'w-11/12' : 'w-full'} flex justify-center items-center`}>
-                {(!showMobileSearch && !isSearchFocused) && <div className={`
+                {!showMobileSearch && <div className={`
                 ${smallScreen ? 'w-full' : 'w-300'} 
                 flex 
                 justify-between 
@@ -48,11 +48,11 @@ const Header = ({
                 </div>}
 
                 <div className={'w-300'} hidden={smallScreen && !showMobileSearch}>
-                    <div
-                        className={'w-full'}>
+                    <div className={'w-full'}>
                         <Search
                             searchRequest={searchRequest}
                             isDisabled={isSearchBtnDisabled}
+                            isSearchFocused={isSearchFocused}
                             setSearchRequest={setSearchRequest}
                             classes={classes}
                             setIsSearchFocused={setIsSearchFocused}

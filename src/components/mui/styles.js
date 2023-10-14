@@ -59,15 +59,34 @@ export const customInput = {
     },
     searchField: {
         '& input': {
-            transition: 'background 0.3s, transform 0.3s, width 0.3s',
             height: '10px'
         },
         '& input:focus': {
-            background: 'white',
             borderRadius: '10px',
         }
     }
 };
+
+export const customBtns = {
+    audioPlayerBtn: {
+        margin: 0,
+        padding: 0,
+        maxWidth: '25px',
+        maxHeight: '25px',
+        height: 'fit-content',
+        minHeight: '25px',
+        minWidth: '25px',
+    },
+    audioPlayerPlayBtn: {
+        margin: 0,
+        padding: 0,
+        height: 'fit-content',
+        minHeight: '35px',
+        minWidth: '45px',
+        maxWidth: '45px',
+        maxHeight: '35px',
+    }
+}
 
 export const searchInput = {
     textField: {
