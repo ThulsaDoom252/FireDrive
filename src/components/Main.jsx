@@ -45,6 +45,7 @@ import MobileVideoMenu from "./modals/Video/MobileVideoMenu";
 import VideoModalContainer from "./modals/Video/VideoModalContainer";
 import useConfirm from "./hooks/useConfirm";
 import {useStyles} from "./mui/styles";
+import ProgressBar from 'react-bootstrap/ProgressBar';
 import toast from "react-hot-toast";
 
 const Main = ({
@@ -74,6 +75,10 @@ const Main = ({
                   setMountedModal,
                   mountedModal,
                   handleMediaName,
+                  uploadProgress,
+                  totalUploadedBytes,
+                  totalBytesToUpload,
+                  isMediaLoading,
               }) => {
 
     const location = useLocation()
@@ -226,11 +231,24 @@ const Main = ({
                 noMedia={noMedia}
                 classes={classes}
             />
-            <main className={'w-full h-full overflow-y-scroll'} id={mainContentId} onClick={hideMobileSearch}>
+            <main className={'w-full h-full overflow-y-scroll relative'} id={mainContentId} onClick={hideMobileSearch}>
                 <BurgerMenu smallScreen={smallScreen} onClick={hideMobileSearch}>
                     <div className={'mt-5 flex flex-col justify-center'}>
                         <div onClick={() => setModalType(userModal)} className={'mb-5 mx-auto'}><UserAvatar
                         /></div>
+
+
+                        <div className={'w-full flex justify-center items-center flex-col'}>
+                            {isMediaLoading &&
+                                <>
+                                    <div>{uploadProgress}</div>
+                                    <input type={'range'}
+                                           value={totalUploadedBytes}
+                                           min={0}
+                                           max={totalBytesToUpload}/>
+                                </>
+                            }
+                        </div>
                         <div className={'flex justify-between items-center mb-2'}>
                             <div className={'mx-auto w-40%'}><UploadContainer/></div>
                             <div className={'mx-auto w-40%'}><RemoveAllBtnContainer confirm={confirm}/></div>
@@ -343,12 +361,10 @@ const Main = ({
                     w-full  
                     bg-opacity-90 
                      p-2 rounded 
-                     relative 
+                  fixed bottom-0 left-0 right-0
                      flex
                      items-center
-                     ${smallScreen ? 'h-mobilePlayerHeight' : 'h-playerHeight'}
                      ${currentTheme.primeBg}
-                     ${!isImageModalMounted && !isVideoModalMounted && 'fixed-bottom'
 
                     }`}>
                     <AudioPlayer currentTheme={currentTheme}
@@ -377,6 +393,10 @@ const mapStateToProps = (state) => {
         alertTitle: state.app.alertTitle,
         mountedItemModal: state.app.mountedItemModal,
         mountedModal: state.app.mountedModal,
+        uploadProgress: state.media.uploadProgress,
+        totalUploadedBytes: state.media.totalUploadedBytes,
+        totalBytesToUpload: state.media.totalBytesToUpload,
+        isMediaLoading: state.media.mediaLoading,
     }
 }
 

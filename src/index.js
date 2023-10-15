@@ -11,7 +11,6 @@ import {PagesContextProvider} from "./context/PagesContext";
 import {BurgerMenuContextProvider} from "./context/BurgerMenuContext";
 import PaginatorContextProvider from "./context/PaginatorContext";
 import {ItemsModalContextProvider} from "./context/ItemsModalContext";
-import 'bootstrap/dist/css/bootstrap.min.css'
 import {VideoControlsContextProvider} from "./context/VideoControlsContext";
 
 

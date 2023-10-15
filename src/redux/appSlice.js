@@ -24,7 +24,7 @@ const appSlice = createSlice({
         initializing: false,
         smallScreen: window.innerWidth <= smallScreenWidth,
         modalType: '',
-        gridSize: 2,
+        gridSize: 4,
         gridIndex: 5,
         itemModalType: noModal,
         mountedModal: noModal,

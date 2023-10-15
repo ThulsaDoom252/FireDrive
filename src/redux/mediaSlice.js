@@ -10,7 +10,16 @@ import {
     videosRoute
 } from "../common/commonData";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {getDownloadURL, getMetadata, listAll, ref, uploadBytes, deleteObject, updateMetadata} from "firebase/storage";
+import {
+    getDownloadURL,
+    getMetadata,
+    listAll,
+    ref,
+    uploadBytes,
+    uploadBytesResumable,
+    deleteObject,
+    updateMetadata
+} from "firebase/storage";
 import {storage} from "../firebase";
 import {setModalType} from "./appSlice";
 import {getAuth} from "firebase/auth";
@@ -52,10 +61,23 @@ const mediaSlice = createSlice({
         videosSet: [],
         audioSet: [],
         isItemRenaming: false,
+        uploadProgress: 0,
+        totalBytesToUpload: 0,
+        totalUploadedBytes: 0,
+
     },
     reducers: {
         toggleMobileSearch(state, action) {
             state.showMobileSearch = action.payload
+        },
+        setUploadedBytes(state, action) {
+            state.totalUploadedBytes = action.payload
+        },
+        setTotalBytesToUpload(state, action) {
+            state.totalBytesToUpload = action.payload
+        },
+        toggleUploadProgress(state, action) {
+            state.uploadProgress = action.payload
         },
         setDeletedItemUrl(state, action) {
             state.deletedItemUrl = action.payload
@@ -305,6 +327,9 @@ export const {
     setOldMediaName,
     toggleIsItemRenaming,
     toggleMobileSearch,
+    toggleUploadProgress,
+    setUploadedBytes,
+    setTotalBytesToUpload,
 } = mediaSlice.actions;
 
 
@@ -370,10 +395,13 @@ export const listMedia = createAsyncThunk('listMedia-thunk', async ({mediaType},
 
 export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
                                                                             event,
-                                                                        }, {dispatch}) => {
+                                                                        }, {dispatch, getState}) => {
     const auth = getAuth()
     const {payload} = await dispatch(getSpecificState({keys: ["currentRoute"]}))
     const [currentRoute] = payload
+    const isImagesRoute = currentRoute === imagesRoute
+    const isVideoRoute = currentRoute === videosRoute
+    const isAudioRoute = currentRoute === audioRoute
     const username = auth.currentUser.displayName
     const allowedTypes = {
         [imagesRoute]: imagesOnly,
@@ -384,27 +412,53 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
     const audioPage = currentRoute === audioRoute
     const files = Array.from(event.target.files);
     const filteredFiles = files.filter(file => allowedTypes[currentRoute].includes(file.type));
+
+    let totalBytesSize = 0;
+    let totalBytesTransferred = 0
+
+    filteredFiles.forEach(file => {
+        totalBytesSize += file.size;
+    });
+
     if (filteredFiles.length > 0) {
-        dispatch(toggleMediaLoading(true))
+        dispatch(setTotalBytesToUpload(totalBytesSize))
+        totalBytesTransferred !== 0 && dispatch(setUploadedBytes(0))
+        dispatch(toggleMediaLoading(true));
         await Promise.all(filteredFiles.map(async (file) => {
             const fileRef = ref(storage, `${username}/${currentRoute === videosRoute ? videos
                 : currentRoute === imagesRoute ? images
                     : currentRoute === audioRoute ? audio
                         : defaultRef}/${file.name}`);
-            await uploadBytes(fileRef, file);
+            const uploadTask = uploadBytesResumable(fileRef, file);
+            // Handle progress
+            uploadTask.on('state_changed', (currentUploadingItem) => {
+                totalBytesTransferred = totalBytesTransferred + currentUploadingItem.bytesTransferred
+                // dispatch(setUploadedBytes(totalSize))
+                const totalPercent = (totalBytesTransferred / totalBytesSize) * 100;
+                dispatch(setUploadedBytes(totalBytesTransferred))
+                dispatch(toggleUploadProgress(parseInt(totalPercent)));
+                console.log(`totalPercent: ${totalPercent}`)
+                debugger
+            });
+
+            await uploadTask;
             const uploadedMedia = await Promise.all([
                 getDownloadURL(fileRef), getMetadata(fileRef)
-            ])
-            const uploadedMediaWithAdditionalData = filterMediaData(uploadedMedia, mediaUploadMode)
-            dispatch(updateMediaSet({currentRoute, uploadedMedia: uploadedMediaWithAdditionalData}))
+            ]);
+            const uploadedMediaWithAdditionalData = filterMediaData(uploadedMedia, mediaUploadMode);
+            dispatch(updateMediaSet({currentRoute, uploadedMedia: uploadedMediaWithAdditionalData}));
             if (audioPage) {
-                dispatch(addAudioIndex())
+                dispatch(addAudioIndex());
             }
         }));
-        dispatch(toggleMediaLoading(false))
-        toast.success('media uploaded')
-        // dispatch(handleAlert({overlayMode: true, alertContent: mediaUploadedMsg, alertStyle: alertSuccessStyle}))
+
+        dispatch(toggleMediaLoading(false));
+        toast.success('media uploaded');
+        console.log(`total: ${totalBytesSize}`)
+        console.log(`transfered: ${totalBytesTransferred}`)
+        return
     }
+    toast.error(`${isImagesRoute ? 'select image file type' : isVideoRoute ? 'select video file type' : 'select audio file type'}`)
 });
 
 export const renameMedia = createAsyncThunk('rename-thunk', async ({

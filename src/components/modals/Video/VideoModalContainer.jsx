@@ -59,6 +59,7 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
         currentVideoTime,
         setCurrentVideoTime,
         videoBlockContainerRef,
+        setIsMobileFullScreen,
         videoContainerRef,
         handleVideoControlsVisibility,
         isControlsVisible,
@@ -119,17 +120,20 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
         const videoBlockContainer = videoBlockContainerRef?.current
         const videoContainer = videoContainerRef?.current
         const fullscreenChangeHandler = () => {
+            debugger
             if (document.fullscreenElement) {
                 videoBlockContainer.style.marginTop = '0'
                 videoBlockContainer.style.width = '100%'
                 videoBlockContainer.style.height = '100%'
                 videoContainer.style.width = '100vw'
                 videoContainer.style.height = '100vh'
+                smallScreen && setIsMobileFullScreen(true)
             } else {
                 if (isMobileFullScreen) {
                     videoBlockContainer.style.width = '100%'
                     videoBlockContainer.style.height = '45%'
                     videoBlockContainer.style.marginTop = '1.25rem'
+                    setIsMobileFullScreen(false)
                 } else {
                     videoBlockContainer.style.width = '80%'
                     videoBlockContainer.style.height = '90%'
@@ -144,7 +148,29 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
         return () => {
             document.removeEventListener('fullscreenchange', fullscreenChangeHandler);
         };
-    }, [isFullScreen]);
+    }, [isFullScreen, isMobileFullScreen]);
+
+    useEffect(() => {
+        const handleLandScapeMode = () => {
+            if (window.innerWidth > window.innerHeight) {
+                if (!isFullScreen) {
+                    if (!document.fullscreenElement)
+                        document.documentElement.requestFullscreen().then(() => void 0)
+                }
+            }
+        };
+
+        if (smallScreen) {
+            window.addEventListener('resize', handleLandScapeMode)
+        } else {
+            window.removeEventListener('resize', handleLandScapeMode)
+        }
+
+        return () => {
+            window.removeEventListener('resize', handleLandScapeMode)
+        }
+        //eslint-disable-next-line
+    }, [smallScreen]);
 
     //Video modal handlers
     const handleVideoIsReady = () => {
@@ -218,6 +244,7 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
         videoBlockContainerRef,
         videoContainerRef,
         listedVideoProps,
+        isFullScreen,
     }}/>
 };
 

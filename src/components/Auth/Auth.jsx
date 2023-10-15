@@ -40,9 +40,7 @@ const Auth = ({
         const inputContainerStyle = 'mt-4 h-inputContainerHeight'
 
         const handleMode = () => {
-            debugger
             if (isSignUpMode || isVerificationMode || isRestoreMode) {
-                debugger
                 setAuthMode(signInMode)
                 return
             }
@@ -64,6 +62,7 @@ const Auth = ({
             bg-gray-200
             bg-opacity-80
             max-w-lg
+            mx-auto
             '>
                 <form onSubmit={handleSubmit}>
                     <div className={'container-fluid max-auto  max-w-screen-sm p-2'}>

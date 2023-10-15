@@ -36,12 +36,9 @@ export const VideoControlsContextProvider = ({children}) => {
     const speedSubMenu = "SPEED_SUB_MENU"
     const scaleSubMenu = "SCALE_SUB_MENU"
 
-
     const videoBlockContainerRef = useRef(null)
 
     const videoContainerRef = useRef(null)
-
-    window.vbc = videoBlockContainerRef
 
     //Control states
     const [currentMenu, setCurrentMenu] = useState(null)
@@ -122,10 +119,10 @@ export const VideoControlsContextProvider = ({children}) => {
     //FullScreen handler
     const requestFullScreen = () => {
         if (!document.fullscreenElement) {
-            smallScreenMode ? setIsMobileFullScreen(true) : setIsFullScreen(true)
+            setIsFullScreen(true)
             document.documentElement.requestFullscreen()
         } else {
-            smallScreenMode ? setIsMobileFullScreen(false) : setIsFullScreen(false)
+            setIsFullScreen(false)
             document.exitFullscreen()
         }
     };
@@ -297,6 +294,7 @@ export const VideoControlsContextProvider = ({children}) => {
         handleVideoMenu,
         handleScaleSubMenu,
         handleSpeedSubMenu,
+        setIsMobileFullScreen,
         handleClearSubMenu,
         requestFullScreen,
         handlePlaySpeed,

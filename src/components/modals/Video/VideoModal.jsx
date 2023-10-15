@@ -7,6 +7,7 @@ import {stopPropagation} from '../../../common/commonData';
 import CustomControls from '../../videoPlayer/controls/CustomControls';
 import {ClipLoader} from "react-spinners";
 import {Fade} from "@mui/material";
+import Button from "@mui/material/Button";
 
 const VideoModal = ({
                         animateModal,
@@ -38,31 +39,31 @@ const VideoModal = ({
                         listedVideoProps,
                         videoBlockContainerRef,
                         videoContainerRef,
-
+                        isFullScreen,
                     }) => {
 
     return (
         <Fade in={animateModal}>
             <div
                 className={`
-            w-screen
-            h-screen
+            inset-0
             absolute
             ${animateModal && zIndex}
           `}
             >
                 {showOverlay && <Overlay bg={overlayColor} opacity={overlayOpacity}/>}
-                <button
-                    className={`
+                {(!smallScreen && !isFullScreen || !smallScreen && isControlsVisible || isControlsVisible) &&
+                    <button
+                        className={`
               absolute
               text-gray-400
               hover:text-white z-1
               left-5 top-3
             `}
-                    onClick={handleClose}
-                >
-                    <IoClose size={closeIconSize}/>
-                </button>
+                        onClick={handleClose}
+                    >
+                        <IoClose size={closeIconSize}/>
+                    </button>}
                 <div
                     onClick={stopPropagation}
                     className={`
@@ -148,20 +149,23 @@ const VideoModal = ({
                 justify-start
                 items-center
                 overflow-y-scroll
-                mb-5
+                overflow-x-hidden
+                ${smallScreen && 'pb-14'}
               `}
                     >
-                        {currentMediaSet.map((video, index) => (
-                            <ModalVideoItem
-                                column={smallScreen}
-                                item={video}
-                                currentModalItemIndex={currentModalItemIndex}
-                                onClick={handleVideoFromListClick}
-                                index={index}
-                                currentModalItemUrl={currentModalItemUrl}
-                                {...{listedVideoProps}}
-                            />
-                        ))}
+                        {currentMediaSet.map((video, index) =>
+                            (
+                                <ModalVideoItem
+                                    column={smallScreen}
+                                    item={video}
+                                    currentModalItemIndex={currentModalItemIndex}
+                                    onClick={handleVideoFromListClick}
+                                    index={index}
+                                    smallScreen={smallScreen}
+                                    currentModalItemUrl={currentModalItemUrl}
+                                    {...{listedVideoProps}}
+                                />
+                            ))}
                     </div>
                 </div>
             </div>
