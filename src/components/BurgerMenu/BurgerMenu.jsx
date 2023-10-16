@@ -4,16 +4,15 @@ import userModal from "../modals/UserModal";
 import UserAvatar from "../user/UserAvatar";
 import UploadContainer from "../btns/UploadBtnContainer";
 import RemoveAllBtnContainer from "../btns/RemoveAllBtnContainer";
-import DropDownMenu from "./DropDownMenu";
+import DropDownMenu from "../common/DropDownMenu";
 import {BiColorFill} from "react-icons/bi";
 import AdaptiveImage from "../AdaptiveImage";
-import {dayTheme, desertTheme, nightTheme} from "../../common/themes";
-import DAS from "../../images/themeTypes/DAS.jpg";
-import NS from "../../images/themeTypes/NS.jpg";
-import DS from "../../images/themeTypes/DS.jpg";
+import {themes} from "../../common/themes";
 import {CiSettings} from "react-icons/ci";
 import LogOutContainer from "../btns/LogOutContainer";
-import SortInput from "./SortInput";
+import SortInput from "../common/SortInput";
+import {useDispatch} from "react-redux";
+import {handleTheme} from "../../redux/appSlice";
 
 const BurgerMenu = ({
                         smallScreen,
@@ -35,13 +34,14 @@ const BurgerMenu = ({
                         itemsPerPage,
                         setItemsPerPage
                     }) => {
+
+    const dispatch = useDispatch()
+
     return (
         <BurgerMenuWrapper smallScreen={smallScreen} onClick={hideMobileSearch}>
             <div className={'mt-5 flex flex-col justify-center'}>
                 <div onClick={() => setModalType(userModal)} className={'mb-5 mx-auto'}><UserAvatar
                 /></div>
-
-
                 <div className={'w-full flex justify-center items-center flex-col'}>
                     {isMediaLoading &&
                         <>
@@ -62,21 +62,13 @@ const BurgerMenu = ({
                 <div className='mt-3 mb-3'>
                     <DropDownMenu menuType={isThemeBlockOpened} toggleMenu={setIsThemeBlockOpened}
                                   btnLabel={'Change theme'} smallScreenIcon={<BiColorFill/>}>
-                        <AdaptiveImage
+                        {themes.map((theme, index) => <AdaptiveImage
                             currentThemeName={currentThemeName}
-                            theme={dayTheme}
-                            url={DAS}
-                            onClick={() => toggleCurrentTheme({type: dayTheme})}/>
-                        <AdaptiveImage
-                            currentThemeName={currentThemeName}
-                            theme={nightTheme}
-                            url={NS}
-                            onClick={() => toggleCurrentTheme({type: nightTheme})}/>
-                        <AdaptiveImage
-                            currentThemeName={currentThemeName}
-                            theme={desertTheme}
-                            url={DS}
-                            onClick={() => toggleCurrentTheme({type: desertTheme})}/>
+                            theme={theme.type}
+                            url={theme.icon}
+                            onClick={() => dispatch(handleTheme(theme.type))}
+
+                        />)}
                     </DropDownMenu>
                     <div className={'mt-3'}>
                         <DropDownMenu

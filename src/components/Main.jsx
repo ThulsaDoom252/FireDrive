@@ -31,7 +31,9 @@ import ImageModalContainer from "./modals/ImageModalContainer";
 import VideoModalContainer from "./modals/Video/VideoModalContainer";
 import useConfirm from "./hooks/useConfirm";
 import {useStyles} from "./mui/styles";
-import BurgerMenu from "./common/BurgerMenu";
+import BurgerMenu from "./BurgerMenu/BurgerMenu";
+import Overlay from "./common/Overlay";
+import {Fade} from "@mui/material";
 
 const Main = ({
                   currentMediaSet,
@@ -64,6 +66,7 @@ const Main = ({
                   totalUploadedBytes,
                   totalBytesToUpload,
                   isMediaLoading,
+                  isThemeUpdating,
               }) => {
 
     const location = useLocation()
@@ -181,6 +184,8 @@ const Main = ({
     const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
     const mediaToShow = searchMode ? searchResults : listMode === paginateMode ? paginatedMedia : currentMediaSet
 
+    window.s1 = isThemeUpdating
+
 
     if (!isAuth) {
         return <Navigate to={signInRoute}/>
@@ -189,6 +194,7 @@ const Main = ({
     return (
         <>
             <Dialog/>
+            {isThemeUpdating && <Overlay zIndex={'z-2'}/>}
             {/*<div className={'relative bottom-20 z-max'}>*/}
             {/*    <MobileVideoMenu/>*/}
             {/*</div>*/}
@@ -302,6 +308,7 @@ const mapStateToProps = (state) => {
         totalUploadedBytes: state.media.totalUploadedBytes,
         totalBytesToUpload: state.media.totalBytesToUpload,
         isMediaLoading: state.media.mediaLoading,
+        isThemeUpdating: state.app.isThemeUpdating,
     }
 }
 

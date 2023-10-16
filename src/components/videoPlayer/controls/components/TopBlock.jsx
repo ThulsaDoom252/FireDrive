@@ -12,7 +12,7 @@ const TopBlock = ({
                       name,
                       oldName,
                       index,
-    confirm,
+                      confirm,
                   }) => {
 
     return (
@@ -25,29 +25,23 @@ const TopBlock = ({
                 `}
                  onClick={stopPropagation}
             >
-                {smallScreenMode || isMobileFullScreen ?
-                    <div className={topBtnClass}
-                         onClick={() => toggleVideoMobileSettings(true)}
-                    >
-                        <HiDotsVertical size={25}/>
-                    </div> :
-                    <div><ItemOptions initialMode={'show'}
-                                       shouldAnimate={false}
-                                       url={url}
-                                       iconBgColor={'bg-gray-600'}
-                                       iconBgActiveColor={'hover:bg-gray-100'}
-                                       index={index}
-                                       name={name}
-                                       oldName={oldName}
-                                       showBg={false}
-                                       tgIconColor={'black'}
-                                       vbIconColor={'black'}
-                                       deleteIconColor={'black'}
-                                       renameIconColor={'black'}
-                                       confirm={confirm}
+                <div><ItemOptions initialMode={'show'}
+                                  shouldAnimate={false}
+                                  url={url}
+                                  iconBgColor={'bg-gray-600'}
+                                  iconBgActiveColor={'hover:bg-gray-100'}
+                                  index={index}
+                                  name={name}
+                                  oldName={oldName}
+                                  showBg={false}
+                                  tgIconColor={'blue'}
+                                  vbIconColor={'violet'}
+                                  deleteIconColor={'red'}
+                                  renameIconColor={'yellow'}
+                                  confirm={confirm}
 
-                    />
-                    </div>}
+                />
+                </div>
             </div>
         </div>
     );

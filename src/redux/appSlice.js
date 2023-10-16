@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {
-    delay,
+    delay, extractUsernameFromEmail,
     imageModal,
     noModal, paginateMode,
     smallScreenWidth,
@@ -16,6 +16,10 @@ import {
     secDesertBg,
     secNightBg
 } from "../common/themes";
+import {get, ref as dbRef, update} from "firebase/database";
+import {database} from "../firebase";
+import toast from "react-hot-toast";
+import {getAuth} from "firebase/auth";
 
 const appSlice = createSlice({
     name: 'app-slice',
@@ -36,14 +40,18 @@ const appSlice = createSlice({
         currentModalItemIndex: 0,
         itemOptionsHovered: false,
         currentThemeName: '',
+        isThemeUpdating: false,
         currentTheme: {
-            mainBg: mainDayBg,
-            primeBg: primeDayBg,
-            secBg: secDayBg,
-            color: dayPrimary,
+            mainBg: null,
+            primeBg: null,
+            secBg: null,
+            color: null,
         },
     },
     reducers: {
+        toggleThemeUpdating(state, action) {
+            state.isThemeUpdating = action.payload
+        },
         toggleSmallScreen(state, action) {
             state.smallScreen = action.payload
         },
@@ -143,6 +151,7 @@ export const {
     setGridIndex,
     setMountedItemModal,
     setMountedModal,
+    toggleThemeUpdating
 } = appSlice.actions
 
 export const handleAlertModal = createAsyncThunk('alertModal-thunk', async ({
@@ -175,4 +184,47 @@ export const handleInitialModalItem = createAsyncThunk('modal-item-initial-url-t
             void 0
     }
 })
+
+export const handleTheme = createAsyncThunk('theme-thunk', async (theme, {dispatch}) => {
+    debugger
+    try {
+        dispatch(toggleThemeUpdating(true))
+        await updateTheme(theme)
+        dispatch(toggleCurrentTheme({type: theme}))
+        dispatch(toggleThemeUpdating(false))
+    } catch (e) {
+        toast.error(`Can't update theme, see console for details`)
+        console.error(e)
+    }
+
+})
+
+///Dall
+export const updateTheme = async (theme) => {
+    const auth = getAuth()
+    const emailKey = extractUsernameFromEmail(auth.currentUser.email)
+    const userRef = dbRef(database, `users/` + emailKey)
+    const updates = {
+        currentTheme: theme
+    }
+
+    return update(userRef, updates)
+        .catch(() => {
+            toast.error('error updating verification link status')
+        })
+
+};
+
+export const getTheme = async () => {
+    const auth = getAuth()
+    const emailKey = extractUsernameFromEmail(auth.currentUser.email)
+    const userRef = dbRef(database, `users/` + emailKey)
+    return get(userRef)
+        .then((result) => {
+            if (result.exists()) {
+                return result.val().currentTheme
+            }
+        })
+};
+
 

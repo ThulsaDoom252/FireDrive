@@ -1,6 +1,6 @@
 import React from 'react';
 import {useSelector} from "react-redux";
-import BurgerMenuTrigger from "../common/BurgerMenuTrigger";
+import BurgerMenuTrigger from "../BurgerMenu/BurgerMenuTrigger";
 import NavItems from "./NavItems";
 import Search from "../search/Search";
 

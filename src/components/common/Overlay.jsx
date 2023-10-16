@@ -3,8 +3,6 @@ import React from 'react';
 const Overlay = ({
                      bg = 'bg-gray-600',
                      position = 'absolute',
-                     width = 'w-full',
-                     height = 'h-full',
                      opacity = 'bg-opacity-50',
                      zIndex = 'z-0',
                      toggleModal,
@@ -16,9 +14,8 @@ const Overlay = ({
     }
     return (
         <div className={`
+        inset-0
         ${position}
-        ${width}
-        ${height} 
         ${bg}
         ${opacity}
         ${zIndex}

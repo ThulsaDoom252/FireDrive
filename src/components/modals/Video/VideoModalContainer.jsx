@@ -120,11 +120,14 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
         confirm,
     ]
 
+    //Stops audio if video starts to play
     useEffect(() => {
         (isCurrentTrackPlaying && isVideoPlaying) && toggleCurrentTrackPlaying(false)
         //eslint-disable-next-line
     }, [isVideoPlaying])
 
+
+    //Handle videoContainer style in fullScreen
     useEffect(() => {
         const videoBlockContainer = videoBlockContainerRef?.current
         const videoContainer = videoContainerRef?.current
@@ -158,6 +161,8 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
         };
     }, [isFullScreen, isMobileFullScreen]);
 
+
+    // Enter fullscreen if  landscape mode turned on
     useEffect(() => {
         const handleLandScapeMode = () => {
             if (window.innerWidth > window.innerHeight) {
@@ -180,6 +185,7 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
         //eslint-disable-next-line
     }, [smallScreen]);
 
+
     //Video modal handlers
     const handleVideoIsReady = () => {
         setIsVideoReady(true)
@@ -193,7 +199,6 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
     const handleProgress = (progress) => {
         setCurrentVideoTime(progress.playedSeconds);
     };
-
 
 // Listed videos in modal handlers
     const handleListedVideoMouseEnter = (index) => {

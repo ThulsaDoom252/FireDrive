@@ -2,7 +2,6 @@ import React from 'react';
 import ReactPlayer from 'react-player';
 import {IoClose} from 'react-icons/io5';
 import ModalVideoItem from '../../media/ModalVideoItem';
-import Overlay from '../../common/Overlay';
 import {stopPropagation} from '../../../common/commonData';
 import CustomControls from '../../videoPlayer/controls/CustomControls';
 import {ClipLoader} from "react-spinners";
@@ -45,13 +44,11 @@ const VideoModal = ({
     return (
         <Fade in={animateModal}>
             <div
-                className={`
-            inset-0
-            absolute
+                className={` inset-0 absolute
+            ${showOverlay && `${overlayOpacity} ${overlayColor}`}
             ${animateModal && zIndex}
           `}
             >
-                {showOverlay && <Overlay bg={overlayColor} opacity={overlayOpacity}/>}
                 {(!smallScreen && !isFullScreen || !smallScreen && isControlsVisible || isControlsVisible) &&
                     <button
                         className={`
@@ -121,7 +118,7 @@ const VideoModal = ({
                                 />}
                             {smallScreen && <hr className={'bg-white h-0.5 rounded-full relative bottom-4'}/>}
                         </div>
-                        {!smallScreen &&
+                        {(!smallScreen && !isFullScreen) &&
                             <div
                                 hidden={smallScreen}
                                 className={`

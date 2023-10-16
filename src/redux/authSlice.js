@@ -16,7 +16,7 @@ import {uploadBytes, ref, getDownloadURL} from "firebase/storage";
 import {database, storage,} from "../firebase";
 import toast from "react-hot-toast";
 import {extractUsernameFromEmail, generateRandomString} from "../common/commonData";
-import {toggleInitializing} from "./appSlice";
+import {getTheme, toggleCurrentTheme, toggleInitializing} from "./appSlice";
 import {restoreTimerInitialValue, verificationTimerInitialValue} from "../common/Timers";
 import {ref as dbRef, set, query, equalTo, get, orderByChild, remove, update} from 'firebase/database';
 import {signInMode, verificationMode} from "../components/Auth/authTypes";
@@ -248,6 +248,9 @@ export const authCheck = createAsyncThunk('auth-check-thunk', async (_, {dispatc
             if (user) {
                 const {email, displayName, photoURL} = user
                 dispatch(setUserData({email, username: displayName, avatar: photoURL}))
+                const userTheme = await getTheme()
+                dispatch(toggleCurrentTheme({type: userTheme}))
+                debugger
                 if (user.providerData[0].providerId === 'github.com' || user.emailVerified) {
                     dispatch(toggleAuthStatus(true))
                 } else {
@@ -360,7 +363,7 @@ export const createUserInDb = async ({username, email, isVerified}) => {
         username,
         email,
         isVerificationLinkSend: false,
-        currentTheme: 'day',
+        currentTheme: 'DAY',
     };
 
     const emailKey = extractUsernameFromEmail(email)
