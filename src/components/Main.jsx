@@ -35,6 +35,7 @@ import {useStyles} from "./mui/styles";
 import BurgerMenu from "./BurgerMenu/BurgerMenu";
 import Overlay from "./common/Overlay";
 import {Fade} from "@mui/material";
+import ThemeContainer from "../common/ThemeContainer";
 
 const Main = ({
                   currentMediaSet,
@@ -282,20 +283,20 @@ const Main = ({
                                                  noMedia,
                                              }}/>}/>}
                     </Routes>
-                    <div
-                        className={`
+                    <ThemeContainer className={` 
                     w-full  
                     bg-opacity-90 
                      p-2 rounded 
-                  fixed bottom-0 left-0 right-0
+                  fixed
+                   bottom-0 
+                   left-0 
+                   right-0
                      flex
-                     items-center
-                     ${currentTheme.primeBg}
-
-                    }`}>
+                     items-center`}>
                         <AudioPlayer currentTheme={currentTheme}
                                      smallScreenMode={smallScreen}
-                        /></div>
+                        />
+                    </ThemeContainer>
                 </Scrollbars>
             </main>
         </>

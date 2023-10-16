@@ -2,7 +2,7 @@ import React from 'react';
 import Button from "@mui/material/Button";
 import {useSelector} from "react-redux";
 
-const FittedThemeBtn = ({children, isDisabled, onClick, navButton, isActive}) => {
+const FittedThemeBtn = ({children, isDisabled, onClick, navButton, isActive, className}) => {
     const activeColor = useSelector(state => state.app.currentTheme.color)
     const inactiveColor = useSelector(state => state.app.currentTheme.navColor)
 
@@ -19,7 +19,7 @@ const FittedThemeBtn = ({children, isDisabled, onClick, navButton, isActive}) =>
     }
 
     return (
-        <Button sx={fittedBtnClass} disabled={isDisabled} onClick={onClick}>
+        <Button className={className} sx={fittedBtnClass} disabled={isDisabled} onClick={onClick}>
             {children}
         </Button>
 
