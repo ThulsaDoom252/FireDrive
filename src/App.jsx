@@ -15,7 +15,7 @@ import {Toaster} from "react-hot-toast";
 import {getAuth} from "firebase/auth";
 import BG from './images/BG.jpg'
 import DESERT from './images/DESERT.jpg'
-import {mainDayBg} from "./common/themes";
+import {mainDayBg} from "./common/theme/themes";
 import {toggleSmallScreen} from "./redux/appSlice";
 import AuthContainer from "./components/Auth/AuthContainer";
 import {Scrollbars} from "react-custom-scrollbars";

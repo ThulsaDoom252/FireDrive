@@ -5,7 +5,7 @@ import {AudioPlayerContext} from "../../context/AudioPlayerContext";
 import ItemOptions from "../options/ItemOptions";
 import {formatTime} from "../../common/commonData";
 import {ClipLoader} from "react-spinners";
-import {dayPrimary} from "../../common/themes";
+import {dayPrimary} from "../../common/theme/themes";
 import {truncate} from "../../common/commonData";
 import {Fade} from "@mui/material";
 import {Skeleton, Tooltip} from "@mui/material";

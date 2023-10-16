@@ -1,12 +1,11 @@
 import React from 'react';
-import {NavLink} from "react-router-dom";
 import {audioRoute, imagesRoute, rootRoute, videosRoute} from "../../common/commonData";
 import {AiFillPicture, AiOutlineHome} from "react-icons/ai";
 import {RiMovieLine} from "react-icons/ri";
 import {BiMusic, BiSearch} from "react-icons/bi";
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import IconButton from '@mui/material/IconButton';
-import Button from '@mui/material/Button';
+import FittedThemeBtn from "../../common/FittedThemeBtn";
 
 
 const NavItems = ({
@@ -14,9 +13,9 @@ const NavItems = ({
                       isSearchBtnDisabled,
                       currentTheme,
                       toggleMobileSearch,
+                      handleRoute,
+                      currentRoute,
                   }) => {
-    const isActiveStyle = `${smallScreen && 'text-2xl'}  transition-all duration-300 text-white transition-transform duration-300`;
-    const inactiveStyle = `${smallScreen && 'text-2xl'} transition-all duration-300 ${currentTheme.color}  no-underline !important hover:text-white '}`;
 
     const navItemsList = [
         {path: rootRoute, icon: <AiOutlineHome size={25}/>, label: 'Home'},
@@ -28,34 +27,24 @@ const NavItems = ({
         toggleMobileSearch(true)
     }
 
-    const commonNavClass = {
-        maxWidth: 'fit-content',
-        minWidth: 'fit-content',
-        minHeight: 'fit-content',
-        maxHeight: 'fit-content'
-    }
-
     return (
         <>
             {navItemsList.map((navItem, index) =>
-                <NavLink to={navItem.path}
-                         className={navData => navData.isActive ? isActiveStyle : inactiveStyle}>
-                    <Button sx={commonNavClass}>
-                        {smallScreen ?
-                            navItem.icon : navItem.label}
-                    </Button>
-                </NavLink>
+                <FittedThemeBtn
+                    navButton
+                    onClick={() => handleRoute(navItem.path)}
+                    isActive={currentRoute === navItem.path}>
+                    {smallScreen ?
+                        navItem.icon : navItem.label}
+                </FittedThemeBtn>
             )}
             {smallScreen && <IconButton
                 onClick={handleMobileSearch}
                 disabled={isSearchBtnDisabled}
                 className={`
             ${isSearchBtnDisabled ? `text-gray-400` : currentTheme.color}
-            `
-
-                }>
+            `}>
                 <BiSearch size={24}/></IconButton>}
-
         </>
     );
 };

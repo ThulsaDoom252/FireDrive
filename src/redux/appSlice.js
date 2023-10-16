@@ -7,15 +7,16 @@ import {
     videoModal
 } from "../common/commonData";
 import {
-    dayPrimary, dayTheme, desertPrimary, desertTheme,
+    dayNavBtn,
+    dayPrimary, dayTheme, desertNavBtn, desertPrimary, desertTheme,
     mainDayBg,
     mainDesertBg,
-    mainNightBg,
+    mainNightBg, nightNavBtn,
     nightPrimary, nightTheme, primeDayBg, primeDesertBg,
     primeNightBg, secDayBg,
     secDesertBg,
     secNightBg
-} from "../common/themes";
+} from "../common/theme/themes";
 import {get, ref as dbRef, update} from "firebase/database";
 import {database} from "../firebase";
 import toast from "react-hot-toast";
@@ -46,6 +47,7 @@ const appSlice = createSlice({
             primeBg: null,
             secBg: null,
             color: null,
+            navColor: null,
         },
     },
     reducers: {
@@ -67,18 +69,21 @@ const appSlice = createSlice({
                     state.currentTheme.primeBg = primeDayBg
                     state.currentTheme.secBg = secDayBg
                     state.currentTheme.color = dayPrimary
+                    state.currentTheme.navColor = dayNavBtn
                     break
                 case nightTheme:
                     state.currentTheme.mainBg = mainNightBg
                     state.currentTheme.primeBg = primeNightBg
                     state.currentTheme.secBg = secNightBg
                     state.currentTheme.color = nightPrimary
+                    state.currentTheme.navColor = nightNavBtn
                     break
                 case desertTheme:
                     state.currentTheme.mainBg = mainDesertBg
                     state.currentTheme.primeBg = primeDesertBg
                     state.currentTheme.secBg = secDesertBg
                     state.currentTheme.color = desertPrimary
+                    state.currentTheme.navColor = desertNavBtn
                     break
                 default:
                     void 0

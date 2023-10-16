@@ -14,6 +14,8 @@ const Header = ({
                     isSearchFocused,
                     setIsSearchFocused,
                     classes,
+                    handleRoute,
+                    currentRoute,
                 }) => {
     const smallScreen = useSelector(state => state.app.smallScreen)
 
@@ -41,6 +43,8 @@ const Header = ({
                 justify-between 
                 mr-10`}>
                     <NavItems
+                        currentRoute={currentRoute}
+                        handleRoute={handleRoute}
                         toggleMobileSearch={toggleMobileSearch}
                         isSearchBtnDisabled={isSearchBtnDisabled}
                         currentTheme={currentTheme}

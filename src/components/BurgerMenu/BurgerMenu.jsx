@@ -7,7 +7,7 @@ import RemoveAllBtnContainer from "../btns/RemoveAllBtnContainer";
 import DropDownMenu from "../common/DropDownMenu";
 import {BiColorFill} from "react-icons/bi";
 import AdaptiveImage from "../AdaptiveImage";
-import {themes} from "../../common/themes";
+import {themes} from "../../common/theme/themes";
 import {CiSettings} from "react-icons/ci";
 import LogOutContainer from "../btns/LogOutContainer";
 import SortInput from "../common/SortInput";

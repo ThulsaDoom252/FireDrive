@@ -1,14 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
 import HeaderContainer from "./header/HeaderContainer";
 import {
+    audioRoute,
     delay,
-    imageModal, lazyMode,
+    imageModal, imagesRoute, lazyMode,
     mainContentId,
     mediaTypes, noModal, paginateMode, renameModal, rootRoute, shareModal,
     signInRoute,
-    videoModal,
+    videoModal, videosRoute,
 } from "../common/commonData";
-import {Routes, Route, Navigate, useLocation} from "react-router-dom";
+import {Routes, Route, Navigate, useLocation, useNavigate} from "react-router-dom";
 import {connect} from "react-redux";
 import {
     handleMediaName,
@@ -69,6 +70,8 @@ const Main = ({
                   isThemeUpdating,
               }) => {
 
+    const navigate = useNavigate()
+
     const location = useLocation()
     const [isThemeBlockOpened, setIsThemeBlockOpened] = useState(false)
     const [isSettingsBlockOpened, setIsSettingsBlockOpened] = useState(false)
@@ -101,10 +104,22 @@ const Main = ({
             toggleListMode(lazyMode)
         }
     }
-
     useEffect(() => {
         setCurrentRoute(pathName)
     }, [pathName])
+
+
+    useEffect(() => {
+        if (currentRoute === imagesRoute) {
+            navigate(imagesRoute)
+        } else if (currentRoute === videosRoute) {
+            navigate(videosRoute)
+        } else if (currentRoute === audioRoute) {
+            navigate(audioRoute)
+        } else {
+            navigate(rootRoute)
+        }
+    }, [currentRoute])
 
 
     useEffect(() => {
@@ -217,6 +232,7 @@ const Main = ({
                        showModal={modalType === userModal}/>
             <HeaderContainer
                 currentTheme={currentTheme}
+                currentRoute={currentRoute}
                 showMobileSearch={showMobileSearch}
                 toggleMobileSearch={toggleMobileSearch}
                 noMedia={noMedia}

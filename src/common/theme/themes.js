@@ -1,7 +1,7 @@
 //Themes
-import DI from "../images/themeIcons/DAS.jpg";
-import NI from "../images/themeIcons/NS.jpg";
-import DESI from "../images/themeIcons/DS.jpg";
+import DI from "../../images/themeIcons/DAS.jpg";
+import NI from "../../images/themeIcons/NS.jpg";
+import DESI from "../../images/themeIcons/DS.jpg";
 
 ///Types
 export const nightTheme = 'NIGHT'
@@ -22,9 +22,15 @@ export const primeDesertBg = 'bg-desert-prime'
 export const secDesertBg = 'bg-desert-sec'
 
 //Colors
-export const dayPrimary = 'text-black'
-export const nightPrimary = 'text-white'
-export const desertPrimary = 'text-red-800'
+export const dayPrimary = 'black'
+export const nightPrimary = 'white'
+export const desertPrimary = 'crimson'
+
+
+// Nav btn default colors
+export const dayNavBtn = 'darkGray'
+export const nightNavBtn = 'lightGray'
+export const desertNavBtn = 'darkRed'
 
 //Themes
 export const themes = [
