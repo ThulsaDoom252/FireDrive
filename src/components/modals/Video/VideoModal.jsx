@@ -78,7 +78,7 @@ const VideoModal = ({
                     <div
                         ref={videoBlockContainerRef}
                         className={`
-                ${smallScreen ? 'w-100% h-45%  flex flex-col justify-center items-center' : 'w-80% h-90%'}
+                ${smallScreen ? 'w-100% h-70% flex flex-col justify-center items-center' : 'w-80% h-90%'}
               `}
                     >
                         <div
@@ -121,9 +121,10 @@ const VideoModal = ({
                                 />}
                             {smallScreen && <hr className={'bg-white h-0.5 rounded-full relative bottom-4'}/>}
                         </div>
-                        <div
-                            hidden={smallScreen}
-                            className={`
+                        {!smallScreen &&
+                            <div
+                                hidden={smallScreen}
+                                className={`
                               w-full
                               h-10%
                               bottom-0
@@ -137,22 +138,20 @@ const VideoModal = ({
                               border-black
                               text-base
                             `}
-                        >
-                            <div className="text-center text-lg">{currentModalItemName}</div>
-                        </div>
+                            >
+                                <div className="text-center text-lg">{currentModalItemName}</div>
+                            </div>}
                     </div>
                     <div
                         className={`
                 flex
-                w-1/5
-                p-2
                 h-90%
                 flex-col
                 justify-start
                 items-center
-                overflow-y-hidden
+                overflow-y-hidden              
                 overflow-x-hidden
-                ${smallScreen && 'pb-14'}
+                ${smallScreen ? 'pb-20 w-full' : 'p-2 w-1/5'}
               `}>
                         <Scrollbars>
                             <>

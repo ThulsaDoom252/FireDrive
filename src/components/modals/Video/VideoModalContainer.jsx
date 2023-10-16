@@ -3,10 +3,12 @@ import {ItemsModalContext} from "../../../context/ItemsModalContext";
 import {formatTime, videoModal} from "../../../common/commonData";
 import VideoModal from "./VideoModal";
 import {VideoControlsContext} from "../../../context/VideoControlsContext";
+import {AudioPlayerContext} from "../../../context/AudioPlayerContext";
 
 const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentModal}) => {
 
     const CustomControlsContext = useContext(VideoControlsContext)
+    const audioPlayerContext = useContext(AudioPlayerContext)
     const ModalContext = useContext(ItemsModalContext);
 
     const [isVideoReady, setIsVideoReady] = useState(false);
@@ -16,6 +18,8 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
     const [listedVideoHoveredIndex, setListedVideoHoveredIndex] = useState(null)
     const [listedVideoTotalTime, setListedVideoTotalTime] = useState(0)
     const [isListedVideoReady, setIsListedVideoReady] = useState(false)
+
+    const {isCurrentTrackPlaying, toggleCurrentTrackPlaying} = audioPlayerContext
 
     const {
         controlBtnAnimation,
@@ -117,10 +121,14 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
     ]
 
     useEffect(() => {
+        (isCurrentTrackPlaying && isVideoPlaying) && toggleCurrentTrackPlaying(false)
+        //eslint-disable-next-line
+    }, [isVideoPlaying])
+
+    useEffect(() => {
         const videoBlockContainer = videoBlockContainerRef?.current
         const videoContainer = videoContainerRef?.current
         const fullscreenChangeHandler = () => {
-            debugger
             if (document.fullscreenElement) {
                 videoBlockContainer.style.marginTop = '0'
                 videoBlockContainer.style.width = '100%'

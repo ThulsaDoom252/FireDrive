@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import ReactPlayer from "react-player";
 import {ClipLoader} from "react-spinners";
 import {Skeleton} from "@mui/material";
@@ -28,17 +28,17 @@ const ModalVideoItem = ({
 
     const hideCurrentItem = smallScreen && currentModalItemIndex === index
 
+
     return (
         <div
             hidden={hideCurrentItem}
             key={index}
-            className={`
-        mt-3 
+            className={` 
         mb-3  
         rounded 
         flex
         ${column ? 'flex-col w-full justify-center' : 'w-80% justify-between'}
-        ${smallScreen ? 'h-52' : 'h-32 bg-black pr-2'}
+        ${smallScreen ? 'h-48 mt-6' : 'h-32 mt-3 bg-black pr-2'}
                          ${item.url === currentModalItemUrl && 'border-4 border-amber-300'} 
 
         `}>

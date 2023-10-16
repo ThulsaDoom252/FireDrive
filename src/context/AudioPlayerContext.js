@@ -240,6 +240,7 @@ export function AudioPlayerContextProvider({children}) {
         handleVolumeChange,
         setRepeatMode,
         toggleMuteVolume,
+        toggleCurrentTrackPlaying,
         audioRef,
         volume,
 
