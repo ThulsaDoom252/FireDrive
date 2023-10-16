@@ -7,7 +7,7 @@ import {stopPropagation} from '../../../common/commonData';
 import CustomControls from '../../videoPlayer/controls/CustomControls';
 import {ClipLoader} from "react-spinners";
 import {Fade} from "@mui/material";
-import Button from "@mui/material/Button";
+import {Scrollbars} from "react-custom-scrollbars";
 
 const VideoModal = ({
                         animateModal,
@@ -144,28 +144,33 @@ const VideoModal = ({
                     <div
                         className={`
                 flex
+                w-1/5
+                p-2
                 h-90%
                 flex-col
                 justify-start
                 items-center
-                overflow-y-scroll
+                overflow-y-hidden
                 overflow-x-hidden
                 ${smallScreen && 'pb-14'}
-              `}
-                    >
-                        {currentMediaSet.map((video, index) =>
-                            (
-                                <ModalVideoItem
-                                    column={smallScreen}
-                                    item={video}
-                                    currentModalItemIndex={currentModalItemIndex}
-                                    onClick={handleVideoFromListClick}
-                                    index={index}
-                                    smallScreen={smallScreen}
-                                    currentModalItemUrl={currentModalItemUrl}
-                                    {...{listedVideoProps}}
-                                />
-                            ))}
+              `}>
+                        <Scrollbars>
+                            <>
+                                {currentMediaSet.map((video, index) =>
+                                    (
+                                        <ModalVideoItem
+                                            column={smallScreen}
+                                            item={video}
+                                            currentModalItemIndex={currentModalItemIndex}
+                                            onClick={handleVideoFromListClick}
+                                            index={index}
+                                            smallScreen={smallScreen}
+                                            currentModalItemUrl={currentModalItemUrl}
+                                            {...{listedVideoProps}}
+                                        />
+                                    ))}
+                            </>
+                        </Scrollbars>
                     </div>
                 </div>
             </div>

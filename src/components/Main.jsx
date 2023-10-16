@@ -19,34 +19,18 @@ import MediaContainer from "./media/MediaContainer";
 import {
     setItemModalType, setModalType, setMountedItemModal, setMountedModal, toggleCurrentTheme, toggleListMode,
 } from "../redux/appSlice";
-import BurgerMenuWrapper from "./common/BurgerMenuWrapper";
-import SortInput from "./common/SortInput";
+import {Scrollbars} from 'react-custom-scrollbars';
 import AudioPlayer from "./audioPlayer/AudioPlayer";
 import {PaginatorContext} from "../context/PaginatorContext";
-import UploadContainer from "./btns/UploadBtnContainer";
-import RemoveAllBtnContainer from "./btns/RemoveAllBtnContainer";
 import UserModal from "./modals/UserModal";
-import UserAvatar from "./user/UserAvatar";
 import RenameModal from "./modals/RenameModal";
 import ShareModal from "./modals/ShareModal";
 import userModal from "./modals/UserModal";
-import {BiColorFill} from "react-icons/bi";
-import LogOutContainer from "./btns/LogOutContainer";
-import DAS from '../images/themeTypes/DAS.jpg'
-import DS from '../images/themeTypes/DS.jpg'
-import NS from '../images/themeTypes/NS.jpg'
-import AdaptiveImage from "./AdaptiveImage";
-import {dayTheme, desertTheme, nightTheme} from "../common/themes";
-import DropDownMenu from "./common/DropDownMenu";
 import Home from "./home/Home";
-import {CiSettings} from "react-icons/ci";
 import ImageModalContainer from "./modals/ImageModalContainer";
-import MobileVideoMenu from "./modals/Video/MobileVideoMenu";
 import VideoModalContainer from "./modals/Video/VideoModalContainer";
 import useConfirm from "./hooks/useConfirm";
 import {useStyles} from "./mui/styles";
-import ProgressBar from 'react-bootstrap/ProgressBar';
-import toast from "react-hot-toast";
 import BurgerMenu from "./common/BurgerMenu";
 
 const Main = ({
@@ -232,51 +216,52 @@ const Main = ({
                 noMedia={noMedia}
                 classes={classes}
             />
-            <main className={'w-full h-full overflow-y-scroll relative'} id={mainContentId} onClick={hideMobileSearch}>
-                <BurgerMenu  {...{
-                    smallScreen,
-                    hideMobileSearch,
-                    setModalType,
-                    isMediaLoading,
-                    uploadProgress,
-                    totalUploadedBytes,
-                    totalBytesToUpload,
-                    confirm,
-                    isThemeBlockOpened,
-                    setIsThemeBlockOpened,
-                    currentThemeName,
-                    toggleCurrentTheme,
-                    isSettingsBlockOpened,
-                    setIsSettingsBlockOpened,
-                    handleListMode,
-                    isPaginatorEnabled,
-                    itemsPerPage,
-                    setItemsPerPage
-                }}/>
-                {homePage && <Home
-                    smallScreen={smallScreen}
-                    currentTheme={currentTheme}/>}
-                <Routes>
-                    {!homePage && <Route path={currentRoute}
-                                         element={<MediaContainer {...{
-                                             currentRoute,
-                                             currentMediaSet,
-                                             mediaToShow,
-                                             isPaginatorEnabled,
-                                             searchMode,
-                                             searchResults,
-                                             smallScreen,
-                                             currentTheme,
-                                             confirm,
-                                             handleItemModal,
-                                             handleModal,
-                                             itemModalType,
-                                             classes,
-                                             noMedia,
-                                         }}/>}/>}
-                </Routes>
-                <div
-                    className={`
+            <main className={'w-full h-full overflow-y-hidden relative'} id={mainContentId} onClick={hideMobileSearch}>
+                <Scrollbars>
+                    <BurgerMenu  {...{
+                        smallScreen,
+                        hideMobileSearch,
+                        setModalType,
+                        isMediaLoading,
+                        uploadProgress,
+                        totalUploadedBytes,
+                        totalBytesToUpload,
+                        confirm,
+                        isThemeBlockOpened,
+                        setIsThemeBlockOpened,
+                        currentThemeName,
+                        toggleCurrentTheme,
+                        isSettingsBlockOpened,
+                        setIsSettingsBlockOpened,
+                        handleListMode,
+                        isPaginatorEnabled,
+                        itemsPerPage,
+                        setItemsPerPage
+                    }}/>
+                    {homePage && <Home
+                        smallScreen={smallScreen}
+                        currentTheme={currentTheme}/>}
+                    <Routes>
+                        {!homePage && <Route path={currentRoute}
+                                             element={<MediaContainer {...{
+                                                 currentRoute,
+                                                 currentMediaSet,
+                                                 mediaToShow,
+                                                 isPaginatorEnabled,
+                                                 searchMode,
+                                                 searchResults,
+                                                 smallScreen,
+                                                 currentTheme,
+                                                 confirm,
+                                                 handleItemModal,
+                                                 handleModal,
+                                                 itemModalType,
+                                                 classes,
+                                                 noMedia,
+                                             }}/>}/>}
+                    </Routes>
+                    <div
+                        className={`
                     w-full  
                     bg-opacity-90 
                      p-2 rounded 
@@ -286,9 +271,10 @@ const Main = ({
                      ${currentTheme.primeBg}
 
                     }`}>
-                    <AudioPlayer currentTheme={currentTheme}
-                                 smallScreenMode={smallScreen}
-                    /></div>
+                        <AudioPlayer currentTheme={currentTheme}
+                                     smallScreenMode={smallScreen}
+                        /></div>
+                </Scrollbars>
             </main>
         </>
 

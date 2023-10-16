@@ -401,7 +401,6 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
     const [currentRoute] = payload
     const isImagesRoute = currentRoute === imagesRoute
     const isVideoRoute = currentRoute === videosRoute
-    const isAudioRoute = currentRoute === audioRoute
     const username = auth.currentUser.displayName
     const allowedTypes = {
         [imagesRoute]: imagesOnly,
@@ -422,7 +421,7 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
 
     if (filteredFiles.length > 0) {
         dispatch(setTotalBytesToUpload(totalBytesSize))
-        totalBytesTransferred !== 0 && dispatch(setUploadedBytes(0))
+        // totalBytesTransferred !== 0 && dispatch(setUploadedBytes(0))
         dispatch(toggleMediaLoading(true));
         await Promise.all(filteredFiles.map(async (file) => {
             const fileRef = ref(storage, `${username}/${currentRoute === videosRoute ? videos
