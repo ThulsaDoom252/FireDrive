@@ -7,6 +7,7 @@ import {PiMusicNotesFill} from "react-icons/pi"
 import Image from "../media/Image/Image"
 import {Skeleton} from "@mui/material";
 import HomeVideoPlayer from "./VideoList/HomeVideoPlayer";
+import ThemeContainer from "../../common/ThemeContainer";
 
 
 const HomeMediaListBlock = ({itemsList, fetchItems, smallScreen, currentTheme, itemType, iconSize = 40}) => {
@@ -15,24 +16,22 @@ const HomeMediaListBlock = ({itemsList, fetchItems, smallScreen, currentTheme, i
     const audioList = (itemType === audio) && (itemsList.length !== 0)
 
     return (
-        <div className={`
-        overflow-x-hidden
+        <ThemeContainer className={`
                     p-3
                     mb-20
                     flex
                     justify-between
-                    w-full
                     rounded
+                    min-w-max
+                    max-w-max
                     bg-opacity-70
                     hover:cursor-pointer
                     z-1
-                    ${currentTheme.color}
-                    ${currentTheme.primeBg}
                     ${!smallScreen ? 'h-homeItemBlock' : 'h-mobileHomeItemsBlock'}
                     hover:brightness-110 
                     hover:p-4
                     transition-all duration-300 ease-in-out 
-                    `}>
+                    `} enableColor>
             <div className={`
                         h-full
                         flex
@@ -104,7 +103,7 @@ const HomeMediaListBlock = ({itemsList, fetchItems, smallScreen, currentTheme, i
                 {itemsList.length}
 
             </div>
-        </div>
+        </ThemeContainer>
     );
 };
 

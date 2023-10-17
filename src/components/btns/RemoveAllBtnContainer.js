@@ -1,11 +1,11 @@
 import React, {useContext} from 'react';
 import {PagesContext} from "../../context/PagesContext";
-import ActionBtn from "../common/ActionBtn";
 import {connect,} from "react-redux";
 import {handleAlertModal} from "../../redux/appSlice";
 import {GoTrash} from "react-icons/go";
 import {removeAllItemsTitle, removeAllMsg} from "../../common/commonData";
 import {deleteAllMedia} from "../../redux/mediaSlice";
+import ThemeBtn from "../../common/ThemeBtn";
 
 const RemoveAllBtnContainer = ({
                                    mediaLoading,
@@ -25,7 +25,7 @@ const RemoveAllBtnContainer = ({
     const handleClick = async () => {
         await handleAlertModal({
             message: removeAllMsg,
-            title:removeAllItemsTitle,
+            title: removeAllItemsTitle,
         })
         const userAction = await confirm()
         if (userAction) {
@@ -40,12 +40,12 @@ const RemoveAllBtnContainer = ({
 
     return (
         <>
-            <ActionBtn isFullWidth={true}
-                       btnStyle={'danger'}
-                       switchToIconIfSmallScreen={true}
-                       smallScreenIcon={< GoTrash/>} {...{handleClick, isDisabled, smallScreen}}>
-                Remove All
-            </ActionBtn>
+            <ThemeBtn fullWidth
+                      onClick={handleClick}
+                      disabled={isDisabled}
+                      smallScreenIcon={< GoTrash/>}>
+                {smallScreen ? <GoTrash/> : 'Remove all'}
+            </ThemeBtn>
         </>
     )
 

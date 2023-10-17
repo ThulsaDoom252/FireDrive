@@ -1,13 +1,17 @@
 import React from 'react';
 import Button from "@mui/material/Button";
 import {useSelector} from "react-redux";
+import {primeDayBg} from "./theme/themes";
 
-const FittedThemeBtn = ({children, isDisabled, onClick, navButton, isActive, className}) => {
+const FittedThemeBtn = ({key, children, isDisabled, onClick, navButton, isActive, className, imgModalBtn}) => {
     const activeColor = useSelector(state => state.app.currentTheme.color)
     const inactiveColor = useSelector(state => state.app.currentTheme.navColor)
+    const primaryColorForImageModal = useSelector(state => state.app.currentTheme.primeBg)
 
     const fittedBtnClass = {
-        color: navButton ? (isActive ? activeColor : inactiveColor) : activeColor,
+        color: navButton ? (isActive ? activeColor : inactiveColor)
+            : imgModalBtn && primaryColorForImageModal === primeDayBg
+                ? primaryColorForImageModal : activeColor,
         minHeight: 'fit-content',
         minWidth: 'fit-content',
         maxHeight: 'fit-content',
@@ -19,7 +23,7 @@ const FittedThemeBtn = ({children, isDisabled, onClick, navButton, isActive, cla
     }
 
     return (
-        <Button className={className} sx={fittedBtnClass} disabled={isDisabled} onClick={onClick}>
+        <Button key={key} className={className} sx={fittedBtnClass} disabled={isDisabled} onClick={onClick}>
             {children}
         </Button>
 

@@ -1,17 +1,16 @@
 import React from 'react';
 import {connect} from "react-redux";
-import ActionBtn from "../common/ActionBtn";
 import {handleLogout} from "../../redux/authSlice";
 import {BiLogOut} from "react-icons/bi";
+import ThemeBtn from "../../common/ThemeBtn";
 
 const LogOutContainer = ({smallScreen, handleLogout}) => {
 
     const handleClick = () => handleLogout()
 
-    return <ActionBtn switchToIconIfSmallScreen={true}
-                      isFullWidth={true}
-                      smallScreenIcon={<BiLogOut/>}
-                      {...{smallScreen, handleClick}}>Logout</ActionBtn>
+    return <ThemeBtn
+        fullWidth
+        onClick={handleClick}>{smallScreen ? <BiLogOut/> : 'Logout'}</ThemeBtn>
 };
 
 const mapStateToProps = (state) => {

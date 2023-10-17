@@ -2,36 +2,57 @@ import React from 'react';
 import {BiSolidPencil} from "react-icons/bi";
 import {FaShare, FaTrash} from "react-icons/fa";
 import {renameModal, shareModal} from "../../common/commonData";
-import Button from '@mui/material/Button';
 import {BsFullscreen} from "react-icons/bs";
 import {AiOutlineFullscreenExit} from "react-icons/ai";
+import FittedThemeBtn from "../../common/FittedThemeBtn";
 
 const ImageModalOptions = ({
-                          handleFullScreen,
-                          handleDeleteCurrentModalItem,
-                          smallScreen,
-                          iconSize = 30,
-                          handleModal,
-                          currentModalItemName,
-                          currentModalOldName,
-                          fullScreen,
-                      }) => {
+                               handleFullScreen,
+                               handleDeleteCurrentModalItem,
+                               smallScreen,
+                               iconSize = 30,
+                               handleModal,
+                               currentModalItemName,
+                               currentModalOldName,
+                               fullScreen,
+                           }) => {
+
+    const optionItem = [
+        {
+            type: 'fullscreen',
+            icon: <BsFullscreen size={iconSize}/>,
+            exitIcon: <AiOutlineFullscreenExit size={iconSize}/>,
+            onClick: () => handleFullScreen(), label: 'Fullscreen'
+        },
+        {
+            type: 'rename',
+            icon: <BiSolidPencil size={iconSize}/>,
+            onClick: () => handleModal({
+                modalType: renameModal,
+                name: currentModalItemName,
+                oldName: currentModalOldName
+            }), label: 'Rename'
+        },
+        {
+            type: 'share',
+            icon: <FaShare size={iconSize}/>,
+            onClick: () => handleModal({modalType: shareModal}),
+            label: 'Share'
+        },
+        {
+            type: 'delete',
+            icon: <FaTrash size={iconSize}/>,
+            onClick: () => handleDeleteCurrentModalItem(),
+            label: 'Delete'
+        },
+
+    ]
 
     return (
         <>
-            <Button className='text-white'
-                    onClick={handleFullScreen}>{smallScreen ? (!fullScreen ? <BsFullscreen size={iconSize}/> :
-                <AiOutlineFullscreenExit size={iconSize}/>) : 'FullScreen'}
-            </Button>
-            <Button className='text-white' onClick={() => handleModal({
-                modalType: renameModal,
-                name: currentModalItemName, oldName: currentModalOldName
-            })}>{smallScreen ?
-                <BiSolidPencil size={iconSize}/> : 'Rename'}</Button>
-            <Button className='text-white' onClick={() => handleModal({modalType: shareModal})}>{smallScreen ?
-                <FaShare size={iconSize}/> : 'Share'}</Button>
-            <Button className='text-white' onClick={handleDeleteCurrentModalItem}>{smallScreen ?
-                <FaTrash size={iconSize}/> : 'Delete'}</Button>
+            {optionItem.map((item, index) => <FittedThemeBtn onClick={item.onClick} imgModalBtn>
+                {smallScreen ? (fullScreen && item.exitIcon ? item.exitIcon : item.icon) : item.label}
+            </FittedThemeBtn>)}
         </>
     );
 };

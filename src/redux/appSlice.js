@@ -7,6 +7,7 @@ import {
     videoModal
 } from "../common/commonData";
 import {
+    activeDayBg, activeDesertBg, activeNightBg,
     dayNavBtn,
     dayPrimary, dayTheme, desertNavBtn, desertPrimary, desertTheme,
     mainDayBg,
@@ -48,6 +49,7 @@ const appSlice = createSlice({
             secBg: null,
             color: null,
             navColor: null,
+            activeColor: null,
         },
     },
     reducers: {
@@ -70,6 +72,7 @@ const appSlice = createSlice({
                     state.currentTheme.secBg = secDayBg
                     state.currentTheme.color = dayPrimary
                     state.currentTheme.navColor = dayNavBtn
+                    state.currentTheme.activeColor = activeDayBg
                     break
                 case nightTheme:
                     state.currentTheme.mainBg = mainNightBg
@@ -77,6 +80,7 @@ const appSlice = createSlice({
                     state.currentTheme.secBg = secNightBg
                     state.currentTheme.color = nightPrimary
                     state.currentTheme.navColor = nightNavBtn
+                    state.currentTheme.activeColor = activeNightBg
                     break
                 case desertTheme:
                     state.currentTheme.mainBg = mainDesertBg
@@ -84,6 +88,7 @@ const appSlice = createSlice({
                     state.currentTheme.secBg = secDesertBg
                     state.currentTheme.color = desertPrimary
                     state.currentTheme.navColor = desertNavBtn
+                    state.currentTheme.activeColor = activeDesertBg
                     break
                 default:
                     void 0

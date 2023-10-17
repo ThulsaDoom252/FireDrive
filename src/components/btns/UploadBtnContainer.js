@@ -1,10 +1,10 @@
 import React, {useContext, useRef} from 'react';
 import {connect} from "react-redux";
 import {uploadMedia} from "../../redux/mediaSlice";
-import ActionBtn from "../common/ActionBtn";
 import {audioFiles, imageFiles, videoFiles} from "../../common/commonData";
 import {PagesContext} from "../../context/PagesContext";
 import {HiOutlinePlus} from "react-icons/hi";
+import ThemeBtn from "../../common/ThemeBtn";
 
 const UploadBtnContainer = ({smallScreen, mediaLoading, uploadMedia}) => {
     const inputBtnRef = useRef(null)
@@ -28,13 +28,12 @@ const UploadBtnContainer = ({smallScreen, mediaLoading, uploadMedia}) => {
                 type={"file"}
                 onChange={e => uploadMedia({event: e})}
                 multiple/>
-            <ActionBtn
-                isFullWidth={true}
-                isDisabled={rootPage || mediaLoading}
-                switchToIconIfSmallScreen={true}
-                smallScreenIcon={< HiOutlinePlus/>} {...{handleClick, smallScreen}}>
-                Add Media</ActionBtn>
-            </>
+            <ThemeBtn
+                fullWidth
+                disabled={rootPage || mediaLoading}
+                onClick={handleClick}>
+                {smallScreen ? < HiOutlinePlus/> : 'Add media'}</ThemeBtn>
+        </>
     )
 
 

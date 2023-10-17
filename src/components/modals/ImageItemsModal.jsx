@@ -105,7 +105,7 @@ const ImageItemsModal = ({
                     ${smallScreen ? 'fixed bottom-0' : 'mt-5 relative'}
                     `}>
                     {(!smallScreen || showImageSettingsInSmallScreen) &&
-                        <div className={'w-full flex justify-center'}>
+                        <div className={`w-full flex ${smallScreen ? 'justify-between' : 'justify-center'}`}>
                             <ImageModalOptions iconSize={20}
                                                handleFullScreen={handleFullScreen}
                                                handleDeleteCurrentModalItem={handleDeleteCurrentModalItem}

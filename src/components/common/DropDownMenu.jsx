@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import ActionBtn from "./ActionBtn";
 import {BiDownArrow, BiUpArrow} from "react-icons/bi";
 import {useSelector} from "react-redux";
 import {Transition} from "react-transition-group";
 import {defaultStyle, transitionStyles} from "../../common/TransitionStyles";
+import ThemeBtn from "../../common/ThemeBtn";
 
 const DropDownMenu = ({
                           switchToSmallScreenIcon = true,
@@ -38,10 +38,10 @@ const DropDownMenu = ({
         justify-center
         items-center      
         ${isFullWidth && 'w-full'}`}>
-            <ActionBtn
-                handleClick={handleOpenDropDown}
-                isDisabled={isDisabled} isFullWidth={true}>
-                {switchToSmallScreenIcon ? smallScreen ? smallScreenIcon : btnLabel : btnLabel}
+            <ThemeBtn
+                onClick={handleOpenDropDown}
+                disabled={isDisabled} fullWidth>
+                {smallScreen ? smallScreenIcon : btnLabel}
                 {!menuType ?
                     <BiDownArrow className='
                 absolute
@@ -51,7 +51,7 @@ const DropDownMenu = ({
                     <BiUpArrow className='
                     absolute
                     right-2
-                    '/>}</ActionBtn>
+                    '/>}</ThemeBtn>
             <div className={'w-full'} hidden={!menuType}>
                 <Transition in={menuType}
                             timeout={duration}

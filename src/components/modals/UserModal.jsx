@@ -6,6 +6,7 @@ import CurrentUser from "../user/CurrentUser";
 import {noModal} from "../../common/commonData";
 import TransitionCommonParrent from "../common/TransitionCommonParrent";
 import ActionBtn from "../common/ActionBtn";
+import ThemeBtn from "../../common/ThemeBtn";
 
 const UserModal = ({
                        toggleModal,
@@ -43,11 +44,9 @@ const UserModal = ({
                 <CurrentUser/>
                 <hr/>
                 <div className="w-full flex justify-end">
-                    <ActionBtn handleClick={uploadPhoto}
-                               height={'h-8'}
-                    >
+                    <ThemeBtn disabled={isAvatarLoading} className={'h-8'} onClick={uploadPhoto}>
                         Change Avatar
-                    </ActionBtn>
+                    </ThemeBtn>
                 </div>
 
             </div>

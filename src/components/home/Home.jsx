@@ -10,60 +10,34 @@ const Home = ({fetchImages, fetchVideos, fetchAudio, currentTheme, smallScreen})
     const videosSet = useSelector(state => state.media.videosSet)
     const audioSet = useSelector(state => state.media.audioSet)
 
-    const navClassNames =
-        `  no-underline
-        w-90%
-            z-1`
+    const navClassNames = `  no-underline w-90%z-1`
+
+    const itemsBlocks = [
+        {type: images, path: imagesRoute, fetch: fetchImages, itemsList: imagesSet},
+        {type: videos, path: videosRoute, fetch: fetchVideos, itemsList: videosSet},
+        {type: audio, path: audioRoute, fetch: fetchAudio, itemsList: audioSet},
+    ]
 
     return (
         <section>
             <div className={`
-            max-w-homeItemBlock
+            container
             mx-auto 
             h-screen
              flex 
              flex-col
              justify-center 
              items-center`}>
-                <div className={`
-                w-100% 
-                h-90% 
-                flex 
-                flex-col 
-                justify-center 
-                items-center
-                `}>
-                    <NavLink to={imagesRoute}
-                             className={navClassNames}>
+                {itemsBlocks.map((block, index) =>
+                    <NavLink key={index} to={block.path} className={navClassNames}>
                         <HomeMediaListBlock
-                            fetchItems={fetchImages}
-                            currentTheme={currentTheme}
+                            fetchItems={block.fetch}
                             smallScreen={smallScreen}
-                            itemType={images}
-                            itemsList={imagesSet}/>
-                    </NavLink>
-                    <NavLink to={videosRoute}
-                             className={navClassNames}
-                    >
-                        <HomeMediaListBlock
-                            fetchItems={fetchVideos}
                             currentTheme={currentTheme}
-                            smallScreen={smallScreen}
-                            itemType={videos}
-                            itemsList={videosSet}/>
+                            itemType={block.type}
+                            itemsList={block.itemsList}/>
                     </NavLink>
-                    <NavLink
-                        to={audioRoute}
-                        className={navClassNames}
-                    >
-                        <HomeMediaListBlock
-                            fetchItems={fetchAudio}
-                            currentTheme={currentTheme}
-                            smallScreen={smallScreen}
-                            itemType={audio}
-                            itemsList={audioSet}/>
-                    </NavLink>
-                </div>
+                )}
             </div>
         </section>
     );

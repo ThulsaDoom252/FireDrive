@@ -8,18 +8,25 @@ export const nightTheme = 'NIGHT'
 export const dayTheme = 'DAY'
 export const desertTheme = 'DESERT'
 
-//Main bg
+//Bg wallpaper
 export const mainDayBg = 'bg-day-main'
 export const mainNightBg = 'bg-night-main'
 export const mainDesertBg = 'bg-desert-main'
 
-//Secondary Bg
-export const primeNightBg = 'bg-night-prime'
-export const secNightBg = 'bg-night-sec'
-export const primeDayBg = 'bg-day-prime'
-export const secDayBg = 'bg-day-sec'
-export const primeDesertBg = 'bg-desert-prime'
-export const secDesertBg = 'bg-desert-sec'
+//Primary bg color
+export const primeDayBg = '#30eeff'
+export const primeNightBg = '#2a4cde'
+export const primeDesertBg = '#ffc08b'
+
+//Secondary bg color
+export const secDayBg = '#ffffff'
+export const secNightBg = '#2e3333'
+export const secDesertBg = '#383634'
+
+//Bg active color
+export const activeDayBg = '#9af0fa'
+export const activeNightBg = '#3960ff'
+export const activeDesertBg = '#ffad73'
 
 //Colors
 export const dayPrimary = 'black'
