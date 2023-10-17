@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from "react-redux";
 import {handleLogout} from "../../redux/authSlice";
 import {BiLogOut} from "react-icons/bi";
-import ThemeBtn from "../../common/ThemeBtn";
+import ThemeBtn from "../../common/theme/ThemeBtn";
 
 const LogOutContainer = ({smallScreen, handleLogout}) => {
 

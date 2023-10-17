@@ -5,7 +5,7 @@ import {handleAlertModal} from "../../redux/appSlice";
 import {GoTrash} from "react-icons/go";
 import {removeAllItemsTitle, removeAllMsg} from "../../common/commonData";
 import {deleteAllMedia} from "../../redux/mediaSlice";
-import ThemeBtn from "../../common/ThemeBtn";
+import ThemeBtn from "../../common/theme/ThemeBtn";
 
 const RemoveAllBtnContainer = ({
                                    mediaLoading,

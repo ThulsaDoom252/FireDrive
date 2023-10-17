@@ -35,7 +35,6 @@ const MediaContainer = ({
                             videosSet,
                             audioSet,
                             smallScreen,
-                            currentMediaSet,
                             currentMediaFetch,
                             searchResults,
                             toggleSearchMode,
@@ -44,7 +43,6 @@ const MediaContainer = ({
                             noSearchResults,
                             searchRequest,
                             setItemOptionsHovered,
-                            currentTheme,
                             itemModalType,
                             isPaginatorEnabled,
                             confirm,
@@ -181,7 +179,6 @@ const MediaContainer = ({
     }
 
     return <Media {...{
-        currentTheme,
         imagesPage,
         videosPage,
         audioPage,

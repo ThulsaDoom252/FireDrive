@@ -11,7 +11,6 @@ import Overlay from "../common/Overlay";
 import noImages from "./noImages.jpg"
 import noVideo from "./noVideo.jpg"
 import noAudio from "./noAudio.png"
-
 const Media = ({
                    imagesPage,
                    videosPage,
@@ -27,7 +26,6 @@ const Media = ({
                    searchMode,
                    smallScreen,
                    setItemOptionsHovered,
-                   currentTheme,
                    noOpenModal,
                    confirm,
                    handleLayoutMenu,
@@ -96,7 +94,6 @@ const Media = ({
                                 return <Grid item xs={gridNumb}><ImageBlock url={media.url}
                                                                             name={media.name}
                                                                             oldName={media.oldName}
-
                                                                             {...{
                                                                                 index,
                                                                                 setHoveredMediaIndex,
@@ -128,7 +125,6 @@ const Media = ({
                                                        hoveredMediaIndex,
                                                        setHoveredMediaIndex,
                                                        setItemOptionsHovered,
-                                                       currentTheme,
                                                        smallScreen,
                                                        handleVideoClick,
                                                        handleModal,
@@ -150,7 +146,6 @@ const Media = ({
                                                                index,
                                                                searchMode,
                                                                smallScreen,
-                                                               currentTheme,
                                                            }}/>
                                                 </div>
                                             </Grid>

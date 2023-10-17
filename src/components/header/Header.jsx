@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import BurgerMenuTrigger from "../BurgerMenu/BurgerMenuTrigger";
 import NavItems from "./NavItems";
 import Search from "../search/Search";
-import ThemeContainer from "../../common/ThemeContainer";
+import ThemeContainer from "../../common/theme/ThemeContainer";
 
 const Header = ({
                     currentTheme,

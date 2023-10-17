@@ -4,7 +4,7 @@ import {FaShare, FaTrash} from "react-icons/fa";
 import {renameModal, shareModal} from "../../common/commonData";
 import {BsFullscreen} from "react-icons/bs";
 import {AiOutlineFullscreenExit} from "react-icons/ai";
-import FittedThemeBtn from "../../common/FittedThemeBtn";
+import FittedThemeBtn from "../../common/theme/FittedThemeBtn";
 
 const ImageModalOptions = ({
                                handleFullScreen,

@@ -1,7 +1,7 @@
 import {useContext} from "react";
 import {BurgerMenuContext} from "../../context/BurgerMenuContext";
 import {CiMenuBurger} from "react-icons/ci";
-import FittedThemeBtn from "../../common/FittedThemeBtn";
+import FittedThemeBtn from "../../common/theme/FittedThemeBtn";
 
 const BurgerMenuTrigger = ({classname = 'bm-burger-button'}) => {
     const ctx = useContext(BurgerMenuContext)

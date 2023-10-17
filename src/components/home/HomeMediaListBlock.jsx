@@ -7,7 +7,7 @@ import {PiMusicNotesFill} from "react-icons/pi"
 import Image from "../media/Image/Image"
 import {Skeleton} from "@mui/material";
 import HomeVideoPlayer from "./VideoList/HomeVideoPlayer";
-import ThemeContainer from "../../common/ThemeContainer";
+import ThemeContainer from "../../common/theme/ThemeContainer";
 
 
 const HomeMediaListBlock = ({itemsList, fetchItems, smallScreen, currentTheme, itemType, iconSize = 40}) => {

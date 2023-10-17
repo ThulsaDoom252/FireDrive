@@ -5,12 +5,10 @@ import {AudioPlayerContext} from "../../context/AudioPlayerContext";
 import ItemOptions from "../options/ItemOptions";
 import {formatTime} from "../../common/commonData";
 import {ClipLoader} from "react-spinners";
-import {dayPrimary} from "../../common/theme/themes";
-import {truncate} from "../../common/commonData";
 import {Fade} from "@mui/material";
 import {Skeleton, Tooltip} from "@mui/material";
-import Button from "@mui/material/Button";
-import {customBtns} from "../mui/styles";
+import FittedThemeBtn from "../../common/theme/FittedThemeBtn";
+import AudioThemeContainer from "../../common/theme/AudioThemeContainer";
 
 const Audio = ({
                    name,
@@ -21,7 +19,6 @@ const Audio = ({
                    hoveredMediaIndex,
                    setHoveredMediaIndex,
                    smallScreen,
-                   currentTheme,
                    skeletonWidth = 40,
                    skeletonHeight = 40,
                }) => {
@@ -37,12 +34,10 @@ const Audio = ({
         setTotalDuration(formattedDuration)
     }
 
-
     const handleLoadAudio = () => {
         formatTotalTime()
         setIsAudioLoaded(true)
     }
-
 
     const {
         currentTrackName,
@@ -59,45 +54,35 @@ const Audio = ({
     return (
         <>
             <audio onCanPlay={handleLoadAudio} hidden={true} src={url || ''} ref={audioRef}></audio>
-            <div
-                onClick={() => handleSetCurrentAudioIndex({index: audioIndex})}
-                className={` 
-                transition-all
-                duration-200
+            <AudioThemeContainer onClick={() => handleSetCurrentAudioIndex({index: audioIndex})}
+                                 className={`
+                                  transition-all
+                duration-100
                 h-45  
-                text-white 
                 flex 
                 justify-between
                 items-center 
                 mb-3  
                 relative 
                 rounded 
-                cursor-pointer
-                ${!isAudioLoaded ? 'bg-opacity-0' : 'border-b-2'}
-                ${(currentTrackPlaying || currentTrackHovered) ? 'bg-opacity-100' : 'bg-opacity-80'}
-                 ${(currentTrackPlaying || currentTrackHovered) ? currentTheme.primeBg : currentTheme.secBg}  
-                
-                `}
-                onMouseEnter={() => setHoveredMediaIndex(audioIndex)}
-                onMouseLeave={() => setHoveredMediaIndex(null)}
+                cursor-pointer`}
+                                 isAudioLoaded
+                                 primeBgCondition={currentTrackPlaying || currentTrackHovered}
+                                 onMouseEnter={() => setHoveredMediaIndex(audioIndex)}
+                                 onMouseLeave={() => setHoveredMediaIndex(null)}
             >
                 {isAudioLoaded ?
                     <>
                         <div>
-                            <Button
-                                className={`relative right-3`}
-                                sx={customBtns.autdioTrackBtn}
-                                // className={'w-10 text-xl h-full flex justify-center items-center hover:cursor-pointer'}
+                            <FittedThemeBtn
+                                optionalClasses={{position: 'relative', right: 3}}
                             >
                                 {isTrackFromTheListPlaying ? <AiFillPauseCircle
-                                        size={25}
-                                        color={currentTheme.color === dayPrimary && 'black'}/>
-                                    : (<AiFillPlayCircle size={25}
-                                                         color={currentTheme.color === dayPrimary && 'black'}/>)}
-                            </Button>
+                                        size={25}/>
+                                    : <AiFillPlayCircle size={25}/>}
+                            </FittedThemeBtn>
                         </div>
-                        <div
-                            className={`w-full absolute left-10  ${currentTheme.color}`}>{smallScreen ? truncate(name, 20) : truncate(name, 50)}</div>
+                        <div className={`w-full absolute left-10 truncate`}>{name}</div>
                         <Fade in={isAudioHovered} timeout={100}>
                             <div className={'absolute top-1/2 transform -translate-y-1/2 right-0 z-50 mr-40'}>
                                 <ItemOptions
@@ -109,15 +94,12 @@ const Audio = ({
                                     index,
                                     searchMode
                                 }}/>
-
-
                             </div>
                         </Fade>
                         <div
                             className={'flex mr-5 '}>
-                            <div
-                                className={`${currentTheme.color}`}>{currentTrackName === name && `${formatTime(currentDuration)}/`}</div>
-                            <div className={`${currentTheme.color}`}>{totalDuration === 0 ?
+                            <div>{currentTrackName === name && `${formatTime(currentDuration)}/`}</div>
+                            <div>{totalDuration === 0 ?
                                 <ClipLoader size={25}/> : totalDuration}</div>
                         </div>
                     </> : <Tooltip title={'audio loading'}>
@@ -126,7 +108,7 @@ const Audio = ({
                     </Tooltip>}
 
 
-            </div>
+            </AudioThemeContainer>
         </>
 
     );

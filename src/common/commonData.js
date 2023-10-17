@@ -17,15 +17,9 @@ export const extractUsernameFromEmail = (email) => {
     }
 }
 
-
-export const setLocalStorageItem = (key, value) => {
-    localStorage.setItem(`${key}`, `${value}`)
-}
-
 export const getLocalStorageItem = (key) => {
     const currentValue = localStorage.getItem(key)
     return currentValue
-    debugger
 }
 
 export const delay = (ms) => {
@@ -34,12 +28,6 @@ export const delay = (ms) => {
             resolve()
         }, ms)
     })
-}
-
-export const dividedValue = (number) => {
-    const wholeNumb = Math.floor(number / 5)
-    return wholeNumb
-
 }
 
 //Format time in mm:ss format

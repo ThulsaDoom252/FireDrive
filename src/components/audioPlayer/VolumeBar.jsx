@@ -2,36 +2,37 @@ import {Slider} from "@mui/material";
 import {makeStyles} from "@mui/styles";
 
 
-const useStyles = makeStyles((theme) => ({
-    root: ({barWidth = 5, barColor = 'gray', barActiveColor = 'blue'}) => ({
-        "& .MuiSlider-rail": {
-            display: 'none'
-        },
-        "& .MuiSlider-track": {
-            display: 'none'
-        },
-        "& .MuiSlider-thumb": {
-            display: "none",
-        },
-        "& .MuiSlider-mark": {
-            width: barWidth, // Ширина отметки
-            height: '50%', // Высота отметки
-            backgroundColor: `${barColor}`, // Цвет отметки по умолчанию (неактивной)
-            "&.MuiSlider-markActive": {
-                backgroundColor: `${barActiveColor}`, // Цвет активной отметки
-            },
-        },
-    }),
-}));
-
 const VolumeBar = ({
                        volume,
                        barWidth,
                        customMarks,
                        handleVolumeChange,
-                       step = 0.1
+                       step = 0.1,
+                       currentTheme,
 
                    }) => {
+
+    const useStyles = makeStyles((theme) => ({
+        root: ({barWidth = 5, barColor = 'gray', barActiveColor = currentTheme.color}) => ({
+            "& .MuiSlider-rail": {
+                display: 'none'
+            },
+            "& .MuiSlider-track": {
+                display: 'none'
+            },
+            "& .MuiSlider-thumb": {
+                display: "none",
+            },
+            "& .MuiSlider-mark": {
+                width: barWidth, // Ширина отметки
+                height: '50%', // Высота отметки
+                backgroundColor: `${barColor}`, // Цвет отметки по умолчанию (неактивной)
+                "&.MuiSlider-markActive": {
+                    backgroundColor: `${barActiveColor}`, // Цвет активной отметки
+                },
+            },
+        }),
+    }));
 
     const classes = useStyles({barWidth});
 

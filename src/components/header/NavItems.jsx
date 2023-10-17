@@ -5,7 +5,7 @@ import {RiMovieLine} from "react-icons/ri";
 import {BiMusic, BiSearch} from "react-icons/bi";
 import {connect, useSelector} from "react-redux";
 import IconButton from '@mui/material/IconButton';
-import FittedThemeBtn from "../../common/FittedThemeBtn";
+import FittedThemeBtn from "../../common/theme/FittedThemeBtn";
 
 
 const NavItems = ({

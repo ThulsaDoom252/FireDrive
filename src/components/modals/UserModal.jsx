@@ -6,7 +6,7 @@ import CurrentUser from "../user/CurrentUser";
 import {noModal} from "../../common/commonData";
 import TransitionCommonParrent from "../common/TransitionCommonParrent";
 import ActionBtn from "../common/ActionBtn";
-import ThemeBtn from "../../common/ThemeBtn";
+import ThemeBtn from "../../common/theme/ThemeBtn";
 
 const UserModal = ({
                        toggleModal,

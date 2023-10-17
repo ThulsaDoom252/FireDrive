@@ -4,7 +4,7 @@ import {uploadMedia} from "../../redux/mediaSlice";
 import {audioFiles, imageFiles, videoFiles} from "../../common/commonData";
 import {PagesContext} from "../../context/PagesContext";
 import {HiOutlinePlus} from "react-icons/hi";
-import ThemeBtn from "../../common/ThemeBtn";
+import ThemeBtn from "../../common/theme/ThemeBtn";
 
 const UploadBtnContainer = ({smallScreen, mediaLoading, uploadMedia}) => {
     const inputBtnRef = useRef(null)

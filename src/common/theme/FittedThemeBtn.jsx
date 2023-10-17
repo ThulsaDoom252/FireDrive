@@ -1,9 +1,19 @@
 import React from 'react';
 import Button from "@mui/material/Button";
 import {useSelector} from "react-redux";
-import {primeDayBg} from "./theme/themes";
+import {primeDayBg} from "./themes";
 
-const FittedThemeBtn = ({key, children, isDisabled, onClick, navButton, isActive, className, imgModalBtn}) => {
+const FittedThemeBtn = ({
+                            key,
+                            children,
+                            isDisabled,
+                            onClick,
+                            navButton,
+                            isActive,
+                            className,
+                            imgModalBtn,
+                            optionalClasses
+                        }) => {
     const activeColor = useSelector(state => state.app.currentTheme.color)
     const inactiveColor = useSelector(state => state.app.currentTheme.navColor)
     const primaryColorForImageModal = useSelector(state => state.app.currentTheme.primeBg)
@@ -16,14 +26,17 @@ const FittedThemeBtn = ({key, children, isDisabled, onClick, navButton, isActive
         minWidth: 'fit-content',
         maxHeight: 'fit-content',
         maxWidth: 'fit-content',
-        transition: 'color 0.3s', // Плавная анимация изменения цвета фона
+        transition: 'color 0.3s',
+        ...optionalClasses,
         '&:hover': {
-            color: navButton && activeColor, // Новый цвет фона при наведении
+            color: navButton && activeColor,
         },
+
     }
 
     return (
-        <Button key={key} className={className} sx={fittedBtnClass} disabled={isDisabled} onClick={onClick}>
+        <Button key={key} className={className} sx={fittedBtnClass} disabled={isDisabled}
+                onClick={onClick}>
             {children}
         </Button>
 

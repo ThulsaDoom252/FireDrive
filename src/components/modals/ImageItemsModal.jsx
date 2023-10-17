@@ -8,6 +8,7 @@ import ImageModalOptions from "../options/ImageModalOptions";
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {Fade} from "@mui/material";
+import FittedThemeBtn from "../../common/theme/FittedThemeBtn";
 
 const ImageItemsModal = ({
                              overlayColor = 'bg-gray-900',
@@ -15,7 +16,6 @@ const ImageItemsModal = ({
                              overlayOpacity = 'bg-opacity-95',
                              showOverlay = true,
                              arrowSize = 30,
-                             closeIconColor = 'white',
                              closeIconSize = 30,
                              animateModal,
                              carouselSettings,
@@ -56,12 +56,11 @@ const ImageItemsModal = ({
                 {showOverlay && <Overlay bg={overlayColor} opacity={overlayOpacity}/>}
                 {/*<div*/}
                 {/*    className={`text-white mb-2 ${zIndex} ${smallScreen && 'absolute top-2'}`}>{currentModalItemName}</div>*/}
-                {(!smallScreen || showImageSettingsInSmallScreen) &&
-                    <div hidden={(fullScreen && !smallScreen) || !showMobileSettings}
-                         className='absolute right-5  top-5 hover:cursor-pointer z-1'
-                         onClick={handleClose}><IoClose
-                        size={closeIconSize}
-                        color={closeIconColor}/></div>}
+                {((!smallScreen && !fullScreen) || showImageSettingsInSmallScreen) &&
+                    <FittedThemeBtn imgModalBtn
+                                    optionalClasses={{position: 'absolute', right: 5, top: 5, zIndex: 1}}
+                                    onClick={handleClose}><IoClose
+                        size={closeIconSize}/></FittedThemeBtn>}
 
                 {smallScreen || !fullScreen ? <div hidden={smallScreen || !fullScreen}
                                                    className='absolute right-10  top-10 hover:cursor-pointer'
@@ -69,8 +68,7 @@ const ImageItemsModal = ({
                                                        e.stopPropagation()
                                                        handleFullScreen()
                                                    }}><AiOutlineFullscreenExit
-                    size={closeIconSize}
-                    color={closeIconColor}/></div> : void 0}
+                    size={closeIconSize}/></div> : void 0}
 
                 <div {...swipeHandlers} onClick={stopPropagation}
                      className={`relative ${smallScreen && !fullScreen && 'bottom-6'}`}>
@@ -118,25 +116,18 @@ const ImageItemsModal = ({
                         </div>}
 
                 </div>
-                <button hidden={smallScreen} disabled={prevArrowDisabled}
-                        className={`
-                absolute 
-                left-5 
-                border-0 
-                bg-transparent
-                ${prevArrowDisabled ? 'text-gray-500' : 'text-white'}`}
-                        onClick={handlePrevModalItem}>
-                    <IoIosArrowBack
-                        size={arrowSize}/></button>
-                <button hidden={smallScreen} disabled={nextArrowDisabled} className={`
-                absolute 
-                right-5
-                border-0 
-                bg-transparent
-                ${nextArrowDisabled ? 'text-gray-500' : 'text-white'}`}
-                        onClick={handleNextModalItem}>
-                    <IoIosArrowForward
-                        size={arrowSize}/></button>
+                {!smallScreen &&
+                    <FittedThemeBtn imgModalBtn optionalClasses={{position: 'absolute', left: 5}}
+                                    isDisabled={prevArrowDisabled}
+                                    onClick={handlePrevModalItem}>
+                        <IoIosArrowBack
+                            size={arrowSize}/></FittedThemeBtn>}
+                {!smallScreen &&
+                    <FittedThemeBtn imgModalBtn isDisabled={nextArrowDisabled}
+                                    optionalClasses={{position: 'absolute', right: 5}}
+                                    onClick={handleNextModalItem}>
+                        <IoIosArrowForward
+                            size={arrowSize}/></FittedThemeBtn>}
             </div>
 
         </Fade>

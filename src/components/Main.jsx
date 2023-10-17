@@ -34,8 +34,7 @@ import useConfirm from "./hooks/useConfirm";
 import {useStyles} from "./mui/styles";
 import BurgerMenu from "./BurgerMenu/BurgerMenu";
 import Overlay from "./common/Overlay";
-import {Fade} from "@mui/material";
-import ThemeContainer from "../common/ThemeContainer";
+import ThemeContainer from "../common/theme/ThemeContainer";
 
 const Main = ({
                   currentMediaSet,
@@ -326,6 +325,7 @@ const mapStateToProps = (state) => {
         totalBytesToUpload: state.media.totalBytesToUpload,
         isMediaLoading: state.media.mediaLoading,
         isThemeUpdating: state.app.isThemeUpdating,
+        currentTheme: state.app.currentTheme,
     }
 }
 
