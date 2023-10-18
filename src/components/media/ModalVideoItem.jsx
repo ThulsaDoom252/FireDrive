@@ -26,19 +26,18 @@ const ModalVideoItem = ({
 
     const shouldPreviewPlay = index === listedVideoHoveredIndex
 
-    const hideCurrentItem = smallScreen && currentModalItemIndex === index
-
+    const hideCurrentItem = smallScreen && (currentModalItemIndex === index)
 
     return (
         <div
-            hidden={hideCurrentItem}
             key={index}
             className={` 
         mb-3  
         rounded 
         flex
+        ${hideCurrentItem && 'hidden'}
         ${column ? 'flex-col w-full justify-center' : 'w-80% justify-between'}
-        ${smallScreen ? 'h-48 mt-6' : 'h-32 mt-3 bg-black pr-2'}
+        ${smallScreen ? 'h-48 mt-6' : 'h-32 mt-3 bg-black pr-2'}s1
                          ${item.url === currentModalItemUrl && 'border-4 border-amber-300'} 
 
         `}>

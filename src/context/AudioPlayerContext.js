@@ -116,9 +116,7 @@ export function AudioPlayerContextProvider({children}) {
             audio.src = currentTrack?.url
             audio.load()
         }
-
     }
-
 
     useEffect(() => {
         if (audio) {
@@ -194,7 +192,6 @@ export function AudioPlayerContextProvider({children}) {
                 await delay(100)
                 toggleCurrentTrackPlaying(true)
                 repeatMode === 'once' && setRepeatMode('none')
-
             }
 
             return void 0
@@ -220,7 +217,6 @@ export function AudioPlayerContextProvider({children}) {
     const nextBtnDisabled = currentTrackIndex === audioSet.length - 1 || noAudio
     const playBtnDisabled = noAudio
 
-
     const audioPlayerState = {
         isCurrentTrackPlaying,
         currentDuration,
@@ -243,7 +239,6 @@ export function AudioPlayerContextProvider({children}) {
         toggleCurrentTrackPlaying,
         audioRef,
         volume,
-
     };
 
     return (

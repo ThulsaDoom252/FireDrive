@@ -14,7 +14,6 @@ const VideoModal = ({
                         overlayColor = 'bg-gray-900',
                         overlayOpacity = 'opacity-95',
                         zIndex = 'z-2',
-                        animated = true,
                         closeIconSize = 30,
                         currentMediaSet,
                         currentModalItemUrl,
@@ -38,7 +37,7 @@ const VideoModal = ({
                         listedVideoProps,
                         videoBlockContainerRef,
                         videoContainerRef,
-                        isFullScreen,
+                        fullScreen,
                     }) => {
 
     return (
@@ -49,7 +48,7 @@ const VideoModal = ({
             ${animateModal && zIndex}
           `}
             >
-                {(!smallScreen && !isFullScreen || !smallScreen && isControlsVisible || isControlsVisible) &&
+                {(!smallScreen && !fullScreen || !smallScreen && isControlsVisible || isControlsVisible) &&
                     <button
                         className={`
               absolute
@@ -75,12 +74,13 @@ const VideoModal = ({
                     <div
                         ref={videoBlockContainerRef}
                         className={`
-                ${smallScreen ? 'w-100% h-70% flex flex-col justify-center items-center' : 'w-80% h-90%'}
+                        ${fullScreen ? 'w-screen h-screen' : `${smallScreen ? 'w-100% h-70%' : 'w-80% h-90%'}`}
+                flex flex-col justify-center items-center
               `}
                     >
                         <div
                             ref={videoContainerRef}
-                            className={`w-100% h-90% relative overflow-hidden bg-black`}
+                            className={`${fullScreen ? 'h-100%' : 'h-90%'} w-100% relative overflow-hidden bg-black`}
                             onContextMenu={(e) => e.preventDefault()}
                             onMouseMove={handleVisibility}
                             onClick={handleVisibility}
@@ -116,11 +116,11 @@ const VideoModal = ({
                                     color={!smallScreen ? 'text-white' : 'text-white'}
                                     {...{customControlsProps}}
                                 />}
-                            {smallScreen && <hr className={'bg-white h-0.5 rounded-full relative bottom-4'}/>}
+                            {/*{smallScreen && */}
+                            {/*    <hr className={'bg-white h-0.5 rounded-full relative bottom-4'}/>}*/}
                         </div>
-                        {(!smallScreen && !isFullScreen) &&
+                        {(!smallScreen && !fullScreen) &&
                             <div
-                                hidden={smallScreen}
                                 className={`
                               w-full
                               h-10%
@@ -139,8 +139,10 @@ const VideoModal = ({
                                 <div className="text-center text-lg">{currentModalItemName}</div>
                             </div>}
                     </div>
-                    <div
-                        className={`
+
+                    {!fullScreen &&
+                        <div
+                            className={`
                 flex
                 h-90%
                 flex-col
@@ -150,24 +152,24 @@ const VideoModal = ({
                 overflow-x-hidden
                 ${smallScreen ? 'pb-20 w-full' : 'p-2 w-1/5'}
               `}>
-                        <Scrollbars>
-                            <>
-                                {currentMediaSet.map((video, index) =>
-                                    (
-                                        <ModalVideoItem
-                                            column={smallScreen}
-                                            item={video}
-                                            currentModalItemIndex={currentModalItemIndex}
-                                            onClick={handleVideoFromListClick}
-                                            index={index}
-                                            smallScreen={smallScreen}
-                                            currentModalItemUrl={currentModalItemUrl}
-                                            {...{listedVideoProps}}
-                                        />
-                                    ))}
-                            </>
-                        </Scrollbars>
-                    </div>
+                            <Scrollbars>
+                                <>
+                                    {currentMediaSet.map((video, index) =>
+                                        (
+                                            <ModalVideoItem
+                                                column={smallScreen}
+                                                item={video}
+                                                currentModalItemIndex={currentModalItemIndex}
+                                                onClick={handleVideoFromListClick}
+                                                index={index}
+                                                smallScreen={smallScreen}
+                                                currentModalItemUrl={currentModalItemUrl}
+                                                {...{listedVideoProps}}
+                                            />
+                                        ))}
+                                </>
+                            </Scrollbars>
+                        </div>}
                 </div>
             </div>
         </Fade>

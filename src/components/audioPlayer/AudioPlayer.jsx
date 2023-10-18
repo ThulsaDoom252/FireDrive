@@ -9,7 +9,8 @@ import {LuRepeat, LuRepeat1} from "react-icons/lu";
 import {IoInfinite} from "react-icons/io5";
 import {ImVolumeHigh, ImVolumeMute2} from "react-icons/im";
 import VolumeBar from "./VolumeBar";
-import FittedThemeBtn from "../../common/theme/FittedThemeBtn";
+import FittedThemeBtn from "../common/theme/FittedThemeBtn";
+import ThemedVolumeBar from "../common/theme/ThemedVolumeBar";
 
 const AudioPlayer = ({
                          smallScreenMode,
@@ -99,9 +100,7 @@ const AudioPlayer = ({
                                     {volume !== 0 ? <ImVolumeHigh size={20}/> : <ImVolumeMute2 size={20}/>}
                                 </FittedThemeBtn>
                                 <div className={'w-20 relative top-0.5'}>
-                                    <VolumeBar volume={volume}
-                                               currentTheme={currentTheme}
-                                               handleVolumeChange={handleVolumeChange}/>
+                                    <ThemedVolumeBar value={volume} handleChange={handleVolumeChange}/>
                                 </div>
                             </div>
                         </div>

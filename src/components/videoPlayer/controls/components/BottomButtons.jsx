@@ -8,14 +8,13 @@ const BottomButtons = ({
                            handleVideoMenu,
                            handleFullScreen,
                            isFullScreen,
-                           isMobileFullScreen
                        }) => {
     return (
         <div className={'flex w-20 justify-between mr-2'}>
             <div className={controlBtnAnimation}><BiMobile onClick={handlePiP} size={20}/></div>
             <div className={controlBtnAnimation}><AiFillSetting onClick={handleVideoMenu} size={20}/>
             </div>
-            <div className={controlBtnAnimation} onClick={handleFullScreen}>{(isFullScreen || isMobileFullScreen) ?
+            <div className={controlBtnAnimation} onClick={handleFullScreen}>{isFullScreen ?
                 <AiOutlineFullscreenExit size={20}/> :
                 <AiOutlineFullscreen size={20}/>}</div>
         </div>

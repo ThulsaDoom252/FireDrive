@@ -8,7 +8,7 @@ import ImageModalOptions from "../options/ImageModalOptions";
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {Fade} from "@mui/material";
-import FittedThemeBtn from "../../common/theme/FittedThemeBtn";
+import FittedThemeBtn from "../common/theme/FittedThemeBtn";
 
 const ImageItemsModal = ({
                              overlayColor = 'bg-gray-900',

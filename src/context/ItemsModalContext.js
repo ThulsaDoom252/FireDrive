@@ -1,8 +1,9 @@
-import React, {createContext, useState} from 'react';
+import React, {createContext, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {setCurrentModalItemIndex} from "../redux/appSlice";
 import {useSwipeable} from "react-swipeable";
-import {imageModal} from "../common/commonData";
+import {imageItemModal, videoItemModal} from "../common/commonData";
+import videoModal from "../components/modals/Video/VideoModal";
 
 export const ItemsModalContext = createContext();
 export const ItemsModalContextProvider = ({children}) => {
@@ -22,23 +23,50 @@ export const ItemsModalContextProvider = ({children}) => {
     const currentModalItemName = searchMode ? searchResults[currentModalItemIndex]?.name : currentMediaSet[currentModalItemIndex]?.name
     const currentModalItemOldName = searchMode ? searchResults[currentModalItemIndex]?.oldName : currentMediaSet[currentModalItemIndex]?.oldName
 
-
     const handleFullScreenState = () => document.fullscreenElement ? toggleFullScreen(true) : toggleFullScreen(false)
 
+    const handleFullScreen = () => !document.fullscreenElement ? document.documentElement.requestFullscreen() : document.exitFullscreen()
 
-    const handleFullScreen = () => {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen()
+    const isItemModalMounted = mountedItemModal === imageItemModal || mountedItemModal === videoItemModal;
+
+
+    useEffect(() => {
+        if (isItemModalMounted) {
+            document.addEventListener('fullscreenchange', handleFullScreenState);
         } else {
-            document.exitFullscreen()
+            return () => {
+                document.removeEventListener('fullscreenchange', handleFullScreenState);
+            };
         }
-    }
+        //eslint-disable-next-line
+    }, [fullScreen, mountedItemModal])
+
+    useEffect(() => {
+        const handleLandScapeMode = () => {
+            if (window.innerWidth > window.innerHeight) {
+                if (!fullScreen) {
+                    if (!document.fullscreenElement)
+                        document.documentElement.requestFullscreen().then(() => void 0)
+                }
+            }
+        };
+
+        if (smallScreen && isItemModalMounted) {
+            window.addEventListener('resize', handleLandScapeMode)
+        } else {
+            window.removeEventListener('resize', handleLandScapeMode)
+        }
+
+        return () => {
+            window.removeEventListener('resize', handleLandScapeMode)
+        }
+        //eslint-disable-next-line
+    }, [smallScreen, mountedItemModal]);
 
 
     const handleCurrentModalItemIndex = (index) => {
         dispatch(setCurrentModalItemIndex(index))
     }
-
 
     const swipeHandlers = useSwipeable({
         onSwipedUp: () => {

@@ -1,8 +1,5 @@
 import {createContext, useEffect, useRef, useState} from "react";
-import {useSelector} from "react-redux";
-
 export const VideoControlsContext = createContext()
-
 
 export const VideoControlsContextProvider = ({children}) => {
 
@@ -20,10 +17,6 @@ export const VideoControlsContextProvider = ({children}) => {
                     justify-center
                     z-10
                     ${mainBtnAnimation}`
-
-
-    const smallScreenMode = useSelector(state => state.app.smallScreenMode)
-
 
     const playerRef = useRef(null)
 
@@ -48,7 +41,6 @@ export const VideoControlsContextProvider = ({children}) => {
     const [isVideoPlaying, setIsVideoPlaying] = useState(false)
     const [currentVideoVolume, setCurrentVideoVolume] = useState(0.5)
     const [totalVideoDuration, setTotalVideoDuration] = useState(0)
-    const [isFullScreen, setIsFullScreen] = useState(false)
     const [isMobileFullScreen, setIsMobileFullScreen] = useState(false)
 
     const [isControlsVisible, setIsControlsVisible] = useState(false)
@@ -116,17 +108,7 @@ export const VideoControlsContextProvider = ({children}) => {
     }
 
 
-    //FullScreen handler
-    const requestFullScreen = () => {
-        if (!document.fullscreenElement) {
-            setIsFullScreen(true)
-            document.documentElement.requestFullscreen()
-        } else {
-            setIsFullScreen(false)
-            document.exitFullscreen()
-        }
-    };
-
+    // FullScreen handler
     const handlePlaySpeed = (value) => {
 
         if (playerRef.current) {
@@ -277,7 +259,6 @@ export const VideoControlsContextProvider = ({children}) => {
         controlBtnAnimation,
         topBtnClass,
         isSliderHovered,
-        isFullScreen,
         mouseX,
         touchX,
         playBackValues,
@@ -296,7 +277,6 @@ export const VideoControlsContextProvider = ({children}) => {
         handleSpeedSubMenu,
         setIsMobileFullScreen,
         handleClearSubMenu,
-        requestFullScreen,
         handlePlaySpeed,
         handleMouseMove,
         handleTouchMove,
@@ -317,8 +297,6 @@ export const VideoControlsContextProvider = ({children}) => {
         videoContainerRef,
         handleVideoControlsVisibility,
         isControlsVisible,
-
-
     }
 
     return (

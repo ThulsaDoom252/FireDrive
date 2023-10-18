@@ -1,24 +1,26 @@
-import { Slider } from "@mui/material";
+import {Slider} from "@mui/material";
+import {useSelector} from "react-redux";
 
-const VolumeBar = ({
-                       volume,
-                       barWidth,
-                       customMarks,
-                       handleVolumeChange,
-                       step = 0.1,
-                       currentTheme,
-                   }) => {
+const ThemedVolumeBar = ({
+                             value,
+                             barWidth,
+                             customMarks,
+                             handleChange,
+                             step = 0.1,
+                         }) => {
+    const currentTheme = useSelector(state => state.app.currentTheme)
+
     const marks = [
-        { value: 0.1 },
-        { value: 0.2 },
-        { value: 0.3 },
-        { value: 0.4 },
-        { value: 0.5 },
-        { value: 0.6 },
-        { value: 0.7 },
-        { value: 0.8 },
-        { value: 0.9 },
-        { value: 1 },
+        {value: 0.1},
+        {value: 0.2},
+        {value: 0.3},
+        {value: 0.4},
+        {value: 0.5},
+        {value: 0.6},
+        {value: 0.7},
+        {value: 0.8},
+        {value: 0.9},
+        {value: 1},
     ];
 
     const rootStyles = {
@@ -47,11 +49,11 @@ const VolumeBar = ({
             min={0}
             marks={customMarks || marks}
             max={1}
-            onChange={handleVolumeChange}
-            value={volume}
+            onChange={handleChange}
+            value={value}
             step={step}
         />
     );
 };
 
-export default VolumeBar;
+export default ThemedVolumeBar;

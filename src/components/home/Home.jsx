@@ -10,7 +10,7 @@ const Home = ({fetchImages, fetchVideos, fetchAudio, currentTheme, smallScreen})
     const videosSet = useSelector(state => state.media.videosSet)
     const audioSet = useSelector(state => state.media.audioSet)
 
-    const navClassNames = `  no-underline w-90%z-1`
+    const navClassNames = `  no-underline w-90%`
 
     const itemsBlocks = [
         {type: images, path: imagesRoute, fetch: fetchImages, itemsList: imagesSet},
@@ -28,16 +28,16 @@ const Home = ({fetchImages, fetchVideos, fetchAudio, currentTheme, smallScreen})
              flex-col
              justify-center 
              items-center`}>
-                {itemsBlocks.map((block, index) =>
-                    <NavLink key={index} to={block.path} className={navClassNames}>
-                        <HomeMediaListBlock
-                            fetchItems={block.fetch}
-                            smallScreen={smallScreen}
-                            currentTheme={currentTheme}
-                            itemType={block.type}
-                            itemsList={block.itemsList}/>
-                    </NavLink>
-                )}
+                    {itemsBlocks.map((block, index) =>
+                        <NavLink key={index} to={block.path} className={navClassNames}>
+                            <HomeMediaListBlock
+                                fetchItems={block.fetch}
+                                smallScreen={smallScreen}
+                                currentTheme={currentTheme}
+                                itemType={block.type}
+                                itemsList={block.itemsList}/>
+                        </NavLink>
+                    )}
             </div>
         </section>
     );

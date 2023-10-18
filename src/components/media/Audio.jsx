@@ -7,8 +7,8 @@ import {formatTime} from "../../common/commonData";
 import {ClipLoader} from "react-spinners";
 import {Fade} from "@mui/material";
 import {Skeleton, Tooltip} from "@mui/material";
-import FittedThemeBtn from "../../common/theme/FittedThemeBtn";
-import AudioThemeContainer from "../../common/theme/AudioThemeContainer";
+import FittedThemeBtn from "../common/theme/FittedThemeBtn";
+import AudioThemeContainer from "../common/theme/AudioThemeContainer";
 
 const Audio = ({
                    name,

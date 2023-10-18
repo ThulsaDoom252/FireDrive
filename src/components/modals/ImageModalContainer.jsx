@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {ItemsModalContext} from "../../context/ItemsModalContext";
-import {imageModal, imagesRoute, removeCurrentItemMsg, removeCurrentItemTitle} from "../../common/commonData";
+import {imageItemModal, imagesRoute, removeCurrentItemMsg, removeCurrentItemTitle} from "../../common/commonData";
 import ImageItemsModal from "./ImageItemsModal";
 import {handleAlertModal} from "../../redux/appSlice";
 import {useDispatch} from "react-redux";
@@ -31,37 +31,6 @@ const ImageModalContainer = ({toggleModal, animateModal, confirm, handleCurrentM
             toggleImageSettingInSmallScreen,
         } = modalContext
 
-        useEffect(() => {
-            document.addEventListener('fullscreenchange', handleFullScreenState);
-
-                return () => {
-                    document.removeEventListener('fullscreenchange', handleFullScreenState);
-                };
-                //eslint-disable-next-line
-            }, [fullScreen]
-        )
-
-        useEffect(() => {
-            const handleLandScapeMode = () => {
-                if (window.innerWidth > window.innerHeight) {
-                    if (!fullScreen) {
-                        if (!document.fullscreenElement)
-                            document.documentElement.requestFullscreen().then(() => void 0)
-                    }
-                }
-            };
-
-            if (smallScreen) {
-                window.addEventListener('resize', handleLandScapeMode)
-            } else {
-                window.removeEventListener('resize', handleLandScapeMode)
-            }
-
-            return () => {
-                window.removeEventListener('resize', handleLandScapeMode)
-            }
-            //eslint-disable-next-line
-        }, [smallScreen]);
 
 // binding keys to current modal handlers
         useEffect(() => {
@@ -111,7 +80,7 @@ const ImageModalContainer = ({toggleModal, animateModal, confirm, handleCurrentM
                 handleFullScreen()
                 return
             }
-            handleCurrentModal(imageModal)
+            handleCurrentModal(imageItemModal)
         }
 
         const carouselSettings = {

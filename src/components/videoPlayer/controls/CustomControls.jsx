@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 import ControlBar from "./components/ControlBar";
 import CentralPlayBtn from "./components/CentralBlayBtn";
 import TopBlock from "./components/TopBlock";
@@ -52,7 +52,6 @@ const CustomControls = ({
         totalVideoDuration,
         previewTime,
         currentVideoVolume,
-        isMobileFullScreen,
         currentSubMenu,
         handlePlay,
         handleMuteVideoVolume,
@@ -110,7 +109,6 @@ const CustomControls = ({
                 currentVideoTime,
                 currentVideoVolume,
                 isFullScreen,
-                isMobileFullScreen,
                 controlBtnAnimation,
                 isVideoMenuOpen,
                 currentSubMenu,

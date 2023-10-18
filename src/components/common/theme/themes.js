@@ -1,7 +1,7 @@
 //Themes
-import DI from "../../images/themeIcons/DAS.jpg";
-import NI from "../../images/themeIcons/NS.jpg";
-import DESI from "../../images/themeIcons/DS.jpg";
+import DI from "../../../images/themeIcons/DAS.jpg";
+import NI from "../../../images/themeIcons/NS.jpg";
+import DESI from "../../../images/themeIcons/DS.jpg";
 
 ///Types
 export const nightTheme = 'NIGHT'

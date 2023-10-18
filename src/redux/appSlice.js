@@ -1,10 +1,10 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {
     delay, extractUsernameFromEmail,
-    imageModal,
+    imageItemModal,
     noModal, paginateMode,
     smallScreenWidth,
-    videoModal
+    videoItemModal
 } from "../common/commonData";
 import {
     activeDayBg, activeDesertBg, activeNightBg,
@@ -17,7 +17,7 @@ import {
     primeNightBg, secDayBg,
     secDesertBg,
     secNightBg
-} from "../common/theme/themes";
+} from "../components/common/theme/themes";
 import {get, ref as dbRef, update} from "firebase/database";
 import {database} from "../firebase";
 import toast from "react-hot-toast";
@@ -185,10 +185,10 @@ export const handleInitialModalItem = createAsyncThunk('modal-item-initial-url-t
     await delay(10)
     switch (modalType) {
         case 'Image':
-            dispatch(setItemModalType(imageModal))
+            dispatch(setItemModalType(imageItemModal))
             break;
         case 'video':
-            dispatch(setItemModalType(videoModal))
+            dispatch(setItemModalType(videoItemModal))
             break;
         default:
             void 0

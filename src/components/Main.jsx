@@ -3,11 +3,11 @@ import HeaderContainer from "./header/HeaderContainer";
 import {
     audioRoute,
     delay,
-    imageModal, imagesRoute, lazyMode,
+    imageItemModal, imagesRoute, lazyMode,
     mainContentId,
     mediaTypes, noModal, paginateMode, renameModal, rootRoute, shareModal,
     signInRoute,
-    videoModal, videosRoute,
+    videoItemModal, videosRoute,
 } from "../common/commonData";
 import {Routes, Route, Navigate, useLocation, useNavigate} from "react-router-dom";
 import {connect} from "react-redux";
@@ -34,7 +34,7 @@ import useConfirm from "./hooks/useConfirm";
 import {useStyles} from "./mui/styles";
 import BurgerMenu from "./BurgerMenu/BurgerMenu";
 import Overlay from "./common/Overlay";
-import ThemeContainer from "../common/theme/ThemeContainer";
+import ThemeContainer from "./common/theme/ThemeContainer";
 
 const Main = ({
                   currentMediaSet,
@@ -75,13 +75,13 @@ const Main = ({
     const location = useLocation()
     const [isThemeBlockOpened, setIsThemeBlockOpened] = useState(false)
     const [isSettingsBlockOpened, setIsSettingsBlockOpened] = useState(false)
-    const isVideoModalMounted = mountedItemModal === videoModal
-    const isImageModalMounted = mountedItemModal === imageModal
+    const isVideoModalMounted = mountedItemModal === videoItemModal
+    const isImageModalMounted = mountedItemModal === imageItemModal
     const isRenameModalMounted = mountedModal === renameModal
     const isShareModalMounted = mountedModal === shareModal
     const animateRenameModal = modalType === renameModal
-    const animateImageModal = itemModalType === imageModal
-    const animateVideoModal = itemModalType === videoModal
+    const animateImageModal = itemModalType === imageItemModal
+    const animateVideoModal = itemModalType === videoItemModal
     const animateShareModal = modalType === shareModal
 
     const pathName = location.pathname
@@ -144,11 +144,11 @@ const Main = ({
     }
 
     const handleItemModal = async (modalType) => {
-        if (modalType === imageModal) {
+        if (modalType === imageItemModal) {
             if (!isImageModalMounted) {
-                setMountedItemModal(imageModal)
+                setMountedItemModal(imageItemModal)
                 await delay(100)
-                setItemModalType(imageModal)
+                setItemModalType(imageItemModal)
 
             } else {
 
@@ -157,13 +157,13 @@ const Main = ({
             return
         }
 
-        if (modalType === videoModal) {
+        if (modalType === videoItemModal) {
 
             if (!isVideoModalMounted) {
 
-                setMountedItemModal(videoModal)
+                setMountedItemModal(videoItemModal)
                 await delay(100)
-                setItemModalType(videoModal)
+                setItemModalType(videoItemModal)
             } else {
 
                 nullItemModal().then(() => void 0)

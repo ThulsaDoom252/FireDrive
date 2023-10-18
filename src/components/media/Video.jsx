@@ -5,7 +5,7 @@ import {delay, formatTime} from "../../common/commonData";
 import {BiSolidVolume, BiVolumeMute} from "react-icons/bi";
 import {Skeleton, Tooltip} from "@mui/material";
 import {Fade} from "@mui/material";
-import VideoItemThemeContainer from "../../common/theme/VideoItemThemeContainer";
+import VideoItemThemeContainer from "../common/theme/VideoItemThemeContainer";
 
 const Video = ({
                    url,

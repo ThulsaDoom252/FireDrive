@@ -24,9 +24,6 @@ const BottomButtonsContainer = ({
                                     isScaleSubMenuOpen,
                                     isVideoMenuOpen,
                                     isSpeedSubMenuOpen,
-                                    isMobileFullScreen,
-
-
                                 }) => {
     return (
         <>
@@ -37,7 +34,6 @@ const BottomButtonsContainer = ({
                 handlePiP={handlePiP}
                 controlBtnAnimation={controlBtnAnimation}
                 handleVideoMenu={handleVideoMenu}
-                isMobileFullScreen={isMobileFullScreen}
             />
             {/*{Context Menu}*/}
             <VideoContextTransition isVideoMenuOpen={isVideoMenuOpen}>

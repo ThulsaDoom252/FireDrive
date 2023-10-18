@@ -84,8 +84,8 @@ export const smallScreenWidth = 1024
 export const AlertModal = 'ALERT MODAL'
 export const UserModal = 'USER MODAL'
 export const renameModal = 'RENAME MODAL'
-export const imageModal = 'IMAGES MODAL'
-export const videoModal = 'VIDEO MODAL'
+export const imageItemModal = 'IMAGES MODAL'
+export const videoItemModal = 'VIDEO MODAL'
 
 export const shareModal = 'SHARE MODAL'
 export const noModal = 'NO MODAL'

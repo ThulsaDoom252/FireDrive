@@ -4,14 +4,8 @@ import {FiPause, FiPlay} from "react-icons/fi";
 import Preview from "./Preview";
 import Progress from "./Progress";
 import {CiVolume, CiVolumeMute} from "react-icons/ci";
-import BottomButtons from "./BottomButtons";
-import VideoContextTransition from "./VideoContextTransition";
-import ScaleBtn from "./ScaleBtn";
-import SpeedBtn from "./SpeedBtn";
-import ScaleMenu from "./ScaleMenu";
-import SpeedMenu from "./SpeedMenu";
 import BottomButtonsContainer from "./BottomButtonsContainer";
-import VolumeBar from "../../../audioPlayer/VolumeBar";
+import ThemedVolumeBar from "../../../common/theme/ThemedVolumeBar";
 
 const ControlBar = ({
                         isVideoPlaying,
@@ -24,7 +18,6 @@ const ControlBar = ({
                         previewTime,
                         mouseX,
                         touchX,
-                        isMobileFullScreen,
                         currentVideoTime,
                         currentVideoVolume,
                         isFullScreen,
@@ -74,21 +67,21 @@ const ControlBar = ({
 
     return (
         <>
-            {smallScreenMode || isMobileFullScreen ?
+            {smallScreenMode  ?
                 <div className='
         w-full
         flex
         flex-col
         h-12
         z-10
-
+        justify-center
         pb-2
         bg-gray-800
         bg-opacity-80'
                      onClick={stopPropagation}
                 >
                     {/*//Mobile Progress */}
-                    <div className={'w-full h-4 relative bottom-4'}>
+                    <div className={'w-full h-4 relative bottom-3.5'}>
                         {isSliderHovered && !disablePreview &&
                             <Preview
                                 smallScreenMode={smallScreenMode}
@@ -127,16 +120,10 @@ const ControlBar = ({
                                 <div onClick={handleMuteVideoVolume}
                                 >{currentVideoVolume !== 0 ? <CiVolume/> : <CiVolumeMute/>}
                                 </div>
-                                {/*Volume bar block */}
+                                {/*Volume bar block*/}
                                 <div className={'w-10 ml-2 relative top-1'}>
                                     {/*Volume bar*/}
-                                    <VolumeBar
-                                        barWidth={5}
-                                        customMarks={videoVolumeMarks}
-                                        handleVolumeChange={handleVideoVolumeChange}
-                                        maxValue={1}
-                                        volume={currentVideoVolume}
-                                    />
+                                    <ThemedVolumeBar barWidth={5} value={currentVideoVolume} customMarks={videoVolumeMarks} handleChange={handleVideoVolumeChange}/>
                                 </div>
                             </div>
                             <BottomButtonsContainer
@@ -145,7 +132,6 @@ const ControlBar = ({
                                 handleVideoMenu={handleVideoMenu}
                                 handleFullScreen={handleFullScreen}
                                 isFullScreen={isFullScreen}
-                                isMobileFullScreen={isMobileFullScreen}
                                 handleScaleSubMenu={handleScaleSubMenu}
                                 currentScaleValue={currentScaleValue}
                                 handleSpeedSubMenu={handleSpeedSubMenu}
@@ -253,12 +239,7 @@ const ControlBar = ({
                                 {/*Volume bar block */}
                                 <div className={'w-20 ml-2 relative top-1'}>
                                     {/*Volume bar*/}
-                                    <VolumeBar
-                                        barWidth={5}
-                                        handleVolumeChange={handleVideoVolumeChange}
-                                        maxValue={1}
-                                        volume={currentVideoVolume}
-                                    />
+                                    <ThemedVolumeBar barWidth={5} handleChange={handleVideoVolumeChange} value={currentVideoVolume}/>
                                 </div>
                             </div>
                             {/*Time block*/}

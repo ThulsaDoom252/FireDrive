@@ -1,19 +1,20 @@
 import React from 'react';
 import {Slider} from "@mui/material";
-import {makeStyles, withStyles} from "@mui/styles";
+import {makeStyles} from "@mui/styles";
 
 
 const useStyles = makeStyles((theme) => ({
-    root: ({smallScreenMode}) =>({
+    root: ({smallScreenMode}) => ({
         '& .MuiSlider-track': {
             visibility: 'visible',
-            height: `${smallScreenMode && '10px'}`,
-            borderRadius: `${smallScreenMode && 0}`,
+            height: `${smallScreenMode ? '10px' : '15px'}`,
+            borderRadius: 0,
         },
         '& .MuiSlider-rail': {
+            border: 'thin white solid',
             visibility: 'visible',
-            height: `${smallScreenMode && '10px'}`,
-            borderRadius: `${smallScreenMode && 0}`,
+            height: `${smallScreenMode ? '10px' : '15px'}`,
+            borderRadius: 0,
         },
         '& .MuiSlider-thumb': {
             display: 'none',
@@ -26,14 +27,14 @@ const Progress = ({
                       handleMouseLeaveSlider,
                       handleMouseMove,
                       handleChange,
-    handleTouchMove,
+                      handleTouchMove,
                       maxValue,
                       smallScreenMode,
                       value,
                       minValue = 0,
                       step = 0.01
                   }) => {
-    const classes = useStyles({smallScreenMode });
+    const classes = useStyles({smallScreenMode});
 
 
     return (
@@ -43,7 +44,7 @@ const Progress = ({
             }}
             onMouseEnter={handleMouseEnterSlider}
             onMouseLeave={handleMouseLeaveSlider}
-            onTouchStart = {handleMouseEnterSlider}
+            onTouchStart={handleMouseEnterSlider}
             onTouchEnd={handleMouseLeaveSlider}
             onTouchMove={handleTouchMove}
             onMouseMove={handleMouseMove}

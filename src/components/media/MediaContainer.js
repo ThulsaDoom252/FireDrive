@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Media from "./Media";
-import {imageModal, noModal, rootRoute, videoModal} from "../../common/commonData";
+import {imageItemModal, noModal, rootRoute, videoItemModal} from "../../common/commonData";
 import {
     clearSearchResults,
     handleCurrentMediaSet,
@@ -154,12 +154,12 @@ const MediaContainer = ({
 
     const handleImageClick = (index) => {
         setCurrentModalItemIndex(index)
-        handleItemModal(imageModal)
+        handleItemModal(imageItemModal)
     }
 
     const handleVideoClick = (index) => {
         setCurrentModalItemIndex(index)
-        handleItemModal(videoModal)
+        handleItemModal(videoItemModal)
     }
 
 

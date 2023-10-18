@@ -1,6 +1,6 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import {ItemsModalContext} from "../../../context/ItemsModalContext";
-import {formatTime, videoModal} from "../../../common/commonData";
+import {formatTime, videoItemModal} from "../../../common/commonData";
 import VideoModal from "./VideoModal";
 import {VideoControlsContext} from "../../../context/VideoControlsContext";
 import {AudioPlayerContext} from "../../../context/AudioPlayerContext";
@@ -25,7 +25,6 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
         controlBtnAnimation,
         topBtnClass,
         isSliderHovered,
-        isFullScreen,
         mouseX,
         touchX,
         playerRef,
@@ -40,7 +39,6 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
         handleScaleSubMenu,
         handleSpeedSubMenu,
         handleClearSubMenu,
-        requestFullScreen,
         handlePlaySpeed,
         handleMouseMove,
         handleTouchMove,
@@ -54,7 +52,6 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
         totalVideoDuration,
         previewTime,
         currentVideoVolume,
-        isMobileFullScreen,
         currentSubMenu,
         handlePlay,
         handleMuteVideoVolume,
@@ -63,7 +60,6 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
         currentVideoTime,
         setCurrentVideoTime,
         videoBlockContainerRef,
-        setIsMobileFullScreen,
         videoContainerRef,
         handleVideoControlsVisibility,
         isControlsVisible,
@@ -79,13 +75,15 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
         handleCurrentModalItemIndex,
         smallScreen,
         toggleVideoMobileSettings,
+        fullScreen,
+        handleFullScreen,
     } = ModalContext;
 
     const customControlsProps = [
         controlBtnAnimation,
         topBtnClass,
         isSliderHovered,
-        isFullScreen,
+        fullScreen,
         mouseX,
         touchX,
         playBackValues,
@@ -99,7 +97,7 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
         handleScaleSubMenu,
         handleSpeedSubMenu,
         handleClearSubMenu,
-        requestFullScreen,
+        handleFullScreen,
         handlePlaySpeed,
         handleMouseMove,
         handleTouchMove,
@@ -113,78 +111,11 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
         totalVideoDuration,
         previewTime,
         currentVideoVolume,
-        isMobileFullScreen,
         currentSubMenu,
         handlePlay,
         handleMuteVideoVolume,
         confirm,
     ]
-
-    //Stops audio if video starts to play
-    useEffect(() => {
-        (isCurrentTrackPlaying && isVideoPlaying) && toggleCurrentTrackPlaying(false)
-        //eslint-disable-next-line
-    }, [isVideoPlaying])
-
-
-    //Handle videoContainer style in fullScreen
-    useEffect(() => {
-        const videoBlockContainer = videoBlockContainerRef?.current
-        const videoContainer = videoContainerRef?.current
-        const fullscreenChangeHandler = () => {
-            if (document.fullscreenElement) {
-                videoBlockContainer.style.marginTop = '0'
-                videoBlockContainer.style.width = '100%'
-                videoBlockContainer.style.height = '100%'
-                videoContainer.style.width = '100vw'
-                videoContainer.style.height = '100vh'
-                smallScreen && setIsMobileFullScreen(true)
-            } else {
-                if (isMobileFullScreen) {
-                    videoBlockContainer.style.width = '100%'
-                    videoBlockContainer.style.height = '45%'
-                    videoBlockContainer.style.marginTop = '1.25rem'
-                    setIsMobileFullScreen(false)
-                } else {
-                    videoBlockContainer.style.width = '80%'
-                    videoBlockContainer.style.height = '90%'
-                }
-                videoContainer.style.width = '100%'
-                videoContainer.style.height = '90%'
-            }
-        };
-
-        document.addEventListener('fullscreenchange', fullscreenChangeHandler);
-
-        return () => {
-            document.removeEventListener('fullscreenchange', fullscreenChangeHandler);
-        };
-    }, [isFullScreen, isMobileFullScreen]);
-
-
-    // Enter fullscreen if  landscape mode turned on
-    useEffect(() => {
-        const handleLandScapeMode = () => {
-            if (window.innerWidth > window.innerHeight) {
-                if (!isFullScreen) {
-                    if (!document.fullscreenElement)
-                        document.documentElement.requestFullscreen().then(() => void 0)
-                }
-            }
-        };
-
-        if (smallScreen) {
-            window.addEventListener('resize', handleLandScapeMode)
-        } else {
-            window.removeEventListener('resize', handleLandScapeMode)
-        }
-
-        return () => {
-            window.removeEventListener('resize', handleLandScapeMode)
-        }
-        //eslint-disable-next-line
-    }, [smallScreen]);
-
 
     //Video modal handlers
     const handleVideoIsReady = () => {
@@ -192,7 +123,12 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
     }
 
     const handleClose = () => {
-        handleCurrentModal(videoModal)
+        if (fullScreen) {
+            handleFullScreen()
+            return
+        }
+
+        handleCurrentModal(videoItemModal)
         setIsVideoReady(false);
     };
 
@@ -257,7 +193,7 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
         videoBlockContainerRef,
         videoContainerRef,
         listedVideoProps,
-        isFullScreen,
+        fullScreen,
     }}/>
 };
 
