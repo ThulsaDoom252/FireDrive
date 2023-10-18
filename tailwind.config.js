@@ -135,7 +135,6 @@ module.exports = {
                 'homeItemBlock': '1024px',
                 'imageListItem': '100px',
                 'videoListItem': '100px',
-                'audioListItem': '50px',
                 '65vw': '65vw',
                 '90screen': '90vw',
                 '95vw': '95vw',

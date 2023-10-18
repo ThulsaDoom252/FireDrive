@@ -31,7 +31,6 @@ const FittedThemeBtn = ({
         '&:hover': {
             color: navButton && activeColor,
         },
-
     }
 
     return (
@@ -39,8 +38,6 @@ const FittedThemeBtn = ({
                 onClick={onClick}>
             {children}
         </Button>
-
-
     );
 };
 

@@ -199,9 +199,6 @@ const Main = ({
     const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
     const mediaToShow = searchMode ? searchResults : listMode === paginateMode ? paginatedMedia : currentMediaSet
 
-    window.s1 = isThemeUpdating
-
-
     if (!isAuth) {
         return <Navigate to={signInRoute}/>
     }

@@ -1,33 +1,49 @@
 import React, {useState} from 'react';
 import {Skeleton} from "@mui/material";
 import ReactPlayer from "react-player";
+import {SkeletonOverlay, StyledPlayer} from "../HomeMediaListBlock";
 
 const HomeVideoPlayer = ({index, smallScreen, url}) => {
     const [isVideoLoaded, setIsVideoLoaded] = useState(false)
+
+    const containerStyle = {
+        position: 'relative',
+        paddingTop: '100%',
+    };
+
+
+    const videoStyle = {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        display: !isVideoLoaded ? 'hidden' : 'block',
+    };
+
+
     return (
         <>
-            {!isVideoLoaded && <Skeleton variant={'rectangular'} animation={'wave'}
-                                         height={100} width={100}/>}
-            {index <= (smallScreen ? 4 : 8) &&
-                <div className={`
-                    flex
-                    m-2
-                    justify-center
-                    items-center
+            {index <= (smallScreen ? 3 : 8) &&
+                <div
+                    style={containerStyle}
+                    className={`
                     rounded
-                    h-90%
-                    max-w-videoListItem
-                    overflow-y-hidden
                     ${isVideoLoaded ? 'bg-black' : 'hidden'}
                     `}>
+                    {!isVideoLoaded && <SkeletonOverlay variant={'rectangular'}/>}
                     <ReactPlayer
                         onReady={() => setIsVideoLoaded(true)}
-                        height={'full'}
-                        width={'full'}
+                        width="100%"
+                        height="100%"
+                        style={videoStyle}
                         url={url}
                         alt={'broken'}/>
+                </div>
+            }
 
-                </div>}</>
+        </>
     );
 };
 

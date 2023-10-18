@@ -20,6 +20,7 @@ import {getTheme, toggleCurrentTheme, toggleInitializing} from "./appSlice";
 import {restoreTimerInitialValue, verificationTimerInitialValue} from "../common/Timers";
 import {ref as dbRef, set, query, equalTo, get, orderByChild, remove, update} from 'firebase/database';
 import {signInMode, verificationMode} from "../components/Auth/authTypes";
+import {dayTheme} from "../components/common/theme/themes";
 
 
 const authSlice = createSlice({
@@ -243,6 +244,7 @@ export const authCheck = createAsyncThunk('auth-check-thunk', async (_, {dispatc
         onAuthStateChanged(auth, async (user) => {
             if (user === null) {
                 dispatch(toggleAuthStatus(false))
+                dispatch(toggleCurrentTheme({type: dayTheme}))
                 dispatch(setUserData({email: '', username: '', avatar: null}))
             }
             if (user) {
