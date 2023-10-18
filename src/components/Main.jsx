@@ -110,14 +110,11 @@ const Main = ({
 
 
     useEffect(() => {
-        if (currentRoute === imagesRoute) {
-            navigate(imagesRoute)
-        } else if (currentRoute === videosRoute) {
-            navigate(videosRoute)
-        } else if (currentRoute === audioRoute) {
-            navigate(audioRoute)
+        const validRoutes = [imagesRoute, videosRoute, audioRoute];
+        if (validRoutes.includes(currentRoute)) {
+            navigate(currentRoute);
         } else {
-            navigate(rootRoute)
+            navigate(rootRoute);
         }
     }, [currentRoute])
 
@@ -207,9 +204,6 @@ const Main = ({
         <>
             <Dialog/>
             {isThemeUpdating && <Overlay zIndex={'z-2'}/>}
-            {/*<div className={'relative bottom-20 z-max'}>*/}
-            {/*    <MobileVideoMenu/>*/}
-            {/*</div>*/}
             {isRenameModalMounted &&
                 <RenameModal toggleModal={handleModal} showModal={animateRenameModal}/>}
             {isShareModalMounted && <ShareModal toggleModal={handleModal} animateModal={animateShareModal}/>}
