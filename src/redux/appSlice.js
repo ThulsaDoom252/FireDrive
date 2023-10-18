@@ -1,83 +1,240 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {alertRemoveAll, delay} from "../common/commonData";
-import {deleteAllMedia} from "./mediaSlice";
+import {
+    delay, extractUsernameFromEmail,
+    imageItemModal,
+    noModal, paginateMode,
+    smallScreenWidth,
+    videoItemModal
+} from "../common/commonData";
+import {
+    activeDayBg, activeDesertBg, activeNightBg,
+    dayNavBtn,
+    dayPrimary, dayTheme, desertNavBtn, desertPrimary, desertTheme,
+    mainDayBg,
+    mainDesertBg,
+    mainNightBg, nightNavBtn,
+    nightPrimary, nightTheme, primeDayBg, primeDesertBg,
+    primeNightBg, secDayBg,
+    secDesertBg,
+    secNightBg
+} from "../components/common/theme/themes";
+import {get, ref as dbRef, update} from "firebase/database";
+import {database} from "../firebase";
+import toast from "react-hot-toast";
+import {getAuth} from "firebase/auth";
 
 const appSlice = createSlice({
     name: 'app-slice',
     initialState: {
+        listMode: paginateMode,
         initializing: false,
-        smallScreen: window.innerWidth < 768,
-        horizontalMode: false,
-        overlay: false,
-        alert: false,
-        alertMode: '',
-        alertStyle: '',
+        smallScreen: window.innerWidth <= smallScreenWidth,
+        modalType: '',
+        gridSize: 4,
+        gridIndex: 5,
+        itemModalType: noModal,
+        mountedModal: noModal,
+        mountedItemModal: noModal,
+        alertTitle: '',
+        alertMessage: '',
+        showVideoMobileMenu: false,
+        showAlertBtn: true,
+        currentModalItemIndex: 0,
+        itemOptionsHovered: false,
+        currentThemeName: '',
+        isThemeUpdating: false,
+        currentTheme: {
+            mainBg: null,
+            primeBg: null,
+            secBg: null,
+            color: null,
+            navColor: null,
+            activeColor: null,
+        },
     },
     reducers: {
+        toggleThemeUpdating(state, action) {
+            state.isThemeUpdating = action.payload
+        },
         toggleSmallScreen(state, action) {
             state.smallScreen = action.payload
         },
-        toggleHorizontalMode(state, action) {
-            state.horizontalMode = action.payload
+        setButtonMenuType(state, action) {
+            state.buttonMenuType = action.payload
         },
-        toggleOverlay(state, action) {
-            state.overlay = action.payload
-        },
-        toggleAlert(state, action) {
-            state.alert = action.payload
-        },
-        setAlertMode(state, action) {
-            const {alertMode, style} = action.payload
-            state.alertMode = alertMode
-            if (style) {
-                state.alertStyle = style
+        toggleCurrentTheme(state, action) {
+            const {type: themeType} = action.payload
+            state.currentThemeName = themeType
+            switch (themeType) {
+                case dayTheme:
+                    state.currentTheme.mainBg = mainDayBg
+                    state.currentTheme.primeBg = primeDayBg
+                    state.currentTheme.secBg = secDayBg
+                    state.currentTheme.color = dayPrimary
+                    state.currentTheme.navColor = dayNavBtn
+                    state.currentTheme.activeColor = activeDayBg
+                    break
+                case nightTheme:
+                    state.currentTheme.mainBg = mainNightBg
+                    state.currentTheme.primeBg = primeNightBg
+                    state.currentTheme.secBg = secNightBg
+                    state.currentTheme.color = nightPrimary
+                    state.currentTheme.navColor = nightNavBtn
+                    state.currentTheme.activeColor = activeNightBg
+                    break
+                case desertTheme:
+                    state.currentTheme.mainBg = mainDesertBg
+                    state.currentTheme.primeBg = primeDesertBg
+                    state.currentTheme.secBg = secDesertBg
+                    state.currentTheme.color = desertPrimary
+                    state.currentTheme.navColor = desertNavBtn
+                    state.currentTheme.activeColor = activeDesertBg
+                    break
+                default:
+                    void 0
             }
+        },
+        setItemOptionsHovered(state, action) {
+            state.itemOptionsHovered = action.payload
+        },
+        setAlertActionType(state, action) {
+            state.alertActionType = action.payload
+        },
+        setMountedItemModal(state, action) {
+            state.mountedItemModal = action.payload
+        },
+        setMountedModal(state, action) {
+            state.mountedModal = action.payload
+        },
+        setGridIndex(state, action) {
+            state.gridIndex = action.payload
+
+        },
+        setModalType(state, action) {
+            state.modalType = action.payload
+        },
+        setGridSize(state, action) {
+            state.gridSize = action.payload
+        },
+        setItemModalType(state, action) {
+            state.itemModalType = action.payload
         },
         toggleInitializing(state, action) {
             state.initializing = action.payload
-        }
+        },
+        toggleListMode(state, action) {
+            state.listMode = action.payload
+        },
+        toggleVideoMobileMenu(state, action) {
+            state.showVideoMobileMenu = action.payload
+        },
+        setAlertModalContent(state, action) {
+            const {message, title, style, btnStyle, btnLabel, actionType, showBtn} = action.payload
+            state.alertMessage = message
+            state.alertTitle = title
+            state.alertStyle = style
+            state.alertBtnStyle = btnStyle
+            state.alertBtnLabel = btnLabel
+            state.alertActionType = actionType
+            state.showAlertBtn = showBtn
+        },
+        setCurrentModalItemIndex(state, action) {
+            state.currentModalItemIndex = action.payload
+        },
+
     }
 })
 
 export default appSlice.reducer
 export const {
     toggleSmallScreen,
-    toggleAlert,
-    toggleOverlay,
-    setAlertMode,
     toggleInitializing,
-    toggleHorizontalMode,
+    setAlertModalContent,
+    setCurrentModalItemIndex,
+    setItemOptionsHovered,
+    setModalType,
+    setItemModalType,
+    toggleCurrentTheme,
+    toggleListMode,
+    toggleVideoMobileMenu,
+    setGridSize,
+    setGridIndex,
+    setMountedItemModal,
+    setMountedModal,
+    toggleThemeUpdating
 } = appSlice.actions
 
-
-export const handleAlertAction = createAsyncThunk('alert-action-thunk', async ({
-                                                                                   alertMode,
-                                                                                   currentRoute,
-                                                                                   currentMediaSet,
-                                                                               }, {dispatch}) => {
-    switch (alertMode) {
-        case alertRemoveAll:
-            dispatch(deleteAllMedia({currentRoute, currentMediaSet}))
-            dispatch(handleAlert({overlayMode: true, toggle: false}))
-            break
-
-    }
+export const handleAlertModal = createAsyncThunk('alertModal-thunk', async ({
+                                                                                type = 'danger',
+                                                                                title,
+                                                                                message,
+                                                                                btnStyle = 'danger',
+                                                                                btnLabel = 'Delete',
+                                                                                showBtn = true,
+                                                                                actionType,
+                                                                            }, {dispatch}) => {
+    await dispatch(setAlertModalContent({type, title, message, btnStyle, btnLabel, showBtn, actionType}))
 })
 
 
-export const handleAlert = createAsyncThunk('alert-thunk', async ({
-                                                                      overlayMode,
-                                                                      alertMode,
-                                                                      alertStyle,
-                                                                      toggle = true
-                                                                  }, {dispatch}) => {
-    dispatch(setAlertMode({mode: '', alertStyle: ''}))
-    if (overlayMode) {
-        dispatch(toggleOverlay(toggle))
+export const handleInitialModalItem = createAsyncThunk('modal-item-initial-url-thunk', async ({
+                                                                                                  index,
+                                                                                                  modalType = "Image",
+                                                                                              }, {dispatch}) => {
+    dispatch(setCurrentModalItemIndex(index))
+    await delay(10)
+    switch (modalType) {
+        case 'Image':
+            dispatch(setItemModalType(imageItemModal))
+            break;
+        case 'video':
+            dispatch(setItemModalType(videoItemModal))
+            break;
+        default:
+            void 0
     }
-    if (alertMode) {
-        dispatch(setAlertMode({alertMode, style: alertStyle}))
-    }
-    delay(500)
-    dispatch(toggleAlert(toggle))
 })
+
+export const handleTheme = createAsyncThunk('theme-thunk', async (theme, {dispatch}) => {
+    debugger
+    try {
+        dispatch(toggleThemeUpdating(true))
+        await updateTheme(theme)
+        dispatch(toggleCurrentTheme({type: theme}))
+        dispatch(toggleThemeUpdating(false))
+    } catch (e) {
+        toast.error(`Can't update theme, see console for details`)
+        console.error(e)
+    }
+
+})
+
+///Dall
+export const updateTheme = async (theme) => {
+    const auth = getAuth()
+    const emailKey = extractUsernameFromEmail(auth.currentUser.email)
+    const userRef = dbRef(database, `users/` + emailKey)
+    const updates = {
+        currentTheme: theme
+    }
+
+    return update(userRef, updates)
+        .catch(() => {
+            toast.error('error updating verification link status')
+        })
+
+};
+
+export const getTheme = async () => {
+    const auth = getAuth()
+    const emailKey = extractUsernameFromEmail(auth.currentUser.email)
+    const userRef = dbRef(database, `users/` + emailKey)
+    return get(userRef)
+        .then((result) => {
+            if (result.exists()) {
+                return result.val().currentTheme
+            }
+        })
+};
+
+

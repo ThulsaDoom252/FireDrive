@@ -7,19 +7,28 @@ import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
 import {store} from "./redux/store";
 import {AudioPlayerContextProvider} from "./context/AudioPlayerContext";
-import 'bootstrap/dist/css/bootstrap.css';
 import {PagesContextProvider} from "./context/PagesContext";
 import {BurgerMenuContextProvider} from "./context/BurgerMenuContext";
+import PaginatorContextProvider from "./context/PaginatorContext";
+import {ItemsModalContextProvider} from "./context/ItemsModalContext";
+import {VideoControlsContextProvider} from "./context/VideoControlsContext";
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Provider store={store}>
         <AudioPlayerContextProvider>
-            <PagesContextProvider>
-                <BurgerMenuContextProvider>
-                    <App/>
-                </BurgerMenuContextProvider>
-            </PagesContextProvider>
+            <VideoControlsContextProvider>
+                <PagesContextProvider>
+                    <BurgerMenuContextProvider>
+                        <PaginatorContextProvider>
+                            <ItemsModalContextProvider>
+                                <App/>
+                            </ItemsModalContextProvider>
+                        </PaginatorContextProvider>
+                    </BurgerMenuContextProvider>
+                </PagesContextProvider>
+            </VideoControlsContextProvider>
         </AudioPlayerContextProvider>
     </Provider>
 );

@@ -6,17 +6,18 @@ body {
     overflow-y: hidden;
 }
 
-/*// BurgerMenu styles*/
+/*// BurgerMenuWrapper styles.js*/
 .bm-burger-button {
     font-size: 2rem;
 }
 
+/*Close btn icon*/
 .bm-cross {
     background: red;
 }
 
 /*
-Sidebar wrapper styles
+Sidebar wrapper styles.js
 Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
 */
 .bm-menu-wrap {
@@ -24,14 +25,15 @@ Note: Beware of modifying this element as it can break the animations - you shou
     height: 100%;
 }
 
-/* General sidebar styles */
+/* General sidebar styles.js */
 .bm-menu {
     background: #373a47;
     border: solid thin gray;
     border-radius: 5px;
     font-size: 1.15em;
-    padding: 3rem 0.5rem 0.5rem 0.5rem;
+    padding: 0.1rem 0.5rem 3rem 0.5rem;
     overflow: auto;
+    z-index: 20;
 }
 
 /* Morph shape necessary with bubble or elastic */
@@ -45,10 +47,47 @@ Note: Beware of modifying this element as it can break the animations - you shou
     justify-content: start;
     flex-direction: column;
     align-items: center;
-
-
 }
+
 .bm-overlay {
-    z-index: 10 !important;
+    z-index: 1 !important;
     background: rgba(0, 0, 0, 0.3);
 }
+
+
+/*Carousel*/
+
+.carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.carousel .slide img {
+    max-height: 100vh;
+    max-width: 100vw;
+    margin: 0 auto;
+    object-fit: contain;
+
+}
+
+
+/*//Animations*/
+/*  */
+/*  //audioPlayer*/
+@keyframes flash {
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-flash {
+    animation: flash 2s infinite;
+}
+
+/*Adaptive module image */
