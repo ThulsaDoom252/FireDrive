@@ -53,12 +53,11 @@ const BurgerMenu = ({
                         </>
                     }
                 </div>
-                <div className={'flex justify-between items-center mb-2'}>
-                    <div className={'mx-auto w-40%'}><UploadContainer/></div>
-                    <div className={'mx-auto w-40%'}><RemoveAllBtnContainer confirm={confirm}/></div>
+                <div className={`flex justify-between items-center mb-2 w-full ${smallScreen && 'flex-col'}`}>
+                    <div className={'m-1 w-1/2 '}><UploadContainer/></div>
+                    <div className={'m-1 w-1/2'}><RemoveAllBtnContainer confirm={confirm}/></div>
                 </div>
                 <div className={'bg-gray-100 h-0.5 rounded w-full'}/>
-
                 <div className='mt-3 mb-3'>
                     <DropDownMenu menuType={isThemeBlockOpened} toggleMenu={setIsThemeBlockOpened}
                                   btnLabel={'Change theme'} smallScreenIcon={<BiColorFill/>}>
