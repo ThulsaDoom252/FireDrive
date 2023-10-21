@@ -1,3 +1,5 @@
+export const preventDefault = e => e.preventDefault()
+
 export const truncate = (name, maxCharacters = 15) => {
     const maxNumber = maxCharacters
     const mediaLength = name?.length

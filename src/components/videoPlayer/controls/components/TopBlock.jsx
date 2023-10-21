@@ -1,6 +1,6 @@
 import React from 'react';
 import {HiDotsVertical} from "react-icons/hi";
-import {stopPropagation} from "../../../../common/commonData";
+import {stopPropagation} from "../../../../common/common";
 import ItemOptions from "../../../options/ItemOptions";
 
 const TopBlock = ({

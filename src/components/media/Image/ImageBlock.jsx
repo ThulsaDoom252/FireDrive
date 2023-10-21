@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import MediaOptions from "../../options/ItemOptions";
 import {Fade} from "@mui/material";
 import Image from "./Image";
-import {delay} from "../../../common/commonData";
+import {delay} from "../../../common/common";
 
 const ImageBlock = ({
                         url,

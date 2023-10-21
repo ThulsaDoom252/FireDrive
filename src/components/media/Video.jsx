@@ -1,7 +1,7 @@
 import React, {useState, useRef, useEffect} from 'react';
 import ReactPlayer from "react-player";
 import ItemOptions from "../options/ItemOptions";
-import {delay, formatTime} from "../../common/commonData";
+import {delay, formatTime, preventDefault} from "../../common/common";
 import {BiSolidVolume, BiVolumeMute} from "react-icons/bi";
 import {Tooltip} from "@mui/material";
 import {Fade} from "@mui/material";
@@ -78,6 +78,7 @@ const Video = ({
         <>
             <div
                 style={videoContainerStyle}
+                onContextMenu={preventDefault}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
                 className={`bg-black 

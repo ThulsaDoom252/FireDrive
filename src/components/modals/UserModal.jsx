@@ -3,7 +3,7 @@ import {CgCloseR} from "react-icons/cg";
 import {connect} from "react-redux";
 import {changeAvatar} from "../../redux/authSlice";
 import CurrentUser from "../user/CurrentUser";
-import {noModal} from "../../common/commonData";
+import {noModal} from "../../common/common";
 import TransitionCommonParrent from "../common/TransitionCommonParrent";
 import ActionBtn from "../common/ActionBtn";
 import ThemeBtn from "../common/theme/ThemeBtn";

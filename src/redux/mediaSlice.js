@@ -8,7 +8,7 @@ import {
     rootRoute, videos,
     videosOnly,
     videosRoute
-} from "../common/commonData";
+} from "../common/common";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {
     getDownloadURL,

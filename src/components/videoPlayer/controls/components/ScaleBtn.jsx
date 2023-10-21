@@ -1,7 +1,7 @@
 import React from 'react';
 import {MdKeyboardArrowRight} from "react-icons/md";
 import {RxMagnifyingGlass} from "react-icons/rx";
-import {formatValueAsPercentage} from "../../../../common/commonData";
+import {formatValueAsPercentage} from "../../../../common/common";
 
 const ScaleBtn = ({handleScaleSubMenu, currentScaleValue}) => {
     return (

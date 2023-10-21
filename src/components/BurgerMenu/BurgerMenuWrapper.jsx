@@ -1,7 +1,7 @@
 import {useContext} from "react";
 import {slide as Menu} from 'react-burger-menu'
 import {BurgerMenuContext} from "../../context/BurgerMenuContext";
-import {mainContentId, wrapperId} from "../../common/commonData";
+import {mainContentId, wrapperId} from "../../common/common";
 
 const BurgerMenuWrapper = ({
                         smallScreen,

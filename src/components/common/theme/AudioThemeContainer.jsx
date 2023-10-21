@@ -1,6 +1,7 @@
 import React from 'react';
 import {useSelector} from "react-redux";
 import {primeDayBg, primeNightBg} from "./themes";
+import {preventDefault} from "../../../common/common";
 
 const AudioThemeContainer = ({
                                  primeBgCondition,
@@ -9,7 +10,7 @@ const AudioThemeContainer = ({
                                  onClick,
                                  isAudioLoaded,
                                  onMouseEnter,
-                                 onMouseLeave
+                                 onMouseLeave,
                              }) => {
     const currentTheme = useSelector(state => state.app.currentTheme)
 
@@ -23,6 +24,7 @@ const AudioThemeContainer = ({
 
     return (
         <div style={audioContainerStyle}
+             onContextMenu={preventDefault}
              onMouseEnter={onMouseEnter}
              onMouseLeave={onMouseLeave}
              className={`${className} 

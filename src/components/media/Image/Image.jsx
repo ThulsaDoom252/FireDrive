@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Skeleton, Tooltip} from "@mui/material";
 import {SkeletonOverlay, StyledImage} from "../../home/HomeMediaListBlock";
+import {preventDefault} from "../../../common/common";
 
 const Image = ({
                    url,
@@ -25,10 +26,11 @@ const Image = ({
         <>
             {!imageIsLoaded &&
                 <Tooltip title={'image loading'}>
-                   <SkeletonOverlay variant={'rectangular'}/>
+                    <SkeletonOverlay variant={'rectangular'}/>
                 </Tooltip>
             }
             <StyledImage
+                onContextMenu={preventDefault}
                 onClick={() => handleImageClick ? handleImageClick(index) : void 0}
                 className={`
                 rounded 

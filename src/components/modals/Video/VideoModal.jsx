@@ -2,7 +2,7 @@ import React from 'react';
 import ReactPlayer from 'react-player';
 import {IoClose} from 'react-icons/io5';
 import ModalVideoItem from '../../media/ModalVideoItem';
-import {stopPropagation} from '../../../common/commonData';
+import {stopPropagation} from '../../../common/common';
 import CustomControls from '../../videoPlayer/controls/CustomControls';
 import {ClipLoader} from "react-spinners";
 import {Fade} from "@mui/material";

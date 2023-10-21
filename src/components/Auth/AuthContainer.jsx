@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Navigate} from "react-router-dom";
-import {delay, rootRoute} from "../../common/commonData";
+import {delay, rootRoute} from "../../common/common";
 import Auth from "./Auth";
 import {
     checkUserVerification,

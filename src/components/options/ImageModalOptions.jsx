@@ -1,7 +1,7 @@
 import React from 'react';
 import {BiSolidPencil} from "react-icons/bi";
 import {FaShare, FaTrash} from "react-icons/fa";
-import {renameModal, shareModal} from "../../common/commonData";
+import {renameModal, shareModal} from "../../common/common";
 import {BsFullscreen} from "react-icons/bs";
 import {AiOutlineFullscreenExit} from "react-icons/ai";
 import FittedThemeBtn from "../common/theme/FittedThemeBtn";

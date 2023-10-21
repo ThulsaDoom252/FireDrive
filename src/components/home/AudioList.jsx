@@ -1,7 +1,7 @@
 import React from 'react';
 import {MdLibraryMusic} from "react-icons/md";
 import {PiMusicNotesFill} from "react-icons/pi";
-import {truncate} from "../../common/commonData";
+import {truncate} from "../../common/common";
 import {ClipLoader} from "react-spinners";
 
 const AudioList = ({audioSet, currentTheme, fetchAudio}) => {

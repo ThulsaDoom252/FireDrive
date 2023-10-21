@@ -1,5 +1,5 @@
 import React from 'react';
-import {formatTime, stopPropagation} from "../../../../common/commonData";
+import {formatTime, stopPropagation} from "../../../../common/common";
 import {FiPause, FiPlay} from "react-icons/fi";
 import Preview from "./Preview";
 import Progress from "./Progress";

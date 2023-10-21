@@ -3,7 +3,7 @@ import {AiFillPauseCircle, AiFillPlayCircle} from "react-icons/ai";
 import {useContext} from "react";
 import {AudioPlayerContext} from "../../context/AudioPlayerContext";
 import ItemOptions from "../options/ItemOptions";
-import {formatTime} from "../../common/commonData";
+import {formatTime} from "../../common/common";
 import {ClipLoader} from "react-spinners";
 import {Fade} from "@mui/material";
 import {Skeleton, Tooltip} from "@mui/material";
@@ -54,7 +54,9 @@ const Audio = ({
     return (
         <>
             <audio onCanPlay={handleLoadAudio} hidden={true} src={url || ''} ref={audioRef}></audio>
-            <AudioThemeContainer onClick={() => handleSetCurrentAudioIndex({index: audioIndex})}
+            <AudioThemeContainer
+
+                onClick={() => handleSetCurrentAudioIndex({index: audioIndex})}
                                  className={`
                                   transition-all
                 duration-100

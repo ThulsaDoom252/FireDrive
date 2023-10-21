@@ -8,7 +8,7 @@ import {
     mediaTypes, noModal, paginateMode, renameModal, rootRoute, shareModal,
     signInRoute,
     videoItemModal, videosRoute,
-} from "../common/commonData";
+} from "../common/common";
 import {Routes, Route, Navigate, useLocation, useNavigate} from "react-router-dom";
 import {connect} from "react-redux";
 import {

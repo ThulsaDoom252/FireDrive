@@ -1,6 +1,6 @@
 import React, {useContext, useRef, useState} from 'react';
 import {ItemsModalContext} from "../../../context/ItemsModalContext";
-import {formatTime, videoItemModal} from "../../../common/commonData";
+import {formatTime, videoItemModal} from "../../../common/common";
 import VideoModal from "./VideoModal";
 import {VideoControlsContext} from "../../../context/VideoControlsContext";
 import {AudioPlayerContext} from "../../../context/AudioPlayerContext";

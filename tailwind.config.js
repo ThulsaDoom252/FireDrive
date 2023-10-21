@@ -55,7 +55,6 @@ module.exports = {
                 'custom-800': '800px'
             },
             backgroundColor: {
-                'settingsBar': 'rgba(255,255,255,0.5)',
                 'desert-prime': '#ffc08b',
                 'desert-sec': '#383634',
                 'day-prime': '#30eeff',

@@ -1,6 +1,6 @@
 import {createContext, useState} from 'react';
 import {useEffect, useRef} from "react";
-import {delay} from "../common/commonData";
+import {delay} from "../common/common";
 import {useSelector} from "react-redux";
 import toast from "react-hot-toast";
 

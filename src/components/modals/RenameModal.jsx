@@ -4,7 +4,7 @@ import {handleMediaName, renameMedia, setNewMediaName} from "../../redux/mediaSl
 import {Button, Fade} from "@mui/material";
 import TextField from '@mui/material/TextField';
 import Overlay from "../common/Overlay";
-import {renameModal, stopPropagation} from "../../common/commonData";
+import {renameModal, stopPropagation} from "../../common/common";
 
 const RenameModal = ({
                          oldName,
