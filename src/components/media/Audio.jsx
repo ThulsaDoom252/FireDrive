@@ -82,7 +82,7 @@ const Audio = ({
                                     : <AiFillPlayCircle size={25}/>}
                             </FittedThemeBtn>
                         </div>
-                        <div className={`w-full absolute left-10 truncate`}>{name}</div>
+                        <div className={`w-60% absolute left-10 truncate`}>{name}</div>
                         <Fade in={isAudioHovered} timeout={100}>
                             <div className={'absolute top-1/2 transform -translate-y-1/2 right-0 z-50 mr-40'}>
                                 <ItemOptions

@@ -9,33 +9,33 @@ import {customInput} from "../mui/styles";
 import {restoreMode, signInMode, signUpMode} from "./authTypes";
 
 const Auth = ({
-                    authError,
-                    isAuthBtnFetching,
-                    googleAuth,
-                    githubAuth,
-                    smallScreen,
-                    isSignInMode,
-                    isSignUpMode,
-                    isVerificationMode,
-                    isRestoreMode,
-                    setAuthMode,
-                    handleLogout,
-                    username,
-                    email,
-                    isVerificationEmailSend,
-                    verificationTimerValue,
-                    handleSubmit,
-                    errors,
-                    handleChange,
-                    values,
-                    showPassword,
-                    setShowPassword,
-                    isRestoreEmailSend,
-                    isVerificationCheckBtnFetching,
-                    checkUserVerification,
-                    restoreTimerValue,
+                  authError,
+                  isAuthBtnFetching,
+                  googleAuth,
+                  githubAuth,
+                  smallScreen,
+                  isSignInMode,
+                  isSignUpMode,
+                  isVerificationMode,
+                  isRestoreMode,
+                  setAuthMode,
+                  handleLogout,
+                  username,
+                  email,
+                  isVerificationEmailSend,
+                  verificationTimerValue,
+                  handleSubmit,
+                  errors,
+                  handleChange,
+                  values,
+                  showPassword,
+                  setShowPassword,
+                  isRestoreEmailSend,
+                  isVerificationCheckBtnFetching,
+                  checkUserVerification,
+                  restoreTimerValue,
 
-                }) => {
+              }) => {
 
         const inputContainerStyle = 'mt-4 h-inputContainerHeight'
 
@@ -46,7 +46,6 @@ const Auth = ({
             }
 
             if (isSignInMode) {
-                debugger
                 setAuthMode(signUpMode)
             }
         }
@@ -66,15 +65,15 @@ const Auth = ({
             '>
                 <form onSubmit={handleSubmit}>
                     <div className={'container-fluid max-auto  max-w-screen-sm p-2'}>
-                        <div className={'w-full h-fit flex justify-center items-center'}>
-                            <Image
-                                height={'h-50'}
-                                width={'w-40'}
-                                showOptions={false}
-                                url={Logo}
-                                imageIsClickable={false}
-                            />
-                        </div>
+                        {/*<div className={'w-full h-fit flex justify-center items-center'}>*/}
+                        {/*    <Image*/}
+                        {/*        height={'h-50'}*/}
+                        {/*        width={'w-40'}*/}
+                        {/*        showOptions={false}*/}
+                        {/*        url={Logo}*/}
+                        {/*        imageIsClickable={false}*/}
+                        {/*    />*/}
+                        {/*</div>*/}
                         {isVerificationMode &&
                             <div className={`
                         w-full 
@@ -215,10 +214,10 @@ const Auth = ({
                         absolute 
                         top-minus30`}>{authError}</div>
                         </div>
-                        {!isVerificationMode && <>
+                        {!isVerificationMode && <div className={'mt-2'}>
                             <SocialAuth {...{googleAuth, githubAuth, smallScreen}}/>
-                            <hr/>
-                        </>}
+                            <hr className={'mt-2 h-0.5 bg-black'}/>
+                        </div>}
                     </div>
                 </form>
                 <div className={'text-center flex justify-center items-center w-full mt-2'}>
