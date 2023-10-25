@@ -1,7 +1,6 @@
 import React from 'react';
 import SocialAuth from "./SocialAuth";
 import Logo from "../../images/logo.png"
-import Image from "../media/Image/Image"
 import {Button, IconButton, TextField, Tooltip} from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
@@ -19,7 +18,6 @@ const Auth = ({
                   isVerificationMode,
                   isRestoreMode,
                   setAuthMode,
-                  handleLogout,
                   username,
                   email,
                   isVerificationEmailSend,
@@ -44,7 +42,6 @@ const Auth = ({
                 setAuthMode(signInMode)
                 return
             }
-
             if (isSignInMode) {
                 setAuthMode(signUpMode)
             }
@@ -52,9 +49,8 @@ const Auth = ({
 
         return (
             <div
-                className='
+                className={`
             font-sans
-            container-fluid
             mt-5
             pb-2
             rounded-md
@@ -62,7 +58,8 @@ const Auth = ({
             bg-opacity-80
             max-w-lg
             mx-auto
-            '>
+            ${smallScreen && 'mb-20'}
+            `}>
                 <form onSubmit={handleSubmit}>
                     <div className={'container-fluid max-auto  max-w-screen-sm p-2'}>
                         <div className={'w-full h-fit flex justify-center items-center'}>
@@ -240,9 +237,7 @@ const Auth = ({
                             Restore
                         </Button>
                     </div>}
-
             </div>
-
         );
     }
 ;

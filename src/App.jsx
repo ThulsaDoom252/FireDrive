@@ -64,12 +64,11 @@ const App = ({
                  className={`
                  ${currentTheme.mainBg}
                  bg-cover
-                 bg-over 
                  bg-no-repeat
              w-screen 
              h-screen 
              relative 
-            overflow-y-hidden`}>
+            overflow-y-auto`}>
                 <Scrollbars>
                     <Routes>
                         <Route exact path={signInRoute} element={<AuthContainer {...{isAuth, smallScreen}}/>}/>

@@ -7,7 +7,7 @@ import {
     githubAuth,
     googleAuth,
     handleEmailAndPasswordSignUp,
-    handleLogin, handleLogout, sendRestoreEmail,
+    handleLogin, sendRestoreEmail,
     sendVerificationEmail,
     setAuthError, setAuthMode
 } from "../../redux/authSlice";
@@ -27,7 +27,6 @@ const AuthContainer = ({
                            smallScreen,
                            handleEmailAndPasswordSignUp,
                            sendVerificationEmail,
-                           handleLogout,
                            isVerificationEmailSend,
                            verificationTimerValue,
                            username,
@@ -137,7 +136,6 @@ const AuthContainer = ({
                 isVerificationMode,
                 isRestoreMode,
                 setAuthMode,
-                handleLogout,
                 username,
                 isVerificationEmailSend,
                 verificationTimerValue,
@@ -178,7 +176,6 @@ export default connect(mapStateToProps, {
     setAuthError,
     sendVerificationEmail,
     sendRestoreEmail,
-    handleLogout,
     setAuthMode,
     checkUserVerification,
 })(AuthContainer);
