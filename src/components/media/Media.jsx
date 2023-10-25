@@ -11,7 +11,7 @@ import Overlay from "../common/Overlay";
 import noImages from "./noImages.jpg"
 import noVideo from "./noVideo.jpg"
 import noAudio from "./noAudio.png"
-import {GridItemContainer} from "../home/HomeMediaListBlock";
+import {GridItemContainer} from '../mui/styles';
 
 const Media = ({
                    imagesPage,

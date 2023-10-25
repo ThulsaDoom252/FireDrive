@@ -1,4 +1,5 @@
 import {makeStyles} from "@mui/styles";
+import {Skeleton, styled} from '@mui/material';
 
 export const useStyles = makeStyles((theme) => ({
     gitIcon: {
@@ -121,3 +122,29 @@ export const searchInput = {
         },
     },
 };
+
+
+export const StyledImage = styled('img')({
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+});
+
+export const GridItemContainer = styled('div')({
+    width: '100%',
+    maxHeight: '100%',
+    paddingBottom: '100%', // Создаем пустое пространство для сохранения пропорций
+    position: 'relative',
+});
+
+export const SkeletonOverlay = styled(Skeleton)({
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+});
+

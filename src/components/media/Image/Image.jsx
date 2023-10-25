@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import {Skeleton, Tooltip} from "@mui/material";
-import {SkeletonOverlay, StyledImage} from "../../home/HomeMediaListBlock";
+import {Tooltip} from "@mui/material";
 import {preventDefault} from "../../../common/common";
+import {SkeletonOverlay, StyledImage} from '../../mui/styles';
 
 const Image = ({
                    url,

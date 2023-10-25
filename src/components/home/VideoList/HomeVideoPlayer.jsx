@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import ReactPlayer from "react-player";
-import {SkeletonOverlay} from "../HomeMediaListBlock";
 import {videoContainerStyle} from "../../../common/styles";
+import {SkeletonOverlay} from '../../mui/styles';
 
 
 const HomeVideoPlayer = ({index, smallScreen, url}) => {

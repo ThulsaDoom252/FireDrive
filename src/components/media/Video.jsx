@@ -6,8 +6,8 @@ import {BiSolidVolume, BiVolumeMute} from "react-icons/bi";
 import {Tooltip} from "@mui/material";
 import {Fade} from "@mui/material";
 import VideoItemThemeContainer from "../common/theme/VideoItemThemeContainer";
-import {SkeletonOverlay} from "../home/HomeMediaListBlock";
 import {videoContainerStyle} from "../../common/styles";
+import {SkeletonOverlay} from '../mui/styles';
 
 const Video = ({
                    url,
