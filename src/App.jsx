@@ -4,7 +4,7 @@ import {
     signInRoute,
     smallScreenWidth,
     wrapperId
-} from "./common/commonData";
+} from "./common/common";
 import {connect, useSelector} from "react-redux";
 import Main from "./components/Main";
 import Initializing from "./components/Initializing";

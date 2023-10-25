@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import MediaOptions from "../../options/ItemOptions";
 import {Fade} from "@mui/material";
 import Image from "./Image";
-import {delay} from "../../../common/commonData";
+import {delay} from "../../../common/common";
 
 const ImageBlock = ({
                         url,
@@ -36,13 +36,10 @@ const ImageBlock = ({
     }, [hoveredMediaIndex])
 
     return (
-        <div key={index}
-             onMouseEnter={() => setHoveredMediaIndex(index)}
-             onMouseLeave={() => setHoveredMediaIndex(null)}
-             className={'flex justify-center w-full h-full relative'}>
+        <>
             {(imageIsHovered && showOptions) &&
                 <Fade in={animateOptions} timeout={200}>
-                    <div className={'absolute top-0 right-0'}>
+                    <div className={'absolute top-0 right-0 z-1'}>
                         <MediaOptions name={name}
                                       oldName={oldName}
                                       url={url}
@@ -62,7 +59,7 @@ const ImageBlock = ({
                 imageIsHovered,
                 handleImageClick,
             }}/>
-        </div>
+        </>
 
     );
 };

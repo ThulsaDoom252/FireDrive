@@ -10,8 +10,9 @@ import {
     removeCurrentItemTitle,
     renameModal,
     stopPropagation
-} from "../../common/commonData";
+} from "../../common/common";
 import {Button, Fade} from "@mui/material";
+import FittedThemeBtn from "../common/theme/FittedThemeBtn";
 
 
 const ItemOptions = ({
@@ -85,12 +86,12 @@ const ItemOptions = ({
                items-center 
                rounded
                 hover:cursor-pointer
-             ${(showOptions && showBg) && 'bg-settingsBar'} 
+             ${(showOptions && showBg) && 'bg-gray-300 bg-opacity-50'} 
            `}
             onMouseLeave={handleMouseLeave}>
             <Fade in={showOptions} timeout={200}>
                 <div className={`flex ${displayInCol && 'flex-col'}`}>
-                    <Button className={iconBlockClass}>
+                    <FittedThemeBtn className={iconBlockClass}>
                         <TelegramShareButton
                             url={url}
                             title={''}>
@@ -99,8 +100,8 @@ const ItemOptions = ({
                                     title={"share via telegram"}
                                     size={iconsSize}
                                     color={tgIconColor}/> : <p>Share via Telegram</p>}</TelegramShareButton>
-                    </Button>
-                    <Button className={iconBlockClass}>
+                    </FittedThemeBtn>
+                    <FittedThemeBtn className={iconBlockClass}>
                         <ViberShareButton url={url}>
                             {showIcons ?
                                 <FaViber
@@ -109,21 +110,21 @@ const ItemOptions = ({
                                     color={vbIconColor}/> :
                                 <p>Share via Viber</p>}
                         </ViberShareButton>
-                    </Button>
-                    <Button className={iconBlockClass}
-                            onClick={() => handleModal({modalType: renameModal, name, oldName})}>
+                    </FittedThemeBtn>
+                    <FittedThemeBtn className={iconBlockClass}
+                                    onClick={() => handleModal({modalType: renameModal, name, oldName})}>
                         {showIcons ?
                             <BsPencilFill size={iconsSize}
                                           title={"edit current item name"}
                                           color={renameIconColor}/> : 'Rename item'}
-                    </Button>
-                    <Button className={iconBlockClass}
-                            onClick={handleDeleteCurrentItem}>
+                    </FittedThemeBtn>
+                    <FittedThemeBtn className={iconBlockClass}
+                                    onClick={handleDeleteCurrentItem}>
                         {showIcons ?
                             < BsTrash title={'delete current item'} size={iconsSize}
                                       color={deleteIconColor}
                             /> : 'Delete Item'}
-                    </Button>
+                    </FittedThemeBtn>
                     {/*<BsDownload className="text-gray-200" size={iconsSize}/>*/}
 
                 </div>

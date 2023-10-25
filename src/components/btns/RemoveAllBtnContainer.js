@@ -3,7 +3,7 @@ import {PagesContext} from "../../context/PagesContext";
 import {connect,} from "react-redux";
 import {handleAlertModal} from "../../redux/appSlice";
 import {GoTrash} from "react-icons/go";
-import {removeAllItemsTitle, removeAllMsg} from "../../common/commonData";
+import {removeAllItemsTitle, removeAllMsg} from "../../common/common";
 import {deleteAllMedia} from "../../redux/mediaSlice";
 import ThemeBtn from "../common/theme/ThemeBtn";
 

@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import {Skeleton, Tooltip} from "@mui/material";
+import {SkeletonOverlay, StyledImage} from "../../home/HomeMediaListBlock";
+import {preventDefault} from "../../../common/common";
 
 const Image = ({
                    url,
@@ -24,25 +26,21 @@ const Image = ({
         <>
             {!imageIsLoaded &&
                 <Tooltip title={'image loading'}>
-                    <Skeleton variant="rectangular" width={skeletonWidth} height={skeletonHeight} animation="wave"/>
+                    <SkeletonOverlay variant={'rectangular'}/>
                 </Tooltip>
             }
-            <img
+            <StyledImage
+                onContextMenu={preventDefault}
                 onClick={() => handleImageClick ? handleImageClick(index) : void 0}
                 className={`
-                object-cover 
                 rounded 
                 cursor-pointer
-                ${imageIsHovered && 'hover:border-2 border-blue-300'}  
-                ${height}
-                ${width}        
-                ${isAbsolute && 'absolute'}
+                ${imageIsHovered && 'hover:border-2 border-blue-300'}    
                 transition-all duration-100
-                ${imageIsLoaded ? 'opacity-100' : 'opacity-0'}
-                `}
+                ${imageIsLoaded ? 'opacity-100' : 'opacity-0'} `}
                 src={url}
                 onLoad={handleLoadImage}
-                alt=''
+                alt='image'
             />
         </>
 

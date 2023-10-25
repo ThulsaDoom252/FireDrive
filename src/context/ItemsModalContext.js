@@ -2,7 +2,7 @@ import React, {createContext, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {setCurrentModalItemIndex} from "../redux/appSlice";
 import {useSwipeable} from "react-swipeable";
-import {imageItemModal, videoItemModal} from "../common/commonData";
+import {imageItemModal, videoItemModal} from "../common/common";
 import videoModal from "../components/modals/Video/VideoModal";
 
 export const ItemsModalContext = createContext();

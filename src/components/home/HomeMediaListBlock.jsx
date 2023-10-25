@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {images,  videos, audio} from "../../common/commonData";
+import {images,  videos, audio} from "../../common/common";
 import {MdLibraryMusic, MdOutlineOndemandVideo} from "react-icons/md";
 import {FaImages} from "react-icons/fa";
 import {PiMusicNotesFill} from "react-icons/pi"

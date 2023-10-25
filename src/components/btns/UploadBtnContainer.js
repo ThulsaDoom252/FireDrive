@@ -1,7 +1,7 @@
 import React, {useContext, useRef} from 'react';
 import {connect} from "react-redux";
 import {uploadMedia} from "../../redux/mediaSlice";
-import {audioFiles, imageFiles, videoFiles} from "../../common/commonData";
+import {audioFiles, imageFiles, videoFiles} from "../../common/common";
 import {PagesContext} from "../../context/PagesContext";
 import {HiOutlinePlus} from "react-icons/hi";
 import ThemeBtn from "../common/theme/ThemeBtn";

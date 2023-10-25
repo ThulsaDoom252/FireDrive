@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {handleMediaName, renameMedia, setNewMediaName} from "../../redux/mediaSlice";
-import {truncate} from "../../common/commonData";
+import {truncate} from "../../common/common";
 
 const MediaName = ({
                        name,

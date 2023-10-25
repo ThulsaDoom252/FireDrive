@@ -1,4 +1,4 @@
-import {formatTime, stopPropagation, truncate} from "../../common/commonData";
+import {formatTime, stopPropagation, truncate} from "../../common/common";
 import 'rc-slider/assets/index.css';
 import {ClipLoader} from "react-spinners";
 import {withStyles} from "@mui/styles";

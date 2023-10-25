@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactPlayer from "react-player";
-import {formatTime} from "../../../../common/commonData";
+import {formatTime} from "../../../../common/common";
 
 const Preview = ({mouseX, previewTime, url, previewRef, smallScreenMode, touchX}) => {
 

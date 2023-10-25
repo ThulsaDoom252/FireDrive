@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect, useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
-import {audioRoute, images, imagesRoute, videos, videosRoute, audio} from "../../common/commonData";
+import {audioRoute, images, imagesRoute, videos, videosRoute, audio} from "../../common/common";
 import HomeMediaListBlock from "./HomeMediaListBlock";
 
 const Home = ({fetchImages, fetchVideos, fetchAudio, currentTheme, smallScreen}) => {

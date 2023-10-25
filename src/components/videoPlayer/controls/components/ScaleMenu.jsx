@@ -1,6 +1,6 @@
 import React from 'react';
 import {MdKeyboardArrowLeft} from "react-icons/md";
-import {formatValueAsPercentage} from "../../../../common/commonData";
+import {formatValueAsPercentage} from "../../../../common/common";
 
 const ScaleMenu = ({handleClearSubMenu, changeVideoScale, currentScaleValue}) => {
     return (

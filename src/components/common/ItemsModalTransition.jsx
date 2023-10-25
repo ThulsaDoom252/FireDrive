@@ -1,6 +1,6 @@
 import React from 'react';
 import {Dialog, Transition} from "@headlessui/react";
-import {noModal, stopPropagation} from "../../common/commonData";
+import {noModal, stopPropagation} from "../../common/common";
 import {IoClose} from "react-icons/io5";
 
 const ItemsModalTransition = ({

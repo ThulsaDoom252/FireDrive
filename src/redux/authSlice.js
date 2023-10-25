@@ -15,7 +15,7 @@ import {
 import {uploadBytes, ref, getDownloadURL} from "firebase/storage";
 import {database, storage,} from "../firebase";
 import toast from "react-hot-toast";
-import {extractUsernameFromEmail, generateRandomString} from "../common/commonData";
+import {extractUsernameFromEmail, generateRandomString} from "../common/common";
 import {getTheme, toggleCurrentTheme, toggleInitializing} from "./appSlice";
 import {restoreTimerInitialValue, verificationTimerInitialValue} from "../common/Timers";
 import {ref as dbRef, set, query, equalTo, get, orderByChild, remove, update} from 'firebase/database';

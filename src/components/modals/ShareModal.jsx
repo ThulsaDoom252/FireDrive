@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {ItemsModalContext} from "../../context/ItemsModalContext";
 import {FacebookShareButton, TelegramShareButton, ViberShareButton} from "react-share";
-import {shareModal, stopPropagation} from "../../common/commonData";
+import {shareModal, stopPropagation} from "../../common/common";
 import {SiFacebook, SiTelegram, SiViber} from "react-icons/si";
 import {Fade} from "@mui/material";
 import Button from '@mui/material/Button';

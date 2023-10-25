@@ -2,7 +2,7 @@ import {useState, useContext} from "react";
 import {connect} from "react-redux";
 import {setLastPlayedAudioNameBeforeSort, sortCurrentMediaSet, toggleSortByValue} from "../../redux/mediaSlice";
 import {PagesContext} from "../../context/PagesContext";
-import {delay, getLocalStorageItem} from "../../common/commonData";
+import {delay, getLocalStorageItem} from "../../common/common";
 import Select from "react-select/base";
 
 const SortInput = ({

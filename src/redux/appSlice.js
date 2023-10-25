@@ -5,7 +5,7 @@ import {
     noModal, paginateMode,
     smallScreenWidth,
     videoItemModal
-} from "../common/commonData";
+} from "../common/common";
 import {
     activeDayBg, activeDesertBg, activeNightBg,
     dayNavBtn,

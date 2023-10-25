@@ -1,5 +1,5 @@
 import React from 'react';
-import {audioRoute, imagesRoute, rootRoute, videosRoute} from "../../common/commonData";
+import {audioRoute, imagesRoute, rootRoute, videosRoute} from "../../common/common";
 import {AiFillPicture, AiOutlineHome} from "react-icons/ai";
 import {RiMovieLine} from "react-icons/ri";
 import {BiMusic, BiSearch} from "react-icons/bi";

@@ -3,7 +3,7 @@ import {IoIosArrowBack, IoIosArrowForward} from 'react-icons/io'
 import {IoClose} from "react-icons/io5";
 import {AiOutlineFullscreenExit} from "react-icons/ai";
 import Overlay from "../common/Overlay";
-import {stopPropagation} from "../../common/commonData";
+import {stopPropagation} from "../../common/common";
 import ImageModalOptions from "../options/ImageModalOptions";
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";

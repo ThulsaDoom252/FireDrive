@@ -1,5 +1,5 @@
 import {createContext} from 'react';
-import {audioRoute, imagesRoute, rootRoute, videosRoute} from "../common/commonData";
+import {audioRoute, imagesRoute, rootRoute, videosRoute} from "../common/common";
 import {useSelector} from "react-redux";
 
 export const PagesContext = createContext();

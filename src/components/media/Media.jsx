@@ -11,6 +11,8 @@ import Overlay from "../common/Overlay";
 import noImages from "./noImages.jpg"
 import noVideo from "./noVideo.jpg"
 import noAudio from "./noAudio.png"
+import {GridItemContainer} from "../home/HomeMediaListBlock";
+
 const Media = ({
                    imagesPage,
                    videosPage,
@@ -76,7 +78,7 @@ const Media = ({
                               src={(imagesPage ? noImages : videosPage ? noVideo : noAudio)}
                               alt={'No images'}/></div> :
                     <Grid
-                        style={{width: gridWidth}}
+                        style={{width: '100%'}}
                         container
                         spacing={1}
                         hidden={noSearchResults}
@@ -91,30 +93,28 @@ const Media = ({
                         />}
 
                         {imagesPage ? mediaToShow.map((media, index) => {
-                                return <Grid item xs={gridNumb}><ImageBlock url={media.url}
-                                                                            name={media.name}
-                                                                            oldName={media.oldName}
-                                                                            {...{
-                                                                                index,
-                                                                                setHoveredMediaIndex,
-                                                                                searchMode,
-                                                                                hoveredMediaIndex,
-                                                                                setItemOptionsHovered,
-                                                                                confirm,
-                                                                                handleImageClick,
-                                                                                handleModal,
-                                                                            }}/></Grid>
+                                return <Grid item xs={gridNumb}>
+                                    <GridItemContainer  key={index} onMouseEnter={() => setHoveredMediaIndex(index)}
+                                                         onMouseLeave={() => setHoveredMediaIndex(null)}>
+                                        <ImageBlock
+                                            url={media.url}
+                                            name={media.name}
+                                            oldName={media.oldName}
+                                            {...{
+                                                index,
+                                                setHoveredMediaIndex,
+                                                searchMode,
+                                                hoveredMediaIndex,
+                                                setItemOptionsHovered,
+                                                confirm,
+                                                handleImageClick,
+                                                handleModal,
+                                            }}/>
+                                    </GridItemContainer>
+                                   </Grid>
                             })
                             : videosPage ? mediaToShow.map((video, index) =>
                                     <Grid item xs={gridNumb}>
-                                        <div key={index} className={`
-                            w-full
-                            relative 
-                            flex
-                             flex-col 
-                             justify-center 
-                             text-center   
-                             `}>
                                             <Video url={video.url}
                                                    name={video.name}
                                                    oldName={video.oldName}
@@ -128,9 +128,7 @@ const Media = ({
                                                        smallScreen,
                                                        handleVideoClick,
                                                        handleModal,
-
                                                    }}/>
-                                        </div>
                                     </Grid>
                                 ) :
                                 mediaToShow.map(((audio, index) => {
