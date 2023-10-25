@@ -65,15 +65,9 @@ const Auth = ({
             '>
                 <form onSubmit={handleSubmit}>
                     <div className={'container-fluid max-auto  max-w-screen-sm p-2'}>
-                        {/*<div className={'w-full h-fit flex justify-center items-center'}>*/}
-                        {/*    <Image*/}
-                        {/*        height={'h-50'}*/}
-                        {/*        width={'w-40'}*/}
-                        {/*        showOptions={false}*/}
-                        {/*        url={Logo}*/}
-                        {/*        imageIsClickable={false}*/}
-                        {/*    />*/}
-                        {/*</div>*/}
+                        <div className={'w-full h-fit flex justify-center items-center'}>
+                            <img className='h-50 w-40' src={Logo} alt='logo'/>
+                        </div>
                         {isVerificationMode &&
                             <div className={`
                         w-full 

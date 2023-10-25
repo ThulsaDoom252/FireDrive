@@ -110,11 +110,11 @@ const Main = ({
 
 
     useEffect(() => {
-        const validRoutes = [imagesRoute, videosRoute, audioRoute];
+        const validRoutes = [imagesRoute, videosRoute, audioRoute, rootRoute];
         if (validRoutes.includes(currentRoute)) {
             navigate(currentRoute);
         } else {
-            navigate(rootRoute);
+            navigate(signInRoute);
         }
     }, [currentRoute])
 
