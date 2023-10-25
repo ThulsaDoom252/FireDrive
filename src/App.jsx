@@ -73,9 +73,6 @@ const App = ({
                 <Scrollbars>
                     <Routes>
                         <Route exact path={signInRoute} element={<AuthContainer {...{isAuth, smallScreen}}/>}/>
-                        {/*<Route path={signUpRoute} element={<SignUpContainer  {...{isAuth}}/>}/>*/}
-                        {/*<Route path={verificationRoute} element={<VerificationContainer/>}/>*/}
-                        {/*<Route path={restoreRoute} element={<RestoreContainer/>}/>*/}
                         <Route path={'*'} element={<Main {...{isAuth, currentTheme}}/>}/>
                     </Routes>
                 </Scrollbars>
