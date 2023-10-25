@@ -1,6 +1,6 @@
 import React, {useState, createContext, useEffect} from 'react'
 import {useDispatch, useSelector} from "react-redux";
-import {toggleMobileSearch} from "../redux/mediaSlice";
+import {toggleSearch} from "../redux/mediaSlice";
 
 export const BurgerMenuContext = createContext();
 
@@ -11,7 +11,7 @@ export function BurgerMenuContextProvider(props) {
 
     useEffect(() => {
         if (menuOpenState) {
-            showMobileSearch && dispatch(toggleMobileSearch(false))
+            showMobileSearch && dispatch(toggleSearch(false))
         }
 
     }, [menuOpenState])

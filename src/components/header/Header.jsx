@@ -9,12 +9,9 @@ const Header = ({
                     currentTheme,
                     searchRequest,
                     setSearchRequest,
-                    toggleMobileSearch,
-                    showMobileSearch,
+                    toggleSearch,
+                    isSearchVisible,
                     isSearchBtnDisabled,
-                    isSearchFocused,
-                    setIsSearchFocused,
-                    classes,
                     handleRoute,
                     currentRoute,
                 }) => {
@@ -40,7 +37,7 @@ const Header = ({
 
 
                 <div className={`${smallScreen ? 'w-11/12' : 'w-full'} flex justify-center items-center`}>
-                    {!showMobileSearch && <div className={`
+                    {!isSearchVisible && <div className={`
                 ${smallScreen ? 'w-full' : 'w-300'} 
                 flex 
                 justify-between 
@@ -48,25 +45,18 @@ const Header = ({
                         <NavItems
                             currentRoute={currentRoute}
                             handleRoute={handleRoute}
-                            toggleMobileSearch={toggleMobileSearch}
+                            toggleSearch={toggleSearch}
                             isSearchBtnDisabled={isSearchBtnDisabled}
                             currentTheme={currentTheme}
                         />
                     </div>}
-
-                    <div className={'w-300'} hidden={smallScreen && !showMobileSearch}>
-                        <div className={'w-full'}>
-                            <Search
-                                searchRequest={searchRequest}
-                                isDisabled={isSearchBtnDisabled}
-                                isSearchFocused={isSearchFocused}
-                                setSearchRequest={setSearchRequest}
-                                classes={classes}
-                                setIsSearchFocused={setIsSearchFocused}
-                            /></div>
-                    </div>
-
-
+                    <div hidden={!isSearchVisible} className={'w-full'}>
+                        <Search
+                            searchRequest={searchRequest}
+                            isDisabled={isSearchBtnDisabled}
+                            toggleSearch={toggleSearch}
+                            setSearchRequest={setSearchRequest}
+                        /></div>
                 </div>
                 <BurgerMenuTrigger/>
             </ThemeContainer>

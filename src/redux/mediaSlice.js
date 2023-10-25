@@ -43,7 +43,7 @@ const mediaSlice = createSlice({
         sortBy: byDate,
         searchResults: [],
         searchRequest: '',
-        showMobileSearch: false,
+        isSearchVisible: false,
         noSearchResults: false,
         searchMode: false,
         sortOptions: [
@@ -67,8 +67,8 @@ const mediaSlice = createSlice({
 
     },
     reducers: {
-        toggleMobileSearch(state, action) {
-            state.showMobileSearch = action.payload
+        toggleSearch(state, action) {
+            state.isSearchVisible = action.payload
         },
         setUploadedBytes(state, action) {
             state.totalUploadedBytes = action.payload
@@ -326,7 +326,7 @@ export const {
     setLastPlayedAudioNameBeforeSort,
     setOldMediaName,
     toggleIsItemRenaming,
-    toggleMobileSearch,
+    toggleSearch,
     toggleUploadProgress,
     setUploadedBytes,
     setTotalBytesToUpload,

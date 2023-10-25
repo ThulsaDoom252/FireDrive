@@ -14,7 +14,7 @@ import {connect} from "react-redux";
 import {
     handleMediaName,
     listMedia,
-    setCurrentRoute, toggleMobileSearch,
+    setCurrentRoute, toggleSearch,
 } from "../redux/mediaSlice";
 import MediaContainer from "./media/MediaContainer";
 import {
@@ -51,8 +51,7 @@ const Main = ({
                   setItemModalType,
                   currentTheme,
                   toggleCurrentTheme,
-                  showMobileSearch,
-                  toggleMobileSearch,
+                  isSearchVisible,
                   currentThemeName,
                   listMode,
                   toggleListMode,
@@ -68,6 +67,7 @@ const Main = ({
                   totalBytesToUpload,
                   isMediaLoading,
                   isThemeUpdating,
+                  toggleSearch,
               }) => {
 
     const navigate = useNavigate()
@@ -125,7 +125,7 @@ const Main = ({
     }, [])
 
     const hideMobileSearch = () => {
-        showMobileSearch && toggleMobileSearch(false)
+        isSearchVisible && toggleSearch(false)
     }
 
     const nullMountedModal = async (time = 200) => {
@@ -224,10 +224,9 @@ const Main = ({
             <HeaderContainer
                 currentTheme={currentTheme}
                 currentRoute={currentRoute}
-                showMobileSearch={showMobileSearch}
-                toggleMobileSearch={toggleMobileSearch}
+                isSearchVisible={isSearchVisible}
+                toggleSearch={toggleSearch}
                 noMedia={noMedia}
-                classes={classes}
             />
             <main className={'w-full h-full overflow-y-hidden relative'} id={mainContentId} onClick={hideMobileSearch}>
                 <Scrollbars>
@@ -304,7 +303,7 @@ const mapStateToProps = (state) => {
         searchResults: state.media.searchResults,
         modalType: state.app.modalType,
         itemModalType: state.app.itemModalType,
-        showMobileSearch: state.media.showMobileSearch,
+        isSearchVisible: state.media.isSearchVisible,
         currentThemeName: state.app.currentThemeName,
         listMode: state.app.listMode,
         alertMessage: state.app.alertMessage,
@@ -323,7 +322,7 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
     listMedia, setCurrentRoute,
     setModalType, setItemModalType,
-    toggleCurrentTheme, toggleMobileSearch,
+    toggleCurrentTheme, toggleSearch,
     toggleListMode, setMountedItemModal,
     setMountedModal, handleMediaName,
 })(Main);

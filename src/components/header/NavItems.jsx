@@ -3,8 +3,7 @@ import {audioRoute, imagesRoute, rootRoute, videosRoute} from "../../common/comm
 import {AiFillPicture, AiOutlineHome} from "react-icons/ai";
 import {RiMovieLine} from "react-icons/ri";
 import {BiMusic, BiSearch} from "react-icons/bi";
-import {connect, useSelector} from "react-redux";
-import IconButton from '@mui/material/IconButton';
+import {connect} from "react-redux";
 import FittedThemeBtn from "../common/theme/FittedThemeBtn";
 
 
@@ -12,7 +11,7 @@ const NavItems = ({
                       smallScreen,
                       isSearchBtnDisabled,
                       currentTheme,
-                      toggleMobileSearch,
+                      toggleSearch,
                       handleRoute,
                       currentRoute,
                   }) => {
@@ -24,7 +23,7 @@ const NavItems = ({
         {path: audioRoute, icon: <BiMusic size={25}/>, label: 'Music'},
     ]
     const handleMobileSearch = () => {
-        toggleMobileSearch(true)
+        toggleSearch(true)
     }
 
     return (
@@ -38,15 +37,12 @@ const NavItems = ({
                         navItem.icon : navItem.label}
                 </FittedThemeBtn>
             )}
-            {smallScreen && <IconButton
-                onClick={handleMobileSearch}
-                disabled={isSearchBtnDisabled}
-                className={`
-            ${isSearchBtnDisabled ? `text-gray-400` : currentTheme.color}
-            `}>
-                <BiSearch size={24}/></IconButton>}
+                <FittedThemeBtn onClick={handleMobileSearch} isDisabled={isSearchBtnDisabled}>
+                    <BiSearch size={24}/>
+                </FittedThemeBtn>
         </>
-    );
+    )
+        ;
 };
 
 

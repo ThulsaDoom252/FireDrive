@@ -1,11 +1,20 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import ReactPlayer from "react-player";
 import {videoContainerStyle} from "../../../common/styles";
 import {SkeletonOverlay} from '../../mui/styles';
 
-
-const HomeVideoPlayer = ({index, smallScreen, url}) => {
+const HomeVideoPlayer = ({url}) => {
+    const ref = useRef(null)
     const [isVideoLoaded, setIsVideoLoaded] = useState(false)
+
+    useEffect(() => {
+        const rewindInitialVideo = () => {
+            const totalDuration = ref.current.getDuration()
+            ref.current.seekTo(totalDuration / 10)
+        }
+
+        isVideoLoaded && rewindInitialVideo()
+    }, [isVideoLoaded]);
 
     return (
         <div
@@ -16,6 +25,7 @@ const HomeVideoPlayer = ({index, smallScreen, url}) => {
                     `}>
             {!isVideoLoaded && <SkeletonOverlay variant={'rectangular'}/>}
             <ReactPlayer
+                ref={ref}
                 onReady={() => setIsVideoLoaded(true)}
                 width="100%"
                 height="100%"

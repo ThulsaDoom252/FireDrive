@@ -8,20 +8,17 @@ const HeaderContainer = ({
                              currentTheme,
                              searchRequest,
                              setSearchRequest,
-                             toggleMobileSearch,
-                             showMobileSearch,
+                             toggleSearch,
+                             isSearchVisible,
                              noMedia,
-                             classes,
                              setCurrentRoute,
                              currentRoute,
                          }) => {
 
     const pages = useContext(PagesContext)
     const {rootPage, imagesPage, videosPage, audioPage} = pages
-    const [isSearchFocused, setIsSearchFocused] = useState(false)
 
     const isSearchBtnDisabled = rootPage || (imagesPage && noMedia) || (videosPage && noMedia) || (audioPage && noMedia)
-
 
     const handleRoute = (route) => {
         setCurrentRoute(route)
@@ -34,11 +31,8 @@ const HeaderContainer = ({
         searchRequest={searchRequest}
         isSearchBtnDisabled={isSearchBtnDisabled}
         setSearchRequest={setSearchRequest}
-        toggleMobileSearch={toggleMobileSearch}
-        showMobileSearch={showMobileSearch}
-        classes={classes}
-        isSearchFocused={isSearchFocused}
-        setIsSearchFocused={setIsSearchFocused}
+        toggleSearch={toggleSearch}
+        isSearchVisible={isSearchVisible}
         handleRoute={handleRoute}
 
 
