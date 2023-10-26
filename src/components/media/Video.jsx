@@ -23,6 +23,7 @@ const Video = ({
                    smallScreen,
                    handleVideoClick,
                    handleModal,
+                   confirm,
                }) => {
     const [videoState, setVideoState] = useState({
         isVideoReady: false,
@@ -164,6 +165,7 @@ const Video = ({
                             setItemOptionsHovered,
                             hoveredMediaIndex,
                             handleModal,
+                            confirm,
                         }} />
                         </div>
                     </Fade>}
@@ -187,14 +189,15 @@ const Video = ({
                     onEnded={() => handlePlayVideo(true)}
                     onProgress={handleProgress}
                 />
-                <div className="absolute bottom-2 text-white left-2 flex justify-between w-full">
-                    <Fade in={isPlaying}>
-                        <div className={'flex'}>
-                            {formatTime(currentTime)}
-                            {' / '}
-                            {playerRef.current && formatTime(totalDuration)}
-                        </div>
-                    </Fade>
+                <div
+                    className={`absolute bottom-2 text-white flex justify-between w-full left-1 ${isPlaying && 'left-2'}`}>
+
+                    <div className={'flex'}>
+                        <div
+                            className={`transition-all duration-300 ${isPlaying ? 'opacity-100' : 'opacity-0 absolute'}`}>{formatTime(currentTime)}
+                            {' / '}</div>
+                        {playerRef.current && formatTime(totalDuration)}
+                    </div>
                     <Fade in={isPlaying}>
                         <div className={`
                             absolute 

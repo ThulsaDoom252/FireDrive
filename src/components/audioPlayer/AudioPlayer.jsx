@@ -100,7 +100,7 @@ const AudioPlayer = ({
                                     {volume !== 0 ? <ImVolumeHigh size={20}/> : <ImVolumeMute2 size={20}/>}
                                 </FittedThemeBtn>
                                 <div className={'w-20 relative top-0.5'}>
-                                    <ThemedVolumeBar value={volume} handleChange={handleVolumeChange}/>
+                                    <ThemedVolumeBar value={volume} handleChange={handleVolumeChange} barWidth={'5px'}/>
                                 </div>
                             </div>
                         </div>

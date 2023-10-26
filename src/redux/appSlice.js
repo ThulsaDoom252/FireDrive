@@ -30,8 +30,8 @@ const appSlice = createSlice({
         initializing: false,
         smallScreen: window.innerWidth <= smallScreenWidth,
         modalType: '',
-        gridSize: 4,
-        gridIndex: 5,
+        gridDividerValue: 4,
+        gridLayoutIndex: 5,
         itemModalType: noModal,
         mountedModal: noModal,
         mountedItemModal: noModal,
@@ -106,15 +106,15 @@ const appSlice = createSlice({
         setMountedModal(state, action) {
             state.mountedModal = action.payload
         },
-        setGridIndex(state, action) {
-            state.gridIndex = action.payload
+        setCurrentLayoutIndex(state, action) {
+            state.gridLayoutIndex = action.payload
 
         },
         setModalType(state, action) {
             state.modalType = action.payload
         },
-        setGridSize(state, action) {
-            state.gridSize = action.payload
+        setGridDividerValue(state, action) {
+            state.gridDividerValue = action.payload
         },
         setItemModalType(state, action) {
             state.itemModalType = action.payload
@@ -157,8 +157,8 @@ export const {
     toggleCurrentTheme,
     toggleListMode,
     toggleVideoMobileMenu,
-    setGridSize,
-    setGridIndex,
+    setGridDividerValue,
+    setCurrentLayoutIndex,
     setMountedItemModal,
     setMountedModal,
     toggleThemeUpdating

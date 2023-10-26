@@ -25,7 +25,7 @@ export const useStyles = makeStyles((theme) => ({
     gridItemBtn: {
         width: '50px',
         display: 'flex',
-        backgroundColor: 'lightgray',
+        backgroundColor: 'red',
         justifyContent: 'center',
         alignItems: 'center',
         margin: '5px',
@@ -67,39 +67,6 @@ export const customInput = {
         }
     }
 };
-
-export const customBtns = {
-    audioPlayerBtn: {
-        margin: 0,
-        padding: 0,
-        maxWidth: '25px',
-        maxHeight: '25px',
-        height: 'fit-content',
-        minHeight: '25px',
-        minWidth: '25px',
-    },
-    audioPlayerPlayBtn: {
-        margin: 0,
-        padding: 0,
-        height: 'fit-content',
-        minHeight: '35px',
-        minWidth: '45px',
-        maxWidth: '45px',
-        maxHeight: '35px',
-    },
-    audioTrackBtn: {
-        margin: 0,
-        padding: 0,
-        height: 'fit-content',
-        minHeight: '35px',
-        minWidth: '45px',
-        maxWidth: '45px',
-        maxHeight: '35px',
-        position: 'relative',
-        right: '2px',
-
-    }
-}
 
 export const searchInput = {
     textField: {

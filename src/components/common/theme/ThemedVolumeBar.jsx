@@ -34,7 +34,7 @@ const ThemedVolumeBar = ({
             display: "none",
         },
         "& .MuiSlider-mark": {
-            width: barWidth, // Ширина отметки
+            width:  barWidth, // Ширина отметки
             height: '50%', // Высота отметки
             backgroundColor: 'gray', // Цвет отметки по умолчанию (неактивной)
             "&.MuiSlider-markActive": {

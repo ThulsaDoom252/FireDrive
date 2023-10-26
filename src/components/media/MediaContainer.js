@@ -12,23 +12,23 @@ import {PaginatorContext} from "../../context/PaginatorContext";
 import {connect} from "react-redux";
 import {
     setCurrentModalItemIndex,
-    setGridIndex,
-    setGridSize,
+    setCurrentLayoutIndex,
+    setGridDividerValue,
     setItemOptionsHovered
 } from "../../redux/appSlice";
-import first from "./layout/numbers/1.png"
-import second from "./layout/numbers/2.png"
-import third from "./layout/numbers/3.png"
-import fourth from "./layout/numbers/4.png"
-import fives from "./layout/numbers/5.png"
-import sixth from "./layout/numbers/6.png"
+import columnLayoutImg from "./layout/numbers/1.png"
+import twoColumnsLayoutImg from "./layout/numbers/2.png"
+import threeColumnsLayoutImg from "./layout/numbers/3.png"
+import quadColumnsLayoutImg from "./layout/numbers/4.png"
+import fiveColumnsLayoutImg from "./layout/numbers/5.png"
+import sixColumnsLayoutImg from "./layout/numbers/6.png"
 
 const MediaContainer = ({
                             currentRoute,
                             handleCurrentMediaSet,
                             handleSearchMedia,
-                            gridIndex,
-                            setGridIndex,
+                            gridLayoutIndex,
+                            setCurrentLayoutIndex,
                             toggleNoSearchResults,
                             clearSearchResults,
                             imagesSet,
@@ -46,8 +46,8 @@ const MediaContainer = ({
                             itemModalType,
                             isPaginatorEnabled,
                             confirm,
-                            gridSize,
-                            setGridSize,
+                            gridDividerValue,
+                            setGridDividerValue,
                             setCurrentModalItemIndex,
                             handleItemModal,
                             handleModal,
@@ -58,7 +58,7 @@ const MediaContainer = ({
     const {imagesPage, videosPage, audioPage} = pagesContext
     const [hoveredMediaIndex, setHoveredMediaIndex] = useState(null)
     const [gridLayoutMenu, toggleGridLayoutMenu] = useState(false)
-    const [gridWidth, setGridWidth] = useState('100%')
+    const [gridContainerWidth, setGridContainerWidth] = useState('100%')
 
     const paginatorContext = useContext(PaginatorContext)
     const {
@@ -109,47 +109,47 @@ const MediaContainer = ({
 
     useEffect(() => {
         if (smallScreen) {
-            gridWidth !== '100%' && setGridWidth('100%')
+            gridContainerWidth !== '100%' && setGridContainerWidth('100%')
             return
         }
 
         if (!smallScreen) {
-            switch (gridSize) {
+            switch (gridDividerValue) {
                 case 3: {
-                    setGridWidth('80%')
-                    gridWidth !== '80%' && setGridWidth('80%')
+                    setGridContainerWidth('80%')
+                    gridContainerWidth !== '80%' && setGridContainerWidth('80%')
                     break;
                 }
                 case 4: {
-                    setGridWidth('70%')
-                    gridWidth !== '70%' && setGridWidth('70%')
+                    setGridContainerWidth('70%')
+                    gridContainerWidth !== '70%' && setGridContainerWidth('70%')
                     break
                 }
                 case 6: {
-                    gridWidth !== '60%' && setGridWidth('60%')
+                    gridContainerWidth !== '60%' && setGridContainerWidth('60%')
                     break
                 }
                 case 12 : {
-                    gridWidth !== '30%' && setGridWidth('30%')
+                    gridContainerWidth !== '30%' && setGridContainerWidth('30%')
                     break
                 }
                 default: {
-                    gridWidths !== '100%' && setGridWidth('100%')
+                    gridContainerWidth !== '100%' && setGridContainerWidth('100%')
                 }
             }
         }
 
-    }, [gridSize, smallScreen])
+    }, [gridDividerValue, smallScreen])
 
 
     // layout test
-    const layoutNumbs = [
-        {img: first, number: 12},
-        {img: second, number: 6},
-        {img: third, number: 4},
-        {img: fourth, number: 3},
-        {img: fives, number: 2.4},
-        {img: sixth, number: 2},
+    const gridLayoutItemsArr = [
+        {img: columnLayoutImg, divider: 12},
+        {img: twoColumnsLayoutImg, divider: 6},
+        {img: threeColumnsLayoutImg, divider: 4},
+        {img: quadColumnsLayoutImg, divider: 3},
+        {img: fiveColumnsLayoutImg, divider: 2.4},
+        {img: sixColumnsLayoutImg, divider: 2},
     ]
 
     const handleImageClick = (index) => {
@@ -163,19 +163,13 @@ const MediaContainer = ({
     }
 
 
-    const gridWidths = !smallScreen && gridSize === (6 || 5) ? '100%' :
-        !smallScreen && gridSize === (4 || 3) ? '70%' :
-            !smallScreen && gridSize === 2 ? '60%' :
-                !smallScreen && gridSize === 1 ? '50%' :
-                    '100%'
-
     const handleLayoutMenu = () => {
         toggleGridLayoutMenu(!gridLayoutMenu)
     }
 
     const handleCollValue = (number, index) => {
-        setGridIndex(index)
-        setGridSize(number)
+        setCurrentLayoutIndex(index)
+        setGridDividerValue(number)
     }
 
     return <Media {...{
@@ -197,11 +191,10 @@ const MediaContainer = ({
         confirm,
         handleLayoutMenu,
         handleCollValue,
-        layoutNumbs,
-        gridWidth,
-        layoutMenu: gridLayoutMenu,
-        gridNumb: gridSize,
-        gridIndex,
+        gridLayoutItemsArr,
+        gridLayoutMenu,
+        gridDividerValue,
+        gridLayoutIndex,
         handleImageClick,
         handleVideoClick,
         handleModal,
@@ -211,8 +204,8 @@ const MediaContainer = ({
 
 const mapStateToProps = (state) => {
     return {
-        gridSize: state.app.gridSize,
-        gridIndex: state.app.gridIndex,
+        gridDividerValue: state.app.gridDividerValue,
+        gridLayoutIndex: state.app. gridLayoutIndex,
         imagesSet: state.media.imagesSet,
         videosSet: state.media.videosSet,
         audioSet: state.media.audioSet,
@@ -228,10 +221,10 @@ export default connect(mapStateToProps, {
     handleSearchMedia,
     toggleSearchMode,
     toggleNoSearchResults,
-    setGridIndex,
+    setCurrentLayoutIndex,
     clearSearchResults,
     setSearchRequest,
     setCurrentModalItemIndex,
     setItemOptionsHovered,
-    setGridSize,
+    setGridDividerValue,
 })(MediaContainer)

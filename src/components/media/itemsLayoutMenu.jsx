@@ -4,10 +4,9 @@ import {Button} from "@mui/material";
 import {Fade} from "@mui/material";
 
 const ItemsLayoutMenu = ({
-                             audioPage,
-                             layoutMenu,
-                             layoutNumbs,
-                             gridIndex,
+                             gridLayoutMenu,
+                             gridLayoutItemsArr,
+                             gridLayoutIndex,
                              handleLayoutMenu,
                              handleCollValue,
                              classes
@@ -15,13 +14,13 @@ const ItemsLayoutMenu = ({
 
     return (
         <>
-            {!audioPage && <div className={'absolute right-0 flex flex-col items-end top-14 w-40 h-40 z-1'}>
+            <div className={'absolute right-0 flex flex-col items-end top-14 w-40 h-40 z-1'}>
                 <Button size={'large'}
                         onClick={handleLayoutMenu}
-                        className={`hover:text-white ${layoutMenu ? 'text-white' : 'text-blue-500'}`}>
+                        className={`hover:text-white ${gridLayoutMenu ? 'text-white' : 'text-blue-500'}`}>
                     <BsFillGridFill size={30}/>
                 </Button>
-                <Fade in={layoutMenu} timeout={200}>
+                <Fade in={gridLayoutMenu} timeout={200}>
                     <div className={`
                         bg-white 
                         relative
@@ -34,23 +33,23 @@ const ItemsLayoutMenu = ({
                         p-2
                         rounded-md                                           
                         justify-center`}>
-                        {layoutNumbs.map((numb, index) =>
+                        {gridLayoutItemsArr.map((gridItem, index) =>
                             <Button
                                 className={`
                                 ${classes.gridItemBtn}
-                        ${gridIndex === index ? "border-black bg-white" : 'bg-gray-300'}                                         
-                        `} onClick={() => handleCollValue(numb.number, index)}>
+                        ${gridLayoutIndex === index ? "border-black bg-white" : 'bg-gray-300'}                                         
+                        `} onClick={() => handleCollValue(gridItem.divider, index)}>
                                 <img
                                     className={'h-full'}
                                     key={index}
-                                    src={numb.img}
-                                    alt=""/>
+                                    src={gridItem.img}
+                                    alt={`layout-${index}`}/>
                             </Button>
                         )}
                     </div>
 
                 </Fade>
-            </div>}
+            </div>
         </>
 
     );

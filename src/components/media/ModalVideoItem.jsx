@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ReactPlayer from "react-player";
 import {ClipLoader} from "react-spinners";
-import {Skeleton} from "@mui/material";
+import {truncate} from '../../common/common';
 
 const ModalVideoItem = ({
                             item,
@@ -27,6 +27,13 @@ const ModalVideoItem = ({
     const shouldPreviewPlay = index === listedVideoHoveredIndex
 
     const hideCurrentItem = smallScreen && (currentModalItemIndex === index)
+
+    useEffect(() => {
+        if (isListedVideoReady) {
+            listedVideoInModalRef.current.seekTo(listedVideoTotalTime / 10)
+        }
+
+    }, [isListedVideoReady]);
 
     return (
         <div
@@ -86,14 +93,14 @@ const ModalVideoItem = ({
             </div>
             {/*//Video item name*/}
             <div className={`
-            text-white            
+            text-white
+            p-1            
             h-full
             break-words
             relative
             ${smallScreen ? 'w-full' : 'w-1/3'}
             text-center
-            `}>{isListedVideoReady ? item.name :
-                <Skeleton animation={'wave'} variant="rectangular" style={{width: '100%'}} height={10}/>}</div>
+            `}>{isListedVideoReady && truncate(item.name, 30)}</div>
         </div>
     );
 };

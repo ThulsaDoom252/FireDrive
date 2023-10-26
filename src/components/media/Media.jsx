@@ -32,11 +32,10 @@ const Media = ({
                    confirm,
                    handleLayoutMenu,
                    handleCollValue,
-                   layoutNumbs,
-                   gridWidth,
-                   layoutMenu,
-                   gridNumb,
-                   gridIndex,
+                   gridLayoutItemsArr,
+                   gridLayoutMenu,
+                   gridDividerValue,
+                   gridLayoutIndex,
                    handleVideoClick,
                    handleImageClick,
                    handleModal,
@@ -45,7 +44,7 @@ const Media = ({
 
     return (
         <>
-            {layoutMenu &&
+            {gridLayoutMenu &&
                 <Overlay opacity={'bg-transparent'} height={'h-screen'} zIndex={'z-1'} width={'w-screen'}
                          toggleModal={handleLayoutMenu} position={'fixed'}/>}
             <section
@@ -61,12 +60,11 @@ const Media = ({
              ${audioPage && smallScreen ? 'w-full' : audioPage ? 'w-1/2' : !audioPage && smallScreen ? 'w-full' : 'w-full pl-10 pr-10'} 
              
              `}>
-                {(!noMedia && !noSearchResults) &&
+                {(!noMedia && !noSearchResults && !audioPage) &&
                     <ItemsLayoutMenu {...{
-                        audioPage,
-                        layoutMenu,
-                        layoutNumbs,
-                        gridIndex,
+                        gridLayoutMenu,
+                        gridLayoutItemsArr,
+                        gridLayoutIndex,
                         handleLayoutMenu,
                         handleCollValue,
                         classes,
@@ -93,9 +91,9 @@ const Media = ({
                         />}
 
                         {imagesPage ? mediaToShow.map((media, index) => {
-                                return <Grid item xs={gridNumb}>
-                                    <GridItemContainer  key={index} onMouseEnter={() => setHoveredMediaIndex(index)}
-                                                         onMouseLeave={() => setHoveredMediaIndex(null)}>
+                                return <Grid item xs={gridDividerValue}>
+                                    <GridItemContainer key={index} onMouseEnter={() => setHoveredMediaIndex(index)}
+                                                       onMouseLeave={() => setHoveredMediaIndex(null)}>
                                         <ImageBlock
                                             url={media.url}
                                             name={media.name}
@@ -111,24 +109,25 @@ const Media = ({
                                                 handleModal,
                                             }}/>
                                     </GridItemContainer>
-                                   </Grid>
+                                </Grid>
                             })
                             : videosPage ? mediaToShow.map((video, index) =>
-                                    <Grid item xs={gridNumb}>
-                                            <Video url={video.url}
-                                                   name={video.name}
-                                                   oldName={video.oldName}
-                                                   {...{
-                                                       searchMode,
-                                                       index,
-                                                       noOpenModal,
-                                                       hoveredMediaIndex,
-                                                       setHoveredMediaIndex,
-                                                       setItemOptionsHovered,
-                                                       smallScreen,
-                                                       handleVideoClick,
-                                                       handleModal,
-                                                   }}/>
+                                    <Grid item xs={gridDividerValue}>
+                                        <Video url={video.url}
+                                               name={video.name}
+                                               oldName={video.oldName}
+                                               {...{
+                                                   searchMode,
+                                                   index,
+                                                   noOpenModal,
+                                                   hoveredMediaIndex,
+                                                   setHoveredMediaIndex,
+                                                   setItemOptionsHovered,
+                                                   smallScreen,
+                                                   handleVideoClick,
+                                                   handleModal,
+                                                   confirm,
+                                               }}/>
                                     </Grid>
                                 ) :
                                 mediaToShow.map(((audio, index) => {
@@ -144,6 +143,7 @@ const Media = ({
                                                                index,
                                                                searchMode,
                                                                smallScreen,
+                                                               confirm,
                                                            }}/>
                                                 </div>
                                             </Grid>
