@@ -39,18 +39,20 @@ export const useStyles = makeStyles((theme) => {
             },
         },
 
-        gridItemBtn: {
-            width: '50px',
-            display: 'flex',
-            backgroundColor: 'red',
-            justifyContent: 'center',
-            alignItems: 'center',
-            margin: '5px',
-            height: '50px',
-            borderRadius: '10px',
-            "&:hover": {
-                backgroundColor: 'white',
-            },
+        gridItemBtn: (props) => {
+            return {
+                width: '50px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                margin: '5px',
+                height: '50px',
+                borderRadius: '10px',
+                background: props.isCurrent ? 'white' : 'none',
+                "&:hover": {
+                    backgroundColor: 'white',
+                },
+            }
         },
     };
 });

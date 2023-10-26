@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {BsFillGridFill} from "react-icons/bs";
-import {Button} from "@mui/material";
+import {Box, Button} from "@mui/material";
 import {Fade} from "@mui/material";
+import ThemeContainer from '../common/theme/ThemeContainer';
+import FittedThemeBtn from '../common/theme/FittedThemeBtn';
 
 const ItemsLayoutMenu = ({
                              gridLayoutMenu,
@@ -9,19 +11,29 @@ const ItemsLayoutMenu = ({
                              gridLayoutIndex,
                              handleLayoutMenu,
                              handleCollValue,
-                             classes
                          }) => {
+
+
+    const [itemIndex, setItemIndex] = useState(gridLayoutIndex)
+
+    const handleItemClick = (divider, index) => {
+        setItemIndex(index)
+        handleCollValue(divider, index)
+    }
 
     return (
         <>
-            <div className={'absolute right-0 flex flex-col items-end top-14 w-40 h-40 z-1'}>
-                <Button size={'large'}
-                        onClick={handleLayoutMenu}
-                        className={`hover:text-white ${gridLayoutMenu ? 'text-white' : 'text-blue-500'}`}>
+            <Box className={'absolute right-0 flex flex-col items-end top-14 w-40 h-40 z-1'}>
+                <FittedThemeBtn size={'large'}
+                                enableHover
+                                onClick={handleLayoutMenu}>
                     <BsFillGridFill size={30}/>
-                </Button>
+                </FittedThemeBtn>
                 <Fade in={gridLayoutMenu} timeout={200}>
-                    <div className={`
+                    <Box
+                        padding={2}
+                        paddingTop={5}
+                        className={`
                         bg-white 
                         relative
                         right-5
@@ -30,15 +42,25 @@ const ItemsLayoutMenu = ({
                         grid-cols-3
                         gap-2
                         w-60
-                        p-2
                         rounded-md                                           
                         justify-center`}>
+                        <p className={'text-center absolute text-lg font-sans top-2 w-full'}>Select items layout</p>
                         {gridLayoutItemsArr.map((gridItem, index) =>
                             <Button
-                                className={`
-                                ${classes.gridItemBtn}
-                        ${gridLayoutIndex === index ? "border-black bg-white" : 'bg-gray-300'}                                         
-                        `} onClick={() => handleCollValue(gridItem.divider, index)}>
+                                sx={{
+                                    width: '50px',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    margin: '5px',
+                                    height: '50px',
+                                    borderRadius: '10px',
+                                    background: index === gridLayoutIndex ? 'white' : 'none',
+                                    "&:hover": {
+                                        backgroundColor: 'white',
+                                    },
+                                }}
+                                onClick={() => handleItemClick(gridItem.divider, index)}>
                                 <img
                                     className={'h-full'}
                                     key={index}
@@ -46,10 +68,10 @@ const ItemsLayoutMenu = ({
                                     alt={`layout-${index}`}/>
                             </Button>
                         )}
-                    </div>
+                    </Box>
 
                 </Fade>
-            </div>
+            </Box>
         </>
 
     );

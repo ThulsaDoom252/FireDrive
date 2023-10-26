@@ -1,12 +1,12 @@
 import React from 'react';
 import {useSelector} from "react-redux";
 
-const ThemeContainer = ({children, className, secBg, enableColor = false}) => {
+const ThemeContainer = ({children, className, secBg, enableColor = false, noBg = false}) => {
     const currentTheme = useSelector(state => state.app.currentTheme)
 
     const containerStyle = {
         color: enableColor ? currentTheme.color : '',
-        backgroundColor: secBg ? currentTheme.secBg : currentTheme.primeBg,
+        backgroundColor: !noBg ? (!secBg ? currentTheme.primeBg : currentTheme.secBg) : ''
     }
 
     return (

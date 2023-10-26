@@ -39,7 +39,6 @@ const Media = ({
                    handleVideoClick,
                    handleImageClick,
                    handleModal,
-                   classes,
                }) => {
 
     return (
@@ -67,7 +66,6 @@ const Media = ({
                         gridLayoutIndex,
                         handleLayoutMenu,
                         handleCollValue,
-                        classes,
                     }}/>}
 
                 {noSearchResults && <div><NoSearchResults/></div>}

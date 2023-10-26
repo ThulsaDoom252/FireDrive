@@ -36,7 +36,7 @@ export const desertPrimary = 'crimson'
 
 // Nav btn default colors
 export const dayNavBtn = 'darkGray'
-export const nightNavBtn = 'lightGray'
+export const nightNavBtn = 'darkGray'
 export const desertNavBtn = 'darkRed'
 
 //Themes

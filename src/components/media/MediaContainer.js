@@ -51,7 +51,6 @@ const MediaContainer = ({
                             setCurrentModalItemIndex,
                             handleItemModal,
                             handleModal,
-                            classes,
                             noMedia,
                         }) => {
     const pagesContext = useContext(PagesContext)
@@ -198,7 +197,6 @@ const MediaContainer = ({
         handleImageClick,
         handleVideoClick,
         handleModal,
-        classes,
     }}/>
 };
 
