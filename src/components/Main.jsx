@@ -1,24 +1,24 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import HeaderContainer from "./header/HeaderContainer";
 import {
     audioRoute,
-    delay,
     imageItemModal, imagesRoute, lazyMode,
     mainContentId,
-    mediaTypes, noModal, paginateMode, renameModal, rootRoute, shareModal,
+    mediaTypes,  paginateMode, renameModal, rootRoute, shareModal,
     signInRoute,
     videoItemModal, videosRoute,
 } from "../common/common";
 import {Routes, Route, Navigate, useLocation, useNavigate} from "react-router-dom";
 import {connect} from "react-redux";
 import {
-    handleMediaName,
     listMedia,
     setCurrentRoute, toggleSearch,
 } from "../redux/mediaSlice";
 import MediaContainer from "./media/MediaContainer";
 import {
-    setItemModalType, setModalType, setMountedItemModal, setMountedModal,  toggleListMode,
+    handleCurrentItemModal,
+    handleCurrentModal,
+    setItemModalType, setModalType, toggleListMode,
 } from "../redux/appSlice";
 import {Scrollbars} from 'react-custom-scrollbars';
 import AudioPlayer from "./audioPlayer/AudioPlayer";
@@ -57,215 +57,150 @@ const Main = ({
                   alertTitle,
                   alertMessage,
                   mountedItemModal,
-                  setMountedItemModal,
-                  setMountedModal,
                   mountedModal,
-                  handleMediaName,
                   uploadProgress,
                   totalUploadedBytes,
                   totalBytesToUpload,
                   isMediaLoading,
                   isThemeUpdating,
                   toggleSearch,
+                  handleCurrentModal,
+                  handleCurrentItemModal,
               }) => {
 
-    const navigate = useNavigate()
+        const navigate = useNavigate()
 
-    const location = useLocation()
-    const isVideoModalMounted = mountedItemModal === videoItemModal
-    const isImageModalMounted = mountedItemModal === imageItemModal
-    const isRenameModalMounted = mountedModal === renameModal
-    const isShareModalMounted = mountedModal === shareModal
-    const animateRenameModal = modalType === renameModal
-    const animateImageModal = itemModalType === imageItemModal
-    const animateVideoModal = itemModalType === videoItemModal
-    const animateShareModal = modalType === shareModal
+        const location = useLocation()
+        const isVideoModalMounted = mountedItemModal === videoItemModal
+        const isImageModalMounted = mountedItemModal === imageItemModal
+        const isRenameModalMounted = mountedModal === renameModal
+        const isShareModalMounted = mountedModal === shareModal
+        const animateRenameModal = modalType === renameModal
+        const animateImageModal = itemModalType === imageItemModal
+        const animateVideoModal = itemModalType === videoItemModal
+        const animateShareModal = modalType === shareModal
 
-    const pathName = location.pathname
-    const homePage = pathName === rootRoute
-    const isPaginatorEnabled = listMode === paginateMode
-    const noMedia = currentMediaSet.length === 0
+        const pathName = location.pathname
+        const homePage = pathName === rootRoute
+        const isPaginatorEnabled = listMode === paginateMode
+        const noMedia = currentMediaSet.length === 0
 
-    const [Dialog, confirm] = useConfirm(
-        alertTitle,
-        alertMessage,
-    )
+        const [Dialog, confirm] = useConfirm(
+            alertTitle,
+            alertMessage,
+        )
 
-    const paginatorContext = useContext(PaginatorContext)
-    const {firstItemIndex, lastItemIndex, setItemsPerPage, itemsPerPage} = paginatorContext
-    const classes = useStyles()
-    const handleListMode = () => {
-        if (listMode === lazyMode) {
-            toggleListMode(paginateMode)
-        } else {
-            toggleListMode(lazyMode)
-        }
-    }
-    useEffect(() => {
-        setCurrentRoute(pathName)
-    }, [pathName])
-
-
-    useEffect(() => {
-        const validRoutes = [imagesRoute, videosRoute, audioRoute, rootRoute];
-        if (validRoutes.includes(currentRoute)) {
-            navigate(currentRoute);
-        } else {
-            navigate(signInRoute);
-        }
-    }, [currentRoute])
-
-
-    useEffect(() => {
-        mediaTypes.forEach(mediaType =>
-            listMedia({mediaType}))
-    }, [])
-
-    const hideMobileSearch = () => {
-        isSearchVisible && toggleSearch(false)
-    }
-
-    const nullMountedModal = async (time = 200) => {
-        setModalType(noModal)
-        await delay(time)
-        setMountedModal(noModal)
-    }
-
-    const nullItemModal = async (time = 200) => {
-        setItemModalType(noModal)
-        await delay(200)
-        setMountedItemModal(noModal)
-    }
-
-    const handleItemModal = async (modalType) => {
-        if (modalType === imageItemModal) {
-            if (!isImageModalMounted) {
-                setMountedItemModal(imageItemModal)
-                await delay(100)
-                setItemModalType(imageItemModal)
-
+        const paginatorContext = useContext(PaginatorContext)
+        const {firstItemIndex, lastItemIndex, setItemsPerPage, itemsPerPage} = paginatorContext
+        const classes = useStyles()
+        const handleListMode = () => {
+            if (listMode === lazyMode) {
+                toggleListMode(paginateMode)
             } else {
-
-                nullItemModal().then(() => void 0)
-            }
-            return
-        }
-
-        if (modalType === videoItemModal) {
-
-            if (!isVideoModalMounted) {
-
-                setMountedItemModal(videoItemModal)
-                await delay(100)
-                setItemModalType(videoItemModal)
-            } else {
-
-                nullItemModal().then(() => void 0)
+                toggleListMode(lazyMode)
             }
         }
-    }
+        useEffect(() => {
+            setCurrentRoute(pathName)
+        }, [pathName])
 
-    const handleModal = async ({modalType, name, oldName}) => {
-        if (modalType === renameModal) {
-            if (!isRenameModalMounted) {
-                handleMediaName({name, oldName})
-                await delay(100)
-                setMountedModal(renameModal)
-                await delay(100)
-                setModalType(renameModal)
+
+        useEffect(() => {
+            const validRoutes = [imagesRoute, videosRoute, audioRoute, rootRoute];
+            if (validRoutes.includes(currentRoute)) {
+                navigate(currentRoute);
             } else {
-                nullMountedModal().then(() => void 0)
+                navigate(signInRoute);
             }
-            return
+        }, [currentRoute])
+
+
+        useEffect(() => {
+            mediaTypes.forEach(mediaType =>
+                listMedia({mediaType}))
+        }, [])
+
+        const hideMobileSearch = () => {
+            isSearchVisible && toggleSearch(false)
         }
 
-        if (modalType === shareModal) {
-            if (!isShareModalMounted) {
-                setMountedModal(shareModal)
-                await delay(100)
-                setModalType(shareModal)
-            } else {
-                nullMountedModal().then(() => void 0)
-            }
+
+        const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
+        const mediaToShow = searchMode ? searchResults : listMode === paginateMode ? paginatedMedia : currentMediaSet
+
+        if (!isAuth) {
+            return <Navigate to={signInRoute}/>
         }
-    }
 
-    const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
-    const mediaToShow = searchMode ? searchResults : listMode === paginateMode ? paginatedMedia : currentMediaSet
-
-    if (!isAuth) {
-        return <Navigate to={signInRoute}/>
-    }
-
-    return (
-        <>
-            <Dialog/>
-            {isThemeUpdating && <Overlay zIndex={'z-2'}/>}
-            {isRenameModalMounted &&
-                <RenameModal toggleModal={handleModal} showModal={animateRenameModal}/>}
-            {isShareModalMounted && <ShareModal toggleModal={handleModal} animateModal={animateShareModal}/>}
-            {isVideoModalMounted && <VideoModalContainer
-                handleCurrentModal={handleItemModal}
-                toggleModal={handleModal}
-                animateModal={animateVideoModal}
-                confirm={confirm}
-                classes={classes}
-            />}
-
-            {isImageModalMounted &&
-                <ImageModalContainer toggleModal={setItemModalType} animateModal={animateImageModal}
-                                     confirm={confirm} handleCurrentModal={handleItemModal} handleModal={handleModal}
+        return (
+            <>
+                <Dialog/>
+                {isThemeUpdating && <Overlay zIndex={'z-2'}/>}
+                {isRenameModalMounted &&
+                    <RenameModal toggleModal={handleCurrentModal} showModal={animateRenameModal}/>}
+                {isShareModalMounted && <ShareModal toggleModal={handleCurrentModal} animateModal={animateShareModal}/>}
+                {isVideoModalMounted && <VideoModalContainer
+                    handleCurrentModal={handleCurrentItemModal}
+                    toggleModal={handleCurrentModal}
+                    animateModal={animateVideoModal}
+                    confirm={confirm}
                 />}
-            <UserModal toggleModal={setModalType}
-                       showModal={modalType === userModal}/>
-            <HeaderContainer
-                smallScreen={smallScreen}
-                currentTheme={currentTheme}
-                currentRoute={currentRoute}
-                isSearchVisible={isSearchVisible}
-                toggleSearch={toggleSearch}
-                noMedia={noMedia}
-            />
-            <main className={'w-full h-full overflow-y-hidden relative'} id={mainContentId} onClick={hideMobileSearch}>
-                <Scrollbars>
-                    <BurgerMenu  {...{
-                        smallScreen,
-                        hideMobileSearch,
-                        setModalType,
-                        isMediaLoading,
-                        uploadProgress,
-                        totalUploadedBytes,
-                        totalBytesToUpload,
-                        confirm,
-                        currentThemeName,
-                        handleListMode,
-                        isPaginatorEnabled,
-                        itemsPerPage,
-                        setItemsPerPage
-                    }}/>
-                    {homePage && <Home
-                        smallScreen={smallScreen}
-                        currentTheme={currentTheme}/>}
-                    <Routes>
-                        {!homePage && <Route path={currentRoute}
-                                             element={<MediaContainer {...{
-                                                 currentRoute,
-                                                 currentMediaSet,
-                                                 mediaToShow,
-                                                 isPaginatorEnabled,
-                                                 searchMode,
-                                                 searchResults,
-                                                 smallScreen,
-                                                 currentTheme,
-                                                 confirm,
-                                                 handleItemModal,
-                                                 handleModal,
-                                                 itemModalType,
-                                                 classes,
-                                                 noMedia,
-                                             }}/>}/>}
-                    </Routes>
-                    <ThemeContainer className={` 
+
+                {isImageModalMounted &&
+                    <ImageModalContainer toggleModal={setItemModalType} animateModal={animateImageModal}
+                                         confirm={confirm} handleCurrentModal={handleCurrentItemModal}
+                                         handleModal={handleCurrentModal}
+                    />}
+                <UserModal toggleModal={setModalType}
+                           showModal={modalType === userModal}/>
+                <HeaderContainer
+                    smallScreen={smallScreen}
+                    currentTheme={currentTheme}
+                    currentRoute={currentRoute}
+                    isSearchVisible={isSearchVisible}
+                    toggleSearch={toggleSearch}
+                    noMedia={noMedia}
+                />
+                <main className={'w-full h-full overflow-y-hidden relative'} id={mainContentId} onClick={hideMobileSearch}>
+                    <Scrollbars>
+                        <BurgerMenu  {...{
+                            smallScreen,
+                            hideMobileSearch,
+                            setModalType,
+                            isMediaLoading,
+                            uploadProgress,
+                            totalUploadedBytes,
+                            totalBytesToUpload,
+                            confirm,
+                            currentThemeName,
+                            handleListMode,
+                            isPaginatorEnabled,
+                            itemsPerPage,
+                            setItemsPerPage
+                        }}/>
+                        {homePage && <Home
+                            smallScreen={smallScreen}
+                            currentTheme={currentTheme}/>}
+                        <Routes>
+                            {!homePage && <Route path={currentRoute}
+                                                 element={<MediaContainer {...{
+                                                     currentRoute,
+                                                     currentMediaSet,
+                                                     mediaToShow,
+                                                     isPaginatorEnabled,
+                                                     searchMode,
+                                                     searchResults,
+                                                     smallScreen,
+                                                     currentTheme,
+                                                     confirm,
+                                                     handleItemModal: handleCurrentItemModal,
+                                                     handleModal: handleCurrentModal,
+                                                     itemModalType,
+                                                     classes,
+                                                     noMedia,
+                                                 }}/>}/>}
+                        </Routes>
+                        <ThemeContainer className={` 
                     w-full  
                     bg-opacity-90 
                      p-2 rounded 
@@ -275,16 +210,17 @@ const Main = ({
                    right-0
                      flex
                      items-center`}>
-                        <AudioPlayer currentTheme={currentTheme}
-                                     smallScreenMode={smallScreen}
-                        />
-                    </ThemeContainer>
-                </Scrollbars>
-            </main>
-        </>
+                            <AudioPlayer currentTheme={currentTheme}
+                                         smallScreenMode={smallScreen}
+                            />
+                        </ThemeContainer>
+                    </Scrollbars>
+                </main>
+            </>
 
-    );
-};
+        );
+    }
+;
 
 const mapStateToProps = (state) => {
     return {
@@ -315,8 +251,7 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
     listMedia, setCurrentRoute,
     setModalType, setItemModalType, toggleSearch,
-    toggleListMode, setMountedItemModal,
-    setMountedModal, handleMediaName,
+    toggleListMode, handleCurrentModal, handleCurrentItemModal,
 })(Main);
 
 

@@ -2,7 +2,7 @@ import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {
     delay, extractUsernameFromEmail,
     imageItemModal,
-    noModal, paginateMode,
+    noModal, paginateMode, renameModal, shareModal,
     smallScreenWidth,
     videoItemModal
 } from "../common/common";
@@ -22,6 +22,7 @@ import {get, ref as dbRef, update} from "firebase/database";
 import {database} from "../firebase";
 import toast from "react-hot-toast";
 import {getAuth} from "firebase/auth";
+import {handleMediaName} from './mediaSlice';
 
 const appSlice = createSlice({
     name: 'app-slice',
@@ -196,7 +197,6 @@ export const handleInitialModalItem = createAsyncThunk('modal-item-initial-url-t
 })
 
 export const handleTheme = createAsyncThunk('theme-thunk', async (theme, {dispatch}) => {
-    debugger
     try {
         dispatch(toggleThemeUpdating(true))
         await updateTheme(theme)
@@ -206,7 +206,92 @@ export const handleTheme = createAsyncThunk('theme-thunk', async (theme, {dispat
         toast.error(`Can't update theme, see console for details`)
         console.error(e)
     }
+})
 
+
+export const handleCurrentItemModal = createAsyncThunk('handle-item-modal-thunk', async (itemModalType, {
+    dispatch,
+    getState
+}) => {
+
+    const currentState = getState()
+
+    const currentItemModal = currentState.app.itemModalType
+    const isImageModalMounted = currentItemModal === imageItemModal
+    const isVideoModalMounted = currentItemModal === videoItemModal
+
+    const nullItemModal = async (time = 200) => {
+        dispatch(setItemModalType(noModal))
+        await delay(200)
+        dispatch(setMountedItemModal(noModal))
+    }
+
+    if (itemModalType === imageItemModal) {
+        if (!isImageModalMounted) {
+            dispatch(setMountedItemModal(imageItemModal))
+            await delay(100)
+            dispatch(setItemModalType(imageItemModal))
+
+        } else {
+            nullItemModal().then(() => void 0)
+        }
+        return
+    }
+
+    if (itemModalType === videoItemModal) {
+        if (!isVideoModalMounted) {
+            dispatch(setMountedItemModal(videoItemModal))
+            await delay(100)
+            dispatch(setItemModalType(videoItemModal))
+        } else {
+            nullItemModal().then(() => void 0)
+        }
+    }
+})
+
+export const handleCurrentModal = createAsyncThunk('handle-modal-thunk', async ({modalType, name, oldName}, {
+    dispatch,
+    getState
+}) => {
+    const currentState = getState()
+    const currentModalType = currentState.app.modalType
+    const isRenameModalMounted = currentModalType === renameModal
+    const isShareModalMounted = currentModalType === shareModal
+
+    const nullMountedModal = async (time = 200) => {
+        dispatch(setModalType(noModal))
+        await delay(time)
+        dispatch(setMountedModal(noModal))
+    }
+
+    if (modalType === renameModal) {
+        if (!isRenameModalMounted) {
+            dispatch(handleMediaName({name, oldName}))
+            await delay(100)
+            dispatch(setMountedModal(renameModal))
+            await delay(100)
+            dispatch(setModalType(renameModal))
+        } else {
+            nullMountedModal().then(() => void 0)
+        }
+        return
+    }
+
+    if (modalType === shareModal) {
+        if (!isShareModalMounted) {
+            setMountedModal(shareModal)
+            await delay(100)
+            setModalType(shareModal)
+        } else {
+            nullMountedModal().then(() => void 0)
+        }
+    }
+})
+
+export const nullMountedModal = createAsyncThunk('null-modal-thunk', async (time = 200, {dispatch}) => {
+    dispatch(setModalType(noModal))
+    await delay(time)
+    dispatch(setMountedModal(noModal))
 })
 
 ///Dall

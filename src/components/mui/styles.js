@@ -1,41 +1,43 @@
 import {makeStyles} from "@mui/styles";
 import {Skeleton, styled} from '@mui/material';
 
-export const useStyles = makeStyles((theme) => ({
-    gitIcon: {
-        color: "green",
-    },
-    socialBtn: {
-        margin: '2px',
-        borderColor: "gray"
-    },
-    actionBtn: {
-        backgroundColor: 'blue',
-        color: 'white',
-    },
-    searchInput: {
-        '&:focus': {
-            background: 'white', // Задаем белый фон при активации
+export const useStyles = makeStyles((theme) => {
+    return {
+        gitIcon: {
+            color: "green",
         },
-        '& .MuiInputAdornment-root': {
-            background: 'white',
+        socialBtn: {
+            margin: '2px',
+            borderColor: "gray"
+        },
+        actionBtn: {
+            backgroundColor: 'blue',
+            color: 'white',
+        },
+        searchInput: {
+            '&:focus': {
+                background: 'white',
+            },
+            '& .MuiInputAdornment-root': {
+                background: 'white',
+            },
         },
 
-    },
-    gridItemBtn: {
-        width: '50px',
-        display: 'flex',
-        backgroundColor: 'red',
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: '5px',
-        height: '50px',
-        borderRadius: '10px',
-        "&:hover": {
-            backgroundColor: 'white'
+        gridItemBtn: {
+            width: '50px',
+            display: 'flex',
+            backgroundColor: 'red',
+            justifyContent: 'center',
+            alignItems: 'center',
+            margin: '5px',
+            height: '50px',
+            borderRadius: '10px',
+            "&:hover": {
+                backgroundColor: 'white',
+            },
         },
-    },
-}));
+    };
+});
 
 
 export const customInput = {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AdaptiveImage = ({
+const ThemeImage = ({
                            url,
                            alt = 'image is broken',
                            onClick = () => void 0,
@@ -30,4 +30,4 @@ const AdaptiveImage = ({
     );
 };
 
-export default AdaptiveImage;
+export default ThemeImage;

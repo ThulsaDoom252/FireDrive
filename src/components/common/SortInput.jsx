@@ -33,10 +33,10 @@ const SortInput = ({
             <FormControl fullWidth disabled={isDisabled}>
                 <InputLabel id="sort-form-label">Sort by</InputLabel>
                 <Select
+                    disabled={isDisabled}
                     labelId="sort-form-label"
                     id="sort-form"
                     value={sortBy}
-                    label="Sort by"
                     onChange={handleChange}
                 >
                     <MenuItem value={byDate}>{byDate}</MenuItem>

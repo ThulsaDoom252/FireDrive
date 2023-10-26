@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {ItemsModalContext} from "../../../context/ItemsModalContext";
 import {videoItemModal} from "../../../common/common";
 import VideoModal from "./VideoModal";
