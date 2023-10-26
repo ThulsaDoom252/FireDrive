@@ -17,7 +17,7 @@ export function PagesContextProvider({children}) {
         imagesPage,
         videosPage,
         audioPage,
-
+        currentRoute,
     };
 
     return (

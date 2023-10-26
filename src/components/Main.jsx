@@ -18,7 +18,7 @@ import {
 } from "../redux/mediaSlice";
 import MediaContainer from "./media/MediaContainer";
 import {
-    setItemModalType, setModalType, setMountedItemModal, setMountedModal, toggleCurrentTheme, toggleListMode,
+    setItemModalType, setModalType, setMountedItemModal, setMountedModal,  toggleListMode,
 } from "../redux/appSlice";
 import {Scrollbars} from 'react-custom-scrollbars';
 import AudioPlayer from "./audioPlayer/AudioPlayer";
@@ -50,7 +50,6 @@ const Main = ({
                   setModalType,
                   setItemModalType,
                   currentTheme,
-                  toggleCurrentTheme,
                   isSearchVisible,
                   currentThemeName,
                   listMode,
@@ -222,6 +221,7 @@ const Main = ({
             <UserModal toggleModal={setModalType}
                        showModal={modalType === userModal}/>
             <HeaderContainer
+                smallScreen={smallScreen}
                 currentTheme={currentTheme}
                 currentRoute={currentRoute}
                 isSearchVisible={isSearchVisible}
@@ -242,7 +242,6 @@ const Main = ({
                         isThemeBlockOpened,
                         setIsThemeBlockOpened,
                         currentThemeName,
-                        toggleCurrentTheme,
                         isSettingsBlockOpened,
                         setIsSettingsBlockOpened,
                         handleListMode,
@@ -321,8 +320,7 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
     listMedia, setCurrentRoute,
-    setModalType, setItemModalType,
-    toggleCurrentTheme, toggleSearch,
+    setModalType, setItemModalType, toggleSearch,
     toggleListMode, setMountedItemModal,
     setMountedModal, handleMediaName,
 })(Main);

@@ -1,25 +1,14 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {ItemsModalContext} from "../../../context/ItemsModalContext";
-import {formatTime, videoItemModal} from "../../../common/common";
+import {videoItemModal} from "../../../common/common";
 import VideoModal from "./VideoModal";
 import {VideoControlsContext} from "../../../context/VideoControlsContext";
-import {AudioPlayerContext} from "../../../context/AudioPlayerContext";
 
 const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentModal}) => {
 
     const CustomControlsContext = useContext(VideoControlsContext)
-    const audioPlayerContext = useContext(AudioPlayerContext)
     const ModalContext = useContext(ItemsModalContext);
-
     const [isVideoReady, setIsVideoReady] = useState(false);
-
-    // listed video in modal ref and state
-    const listedVideoInModalRef = useRef(null)
-    const [listedVideoHoveredIndex, setListedVideoHoveredIndex] = useState(null)
-    const [listedVideoTotalTime, setListedVideoTotalTime] = useState(0)
-    const [isListedVideoReady, setIsListedVideoReady] = useState(false)
-
-    const {isCurrentTrackPlaying, toggleCurrentTrackPlaying} = audioPlayerContext
 
     const {
         controlBtnAnimation,
@@ -137,37 +126,11 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
     };
 
 // Listed videos in modal handlers
-    const handleListedVideoMouseEnter = (index) => {
-        setListedVideoHoveredIndex(index);
-    };
-
-    const handleListedVideoMouseLeave = () => {
-        setListedVideoHoveredIndex(null);
-        listedVideoInModalRef.current.seekTo(0);
-    };
-
-
-    const handleReadyListedVideo = () => {
-        setListedVideoTotalTime(formatTime(listedVideoInModalRef.current.getDuration()))
-        setIsListedVideoReady(true)
-    }
-
     const handleVideoFromListClick = (index) => {
         handleCurrentModalItemIndex(index)
         setIsVideoReady(false)
         setIsVideoPlaying(false)
     }
-
-    const listedVideoProps = [
-        listedVideoInModalRef,
-        listedVideoHoveredIndex,
-        listedVideoTotalTime,
-        isListedVideoReady,
-        handleListedVideoMouseEnter,
-        handleListedVideoMouseLeave,
-        handleReadyListedVideo,
-        listedVideoHoveredIndex,
-    ]
 
     return <VideoModal {...{
         animateModal,
@@ -192,7 +155,6 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
         customControlsProps,
         videoBlockContainerRef,
         videoContainerRef,
-        listedVideoProps,
         fullScreen,
     }}/>
 };

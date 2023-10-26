@@ -1,12 +1,12 @@
 import React, {useContext, useRef} from 'react';
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {uploadMedia} from "../../redux/mediaSlice";
 import {audioFiles, imageFiles, videoFiles} from "../../common/common";
 import {PagesContext} from "../../context/PagesContext";
 import {HiOutlinePlus} from "react-icons/hi";
 import ThemeBtn from "../common/theme/ThemeBtn";
 
-const UploadBtnContainer = ({smallScreen, mediaLoading, uploadMedia}) => {
+const UploadBtnContainer = () => {
     const inputBtnRef = useRef(null)
     const pages = useContext(PagesContext)
     const {
@@ -15,6 +15,10 @@ const UploadBtnContainer = ({smallScreen, mediaLoading, uploadMedia}) => {
         videosPage,
         audioPage,
     } = pages
+
+    const dispatch = useDispatch()
+    const smallScreen = useSelector(state => state.app.smallScreen)
+    const mediaLoading = useSelector(state => state.media.mediaLoading,)
 
     const handleClick = () => inputBtnRef.current.click()
 
@@ -26,7 +30,7 @@ const UploadBtnContainer = ({smallScreen, mediaLoading, uploadMedia}) => {
                     audioPage ? audioFiles : ''}
                 hidden={true}
                 type={"file"}
-                onChange={e => uploadMedia({event: e})}
+                onChange={e => dispatch(uploadMedia({event: e}))}
                 multiple/>
             <ThemeBtn
                 fullWidth
@@ -35,17 +39,6 @@ const UploadBtnContainer = ({smallScreen, mediaLoading, uploadMedia}) => {
                 {smallScreen ? < HiOutlinePlus/> : 'Add media'}</ThemeBtn>
         </>
     )
-
-
 };
 
-
-const mapStateToProps = (state) => {
-    return {
-        smallScreen: state.app.smallScreen,
-        mediaLoading: state.media.mediaLoading,
-    }
-
-}
-
-export default connect(mapStateToProps, {uploadMedia})(UploadBtnContainer);
+export default UploadBtnContainer;

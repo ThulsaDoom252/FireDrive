@@ -13,6 +13,7 @@ const HeaderContainer = ({
                              noMedia,
                              setCurrentRoute,
                              currentRoute,
+                             smallScreen,
                          }) => {
 
     const pages = useContext(PagesContext)
@@ -26,6 +27,7 @@ const HeaderContainer = ({
 
     return <Header
         currentRoute={currentRoute}
+        smallScreen={smallScreen}
         rootPage={rootPage}
         currentTheme={currentTheme}
         searchRequest={searchRequest}

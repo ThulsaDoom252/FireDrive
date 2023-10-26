@@ -4,8 +4,7 @@ import {connect} from "react-redux";
 import {changeAvatar} from "../../redux/authSlice";
 import CurrentUser from "../user/CurrentUser";
 import {noModal} from "../../common/common";
-import TransitionCommonParrent from "../common/TransitionCommonParrent";
-import ActionBtn from "../common/ActionBtn";
+import CommonTransitionParent from "../common/CommonTransitionParent";
 import ThemeBtn from "../common/theme/ThemeBtn";
 
 const UserModal = ({
@@ -31,7 +30,7 @@ const UserModal = ({
     const handleClose = () => toggleModal(noModal)
 
     return (
-        <TransitionCommonParrent show={showModal} toggleModal={toggleModal} zIndex={'z-max'}>
+        <CommonTransitionParent show={showModal} toggleModal={toggleModal} zIndex={'z-max'}>
             <input type="file" hidden={true} ref={hiddenFileInput} onChange={uploadPhoto}/>
             <div className="
             absolute
@@ -50,7 +49,7 @@ const UserModal = ({
                 </div>
 
             </div>
-        </TransitionCommonParrent>
+        </CommonTransitionParent>
 
 
     );

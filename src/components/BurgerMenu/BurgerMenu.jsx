@@ -13,6 +13,7 @@ import LogOutContainer from "../btns/LogOutContainer";
 import SortInput from "../common/SortInput";
 import {useDispatch} from "react-redux";
 import {handleTheme} from "../../redux/appSlice";
+import UploadingProgress from './UploadingProgress';
 
 const BurgerMenu = ({
                         smallScreen,
@@ -26,7 +27,6 @@ const BurgerMenu = ({
                         isThemeBlockOpened,
                         setIsThemeBlockOpened,
                         currentThemeName,
-                        toggleCurrentTheme,
                         isSettingsBlockOpened,
                         setIsSettingsBlockOpened,
                         handleListMode,
@@ -42,17 +42,7 @@ const BurgerMenu = ({
             <div className={'mt-5 flex flex-col justify-center'}>
                 <div onClick={() => setModalType(userModal)} className={'mb-5 mx-auto'}><UserAvatar
                 /></div>
-                <div className={'w-full flex justify-center items-center flex-col'}>
-                    {isMediaLoading &&
-                        <>
-                            <div>{uploadProgress}</div>
-                            <input type={'range'}
-                                   value={totalUploadedBytes}
-                                   min={0}
-                                   max={totalBytesToUpload}/>
-                        </>
-                    }
-                </div>
+                <UploadingProgress {...{isMediaLoading, uploadProgress, totalUploadedBytes, totalBytesToUpload}}/>
                 <div className={`flex justify-between items-center mb-2 w-full ${smallScreen && 'flex-col'}`}>
                     <div className={'m-1 w-1/2 '}><UploadContainer/></div>
                     <div className={'m-1 w-1/2'}><RemoveAllBtnContainer confirm={confirm}/></div>

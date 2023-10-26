@@ -53,11 +53,8 @@ const ItemOptions = ({
     }
 
     const handleDeleteCurrentItem = async () => {
-        debugger
         await handleAlertModal({message: removeCurrentItemMsg, title: removeCurrentItemTitle})
-        debugger
         const userAction = await confirm()
-        debugger
         if (userAction) {
             deleteCurrentItem({url, index, searchMode, route: currentRoute})
         }
@@ -143,7 +140,6 @@ const ItemOptions = ({
 const mapStateToProps = (state) => {
     return {
         currentRoute: state.media.currentRoute
-
     }
 }
 

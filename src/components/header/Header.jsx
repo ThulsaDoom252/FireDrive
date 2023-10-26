@@ -1,5 +1,4 @@
 import React from 'react';
-import {useSelector} from "react-redux";
 import BurgerMenuTrigger from "../BurgerMenu/BurgerMenuTrigger";
 import NavItems from "./NavItems";
 import Search from "../search/Search";
@@ -14,8 +13,8 @@ const Header = ({
                     isSearchBtnDisabled,
                     handleRoute,
                     currentRoute,
+                    smallScreen,
                 }) => {
-    const smallScreen = useSelector(state => state.app.smallScreen)
 
     return (
         <header>

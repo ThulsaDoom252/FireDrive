@@ -34,7 +34,6 @@ const VideoModal = ({
                         handleClose,
                         handleProgress,
                         customControlsProps,
-                        listedVideoProps,
                         videoBlockContainerRef,
                         videoContainerRef,
                         fullScreen,
@@ -164,7 +163,6 @@ const VideoModal = ({
                                                 index={index}
                                                 smallScreen={smallScreen}
                                                 currentModalItemUrl={currentModalItemUrl}
-                                                {...{listedVideoProps}}
                                             />
                                         ))}
                                 </>
