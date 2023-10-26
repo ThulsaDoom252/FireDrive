@@ -1,11 +1,11 @@
 import {
     audio,
     audioOnly,
-    audioRoute, byDate, byName, bySize, defaultRef,
+    audioRoute, byDate, byName, bySize, defaultRef, delay, getLocalStorageItem,
     images,
     imagesOnly,
     imagesRoute, mediaFetchMode, mediaUploadMode, noModal,
-    rootRoute, videos,
+    rootRoute, sortSet, videos,
     videosOnly,
     videosRoute
 } from "../common/common";
@@ -46,11 +46,6 @@ const mediaSlice = createSlice({
         isSearchVisible: false,
         noSearchResults: false,
         searchMode: false,
-        sortOptions: [
-            {value: byDate, label: byDate},
-            {value: byName, label: byName},
-            {value: bySize, label: bySize},
-        ],
         mediaSortedBy: byDate,
         deletingMediaIndex: null,
         deletingAudioIndex: null,
@@ -182,29 +177,27 @@ const mediaSlice = createSlice({
             state.lastPlayedAudioNameBeforeSort = action.payload
         },
         sortCurrentMediaSet(state, action) {
-            const {sortType, isAudio} = action.payload
+            const {sortType, isAudio} = action.payload;
+            let compareFn;
+
             switch (sortType) {
                 case byDate:
-                    state.currentMediaSet.sort((a, b) => a.date.localeCompare(b.date))
-                    if (isAudio) {
-                        state.audioSet.sort((a, b) => a.date.localeCompare(b.date))
-                    }
+                    compareFn = (a, b) => a.date.localeCompare(b.date);
                     break;
                 case byName:
-                    state.currentMediaSet.sort((a, b) => a.name.localeCompare(b.name))
-                    if (isAudio) {
-                        state.audioSet.sort((a, b) => a.name.localeCompare(b.name))
-                    }
-
+                    compareFn = (a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase());
                     break;
                 case bySize:
-                    state.currentMediaSet.sort((a, b) => b.size - a.size)
-                    if (isAudio) {
-                        state.audioSet.sort((a, b) => b.size - a.size)
-                    }
+                    compareFn = (a, b) => b.size - a.size;
                     break;
                 default:
-                    void 0
+                    return;
+            }
+
+            sortSet(state.currentMediaSet, compareFn);
+
+            if (isAudio) {
+                sortSet(state.audioSet, compareFn);
             }
         },
         changeListedMediaName(state, action) {
@@ -350,6 +343,15 @@ export const handleSearchMedia = createAsyncThunk('search-thunk', async (request
         dispatch(searchItems(searchRequest))
     }
 })
+
+export const handleSortitems = createAsyncThunk('sort-thunk', async ({value, isAudio}, {dispatch}) => {
+    await dispatch(toggleSortByValue(value))
+    isAudio && await dispatch(setLastPlayedAudioNameBeforeSort(getLocalStorageItem('currentTrackName')))
+    await dispatch(sortCurrentMediaSet({sortType: value, isAudio}))
+    await delay(100)
+    isAudio && await dispatch(setLastPlayedAudioNameBeforeSort(null))
+    }
+)
 
 
 const filterMediaData = (array, mode) => {

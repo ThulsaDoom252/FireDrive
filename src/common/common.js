@@ -19,6 +19,10 @@ export const extractUsernameFromEmail = (email) => {
     }
 }
 
+export const sortSet = (set, compareFn) => {
+    set.sort(compareFn);
+}
+
 export const getLocalStorageItem = (key) => {
     const currentValue = localStorage.getItem(key)
     return currentValue
