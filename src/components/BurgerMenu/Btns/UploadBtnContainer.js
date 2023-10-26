@@ -1,10 +1,10 @@
 import React, {useContext, useRef} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {uploadMedia} from "../../redux/mediaSlice";
-import {audioFiles, imageFiles, videoFiles} from "../../common/common";
-import {PagesContext} from "../../context/PagesContext";
+import {uploadMedia} from "../../../redux/mediaSlice";
+import {audioFiles, imageFiles, videoFiles} from "../../../common/common";
+import {PagesContext} from "../../../context/PagesContext";
 import {HiOutlinePlus} from "react-icons/hi";
-import ThemeBtn from "../common/theme/ThemeBtn";
+import ThemeBtn from "../../common/theme/ThemeBtn";
 
 const UploadBtnContainer = () => {
     const inputBtnRef = useRef(null)

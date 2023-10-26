@@ -1,47 +1,41 @@
 import {useState, useContext} from "react";
-import {connect} from "react-redux";
-import {setLastPlayedAudioNameBeforeSort, sortCurrentMediaSet, toggleSortByValue} from "../../redux/mediaSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {setCurrentMediaSet, setLastPlayedAudioNameBeforeSort, toggleSortByValue} from "../../redux/mediaSlice";
 import {PagesContext} from "../../context/PagesContext";
 import {delay, getLocalStorageItem} from "../../common/common";
 import Select from "react-select/base";
 
 const SortInput = ({
-                       options,
                        classname = 'select',
-                       currentOption,
-                       handleOptionChange,
                        disabled,
-                       setSortedAudioName,
-                       hidden,
-                       handleArray,
                        direction = 'bottom'
                    }) => {
 
-    const sortContext = useContext(PagesContext)
+    const pages = useContext(PagesContext)
+    const dispatch = useDispatch()
+    const [isMenuOpen, setMenuOpen] = useState(false);
+    const currentOption = useSelector(state => state.media.sortBy)
+    const options = useSelector(state => state.media.sortOptions)
 
     const {
         rootPage,
         audioPage,
-    } = sortContext
+    } = pages
 
     const isDisabled = rootPage || disabled
 
     const handleChange = async (item) => {
-        await handleOptionChange(item.value)
-        audioPage && await setSortedAudioName(getLocalStorageItem('currentTrackName'))
-        await handleArray({sortType: currentOption, isAudio: audioPage})
+        await dispatch(toggleSortByValue(item.value))
+        audioPage && await setLastPlayedAudioNameBeforeSort(getLocalStorageItem('currentTrackName'))
+        await setCurrentMediaSet({sortType: currentOption, isAudio: audioPage})
         await delay(100)
-        audioPage && setSortedAudioName(null)
+        audioPage && await (setLastPlayedAudioNameBeforeSort(null))
     };
 
     const handleInputChange = () => {
         return void 0
     };
-
-    const [isMenuOpen, setMenuOpen] = useState(false);
-
     const handleOpenMenu = () => setMenuOpen(true);
-
     const handleCloseMenu = () => setMenuOpen(false);
 
     return (
@@ -60,22 +54,8 @@ const SortInput = ({
                 blurInputOnSelect={false}
                 menuIsOpen={isMenuOpen}
             />
-
         </>
-
     );
 }
-
-const mapStateToProps = (state) => {
-    return {
-        currentOption: state.media.sortBy,
-        options: state.media.sortOptions,
-    }
-}
-
-export default connect(mapStateToProps, {
-    handleOptionChange: toggleSortByValue,
-    handleArray: sortCurrentMediaSet,
-    setSortedAudioName: setLastPlayedAudioNameBeforeSort,
-})(SortInput)
+export default SortInput
 

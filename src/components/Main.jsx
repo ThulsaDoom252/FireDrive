@@ -72,8 +72,6 @@ const Main = ({
     const navigate = useNavigate()
 
     const location = useLocation()
-    const [isThemeBlockOpened, setIsThemeBlockOpened] = useState(false)
-    const [isSettingsBlockOpened, setIsSettingsBlockOpened] = useState(false)
     const isVideoModalMounted = mountedItemModal === videoItemModal
     const isImageModalMounted = mountedItemModal === imageItemModal
     const isRenameModalMounted = mountedModal === renameModal
@@ -239,11 +237,7 @@ const Main = ({
                         totalUploadedBytes,
                         totalBytesToUpload,
                         confirm,
-                        isThemeBlockOpened,
-                        setIsThemeBlockOpened,
                         currentThemeName,
-                        isSettingsBlockOpened,
-                        setIsSettingsBlockOpened,
                         handleListMode,
                         isPaginatorEnabled,
                         itemsPerPage,

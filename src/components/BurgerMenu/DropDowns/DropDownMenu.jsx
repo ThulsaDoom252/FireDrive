@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {BiDownArrow, BiUpArrow} from "react-icons/bi";
 import {useSelector} from "react-redux";
 import {Transition} from "react-transition-group";
-import {defaultStyle, transitionStyles} from "../../common/TransitionStyles";
-import ThemeBtn from "./theme/ThemeBtn";
+import {defaultStyle, transitionStyles} from "../../../common/TransitionStyles";
+import ThemeBtn from "../../common/theme/ThemeBtn";
 
 const DropDownMenu = ({
                           switchToSmallScreenIcon = true,
