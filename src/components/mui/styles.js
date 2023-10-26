@@ -14,6 +14,22 @@ export const useStyles = makeStyles((theme) => {
             backgroundColor: 'blue',
             color: 'white',
         },
+        link: (props) => {
+            return {
+                textDecoration: 'none',
+                fontFamily: 'cursive',
+                color: props.navColor,
+                fontSize: '1.2rem',
+                transition: 'color 0.3s ease-in-out',
+                '&:hover': {
+                    color: props.navActiveColor
+                },
+                '&.active': {
+                    color: props.navActiveColor,
+                }
+            }
+
+        },
         searchInput: {
             '&:focus': {
                 background: 'white',

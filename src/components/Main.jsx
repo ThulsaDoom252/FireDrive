@@ -1,14 +1,13 @@
 import React, {useContext, useEffect} from 'react';
 import HeaderContainer from "./header/HeaderContainer";
 import {
-    audioRoute,
-    imageItemModal, imagesRoute, lazyMode,
+    imageItemModal, lazyMode,
     mainContentId,
-    mediaTypes,  paginateMode, renameModal, rootRoute, shareModal,
+    mediaTypes, paginateMode, renameModal, rootRoute, shareModal,
     signInRoute,
-    videoItemModal, videosRoute,
+    videoItemModal,
 } from "../common/common";
-import {Routes, Route, Navigate, useLocation, useNavigate} from "react-router-dom";
+import {Routes, Route, Navigate, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
 import {
     listMedia,
@@ -68,8 +67,6 @@ const Main = ({
                   handleCurrentItemModal,
               }) => {
 
-        const navigate = useNavigate()
-
         const location = useLocation()
         const isVideoModalMounted = mountedItemModal === videoItemModal
         const isImageModalMounted = mountedItemModal === imageItemModal
@@ -103,16 +100,6 @@ const Main = ({
         useEffect(() => {
             setCurrentRoute(pathName)
         }, [pathName])
-
-
-        useEffect(() => {
-            const validRoutes = [imagesRoute, videosRoute, audioRoute, rootRoute];
-            if (validRoutes.includes(currentRoute)) {
-                navigate(currentRoute);
-            } else {
-                navigate(signInRoute);
-            }
-        }, [currentRoute])
 
 
         useEffect(() => {
