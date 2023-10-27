@@ -80,6 +80,9 @@ const Video = ({
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             if (hoveredMediaIndex === index) {
+                setVideoState(prevState => ({
+                    ...prevState, currentTime: 0
+                }))
                 playerRef.current.seekTo(0);
                 handlePlayVideo(true)
             }
