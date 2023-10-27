@@ -43,7 +43,7 @@ const Media = ({
                    isMediaDeleting,
                }) => {
 
-    window.s1  = mediaToShow
+    window.s1 = mediaToShow
 
     return (
         <>
@@ -146,6 +146,8 @@ const Media = ({
                                                            {...{
                                                                hoveredMediaIndex,
                                                                setHoveredMediaIndex,
+                                                               isMediaDeleting,
+                                                               deletedItemUrl,
                                                                index,
                                                                searchMode,
                                                                smallScreen,
