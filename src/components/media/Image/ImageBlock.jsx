@@ -16,6 +16,8 @@ const ImageBlock = ({
                         confirm,
                         handleImageClick,
                         handleModal,
+                        isMediaDeleting,
+                        deletedItemUrl,
                     }) => {
     const imageIsHovered = hoveredMediaIndex === index
     const [showOptions, setIsShowOptions] = useState(false)
@@ -53,7 +55,9 @@ const ImageBlock = ({
                                       }}/></div>
                 </Fade>}
             <Image  {...{
+                isMediaDeleting,
                 url,
+                deletedItemUrl,
                 setIsShowOptions,
                 index,
                 imageIsHovered,

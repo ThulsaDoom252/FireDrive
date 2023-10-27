@@ -51,7 +51,7 @@ const mediaSlice = createSlice({
         deletingAudioIndex: null,
         currentMediaSet: [],
         mediaLoading: false,
-        mediaDeleting: false,
+        isMediaDeleting: false,
         imagesSet: [],
         videosSet: [],
         audioSet: [],
@@ -243,7 +243,7 @@ const mediaSlice = createSlice({
             }
         },
         toggleIsMediaDeleting(state, action) {
-            state.mediaDeleting = action.payload
+            state.isMediaDeleting = action.payload
         },
         toggleIsMediaUploaded(state, action) {
             state.mediaUploaded = action.payload

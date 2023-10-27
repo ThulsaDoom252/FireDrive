@@ -1,5 +1,5 @@
 import {makeStyles} from "@mui/styles";
-import {createMuiTheme, Skeleton, styled} from '@mui/material';
+import { Skeleton, styled} from '@mui/material';
 
 export const useStyles = makeStyles(() => ({
     formControl: (props) => {
@@ -147,6 +147,17 @@ export const StyledImage = styled('img')({
     height: '100%',
     objectFit: 'cover',
 });
+
+export const ItemDeletingOverlay = styled('div')({
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    zIndex: 5,
+    backgroundColor: 'rgba(250,0,0,0.5)'
+})
 
 export const GridItemContainer = styled('div')({
     width: '100%',

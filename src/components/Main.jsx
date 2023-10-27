@@ -67,6 +67,8 @@ const Main = ({
                   toggleSearch,
                   handleCurrentModal,
                   handleCurrentItemModal,
+                  isMediaDeleting,
+                  deletedItemUrl,
               }) => {
 
         const location = useLocation()
@@ -180,6 +182,8 @@ const Main = ({
                                                      currentMediaSet,
                                                      mediaToShow,
                                                      isPaginatorEnabled,
+                                                     isMediaDeleting,
+                                                     deletedItemUrl,
                                                      searchMode,
                                                      searchResults,
                                                      smallScreen,
@@ -238,6 +242,8 @@ const mapStateToProps = (state) => {
         isMediaLoading: state.media.mediaLoading,
         isThemeUpdating: state.app.isThemeUpdating,
         currentTheme: state.app.currentTheme,
+        isMediaDeleting: state.media.isMediaDeleting,
+        deletedItemUrl: state.media.deletedItemUrl,
     }
 }
 

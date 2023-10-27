@@ -36,10 +36,14 @@ const Media = ({
                    gridLayoutMenu,
                    gridDividerValue,
                    gridLayoutIndex,
+                   deletedItemUrl,
                    handleVideoClick,
                    handleImageClick,
                    handleModal,
+                   isMediaDeleting,
                }) => {
+
+    window.s1  = mediaToShow
 
     return (
         <>
@@ -99,12 +103,14 @@ const Media = ({
                                             {...{
                                                 index,
                                                 setHoveredMediaIndex,
+                                                deletedItemUrl,
                                                 searchMode,
                                                 hoveredMediaIndex,
                                                 setItemOptionsHovered,
                                                 confirm,
                                                 handleImageClick,
                                                 handleModal,
+                                                isMediaDeleting,
                                             }}/>
                                     </GridItemContainer>
                                 </Grid>
@@ -118,6 +124,8 @@ const Media = ({
                                                    searchMode,
                                                    index,
                                                    noOpenModal,
+                                                   deletedItemUrl,
+                                                   isMediaDeleting,
                                                    hoveredMediaIndex,
                                                    setHoveredMediaIndex,
                                                    setItemOptionsHovered,

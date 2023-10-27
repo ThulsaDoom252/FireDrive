@@ -45,6 +45,7 @@ const MediaContainer = ({
                             setItemOptionsHovered,
                             itemModalType,
                             isPaginatorEnabled,
+                            isMediaDeleting,
                             confirm,
                             gridDividerValue,
                             setGridDividerValue,
@@ -52,6 +53,7 @@ const MediaContainer = ({
                             handleItemModal,
                             handleModal,
                             noMedia,
+                            deletedItemUrl,
                         }) => {
     const pagesContext = useContext(PagesContext)
     const {imagesPage, videosPage, audioPage} = pagesContext
@@ -70,7 +72,7 @@ const MediaContainer = ({
         currentPage]
 
 
-    const isPaginatorHidden = !isPaginatorEnabled || noMedia || searchMode || noSearchResults
+    const isPaginatorHidden = !isPaginatorEnabled || noMedia || searchMode || noSearchResults || isMediaDeleting
 
     const noOpenModal = itemModalType === noModal
 
@@ -173,6 +175,7 @@ const MediaContainer = ({
 
     return <Media {...{
         imagesPage,
+        isMediaDeleting,
         videosPage,
         audioPage,
         currentMediaFetch,
@@ -186,6 +189,7 @@ const MediaContainer = ({
         isPaginatorHidden,
         paginatorProps,
         setItemOptionsHovered,
+        deletedItemUrl,
         noOpenModal,
         confirm,
         handleLayoutMenu,
@@ -203,7 +207,7 @@ const MediaContainer = ({
 const mapStateToProps = (state) => {
     return {
         gridDividerValue: state.app.gridDividerValue,
-        gridLayoutIndex: state.app. gridLayoutIndex,
+        gridLayoutIndex: state.app.gridLayoutIndex,
         imagesSet: state.media.imagesSet,
         videosSet: state.media.videosSet,
         audioSet: state.media.audioSet,

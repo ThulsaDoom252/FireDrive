@@ -11,9 +11,9 @@ import {
     renameModal,
     stopPropagation
 } from "../../common/common";
-import {Button, Fade} from "@mui/material";
+import {Fade} from "@mui/material";
 import FittedThemeBtn from "../common/theme/FittedThemeBtn";
-
+import {download} from "../../dal"
 
 const ItemOptions = ({
                          hoveredMediaIndex,
@@ -125,7 +125,7 @@ const ItemOptions = ({
                                       color={deleteIconColor}
                             /> : 'Delete Item'}
                     </FittedThemeBtn>
-                    {/*<BsDownload className="text-gray-200" size={iconsSize}/>*/}
+                    <FittedThemeBtn onClick={() => download(url)}><BsDownload size={iconsSize}/></FittedThemeBtn>
 
                 </div>
             </Fade>
