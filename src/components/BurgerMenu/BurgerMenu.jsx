@@ -12,7 +12,7 @@ import SettingsDropDown from './DropDowns/SettingsDropDown';
 
 const BurgerMenu = ({
                         smallScreen,
-                        hideMobileSearch,
+                        hideSearch,
                         setModalType,
                         isMediaLoading,
                         uploadProgress,
@@ -27,7 +27,7 @@ const BurgerMenu = ({
                     }) => {
 
     return (
-        <BurgerMenuWrapper smallScreen={smallScreen} onClick={hideMobileSearch}>
+        <BurgerMenuWrapper smallScreen={smallScreen} onClick={hideSearch}>
             <div className={'mt-5 flex flex-col justify-center'}>
                 <div onClick={() => setModalType(userModal)} className={'mb-5 mx-auto'}><UserAvatar
                 /></div>

@@ -5,7 +5,7 @@ import Paginator from "../paginator/Paginator";
 import NoSearchResults from "../search/NoSearchResults";
 import Video from "./Video";
 import ImageBlock from "./Image/ImageBlock";
-import {Grid} from "@mui/material";
+import {Box, Grid} from "@mui/material";
 import ItemsLayoutMenu from "./itemsLayoutMenu";
 import Overlay from "../common/Overlay";
 import noImages from "./noImages.jpg"
@@ -68,11 +68,11 @@ const Media = ({
                         handleCollValue,
                     }}/>}
 
-                {noSearchResults && <div><NoSearchResults/></div>}
+                {noSearchResults && <Box><NoSearchResults/></Box>}
                 {noMedia ?
-                    <div><img className={`mx-auto w-1/2 rounded-md opacity-80 bg-white`}
+                    <Box><img className={`mx-auto w-1/2 rounded-md opacity-80 bg-white`}
                               src={(imagesPage ? noImages : videosPage ? noVideo : noAudio)}
-                              alt={'No images'}/></div> :
+                              alt={'No images'}/></Box> :
                     <Grid
                         style={{width: '100%'}}
                         container

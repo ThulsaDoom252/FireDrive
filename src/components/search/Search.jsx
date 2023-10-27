@@ -1,26 +1,23 @@
 import React from 'react';
-import {TextField} from "@mui/material"
+import {IconButton, TextField} from "@mui/material"
 import {customInput} from "../mui/styles";
 import InputAdornment from "@mui/material/InputAdornment";
 import {FaSearch} from "react-icons/fa";
+import {MdClear} from 'react-icons/md';
+import ThemeBtn from '../common/theme/ThemeBtn';
 
 const Search = ({
                     searchRequest,
                     setSearchRequest,
                     isDisabled,
-                    toggleSearch,
+    hideSearch,
                 }) => {
-
-    const handleBlur = () => {
-        toggleSearch(false)
-    }
 
     return (
         <div
             className={`bg-white  w-full`}>
             <TextField
                 autoFocus={true}
-                onBlur={handleBlur}
                 disabled={isDisabled}
                 type={'text'}
                 className={'w-full'}
@@ -35,6 +32,14 @@ const Search = ({
                             <FaSearch/>
                         </InputAdornment>
 
+                    ),
+                    endAdornment: (
+                        <InputAdornment position="end">
+                            <ThemeBtn size='small' onClick={() => setSearchRequest('')}>Clear</ThemeBtn>
+                            <IconButton onClick={hideSearch}>
+                                <MdClear/>
+                            </IconButton>
+                        </InputAdornment>
                     ),
                 }}
             />

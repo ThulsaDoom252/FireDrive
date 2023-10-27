@@ -2,7 +2,7 @@ import React from 'react';
 import Button from "@mui/material/Button";
 import {useSelector} from "react-redux";
 
-const ThemeBtn = ({children, fullWidth, onClick, disabled, className}) => {
+const ThemeBtn = ({children, fullWidth, onClick, disabled, className, size}) => {
 
     const primeBg = useSelector(state => state.app.currentTheme.primeBg)
     const activeBg = useSelector(state => state.app.currentTheme.activeColor)
@@ -19,7 +19,7 @@ const ThemeBtn = ({children, fullWidth, onClick, disabled, className}) => {
     }
 
     return (
-        <Button className={className} sx={themeBtnClass} disabled={disabled} onClick={onClick}>
+        <Button size={size} className={className} sx={themeBtnClass} disabled={disabled} onClick={onClick}>
             {children}
         </Button>
     );

@@ -11,7 +11,7 @@ import {Routes, Route, Navigate, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
 import {
     listMedia,
-    setCurrentRoute, toggleSearch,
+    setCurrentRoute, setSearchRequest, toggleSearch,
 } from "../redux/mediaSlice";
 import MediaContainer from "./media/MediaContainer";
 import {
@@ -49,6 +49,8 @@ const Main = ({
                   setModalType,
                   setItemModalType,
                   currentTheme,
+                  searchRequest,
+                  setSearchRequest,
                   isSearchVisible,
                   currentThemeName,
                   listMode,
@@ -107,10 +109,10 @@ const Main = ({
                 listMedia({mediaType}))
         }, [])
 
-        const hideMobileSearch = () => {
+        const hideSearch = () => {
             isSearchVisible && toggleSearch(false)
+            searchRequest && setSearchRequest('')
         }
-
 
         const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
         const mediaToShow = searchMode ? searchResults : listMode === paginateMode ? paginatedMedia : currentMediaSet
@@ -141,6 +143,9 @@ const Main = ({
                 <UserModal toggleModal={setModalType}
                            showModal={modalType === userModal}/>
                 <HeaderContainer
+                    searchRequest={searchRequest}
+                    setSearchRequest={setSearchRequest}
+                    hideSearch={hideSearch}
                     smallScreen={smallScreen}
                     currentTheme={currentTheme}
                     currentRoute={currentRoute}
@@ -148,11 +153,11 @@ const Main = ({
                     toggleSearch={toggleSearch}
                     noMedia={noMedia}
                 />
-                <main className={'w-full h-full overflow-y-hidden relative'} id={mainContentId} onClick={hideMobileSearch}>
+                <main className={'w-full h-full overflow-y-hidden relative'} id={mainContentId}>
                     <Scrollbars>
                         <BurgerMenu  {...{
                             smallScreen,
-                            hideMobileSearch,
+                            hideSearch,
                             setModalType,
                             isMediaLoading,
                             uploadProgress,
@@ -216,6 +221,7 @@ const mapStateToProps = (state) => {
         currentMediaSet: state.media.currentMediaSet,
         audioSet: state.media.audioSet,
         searchMode: state.media.searchMode,
+        searchRequest: state.media.searchRequest,
         searchResults: state.media.searchResults,
         modalType: state.app.modalType,
         itemModalType: state.app.itemModalType,
@@ -238,7 +244,7 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
     listMedia, setCurrentRoute,
     setModalType, setItemModalType, toggleSearch,
-    toggleListMode, handleCurrentModal, handleCurrentItemModal,
+    toggleListMode, handleCurrentModal, handleCurrentItemModal, setSearchRequest,
 })(Main);
 
 

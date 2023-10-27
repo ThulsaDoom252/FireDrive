@@ -4,17 +4,8 @@ import {toggleSearch} from "../redux/mediaSlice";
 
 export const BurgerMenuContext = createContext();
 
-export function BurgerMenuContextProvider(props) {
-    const dispatch = useDispatch()
-    const showMobileSearch = useSelector(state => state.media.showMobileSearch)
+export function BurgerMenuContextProvider({children}) {
     const [menuOpenState, setMenuOpenState] = useState(false)
-
-    useEffect(() => {
-        if (menuOpenState) {
-            showMobileSearch && dispatch(toggleSearch(false))
-        }
-
-    }, [menuOpenState])
 
 
     const stateChangeHandler = (newState) => setMenuOpenState(newState.isOpen)
@@ -28,7 +19,7 @@ export function BurgerMenuContextProvider(props) {
 
     return (
         <BurgerMenuContext.Provider value={menuValues}>
-            {props.children}
+            {children}
         </BurgerMenuContext.Provider>
     )
 }
