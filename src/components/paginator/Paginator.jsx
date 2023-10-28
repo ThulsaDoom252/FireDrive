@@ -1,38 +1,27 @@
 import React from 'react';
+import {Pagination} from '@mui/material';
 
 const Paginator = ({paginatorProps}) => {
-    const [handleNextClick, handlePrevClick, disablePrevButton, disableNextButton, handlePageClick, pages,
-        currentPage] = paginatorProps
+    const [handleNextClick, handlePrevClick, disablePrevButton, disableNextButton, handlePageClick,
+        currentPage, totalPages] = paginatorProps
+
+    const handleChange = (e, value) => handlePageClick(value)
+
     return (
-        <nav aria-label="Page navigation example">
-            <ul className="pagination">
-                <li className="page-item">
-                    <button className="page-link cursor-pointer disabled:text-gray-300 cursor-not-allowed "
-                            aria-label="Previous"
-                            disabled={disablePrevButton}
-                            onClick={handlePrevClick}>
-                        &laquo;
-                    </button>
-                </li>
-                {pages.map((page, index) => (
-                    <li key={index} className={`page-item `}
-                        onClick={() => handlePageClick(page)}>
-                        <a
-                            style={{color: page === currentPage ? 'blue' : 'gray'}}
-                            className={`page-link  hover:cursor-pointer`}>{page}</a>
-                    </li>
-                ))}
-                <li className="page-item">
-                    <button
-                        className={`page-link  cursor-pointer disabled:text-gray-300 cursor-not-allowed}`}
-                        aria-label="Next"
-                        onClick={handleNextClick}
-                        disabled={disableNextButton}>
-                        &raquo;
-                    </button>
-                </li>
-            </ul>
-        </nav>
+        <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={handleChange}
+            nextIconButtonProps={{
+                onClick: handleNextClick,
+                disabled: disableNextButton,
+            }}
+            prevIconButtonProps={{
+                onClick: handlePrevClick,
+                disabled: disablePrevButton,
+            }}
+            showFirstButton showLastButton
+        />
     );
 };
 

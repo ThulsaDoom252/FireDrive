@@ -15,14 +15,6 @@ const PaginatorContextProvider = ({children}) => {
     const [portionSize] = useState(4);
     const [portionNumber, setPortionNumber] = useState(1);
 
-
-    // useEffect(() => {
-    //     const newTotalPagesValue = Math.ceil(currentMediaSet.length / itemsPerPage);
-    //     setTotalPages(newTotalPagesValue)
-    //     setCurrentPage(currentPage > newTotalPagesValue ? newTotalPagesValue : currentPage)
-    //     debugger
-    // }, [currentMediaSet, itemsPerPage]);
-
     useEffect(() => {
         if (currentMediaSet.length > 0) {
             setTotalPages(Math.ceil(currentMediaSet.length / itemsPerPage))
@@ -58,13 +50,9 @@ const PaginatorContextProvider = ({children}) => {
     const disablePrevButton = currentPage === 1;
     const disableNextButton = currentPage === totalPages;
 
-    const pages = Array.from(Array(totalPages), (_, i) => i + 1)
-        .filter((page) => page >= (portionNumber - 1) * portionSize + 1 && page <= portionNumber * portionSize);
-
     const paginationValues = {
         handleNextClick,
         handlePrevClick,
-        pages,
         disablePrevButton,
         disableNextButton,
         handlePageClick,
@@ -75,6 +63,7 @@ const PaginatorContextProvider = ({children}) => {
         currentPage,
         itemsPerPage,
         setItemsPerPage,
+        totalPages,
         isPaginatorEnabled,
         setIsPaginatorEnabled,
     }

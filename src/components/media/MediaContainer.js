@@ -63,13 +63,13 @@ const MediaContainer = ({
 
     const paginatorContext = useContext(PaginatorContext)
     const {
-        handleNextClick, handlePrevClick, disablePrevButton, disableNextButton, handlePageClick, pages,
-        currentPage,
+        handleNextClick, handlePrevClick, disablePrevButton, disableNextButton, handlePageClick,
+        currentPage, totalPages
     } = paginatorContext
 
 
-    const paginatorProps = [handleNextClick, handlePrevClick, disablePrevButton, disableNextButton, handlePageClick, pages,
-        currentPage]
+    const paginatorProps = [handleNextClick, handlePrevClick, disablePrevButton, disableNextButton, handlePageClick,
+        currentPage, totalPages]
 
 
     const isPaginatorHidden = !isPaginatorEnabled || noMedia || searchMode || noSearchResults || isMediaDeleting
