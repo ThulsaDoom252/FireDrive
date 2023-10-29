@@ -22,12 +22,14 @@ const ItemOptions = ({
                          iconBgColor,
                          iconBgActiveColor,
                          displayInCol = false,
+                         fullWidth,
                          name,
                          oldName,
                          tgIconColor = 'black',
                          vbIconColor = 'black',
                          renameIconColor = 'black',
                          deleteIconColor = 'black',
+                         downloadIconColor = 'black',
                          iconsSize = 20,
                          url, index, searchMode, currentRoute,
                          initialMode = 'hide',
@@ -64,7 +66,7 @@ const ItemOptions = ({
     bg-opacity-5
     rounded md 
     flex 
-    justify-center 
+    justify-center
     items-center 
     transition-all
     duration-500
@@ -82,15 +84,15 @@ const ItemOptions = ({
              p-1 
              h-fit 
                flex 
-               justify-center 
-               items-center 
+               items-center
                rounded
                 hover:cursor-pointer
              ${(showOptions && showBg) && 'bg-gray-300 bg-opacity-50'} 
+               ${fullWidth && 'w-full'}
            `}
             onMouseLeave={handleMouseLeave}>
             <Fade in={showOptions} timeout={200}>
-                <div className={`flex ${displayInCol && 'flex-col'}`}>
+                <div className={`flex ${fullWidth && 'w-full'} justify-between ${displayInCol && 'flex-col'}`}>
                     <FittedThemeBtn className={iconBlockClass}>
                         <TelegramShareButton
                             url={url}
@@ -121,11 +123,12 @@ const ItemOptions = ({
                     <FittedThemeBtn className={iconBlockClass}
                                     onClick={handleDeleteCurrentItem}>
                         {showIcons ?
-                            < BsTrash title={'delete current item'} size={iconsSize}
+                            < BsTrash  title={'delete current item'} size={iconsSize}
                                       color={deleteIconColor}
                             /> : 'Delete Item'}
                     </FittedThemeBtn>
-                    <FittedThemeBtn onClick={() => download(url)}><BsDownload size={iconsSize}/></FittedThemeBtn>
+                    <FittedThemeBtn onClick={() => download(url)}><BsDownload size={iconsSize}
+                                                                              color={downloadIconColor}/></FittedThemeBtn>
 
                 </div>
             </Fade>

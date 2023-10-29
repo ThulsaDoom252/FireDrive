@@ -1,4 +1,6 @@
 import {createContext, useEffect, useRef, useState} from "react";
+import {delay} from '../common/common';
+
 export const VideoControlsContext = createContext()
 
 export const VideoControlsContextProvider = ({children}) => {
@@ -51,6 +53,10 @@ export const VideoControlsContextProvider = ({children}) => {
     const [touchX, setTouchX] = useState(null)
 
     const playBackValues = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]
+
+    //Video options
+    const [videoOptions, toggleVideoOptions] = useState(false)
+    const [isVideoOptionsWidthExpanded, expandVideoOptionsWidth] = useState(false)
 
     // control menu state
     const [currentSpeedValue, setCurrentSpeedValue] = useState(1.0)
@@ -106,7 +112,6 @@ export const VideoControlsContextProvider = ({children}) => {
     const handleClearSubMenu = () => {
         setCurrentSubMenu(null)
     }
-
 
     // FullScreen handler
     const handlePlaySpeed = (value) => {
@@ -178,16 +183,33 @@ export const VideoControlsContextProvider = ({children}) => {
 
 
     const handlePlay = () => {
-        debugger
         if (isVideoPlaying) {
-            debugger
             playerRef?.current?.getInternalPlayer()?.pause()
             setIsVideoPlaying(false)
         } else {
-            debugger
             playerRef?.current?.getInternalPlayer()?.play();
             setIsVideoPlaying(true)
         }
+    }
+
+    // Open/Close video options
+    const handleVideoOptions = async () => {
+        const delayTime = 80
+        if (!videoOptions) {
+            if (isVideoPlaying) {
+                isVideoPlaying && playerRef?.current?.getInternalPlayer()?.pause()
+                setIsVideoPlaying(false)
+            }
+
+            toggleVideoOptions(true)
+            await delay(delayTime)
+            expandVideoOptionsWidth(true)
+        } else {
+            expandVideoOptionsWidth(false)
+            await delay(delayTime)
+            toggleVideoOptions(false)
+        }
+
     }
 
     //Volume logic
@@ -217,11 +239,8 @@ export const VideoControlsContextProvider = ({children}) => {
         setIsSliderHovered(false)
     }
     const handleChangeDuration = (value) => {
-        debugger
         playerRef?.current?.seekTo(value.target.value)
-        debugger
         setCurrentVideoTime(value.target.value)
-        debugger
     }
 
     //Picture in picture mode
@@ -242,12 +261,14 @@ export const VideoControlsContextProvider = ({children}) => {
     };
 
     const handleVideoControlsVisibility = () => {
+        let visibilityTime = 1000000000
+        // default time 10000
         setControlInitialVisibilityValue(prevValue => prevValue + 5000)
         if (!isControlsVisible) {
             setIsControlsVisible(true)
             setTimeout(() => {
                 setIsControlsVisible(false)
-                setControlInitialVisibilityValue(10000)
+                setControlInitialVisibilityValue(visibilityTime)
             }, [controlInitialVisibilityValue])
         }
     }
@@ -297,6 +318,9 @@ export const VideoControlsContextProvider = ({children}) => {
         videoContainerRef,
         handleVideoControlsVisibility,
         isControlsVisible,
+        videoOptions,
+        isVideoOptionsWidthExpanded,
+        handleVideoOptions,
     }
 
     return (

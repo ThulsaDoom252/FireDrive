@@ -153,7 +153,6 @@ const Video = ({
         display: isVideoReady ? 'block' : 'none',
     }
 
-
     return (
         <>
             <Box

@@ -8,7 +8,8 @@ const Overlay = ({
                      toggleModal,
                  }) => {
 
-    const handleClose = () => {
+    const handleClose = (e) => {
+        e.stopPropagation()
         if (toggleModal)
             toggleModal(false)
     }

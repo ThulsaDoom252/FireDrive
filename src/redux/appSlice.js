@@ -253,6 +253,7 @@ export const handleCurrentModal = createAsyncThunk('handle-modal-thunk', async (
     dispatch,
     getState
 }) => {
+    debugger
     const currentState = getState()
     const currentModalType = currentState.app.modalType
     const isRenameModalMounted = currentModalType === renameModal

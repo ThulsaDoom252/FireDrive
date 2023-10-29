@@ -13,7 +13,7 @@ import noVideo from "./noVideo.jpg"
 import noAudio from "./noAudio.png"
 import {GridItemContainer} from '../mui/styles';
 
-const Media = ({
+const ItemsPage = ({
                    imagesPage,
                    videosPage,
                    audioPage,
@@ -42,8 +42,6 @@ const Media = ({
                    handleModal,
                    isMediaDeleting,
                }) => {
-
-    window.s1 = mediaToShow
 
     return (
         <>
@@ -169,4 +167,4 @@ const Media = ({
     );
 };
 
-export default Media;
+export default ItemsPage;

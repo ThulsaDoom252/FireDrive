@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import MediaOptions from "../../options/ItemOptions";
+import ItemOptions from "../../options/ItemOptions";
 import {Fade} from "@mui/material";
 import Image from "./Image";
 import {delay} from "../../../common/common";
@@ -42,7 +42,7 @@ const ImageBlock = ({
             {(imageIsHovered && showOptions) &&
                 <Fade in={animateOptions} timeout={200}>
                     <div className={'absolute top-0 right-0 z-1'}>
-                        <MediaOptions name={name}
+                        <ItemOptions name={name}
                                       oldName={oldName}
                                       url={url}
                                       {...{

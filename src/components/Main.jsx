@@ -131,7 +131,7 @@ const Main = ({
                     <RenameModal toggleModal={handleCurrentModal} showModal={animateRenameModal}/>}
                 {isShareModalMounted && <ShareModal toggleModal={handleCurrentModal} animateModal={animateShareModal}/>}
                 {isVideoModalMounted && <VideoModalContainer
-                    handleCurrentModal={handleCurrentItemModal}
+                    handleCurrentItemModal={handleCurrentItemModal}
                     toggleModal={handleCurrentModal}
                     animateModal={animateVideoModal}
                     confirm={confirm}
