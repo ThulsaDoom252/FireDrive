@@ -6,9 +6,10 @@ import UploadContainer from "./Btns/UploadBtnContainer";
 import RemoveAllBtnContainer from "./Btns/RemoveAllBtnContainer";
 import LogOutContainer from "./Btns/LogOutContainer";
 import SortInput from "../common/SortInput";
-import UploadingProgress from './UploadingProgress';
 import ThemeDropDown from './DropDowns/ThemeDropDown';
 import SettingsDropDown from './DropDowns/SettingsDropDown';
+import ThemedSlider from '../common/theme/ThemedSlider';
+import {Box} from '@mui/material';
 
 const BurgerMenu = ({
                         smallScreen,
@@ -31,7 +32,14 @@ const BurgerMenu = ({
             <div className={'mt-5 flex flex-col justify-center'}>
                 <div onClick={() => setModalType(userModal)} className={'mb-5 mx-auto'}><UserAvatar
                 /></div>
-                <UploadingProgress {...{isMediaLoading, uploadProgress, totalUploadedBytes, totalBytesToUpload}}/>
+                {/*<UploadingProgress {...{isMediaLoading, uploadProgress, totalUploadedBytes, totalBytesToUpload}}/>*/}
+                <Box margin={1}>
+                    <ThemedSlider
+                        value={totalUploadedBytes}
+                        max={totalBytesToUpload}
+                        show={isMediaLoading}
+                        valueToDisplay={uploadProgress}/>
+                </Box>
                 <div className={`flex justify-between items-center mb-2 w-full ${smallScreen && 'flex-col'}`}>
                     <div className={'m-1 w-1/2 '}><UploadContainer/></div>
                     <div className={'m-1 w-1/2'}><RemoveAllBtnContainer confirm={confirm}/></div>
