@@ -54,8 +54,6 @@ const ThemedSlider = ({
                             value={value}/>
                 </Box>}
         </>
-
-
     );
 };
 

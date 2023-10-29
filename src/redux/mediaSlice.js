@@ -412,20 +412,20 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
     };
     const audioPage = currentRoute === audioRoute
     const files = Array.from(event.target.files);
-    const filteredFiles = files.filter(file => allowedTypes[currentRoute].includes(file.type));
+    const allowedFiles = files.filter(file => allowedTypes[currentRoute].includes(file.type));
 
     let totalBytesSize = 0;
     let totalBytesTransferred = 0
 
-    filteredFiles.forEach(file => {
+    allowedFiles.forEach(file => {
         totalBytesSize += file.size;
     });
 
-    if (filteredFiles.length > 0) {
+    if (allowedFiles.length > 0) {
         dispatch(setTotalBytesToUpload(totalBytesSize))
         // totalBytesTransferred !== 0 && dispatch(setUploadedBytes(0))
         dispatch(toggleMediaLoading(true));
-        await Promise.all(filteredFiles.map(async (file) => {
+        await Promise.all(allowedFiles.map(async (file) => {
             const fileRef = ref(storage, `${username}/${currentRoute === videosRoute ? videos
                 : currentRoute === imagesRoute ? images
                     : currentRoute === audioRoute ? audio
@@ -439,7 +439,6 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
                 dispatch(setUploadedBytes(totalBytesTransferred))
                 dispatch(toggleUploadProgress(parseInt(totalPercent)));
                 console.log(`totalPercent: ${totalPercent}`)
-                debugger
             });
 
             await uploadTask;

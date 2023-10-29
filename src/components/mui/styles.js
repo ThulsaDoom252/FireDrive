@@ -1,5 +1,5 @@
 import {makeStyles} from "@mui/styles";
-import { Skeleton, styled} from '@mui/material';
+import {Skeleton, styled} from '@mui/material';
 
 export const useStyles = makeStyles(() => ({
     formControl: (props) => {
@@ -172,5 +172,7 @@ export const SkeletonOverlay = styled(Skeleton)({
     left: 0,
     width: '100%',
     height: '100%',
+    opacity: 0.5,
+    background: '#cec3c3',
 });
 

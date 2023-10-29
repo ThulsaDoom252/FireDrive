@@ -3,7 +3,7 @@ import ReactPlayer from "react-player";
 import ItemOptions from "../options/ItemOptions";
 import {delay, formatTime, preventDefault} from "../../common/common";
 import {BiSolidVolume, BiVolumeMute} from "react-icons/bi";
-import {Tooltip} from "@mui/material";
+import {Box, Tooltip} from "@mui/material";
 import {Fade} from "@mui/material";
 import VideoItemThemeContainer from "../common/theme/VideoItemThemeContainer";
 import {videoContainerStyle} from "../../common/styles";
@@ -150,24 +150,25 @@ const Video = ({
         width: '100%',
         height: '100%',
         objectFit: 'cover',
-        display: isVideoReady ? 'block' : 'hidden',
+        display: isVideoReady ? 'block' : 'none',
     }
+
 
     return (
         <>
-            <div
+            <Box
                 style={videoContainerStyle}
                 onContextMenu={preventDefault}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                className={`bg-black 
-                    ${!isVideoHovered && 'rounded-t-lg'} 
-                    overflow-hidden
+                className={` 
+                overflow-hidden
                      cursor-pointer
-                    ${isVideoReady ? 'block' : 'hidden'}
-                    `}
+                      ${!isVideoHovered && 'rounded-t-lg'} 
+                      ${isVideoReady && 'bg-black'}
+                     `}
                 onClick={() => handleVideoClick(index)}>
-                {isVideoReady && <Tooltip title={'video loading'}>
+                {!isVideoReady && <Tooltip title={'video loading'}>
                     <SkeletonOverlay variant="rectangular"/>
                 </Tooltip>}
                 {mountVideoItemOptions && !deletedItemUrl &&
@@ -229,7 +230,7 @@ const Video = ({
                         </div>
                     </Fade>
                 </div>
-            </div>
+            </Box>
             {
                 (!smallScreen && isVideoReady) && <VideoItemThemeContainer
                     opacityCondition={hoveredMediaIndex === index}
