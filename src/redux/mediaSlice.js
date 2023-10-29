@@ -345,11 +345,11 @@ export const handleSearchMedia = createAsyncThunk('search-thunk', async (request
 })
 
 export const handleSortitems = createAsyncThunk('sort-thunk', async ({value, isAudio}, {dispatch}) => {
-    await dispatch(toggleSortByValue(value))
-    isAudio && await dispatch(setLastPlayedAudioNameBeforeSort(getLocalStorageItem('currentTrackName')))
-    await dispatch(sortCurrentMediaSet({sortType: value, isAudio}))
-    await delay(100)
-    isAudio && await dispatch(setLastPlayedAudioNameBeforeSort(null))
+        await dispatch(toggleSortByValue(value))
+        isAudio && await dispatch(setLastPlayedAudioNameBeforeSort(getLocalStorageItem('currentTrackName')))
+        await dispatch(sortCurrentMediaSet({sortType: value, isAudio}))
+        await delay(100)
+        isAudio && await dispatch(setLastPlayedAudioNameBeforeSort(null))
     }
 )
 
@@ -506,6 +506,7 @@ export const deleteAllMedia = createAsyncThunk('delete-all-media-thunk', async (
     }
     dispatch(clearMediaSet({route: currentRoute}))
     dispatch(toggleIsMediaDeleting(false))
+    toast.success('All items has been deleted')
 
 })
 

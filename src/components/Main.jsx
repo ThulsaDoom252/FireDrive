@@ -13,7 +13,7 @@ import {
     listMedia,
     setCurrentRoute, setSearchRequest, toggleSearch,
 } from "../redux/mediaSlice";
-import MediaContainer from "./media/MediaContainer";
+import ItemsPageContainer from "./media/MediaContainer";
 import {
     handleCurrentItemModal,
     handleCurrentModal,
@@ -177,7 +177,7 @@ const Main = ({
                             currentTheme={currentTheme}/>}
                         <Routes>
                             {!homePage && <Route path={currentRoute}
-                                                 element={<MediaContainer {...{
+                                                 element={<ItemsPageContainer {...{
                                                      currentRoute,
                                                      currentMediaSet,
                                                      mediaToShow,

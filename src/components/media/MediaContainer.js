@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import Media from "./Media";
+import ItemsPage from "./Media";
 import {imageItemModal, noModal, rootRoute, videoItemModal} from "../../common/common";
 import {
     clearSearchResults,
@@ -173,7 +173,7 @@ const MediaContainer = ({
         setGridDividerValue(number)
     }
 
-    return <Media {...{
+    return <ItemsPage {...{
         imagesPage,
         isMediaDeleting,
         videosPage,
