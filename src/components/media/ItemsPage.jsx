@@ -93,6 +93,7 @@ const ItemsPage = ({
                         {imagesPage ? mediaToShow.map((media, index) => {
                                 return <Grid item xs={gridDividerValue}>
                                     <GridItemContainer key={index}
+                                                       onClick={() => handleImageClick(index)}
                                                        onMouseEnter={() => !smallScreen && setHoveredMediaIndex(index)}
                                                        onMouseLeave={() => setHoveredMediaIndex(null)}>
                                         <ImageBlock

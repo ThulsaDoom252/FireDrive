@@ -24,37 +24,37 @@ import fiveColumnsLayoutImg from "./layout/numbers/5.png"
 import sixColumnsLayoutImg from "./layout/numbers/6.png"
 
 const ItemsPageContainer = ({
-                            currentRoute,
-                            handleCurrentMediaSet,
-                            handleSearchMedia,
-                            gridLayoutIndex,
-                            setCurrentLayoutIndex,
-                            toggleNoSearchResults,
-                            clearSearchResults,
-                            imagesSet,
-                            videosSet,
-                            audioSet,
-                            smallScreen,
-                            currentMediaFetch,
-                            searchResults,
-                            toggleSearchMode,
-                            mediaToShow,
-                            searchMode,
-                            noSearchResults,
-                            searchRequest,
-                            setItemOptionsHovered,
-                            itemModalType,
-                            isPaginatorEnabled,
-                            isMediaDeleting,
-                            confirm,
-                            gridDividerValue,
-                            setGridDividerValue,
-                            setCurrentModalItemIndex,
-                            handleItemModal,
-                            handleModal,
-                            noMedia,
-                            deletedItemUrl,
-                        }) => {
+                                currentRoute,
+                                handleCurrentMediaSet,
+                                handleSearchMedia,
+                                gridLayoutIndex,
+                                setCurrentLayoutIndex,
+                                toggleNoSearchResults,
+                                clearSearchResults,
+                                imagesSet,
+                                videosSet,
+                                audioSet,
+                                smallScreen,
+                                currentMediaFetch,
+                                searchResults,
+                                toggleSearchMode,
+                                mediaToShow,
+                                searchMode,
+                                noSearchResults,
+                                searchRequest,
+                                setItemOptionsHovered,
+                                itemModalType,
+                                isPaginatorEnabled,
+                                isMediaDeleting,
+                                confirm,
+                                gridDividerValue,
+                                setGridDividerValue,
+                                setCurrentModalItemIndex,
+                                handleItemModal,
+                                handleModal,
+                                noMedia,
+                                deletedItemUrl,
+                            }) => {
     const pagesContext = useContext(PagesContext)
     const {imagesPage, videosPage, audioPage} = pagesContext
     const [hoveredMediaIndex, setHoveredMediaIndex] = useState(null)
@@ -154,6 +154,7 @@ const ItemsPageContainer = ({
     ]
 
     const handleImageClick = (index) => {
+        debugger
         setCurrentModalItemIndex(index)
         handleItemModal(imageItemModal)
     }

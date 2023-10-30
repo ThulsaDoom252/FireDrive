@@ -5,7 +5,6 @@ import {ItemDeletingOverlay, SkeletonOverlay, StyledImage} from '../../mui/style
 
 const Image = ({
                    url,
-                   index,
                    imageIsHovered,
                    isAbsolute,
                    height = 'h-full',
@@ -13,7 +12,6 @@ const Image = ({
                    skeletonHeight = 100,
                    skeletonWidth = 300,
                    setIsShowOptions,
-                   handleImageClick,
                    isMediaDeleting,
                    deletedItemUrl,
                }) => {
@@ -38,7 +36,6 @@ const Image = ({
             </Fade>
             <StyledImage
                 onContextMenu={preventDefault}
-                onClick={() =>  handleImageClick(index)}
                 className={`
                 rounded 
                 cursor-pointer
