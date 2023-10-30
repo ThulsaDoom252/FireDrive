@@ -41,7 +41,7 @@ const TopBlock = ({
                     <Box width={isVideoOptionsWidthExpanded ? '80%' : '1%'} sx={videoPlayerOptionsBlock}>
                         <ItemOptions
                             fullWidth
-                            iconsSize={isVideoOptionsWidthExpanded ? 80 : 10}
+                            iconsSize={isVideoOptionsWidthExpanded ? 50 : 10}
                             initialMode={'show'}
                             url={url}
                             tgIconColor={'#3f70e7'}

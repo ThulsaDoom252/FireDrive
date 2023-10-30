@@ -10,12 +10,12 @@ import ThemeBtn from "../../common/theme/ThemeBtn";
 const RemoveAllBtnContainer = ({confirm}) => {
     const pages = useContext(PagesContext)
     const dispatch = useDispatch()
-    const { rootPage } = pages
-    const { mediaLoading, isMediaDeleting, currentMediaSet, smallScreen } = useSelector(state => ({
+    const {rootPage} = pages
+    const {mediaLoading, isMediaDeleting, currentMediaSet, smallScreen} = useSelector(state => ({
         mediaLoading: state.media.mediaLoading,
         isMediaDeleting: state.media.isMediaDeleting,
         currentMediaSet: state.media.currentMediaSet,
-        smallScreen: state.media.smallScreen
+        smallScreen: state.app.smallScreen
     }))
 
     const handleClick = async () => {
@@ -35,8 +35,7 @@ const RemoveAllBtnContainer = ({confirm}) => {
         <>
             <ThemeBtn fullWidth
                       onClick={handleClick}
-                      disabled={isDisabled}
-                      smallScreenIcon={< GoTrash/>}>
+                      disabled={isDisabled}>
                 {smallScreen ? <GoTrash/> : 'Remove all'}
             </ThemeBtn>
         </>
