@@ -5,6 +5,9 @@ import {RiMovieLine} from "react-icons/ri";
 import {BiMusic, BiSearch} from "react-icons/bi";
 import {connect} from "react-redux";
 import FittedThemeBtn from "../common/theme/FittedThemeBtn";
+import {NavLink} from 'react-router-dom';
+import {useStyles} from '../mui/styles';
+import {ButtonBase} from '@mui/material';
 
 
 const NavItems = ({
@@ -12,8 +15,6 @@ const NavItems = ({
                       isSearchBtnDisabled,
                       currentTheme,
                       toggleSearch,
-                      handleRoute,
-                      currentRoute,
                   }) => {
 
     const navItemsList = [
@@ -22,24 +23,26 @@ const NavItems = ({
         {path: videosRoute, icon: <RiMovieLine size={25}/>, label: 'Video'},
         {path: audioRoute, icon: <BiMusic size={25}/>, label: 'Music'},
     ]
+
     const handleMobileSearch = () => {
         toggleSearch(true)
     }
 
+    const classes = useStyles({navColor: currentTheme.color, navActiveColor: currentTheme.navColor})
+
     return (
         <>
             {navItemsList.map((navItem, index) =>
-                <FittedThemeBtn
-                    navButton
-                    onClick={() => handleRoute(navItem.path)}
-                    isActive={currentRoute === navItem.path}>
-                    {smallScreen ?
-                        navItem.icon : navItem.label}
-                </FittedThemeBtn>
+                <NavLink to={navItem.path} className={classes.link}>
+                    <ButtonBase>
+                        {smallScreen ?
+                            navItem.icon : navItem.label}
+                    </ButtonBase>
+                </NavLink>
             )}
-                <FittedThemeBtn onClick={handleMobileSearch} isDisabled={isSearchBtnDisabled}>
-                    <BiSearch size={24}/>
-                </FittedThemeBtn>
+            <FittedThemeBtn onClick={handleMobileSearch} isDisabled={isSearchBtnDisabled}>
+                <BiSearch size={24}/>
+            </FittedThemeBtn>
         </>
     )
         ;

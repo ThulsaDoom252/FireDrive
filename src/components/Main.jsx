@@ -1,20 +1,19 @@
 import React, {useContext, useEffect} from 'react';
 import HeaderContainer from "./header/HeaderContainer";
 import {
-    audioRoute,
-    imageItemModal, imagesRoute, lazyMode,
+    imageItemModal, lazyMode,
     mainContentId,
-    mediaTypes,  paginateMode, renameModal, rootRoute, shareModal,
+    mediaTypes, paginateMode, renameModal, rootRoute, shareModal,
     signInRoute,
-    videoItemModal, videosRoute,
+    videoItemModal,
 } from "../common/common";
-import {Routes, Route, Navigate, useLocation, useNavigate} from "react-router-dom";
+import {Routes, Route, Navigate, useLocation} from "react-router-dom";
 import {connect} from "react-redux";
 import {
     listMedia,
-    setCurrentRoute, toggleSearch,
+    setCurrentRoute, setSearchRequest, toggleSearch,
 } from "../redux/mediaSlice";
-import MediaContainer from "./media/MediaContainer";
+import ItemsPageContainer from "./media/ItemsPageContainer";
 import {
     handleCurrentItemModal,
     handleCurrentModal,
@@ -50,6 +49,8 @@ const Main = ({
                   setModalType,
                   setItemModalType,
                   currentTheme,
+                  searchRequest,
+                  setSearchRequest,
                   isSearchVisible,
                   currentThemeName,
                   listMode,
@@ -66,9 +67,9 @@ const Main = ({
                   toggleSearch,
                   handleCurrentModal,
                   handleCurrentItemModal,
+                  isMediaDeleting,
+                  deletedItemUrl,
               }) => {
-
-        const navigate = useNavigate()
 
         const location = useLocation()
         const isVideoModalMounted = mountedItemModal === videoItemModal
@@ -106,24 +107,14 @@ const Main = ({
 
 
         useEffect(() => {
-            const validRoutes = [imagesRoute, videosRoute, audioRoute, rootRoute];
-            if (validRoutes.includes(currentRoute)) {
-                navigate(currentRoute);
-            } else {
-                navigate(signInRoute);
-            }
-        }, [currentRoute])
-
-
-        useEffect(() => {
             mediaTypes.forEach(mediaType =>
                 listMedia({mediaType}))
         }, [])
 
-        const hideMobileSearch = () => {
+        const hideSearch = () => {
             isSearchVisible && toggleSearch(false)
+            searchRequest && setSearchRequest('')
         }
-
 
         const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
         const mediaToShow = searchMode ? searchResults : listMode === paginateMode ? paginatedMedia : currentMediaSet
@@ -140,7 +131,7 @@ const Main = ({
                     <RenameModal toggleModal={handleCurrentModal} showModal={animateRenameModal}/>}
                 {isShareModalMounted && <ShareModal toggleModal={handleCurrentModal} animateModal={animateShareModal}/>}
                 {isVideoModalMounted && <VideoModalContainer
-                    handleCurrentModal={handleCurrentItemModal}
+                    handleCurrentItemModal={handleCurrentItemModal}
                     toggleModal={handleCurrentModal}
                     animateModal={animateVideoModal}
                     confirm={confirm}
@@ -154,6 +145,9 @@ const Main = ({
                 <UserModal toggleModal={setModalType}
                            showModal={modalType === userModal}/>
                 <HeaderContainer
+                    searchRequest={searchRequest}
+                    setSearchRequest={setSearchRequest}
+                    hideSearch={hideSearch}
                     smallScreen={smallScreen}
                     currentTheme={currentTheme}
                     currentRoute={currentRoute}
@@ -161,11 +155,11 @@ const Main = ({
                     toggleSearch={toggleSearch}
                     noMedia={noMedia}
                 />
-                <main className={'w-full h-full overflow-y-hidden relative'} id={mainContentId} onClick={hideMobileSearch}>
+                <main className={'w-full h-full overflow-y-hidden relative'} id={mainContentId}>
                     <Scrollbars>
                         <BurgerMenu  {...{
                             smallScreen,
-                            hideMobileSearch,
+                            hideSearch,
                             setModalType,
                             isMediaLoading,
                             uploadProgress,
@@ -183,11 +177,13 @@ const Main = ({
                             currentTheme={currentTheme}/>}
                         <Routes>
                             {!homePage && <Route path={currentRoute}
-                                                 element={<MediaContainer {...{
+                                                 element={<ItemsPageContainer {...{
                                                      currentRoute,
                                                      currentMediaSet,
                                                      mediaToShow,
                                                      isPaginatorEnabled,
+                                                     isMediaDeleting,
+                                                     deletedItemUrl,
                                                      searchMode,
                                                      searchResults,
                                                      smallScreen,
@@ -229,6 +225,7 @@ const mapStateToProps = (state) => {
         currentMediaSet: state.media.currentMediaSet,
         audioSet: state.media.audioSet,
         searchMode: state.media.searchMode,
+        searchRequest: state.media.searchRequest,
         searchResults: state.media.searchResults,
         modalType: state.app.modalType,
         itemModalType: state.app.itemModalType,
@@ -245,13 +242,15 @@ const mapStateToProps = (state) => {
         isMediaLoading: state.media.mediaLoading,
         isThemeUpdating: state.app.isThemeUpdating,
         currentTheme: state.app.currentTheme,
+        isMediaDeleting: state.media.isMediaDeleting,
+        deletedItemUrl: state.media.deletedItemUrl,
     }
 }
 
 export default connect(mapStateToProps, {
     listMedia, setCurrentRoute,
     setModalType, setItemModalType, toggleSearch,
-    toggleListMode, handleCurrentModal, handleCurrentItemModal,
+    toggleListMode, handleCurrentModal, handleCurrentItemModal, setSearchRequest,
 })(Main);
 
 

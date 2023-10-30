@@ -8,7 +8,6 @@ import AudioPlayerDisabled from "./AudioPlayerDisabled";
 import {LuRepeat, LuRepeat1} from "react-icons/lu";
 import {IoInfinite} from "react-icons/io5";
 import {ImVolumeHigh, ImVolumeMute2} from "react-icons/im";
-import VolumeBar from "./VolumeBar";
 import FittedThemeBtn from "../common/theme/FittedThemeBtn";
 import ThemedVolumeBar from "../common/theme/ThemedVolumeBar";
 

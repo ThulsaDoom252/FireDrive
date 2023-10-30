@@ -9,6 +9,7 @@ import {Fade} from "@mui/material";
 import {Skeleton, Tooltip} from "@mui/material";
 import FittedThemeBtn from "../common/theme/FittedThemeBtn";
 import AudioThemeContainer from "../common/theme/AudioThemeContainer";
+import {ItemDeletingOverlay} from '../mui/styles';
 
 const Audio = ({
                    name,
@@ -21,6 +22,9 @@ const Audio = ({
                    smallScreen,
                    skeletonWidth = 40,
                    skeletonHeight = 40,
+                   isMediaDeleting,
+                   deletedItemUrl,
+                   confirm,
                }) => {
 
     const audioContext = useContext(AudioPlayerContext)
@@ -28,6 +32,9 @@ const Audio = ({
     const isAudioHovered = (hoveredMediaIndex === index) && !smallScreen
     const [totalDuration, setTotalDuration] = useState(0)
     const [isAudioLoaded, setIsAudioLoaded] = useState(false)
+
+    const showDeletingOverlay = isMediaDeleting || deletedItemUrl === url
+
 
     const formatTotalTime = () => {
         const formattedDuration = formatTime(audioRef.current.duration)
@@ -57,7 +64,7 @@ const Audio = ({
             <AudioThemeContainer
 
                 onClick={() => handleSetCurrentAudioIndex({index: audioIndex})}
-                                 className={`
+                className={`
                                   transition-all
                 duration-100
                 h-45  
@@ -68,11 +75,12 @@ const Audio = ({
                 relative 
                 rounded 
                 cursor-pointer`}
-                                 isAudioLoaded
-                                 primeBgCondition={currentTrackPlaying || currentTrackHovered}
-                                 onMouseEnter={() => setHoveredMediaIndex(audioIndex)}
-                                 onMouseLeave={() => setHoveredMediaIndex(null)}
+                isAudioLoaded
+                primeBgCondition={currentTrackPlaying || currentTrackHovered}
+                onMouseEnter={() => setHoveredMediaIndex(audioIndex)}
+                onMouseLeave={() => setHoveredMediaIndex(null)}
             >
+                {showDeletingOverlay && <ItemDeletingOverlay/>}
                 {isAudioLoaded ?
                     <>
                         <div>
@@ -86,7 +94,8 @@ const Audio = ({
                         </div>
                         <div className={`w-60% absolute left-10 truncate`}>{name}</div>
                         <Fade in={isAudioHovered} timeout={100}>
-                            <div className={'absolute top-1/2 transform -translate-y-1/2 right-0 z-50 mr-40'}>
+                            <div hidden={showDeletingOverlay}
+                                 className={'absolute top-1/2 transform -translate-y-1/2 right-0 z-50 mr-40'}>
                                 <ItemOptions
                                     initialMode={'show'}
                                     itemOptionsHovered={isAudioHovered} {...{
@@ -94,7 +103,8 @@ const Audio = ({
                                     url,
                                     hoveredMediaIndex,
                                     index,
-                                    searchMode
+                                    searchMode,
+                                    confirm,
                                 }}/>
                             </div>
                         </Fade>
@@ -108,7 +118,6 @@ const Audio = ({
                         <Skeleton variant="rectangular" width={skeletonWidth} height={skeletonHeight} animation="wave"
                                   style={{width: '100%', height: '100%'}}/>
                     </Tooltip>}
-
 
             </AudioThemeContainer>
         </>

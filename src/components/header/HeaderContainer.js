@@ -1,7 +1,5 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import Header from "./Header";
-import {connect} from "react-redux";
-import {setCurrentRoute, setSearchRequest} from "../../redux/mediaSlice";
 import {PagesContext} from "../../context/PagesContext"
 
 const HeaderContainer = ({
@@ -10,8 +8,8 @@ const HeaderContainer = ({
                              setSearchRequest,
                              toggleSearch,
                              isSearchVisible,
+                             hideSearch,
                              noMedia,
-                             setCurrentRoute,
                              currentRoute,
                              smallScreen,
                          }) => {
@@ -20,10 +18,6 @@ const HeaderContainer = ({
     const {rootPage, imagesPage, videosPage, audioPage} = pages
 
     const isSearchBtnDisabled = rootPage || (imagesPage && noMedia) || (videosPage && noMedia) || (audioPage && noMedia)
-
-    const handleRoute = (route) => {
-        setCurrentRoute(route)
-    }
 
     return <Header
         currentRoute={currentRoute}
@@ -35,17 +29,8 @@ const HeaderContainer = ({
         setSearchRequest={setSearchRequest}
         toggleSearch={toggleSearch}
         isSearchVisible={isSearchVisible}
-        handleRoute={handleRoute}
-
-
-    />
+        hideSearch={hideSearch}/>
 }
 
 
-const mapStateToProps = state => {
-    return {
-        searchRequest: state.media.searchRequest
-    }
-}
-
-export default connect(mapStateToProps, {setSearchRequest, setCurrentRoute})(HeaderContainer);
+export default HeaderContainer;

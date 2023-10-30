@@ -13,7 +13,7 @@ const SocialAuth = ({googleAuth, githubAuth, smallScreen}) => {
             <div className={`${smallScreen ? 'flex' : ''}`}>
                 <Tooltip title={'Sign in with google'}>
                     <Button
-                        className={classes.socialBtn}
+                        className={classes.oAuthBtn}
                         onClick={googleAuth}
                         variant="outlined"
                         color="primary"
@@ -22,13 +22,13 @@ const SocialAuth = ({googleAuth, githubAuth, smallScreen}) => {
                         <FcGoogle size={25}/></Button></Tooltip>
 
                 <Tooltip title={'Sign in with github'}>
-                <Button
-                    className={classes.socialBtn}
-                    onClick={googleAuth}
-                    variant="outlined"
-                    color="primary"
-                    fullWidth
-                ><GitHub className={classes.gitIcon}/></Button>
+                    <Button
+                        className={classes.oAuthBtn}
+                        onClick={githubAuth}
+                        variant="outlined"
+                        color="primary"
+                        fullWidth
+                    ><GitHub className={classes.githubIcon}/></Button>
                 </Tooltip>
             </div>
         </>

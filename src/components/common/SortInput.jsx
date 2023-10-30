@@ -6,6 +6,7 @@ import {
 import {PagesContext} from "../../context/PagesContext";
 import {byDate, byName, bySize} from "../../common/common";
 import {FormControl, InputLabel, MenuItem, Select} from '@mui/material';
+import {useStyles} from '../mui/styles';
 
 const SortInput = ({
                        classname = 'select',
@@ -16,6 +17,9 @@ const SortInput = ({
     const pages = useContext(PagesContext)
     const dispatch = useDispatch()
     const sortBy = useSelector(state => state.media.sortBy)
+    const currentTheme = useSelector(state => state.app.currentTheme)
+
+    const classes = useStyles(currentTheme)
 
     const {
         rootPage,
@@ -30,8 +34,8 @@ const SortInput = ({
 
     return (
         <>
-            <FormControl fullWidth disabled={isDisabled}>
-                <InputLabel id="sort-form-label">Sort by</InputLabel>
+            <FormControl className={classes.formControl} fullWidth disabled={isDisabled}>
+                <InputLabel id="sort-form-label">Sort</InputLabel>
                 <Select
                     disabled={isDisabled}
                     labelId="sort-form-label"

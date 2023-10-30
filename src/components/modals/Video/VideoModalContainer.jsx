@@ -4,7 +4,7 @@ import {videoItemModal} from "../../../common/common";
 import VideoModal from "./VideoModal";
 import {VideoControlsContext} from "../../../context/VideoControlsContext";
 
-const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentModal}) => {
+const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentItemModal}) => {
 
     const CustomControlsContext = useContext(VideoControlsContext)
     const ModalContext = useContext(ItemsModalContext);
@@ -52,6 +52,9 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
         videoContainerRef,
         handleVideoControlsVisibility,
         isControlsVisible,
+        videoOptions,
+        isVideoOptionsWidthExpanded,
+        handleVideoOptions,
     } = CustomControlsContext
 
 
@@ -104,6 +107,10 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
         handlePlay,
         handleMuteVideoVolume,
         confirm,
+        toggleModal,
+        videoOptions,
+        isVideoOptionsWidthExpanded,
+        handleVideoOptions,
     ]
 
     //Video modal handlers
@@ -117,7 +124,7 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentM
             return
         }
 
-        handleCurrentModal(videoItemModal)
+        handleCurrentItemModal(videoItemModal)
         setIsVideoReady(false);
     };
 

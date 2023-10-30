@@ -51,7 +51,7 @@ const mediaSlice = createSlice({
         deletingAudioIndex: null,
         currentMediaSet: [],
         mediaLoading: false,
-        mediaDeleting: false,
+        isMediaDeleting: false,
         imagesSet: [],
         videosSet: [],
         audioSet: [],
@@ -243,7 +243,7 @@ const mediaSlice = createSlice({
             }
         },
         toggleIsMediaDeleting(state, action) {
-            state.mediaDeleting = action.payload
+            state.isMediaDeleting = action.payload
         },
         toggleIsMediaUploaded(state, action) {
             state.mediaUploaded = action.payload
@@ -345,11 +345,11 @@ export const handleSearchMedia = createAsyncThunk('search-thunk', async (request
 })
 
 export const handleSortitems = createAsyncThunk('sort-thunk', async ({value, isAudio}, {dispatch}) => {
-    await dispatch(toggleSortByValue(value))
-    isAudio && await dispatch(setLastPlayedAudioNameBeforeSort(getLocalStorageItem('currentTrackName')))
-    await dispatch(sortCurrentMediaSet({sortType: value, isAudio}))
-    await delay(100)
-    isAudio && await dispatch(setLastPlayedAudioNameBeforeSort(null))
+        await dispatch(toggleSortByValue(value))
+        isAudio && await dispatch(setLastPlayedAudioNameBeforeSort(getLocalStorageItem('currentTrackName')))
+        await dispatch(sortCurrentMediaSet({sortType: value, isAudio}))
+        await delay(100)
+        isAudio && await dispatch(setLastPlayedAudioNameBeforeSort(null))
     }
 )
 
@@ -412,20 +412,20 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
     };
     const audioPage = currentRoute === audioRoute
     const files = Array.from(event.target.files);
-    const filteredFiles = files.filter(file => allowedTypes[currentRoute].includes(file.type));
+    const allowedFiles = files.filter(file => allowedTypes[currentRoute].includes(file.type));
 
     let totalBytesSize = 0;
     let totalBytesTransferred = 0
 
-    filteredFiles.forEach(file => {
+    allowedFiles.forEach(file => {
         totalBytesSize += file.size;
     });
 
-    if (filteredFiles.length > 0) {
+    if (allowedFiles.length > 0) {
         dispatch(setTotalBytesToUpload(totalBytesSize))
         // totalBytesTransferred !== 0 && dispatch(setUploadedBytes(0))
         dispatch(toggleMediaLoading(true));
-        await Promise.all(filteredFiles.map(async (file) => {
+        await Promise.all(allowedFiles.map(async (file) => {
             const fileRef = ref(storage, `${username}/${currentRoute === videosRoute ? videos
                 : currentRoute === imagesRoute ? images
                     : currentRoute === audioRoute ? audio
@@ -439,7 +439,6 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
                 dispatch(setUploadedBytes(totalBytesTransferred))
                 dispatch(toggleUploadProgress(parseInt(totalPercent)));
                 console.log(`totalPercent: ${totalPercent}`)
-                debugger
             });
 
             await uploadTask;
@@ -506,6 +505,7 @@ export const deleteAllMedia = createAsyncThunk('delete-all-media-thunk', async (
     }
     dispatch(clearMediaSet({route: currentRoute}))
     dispatch(toggleIsMediaDeleting(false))
+    toast.success('All items has been deleted')
 
 })
 

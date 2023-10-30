@@ -56,6 +56,10 @@ const CustomControls = ({
         handlePlay,
         handleMuteVideoVolume,
         confirm,
+        toggleModal,
+        videoOptions,
+        isVideoOptionsWidthExpanded,
+        handleVideoOptions,
     ] = customControlsProps
 
 
@@ -63,7 +67,6 @@ const CustomControls = ({
         // Menu Container
         <div
             style={{visibility: isVisible ? "visible" : "hidden"}}
-
             className={`
         w-full 
         h-full 
@@ -76,7 +79,6 @@ const CustomControls = ({
            ${(!smallScreenMode && !isFullScreen) && 'pr-10 pl-10'}
         `}
             onClick={handleMainClick}
-
         >
             {/*Top menu block*/}
             <TopBlock
@@ -88,10 +90,16 @@ const CustomControls = ({
                 toggleVideoMobileSettings={toggleVideoMobileSettings}
                 smallScreenMode={smallScreenMode}
                 confirm={confirm}
+                toggleModal={toggleModal}
+                {...{
+                    videoOptions,
+                    isVideoOptionsWidthExpanded,
+                    handleVideoOptions
+                }}
             />
 
             {/*//Center Player Btn*/}
-            {!isVideoPlaying &&
+            {!isVideoPlaying && !videoOptions &&
                 <CentralPlayBtn/>
             }
             {/*Control Bar*/}

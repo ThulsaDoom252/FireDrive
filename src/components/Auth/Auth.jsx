@@ -6,7 +6,6 @@ import InputAdornment from "@mui/material/InputAdornment";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {customInput} from "../mui/styles";
 import {restoreMode, signInMode, signUpMode} from "./authTypes";
-
 const Auth = ({
                   authError,
                   isAuthBtnFetching,

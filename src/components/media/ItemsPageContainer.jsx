@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import Media from "./Media";
+import ItemsPage from "./ItemsPage";
 import {imageItemModal, noModal, rootRoute, videoItemModal} from "../../common/common";
 import {
     clearSearchResults,
@@ -23,37 +23,38 @@ import quadColumnsLayoutImg from "./layout/numbers/4.png"
 import fiveColumnsLayoutImg from "./layout/numbers/5.png"
 import sixColumnsLayoutImg from "./layout/numbers/6.png"
 
-const MediaContainer = ({
-                            currentRoute,
-                            handleCurrentMediaSet,
-                            handleSearchMedia,
-                            gridLayoutIndex,
-                            setCurrentLayoutIndex,
-                            toggleNoSearchResults,
-                            clearSearchResults,
-                            imagesSet,
-                            videosSet,
-                            audioSet,
-                            smallScreen,
-                            currentMediaFetch,
-                            searchResults,
-                            toggleSearchMode,
-                            mediaToShow,
-                            searchMode,
-                            noSearchResults,
-                            searchRequest,
-                            setItemOptionsHovered,
-                            itemModalType,
-                            isPaginatorEnabled,
-                            confirm,
-                            gridDividerValue,
-                            setGridDividerValue,
-                            setCurrentModalItemIndex,
-                            handleItemModal,
-                            handleModal,
-                            classes,
-                            noMedia,
-                        }) => {
+const ItemsPageContainer = ({
+                                currentRoute,
+                                handleCurrentMediaSet,
+                                handleSearchMedia,
+                                gridLayoutIndex,
+                                setCurrentLayoutIndex,
+                                toggleNoSearchResults,
+                                clearSearchResults,
+                                imagesSet,
+                                videosSet,
+                                audioSet,
+                                smallScreen,
+                                currentMediaFetch,
+                                searchResults,
+                                toggleSearchMode,
+                                mediaToShow,
+                                searchMode,
+                                noSearchResults,
+                                searchRequest,
+                                setItemOptionsHovered,
+                                itemModalType,
+                                isPaginatorEnabled,
+                                isMediaDeleting,
+                                confirm,
+                                gridDividerValue,
+                                setGridDividerValue,
+                                setCurrentModalItemIndex,
+                                handleItemModal,
+                                handleModal,
+                                noMedia,
+                                deletedItemUrl,
+                            }) => {
     const pagesContext = useContext(PagesContext)
     const {imagesPage, videosPage, audioPage} = pagesContext
     const [hoveredMediaIndex, setHoveredMediaIndex] = useState(null)
@@ -62,16 +63,16 @@ const MediaContainer = ({
 
     const paginatorContext = useContext(PaginatorContext)
     const {
-        handleNextClick, handlePrevClick, disablePrevButton, disableNextButton, handlePageClick, pages,
-        currentPage,
+        handleNextClick, handlePrevClick, disablePrevButton, disableNextButton, handlePageClick,
+        currentPage, totalPages
     } = paginatorContext
 
 
-    const paginatorProps = [handleNextClick, handlePrevClick, disablePrevButton, disableNextButton, handlePageClick, pages,
-        currentPage]
+    const paginatorProps = [handleNextClick, handlePrevClick, disablePrevButton, disableNextButton, handlePageClick,
+        currentPage, totalPages]
 
 
-    const isPaginatorHidden = !isPaginatorEnabled || noMedia || searchMode || noSearchResults
+    const isPaginatorHidden = !isPaginatorEnabled || noMedia || searchMode || noSearchResults || isMediaDeleting
 
     const noOpenModal = itemModalType === noModal
 
@@ -153,6 +154,7 @@ const MediaContainer = ({
     ]
 
     const handleImageClick = (index) => {
+        debugger
         setCurrentModalItemIndex(index)
         handleItemModal(imageItemModal)
     }
@@ -172,8 +174,9 @@ const MediaContainer = ({
         setGridDividerValue(number)
     }
 
-    return <Media {...{
+    return <ItemsPage {...{
         imagesPage,
+        isMediaDeleting,
         videosPage,
         audioPage,
         currentMediaFetch,
@@ -187,6 +190,7 @@ const MediaContainer = ({
         isPaginatorHidden,
         paginatorProps,
         setItemOptionsHovered,
+        deletedItemUrl,
         noOpenModal,
         confirm,
         handleLayoutMenu,
@@ -198,14 +202,13 @@ const MediaContainer = ({
         handleImageClick,
         handleVideoClick,
         handleModal,
-        classes,
     }}/>
 };
 
 const mapStateToProps = (state) => {
     return {
         gridDividerValue: state.app.gridDividerValue,
-        gridLayoutIndex: state.app. gridLayoutIndex,
+        gridLayoutIndex: state.app.gridLayoutIndex,
         imagesSet: state.media.imagesSet,
         videosSet: state.media.videosSet,
         audioSet: state.media.audioSet,
@@ -227,4 +230,4 @@ export default connect(mapStateToProps, {
     setCurrentModalItemIndex,
     setItemOptionsHovered,
     setGridDividerValue,
-})(MediaContainer)
+})(ItemsPageContainer)

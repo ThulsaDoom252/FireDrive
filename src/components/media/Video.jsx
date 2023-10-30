@@ -3,11 +3,11 @@ import ReactPlayer from "react-player";
 import ItemOptions from "../options/ItemOptions";
 import {delay, formatTime, preventDefault} from "../../common/common";
 import {BiSolidVolume, BiVolumeMute} from "react-icons/bi";
-import {Tooltip} from "@mui/material";
+import {Box, Tooltip} from "@mui/material";
 import {Fade} from "@mui/material";
 import VideoItemThemeContainer from "../common/theme/VideoItemThemeContainer";
 import {videoContainerStyle} from "../../common/styles";
-import {SkeletonOverlay} from '../mui/styles';
+import {ItemDeletingOverlay, SkeletonOverlay} from '../mui/styles';
 
 const Video = ({
                    url,
@@ -24,6 +24,8 @@ const Video = ({
                    handleVideoClick,
                    handleModal,
                    confirm,
+                   deletedItemUrl,
+                   isMediaDeleting,
                }) => {
     const [videoState, setVideoState] = useState({
         isVideoReady: false,
@@ -33,6 +35,8 @@ const Video = ({
         totalDuration: null,
         previewVideoDuration: null,
     });
+
+    const showDeletingOverlay = isMediaDeleting || url === deletedItemUrl
 
     const {
         isVideoReady, isPlaying, previewVideoDuration, currentVolume,
@@ -80,6 +84,9 @@ const Video = ({
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             if (hoveredMediaIndex === index) {
+                setVideoState(prevState => ({
+                    ...prevState, currentTime: 0
+                }))
                 playerRef.current.seekTo(0);
                 handlePlayVideo(true)
             }
@@ -136,24 +143,34 @@ const Video = ({
         }))
     }
 
+    const playerStyles = {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        display: isVideoReady ? 'block' : 'none',
+    }
+
     return (
         <>
-            <div
+            <Box
                 style={videoContainerStyle}
                 onContextMenu={preventDefault}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                className={`bg-black 
-                    ${!isVideoHovered && 'rounded-t-lg'} 
-                    overflow-hidden
+                className={` 
+                overflow-hidden
                      cursor-pointer
-                    ${isVideoReady ? 'block' : 'hidden'}
-                    `}
+                      ${!isVideoHovered && 'rounded-t-lg'} 
+                      ${isVideoReady && 'bg-black'}
+                     `}
                 onClick={() => handleVideoClick(index)}>
-                {isVideoReady && <Tooltip title={'video loading'}>
+                {!isVideoReady && <Tooltip title={'video loading'}>
                     <SkeletonOverlay variant="rectangular"/>
                 </Tooltip>}
-                {mountVideoItemOptions &&
+                {mountVideoItemOptions && !deletedItemUrl &&
                     <Fade in={isVideoOptionsAnimated}>
                         <div className={'absolute top-0 right-0 z-50'}><ItemOptions {...{
                             name,
@@ -169,20 +186,15 @@ const Video = ({
                         }} />
                         </div>
                     </Fade>}
+                <Fade in={showDeletingOverlay}>
+                    <ItemDeletingOverlay/>
+                </Fade>
                 <ReactPlayer
+                    style={playerStyles}
                     ref={playerRef}
                     url={url}
                     width="100%"
                     height="100%"
-                    style={{
-                        position: 'absolute',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                        display: isVideoReady ? 'block' : 'hidden',
-                    }}
                     onReady={handleVideoReady}
                     playing={isPlaying}
                     volume={currentVolume}
@@ -217,7 +229,7 @@ const Video = ({
                         </div>
                     </Fade>
                 </div>
-            </div>
+            </Box>
             {
                 (!smallScreen && isVideoReady) && <VideoItemThemeContainer
                     opacityCondition={hoveredMediaIndex === index}

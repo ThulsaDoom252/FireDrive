@@ -1,43 +1,89 @@
 import {makeStyles} from "@mui/styles";
 import {Skeleton, styled} from '@mui/material';
 
-export const useStyles = makeStyles((theme) => {
-    return {
-        gitIcon: {
-            color: "green",
-        },
-        socialBtn: {
-            margin: '2px',
-            borderColor: "gray"
-        },
-        actionBtn: {
-            backgroundColor: 'blue',
-            color: 'white',
-        },
-        searchInput: {
-            '&:focus': {
-                background: 'white',
+export const useStyles = makeStyles(() => ({
+    formControl: (props) => {
+        return {
+            '& .MuiOutlinedInput-root': {
+                '&:hover fieldset': {
+                    borderColor: props.primeBg,
+                },
+                '&.Mui-focused fieldset': {
+                    borderColor: props.primeBg,
+                },
             },
-            '& .MuiInputAdornment-root': {
-                background: 'white',
+            '& .MuiInputLabel-root': {
+                color: props.color === 'black' ? '#9af0fa' : props.color,
+                fontWeight: 'bold',
+                position: 'relative',
+                top: '1.3rem',
+                fontSize: '1.2rem',
+                fontStyle: 'italic',
             },
-        },
+            '& .MuiInputBase-input': {
+                backgroundColor: 'rgba(255,255,255,0.7)',
+                fontStyle: 'italic',
+            },
+            '&.Mui-disabled': {
+                '& .MuiInputLabel-root': {
+                    color: 'gray',
+                },
+            },
+        }
+    },
 
-        gridItemBtn: {
+    githubIcon: {
+        color: "green",
+    },
+    oAuthBtn: {
+        margin: '2px',
+        borderColor: "gray"
+    },
+    actionBtn: {
+        backgroundColor: 'blue',
+        color: 'white',
+    },
+    link: (props) => {
+        return {
+            textDecoration: 'none',
+            fontFamily: 'cursive',
+            color: props.navColor,
+            fontSize: '1.2rem',
+            transition: 'color 0.3s ease-in-out',
+            '&:hover': {
+                color: props.navActiveColor
+            },
+            '&.active': {
+                color: props.navActiveColor,
+            }
+        }
+
+    },
+    searchInput: {
+        '&:focus': {
+            background: 'white',
+        },
+        '& .MuiInputAdornment-root': {
+            background: 'white',
+        },
+    },
+
+    gridItemBtn: (props) => {
+        return {
             width: '50px',
             display: 'flex',
-            backgroundColor: 'red',
             justifyContent: 'center',
             alignItems: 'center',
             margin: '5px',
             height: '50px',
             borderRadius: '10px',
+            background: props.isCurrent ? 'white' : 'none',
             "&:hover": {
                 backgroundColor: 'white',
             },
-        },
-    };
-});
+        }
+    },
+}));
 
 
 export const customInput = {
@@ -102,6 +148,17 @@ export const StyledImage = styled('img')({
     objectFit: 'cover',
 });
 
+export const ItemDeletingOverlay = styled('div')({
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    zIndex: 5,
+    backgroundColor: 'rgba(250,0,0,0.5)'
+})
+
 export const GridItemContainer = styled('div')({
     width: '100%',
     maxHeight: '100%',
@@ -115,5 +172,7 @@ export const SkeletonOverlay = styled(Skeleton)({
     left: 0,
     width: '100%',
     height: '100%',
+    opacity: 0.5,
+    background: '#cec3c3',
 });
 

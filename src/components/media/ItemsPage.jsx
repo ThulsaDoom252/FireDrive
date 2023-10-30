@@ -5,7 +5,7 @@ import Paginator from "../paginator/Paginator";
 import NoSearchResults from "../search/NoSearchResults";
 import Video from "./Video";
 import ImageBlock from "./Image/ImageBlock";
-import {Grid} from "@mui/material";
+import {Box, Grid} from "@mui/material";
 import ItemsLayoutMenu from "./itemsLayoutMenu";
 import Overlay from "../common/Overlay";
 import noImages from "./noImages.jpg"
@@ -13,34 +13,35 @@ import noVideo from "./noVideo.jpg"
 import noAudio from "./noAudio.png"
 import {GridItemContainer} from '../mui/styles';
 
-const Media = ({
-                   imagesPage,
-                   videosPage,
-                   audioPage,
-                   currentMediaFetch,
-                   mediaToShow,
-                   noMedia,
-                   hoveredMediaIndex,
-                   setHoveredMediaIndex,
-                   noSearchResults,
-                   isPaginatorHidden,
-                   paginatorProps,
-                   searchMode,
-                   smallScreen,
-                   setItemOptionsHovered,
-                   noOpenModal,
-                   confirm,
-                   handleLayoutMenu,
-                   handleCollValue,
-                   gridLayoutItemsArr,
-                   gridLayoutMenu,
-                   gridDividerValue,
-                   gridLayoutIndex,
-                   handleVideoClick,
-                   handleImageClick,
-                   handleModal,
-                   classes,
-               }) => {
+const ItemsPage = ({
+                       imagesPage,
+                       videosPage,
+                       audioPage,
+                       currentMediaFetch,
+                       mediaToShow,
+                       noMedia,
+                       hoveredMediaIndex,
+                       setHoveredMediaIndex,
+                       noSearchResults,
+                       isPaginatorHidden,
+                       paginatorProps,
+                       searchMode,
+                       smallScreen,
+                       setItemOptionsHovered,
+                       noOpenModal,
+                       confirm,
+                       handleLayoutMenu,
+                       handleCollValue,
+                       gridLayoutItemsArr,
+                       gridLayoutMenu,
+                       gridDividerValue,
+                       gridLayoutIndex,
+                       deletedItemUrl,
+                       handleVideoClick,
+                       handleImageClick,
+                       handleModal,
+                       isMediaDeleting,
+                   }) => {
 
     return (
         <>
@@ -67,14 +68,13 @@ const Media = ({
                         gridLayoutIndex,
                         handleLayoutMenu,
                         handleCollValue,
-                        classes,
                     }}/>}
 
-                {noSearchResults && <div><NoSearchResults/></div>}
+                {noSearchResults && <Box><NoSearchResults/></Box>}
                 {noMedia ?
-                    <div><img className={`mx-auto w-1/2 rounded-md opacity-80 bg-white`}
+                    <Box><img className={`mx-auto w-1/2 rounded-md opacity-80 bg-white`}
                               src={(imagesPage ? noImages : videosPage ? noVideo : noAudio)}
-                              alt={'No images'}/></div> :
+                              alt={'No images'}/></Box> :
                     <Grid
                         style={{width: '100%'}}
                         container
@@ -92,7 +92,9 @@ const Media = ({
 
                         {imagesPage ? mediaToShow.map((media, index) => {
                                 return <Grid item xs={gridDividerValue}>
-                                    <GridItemContainer key={index} onMouseEnter={() => setHoveredMediaIndex(index)}
+                                    <GridItemContainer key={index}
+                                                       onClick={() => handleImageClick(index)}
+                                                       onMouseEnter={() => !smallScreen && setHoveredMediaIndex(index)}
                                                        onMouseLeave={() => setHoveredMediaIndex(null)}>
                                         <ImageBlock
                                             url={media.url}
@@ -101,12 +103,14 @@ const Media = ({
                                             {...{
                                                 index,
                                                 setHoveredMediaIndex,
+                                                deletedItemUrl,
                                                 searchMode,
                                                 hoveredMediaIndex,
                                                 setItemOptionsHovered,
                                                 confirm,
                                                 handleImageClick,
                                                 handleModal,
+                                                isMediaDeleting,
                                             }}/>
                                     </GridItemContainer>
                                 </Grid>
@@ -120,6 +124,8 @@ const Media = ({
                                                    searchMode,
                                                    index,
                                                    noOpenModal,
+                                                   deletedItemUrl,
+                                                   isMediaDeleting,
                                                    hoveredMediaIndex,
                                                    setHoveredMediaIndex,
                                                    setItemOptionsHovered,
@@ -140,6 +146,8 @@ const Media = ({
                                                            {...{
                                                                hoveredMediaIndex,
                                                                setHoveredMediaIndex,
+                                                               isMediaDeleting,
+                                                               deletedItemUrl,
                                                                index,
                                                                searchMode,
                                                                smallScreen,
@@ -161,4 +169,4 @@ const Media = ({
     );
 };
 
-export default Media;
+export default ItemsPage;

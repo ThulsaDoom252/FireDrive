@@ -7,34 +7,33 @@ const FittedThemeBtn = ({
                             key,
                             children,
                             isDisabled,
+                            enableHover,
+                            size,
                             onClick,
-                            navButton,
-                            isActive,
                             className,
                             imgModalBtn,
                             optionalClasses
                         }) => {
-    const activeColor = useSelector(state => state.app.currentTheme.color)
-    const inactiveColor = useSelector(state => state.app.currentTheme.navColor)
+    const primeActiveColor = useSelector(state => state.app.currentTheme.color)
+    const hoverColor = useSelector(state => state.app.currentTheme.navColor)
     const primaryColorForImageModal = useSelector(state => state.app.currentTheme.primeBg)
 
     const fittedBtnClass = {
-        color: navButton ? (isActive ? activeColor : inactiveColor)
-            : imgModalBtn && primaryColorForImageModal === primeDayBg
-                ? primaryColorForImageModal : activeColor,
+        color: imgModalBtn && primaryColorForImageModal === primeDayBg
+            ? primaryColorForImageModal : primeActiveColor,
         minHeight: 'fit-content',
         minWidth: 'fit-content',
         maxHeight: 'fit-content',
         maxWidth: 'fit-content',
         transition: 'color 0.3s',
         ...optionalClasses,
-        '&:hover': {
-            color: navButton && activeColor,
-        },
+        '&: hover': {
+            color: enableHover && hoverColor
+        }
     }
 
     return (
-        <Button key={key} className={className} sx={fittedBtnClass} disabled={isDisabled}
+        <Button size={size} key={key} className={className} sx={fittedBtnClass} disabled={isDisabled}
                 onClick={onClick}>
             {children}
         </Button>

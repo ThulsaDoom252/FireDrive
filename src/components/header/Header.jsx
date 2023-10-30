@@ -11,9 +11,9 @@ const Header = ({
                     toggleSearch,
                     isSearchVisible,
                     isSearchBtnDisabled,
-                    handleRoute,
                     currentRoute,
                     smallScreen,
+                    hideSearch,
                 }) => {
 
     return (
@@ -43,7 +43,6 @@ const Header = ({
                 mr-10`}>
                         <NavItems
                             currentRoute={currentRoute}
-                            handleRoute={handleRoute}
                             toggleSearch={toggleSearch}
                             isSearchBtnDisabled={isSearchBtnDisabled}
                             currentTheme={currentTheme}
@@ -51,13 +50,13 @@ const Header = ({
                     </div>}
                     <div hidden={!isSearchVisible} className={'w-full'}>
                         <Search
+                            hideSearch={hideSearch}
                             searchRequest={searchRequest}
                             isDisabled={isSearchBtnDisabled}
-                            toggleSearch={toggleSearch}
                             setSearchRequest={setSearchRequest}
                         /></div>
                 </div>
-                <BurgerMenuTrigger/>
+                <BurgerMenuTrigger hideSearch={hideSearch}/>
             </ThemeContainer>
         </header>
     );

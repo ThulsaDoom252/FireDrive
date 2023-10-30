@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import DropDownMenu from './DropDownMenu';
 import {CiSettings} from 'react-icons/ci';
 import {useSelector} from 'react-redux';
+import ThemedSlider from '../../common/theme/ThemedSlider';
+import {Box} from '@mui/material';
 
 const SettingsDropDown = ({
                               handleListMode,
@@ -12,6 +14,12 @@ const SettingsDropDown = ({
                           }) => {
     const [isSettingsBlockOpened, setIsSettingsBlockOpened] = useState(false)
     const smallScreen = useSelector(state => state.app.smallScreen)
+
+    const handleItemsPerPage = (e) => {
+        debugger
+        setItemsPerPage(e.target.value)
+    }
+
     return (
         <DropDownMenu
             menuType={isSettingsBlockOpened} toggleMenu={setIsSettingsBlockOpened}
@@ -40,28 +48,15 @@ const SettingsDropDown = ({
                                         mt-4
                                         ${smallScreen ? 'flex-col' : ''}
                                         `}>
-                    <div className={'text-gray-400 text-center'}>Items per page</div>
-                    <div className={`flex 
-                                            flex-col 
-                                            justify-center 
-                                            items-center`}>
-                        <div className={'text-white'}>{itemsPerPage}</div>
-                        <input type={'range'} value={itemsPerPage} min={5} max={100}
-                               onChange={(e) =>
-                                   setItemsPerPage(e.currentTarget.value)}/>
-                    </div>
-                </div>
-                <div className={`
-                                        w-full 
-                                        flex 
-                                        justify-between 
-                                        items-center 
-                                        mb-4 
-                                        mt-4
-                                        ${smallScreen ? 'flex-col' : ''}
-                                        `}>
-                    <div className={'text-gray-400'}>Animations</div>
-                    <div>On</div>
+                    <Box paddingX={2} width='100%'>
+                        <ThemedSlider label='Items per Page'
+                                      onChange={handleItemsPerPage}
+                                      value={itemsPerPage}
+                                      valueToDisplay={itemsPerPage}
+                                      min={5} max={100} step={1}
+                                      direction='row'
+                        />
+                    </Box>
                 </div>
             </div>
         </DropDownMenu>
