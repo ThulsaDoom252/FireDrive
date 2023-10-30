@@ -1,5 +1,6 @@
 import React from 'react';
 import {Pagination} from '@mui/material';
+import ThemeContainer from '../common/theme/ThemeContainer';
 
 const Paginator = ({paginatorProps}) => {
     const [handleNextClick, handlePrevClick, disablePrevButton, disableNextButton, handlePageClick,
@@ -8,20 +9,23 @@ const Paginator = ({paginatorProps}) => {
     const handleChange = (e, value) => handlePageClick(value)
 
     return (
-        <Pagination
-            count={totalPages}
-            page={currentPage}
-            onChange={handleChange}
-            nextIconButtonProps={{
-                onClick: handleNextClick,
-                disabled: disableNextButton,
-            }}
-            prevIconButtonProps={{
-                onClick: handlePrevClick,
-                disabled: disablePrevButton,
-            }}
-            showFirstButton showLastButton
-        />
+        <ThemeContainer>
+            <Pagination
+                count={totalPages}
+                page={currentPage}
+                onChange={handleChange}
+                nextIconButtonProps={{
+                    onClick: handleNextClick,
+                    disabled: disableNextButton,
+                }}
+                prevIconButtonProps={{
+                    onClick: handlePrevClick,
+                    disabled: disablePrevButton,
+                }}
+                showFirstButton showLastButton
+            />
+        </ThemeContainer>
+
     );
 };
 

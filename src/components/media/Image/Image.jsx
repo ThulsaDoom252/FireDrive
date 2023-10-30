@@ -38,7 +38,7 @@ const Image = ({
             </Fade>
             <StyledImage
                 onContextMenu={preventDefault}
-                onClick={() => handleImageClick ? handleImageClick(index) : void 0}
+                onClick={() =>  handleImageClick(index)}
                 className={`
                 rounded 
                 cursor-pointer

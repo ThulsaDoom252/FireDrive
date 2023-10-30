@@ -13,7 +13,7 @@ import {
     listMedia,
     setCurrentRoute, setSearchRequest, toggleSearch,
 } from "../redux/mediaSlice";
-import ItemsPageContainer from "./media/MediaContainer";
+import ItemsPageContainer from "./media/ItemsPageContainer";
 import {
     handleCurrentItemModal,
     handleCurrentModal,

@@ -23,7 +23,7 @@ import quadColumnsLayoutImg from "./layout/numbers/4.png"
 import fiveColumnsLayoutImg from "./layout/numbers/5.png"
 import sixColumnsLayoutImg from "./layout/numbers/6.png"
 
-const MediaContainer = ({
+const ItemsPageContainer = ({
                             currentRoute,
                             handleCurrentMediaSet,
                             handleSearchMedia,
@@ -229,4 +229,4 @@ export default connect(mapStateToProps, {
     setCurrentModalItemIndex,
     setItemOptionsHovered,
     setGridDividerValue,
-})(MediaContainer)
+})(ItemsPageContainer)

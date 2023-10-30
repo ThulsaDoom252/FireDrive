@@ -14,34 +14,34 @@ import noAudio from "./noAudio.png"
 import {GridItemContainer} from '../mui/styles';
 
 const ItemsPage = ({
-                   imagesPage,
-                   videosPage,
-                   audioPage,
-                   currentMediaFetch,
-                   mediaToShow,
-                   noMedia,
-                   hoveredMediaIndex,
-                   setHoveredMediaIndex,
-                   noSearchResults,
-                   isPaginatorHidden,
-                   paginatorProps,
-                   searchMode,
-                   smallScreen,
-                   setItemOptionsHovered,
-                   noOpenModal,
-                   confirm,
-                   handleLayoutMenu,
-                   handleCollValue,
-                   gridLayoutItemsArr,
-                   gridLayoutMenu,
-                   gridDividerValue,
-                   gridLayoutIndex,
-                   deletedItemUrl,
-                   handleVideoClick,
-                   handleImageClick,
-                   handleModal,
-                   isMediaDeleting,
-               }) => {
+                       imagesPage,
+                       videosPage,
+                       audioPage,
+                       currentMediaFetch,
+                       mediaToShow,
+                       noMedia,
+                       hoveredMediaIndex,
+                       setHoveredMediaIndex,
+                       noSearchResults,
+                       isPaginatorHidden,
+                       paginatorProps,
+                       searchMode,
+                       smallScreen,
+                       setItemOptionsHovered,
+                       noOpenModal,
+                       confirm,
+                       handleLayoutMenu,
+                       handleCollValue,
+                       gridLayoutItemsArr,
+                       gridLayoutMenu,
+                       gridDividerValue,
+                       gridLayoutIndex,
+                       deletedItemUrl,
+                       handleVideoClick,
+                       handleImageClick,
+                       handleModal,
+                       isMediaDeleting,
+                   }) => {
 
     return (
         <>
@@ -92,7 +92,8 @@ const ItemsPage = ({
 
                         {imagesPage ? mediaToShow.map((media, index) => {
                                 return <Grid item xs={gridDividerValue}>
-                                    <GridItemContainer key={index} onMouseEnter={() => setHoveredMediaIndex(index)}
+                                    <GridItemContainer key={index}
+                                                       onMouseEnter={() => !smallScreen && setHoveredMediaIndex(index)}
                                                        onMouseLeave={() => setHoveredMediaIndex(null)}>
                                         <ImageBlock
                                             url={media.url}
