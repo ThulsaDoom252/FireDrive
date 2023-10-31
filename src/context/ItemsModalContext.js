@@ -1,4 +1,4 @@
-import React, {createContext, useEffect, useState} from 'react';
+import React, {createContext, useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {setCurrentModalItemIndex} from "../redux/appSlice";
 import {useSwipeable} from "react-swipeable";
@@ -14,7 +14,7 @@ export const ItemsModalContextProvider = ({children}) => {
     const currentModalItemIndex = useSelector(state => state.app.currentModalItemIndex)
     const searchMode = useSelector(state => state.media.searchMode)
     const [fullScreen, toggleFullScreen] = useState(false)
-    const [showMobileSettings, toggleMobileSettings] = useState(true)
+    const [showMobileSettings] = useState(true)
     const [showVideoMobileSettings, toggleVideoMobileSettings] = useState(false)
     const [showImageSettingsInSmallScreen, toggleImageSettingInSmallScreen] = useState(true)
 
@@ -39,29 +39,6 @@ export const ItemsModalContextProvider = ({children}) => {
         }
         //eslint-disable-next-line
     }, [fullScreen, mountedItemModal])
-
-    useEffect(() => {
-        const handleLandScapeMode = () => {
-            if (window.innerWidth > window.innerHeight) {
-                if (!fullScreen) {
-                    if (!document.fullscreenElement)
-                        document.documentElement.requestFullscreen().then(() => void 0)
-                }
-            }
-        };
-
-        if (smallScreen && isItemModalMounted) {
-            window.addEventListener('resize', handleLandScapeMode)
-        } else {
-            window.removeEventListener('resize', handleLandScapeMode)
-        }
-
-        return () => {
-            window.removeEventListener('resize', handleLandScapeMode)
-        }
-        //eslint-disable-next-line
-    }, [smallScreen, mountedItemModal]);
-
 
     const handleCurrentModalItemIndex = (index) => {
         dispatch(setCurrentModalItemIndex(index))
@@ -110,9 +87,8 @@ export const ItemsModalContextProvider = ({children}) => {
         toggleVideoMobileSettings,
         currentModalItemName,
         toggleFullScreen,
-        handleFullScreenState,
         showImageSettingsInSmallScreen,
-        toggleImageSettingInSmallScreen
+        toggleImageSettingInSmallScreen,
     }
 
 

@@ -26,7 +26,6 @@ const ImageModalContainer = ({confirm, handleItemModal, handleModal}) => {
             handleFullScreen,
             currentModalItemName,
             currentModalOldName,
-            handleFullScreenState,
             showImageSettingsInSmallScreen,
             toggleImageSettingInSmallScreen,
         } = modalContext
@@ -34,7 +33,7 @@ const ImageModalContainer = ({confirm, handleItemModal, handleModal}) => {
 
         const [closeModalByBtn, setCloseModalByBtn] = useState(false)
 
-    // binding keys to current modal handlers
+        // binding keys to current modal handlers
         useEffect(() => {
             const handleArrowKey = e => {
                 if ((e.key === 'ArrowLeft' || e.key === 'ArrowDown')) {
@@ -78,12 +77,13 @@ const ImageModalContainer = ({confirm, handleItemModal, handleModal}) => {
         const nextArrowDisabled = currentModalItemIndex === (searchMode ? searchResults.length - 1 : currentMediaSet.length - 1)
 
         const handleClose = (closeByBtn) => {
+            fullScreen && handleFullScreen()
+
             if (closeByBtn) {
                 setCloseModalByBtn(true)
                 return
             }
 
-            fullScreen && handleFullScreen()
             handleItemModal()
         }
 
@@ -99,25 +99,33 @@ const ImageModalContainer = ({confirm, handleItemModal, handleModal}) => {
         const modalOptionsProps = [handleDeleteCurrentModalItem, showMobileSettings, handleModal,
             showImageSettingsInSmallScreen, toggleImageSettingInSmallScreen]
 
-        return <ImageItemsModal
-            closeByBtn={closeModalByBtn}
-            currentMediaSet={currentMediaSet}
-            fullScreen={fullScreen}
-            handleFullScreen={handleFullScreen}
-            currentModalItemUrl={currentModalItemUrl}
-            swipeHandlers={swipeHandlers}
-            handleNextModalItem={handleNextModalItem}
-            handlePrevModalItem={handlePrevModalItem}
-            prevArrowDisabled={prevArrowDisabled}
-            nextArrowDisabled={nextArrowDisabled}
-            carouselSettings={carouselSettings}
-            handleClose={handleClose}
-            smallScreen={smallScreen}
-            modalOptionsProps={modalOptionsProps}
-            currentModalItemName={currentModalItemName}
-            currentModalOldName={currentModalOldName}
-            {...confirm}
-        />
+        return (
+            <>
+                <ImageItemsModal
+                    closeByBtn={closeModalByBtn}
+                    currentMediaSet={currentMediaSet}
+                    fullScreen={fullScreen}
+                    handleFullScreen={handleFullScreen}
+                    currentModalItemUrl={currentModalItemUrl}
+                    swipeHandlers={swipeHandlers}
+                    handleNextModalItem={handleNextModalItem}
+                    handlePrevModalItem={handlePrevModalItem}
+                    prevArrowDisabled={prevArrowDisabled}
+                    nextArrowDisabled={nextArrowDisabled}
+                    carouselSettings={carouselSettings}
+                    handleClose={handleClose}
+                    smallScreen={smallScreen}
+                    modalOptionsProps={modalOptionsProps}
+                    currentModalItemName={currentModalItemName}
+                    currentModalOldName={currentModalOldName}
+                    {...confirm}
+                />
+
+            </>
+
+        )
+
+
     }
 ;
 

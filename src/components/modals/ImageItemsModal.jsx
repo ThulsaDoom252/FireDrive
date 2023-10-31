@@ -8,6 +8,7 @@ import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import FittedThemeBtn from "../common/theme/FittedThemeBtn";
 import AnimatedContainer from '../../common/AnimatedContainer';
+import {Box} from '@mui/material';
 
 const ImageItemsModal = ({
                              arrowSize = 30,
@@ -73,10 +74,12 @@ const ImageItemsModal = ({
                             className={`rounded  ${fullScreen ? 'max-h-95vh max-w-95vw' : 'max-h-75vh max-w-75vw'}`}
                             src={currentModalItemUrl} alt="image"/>}
                 </div>
-                <div
+                <Box
+                    maxWidth='50%'
+                    minWidth='50%'
                     hidden={!showMobileSettings || (!smallScreen && fullScreen)}
                     onClick={stopPropagation}
-                    className={`
+                    className={`      
                     flex
                     flex-col
                     pl-5
@@ -101,7 +104,7 @@ const ImageItemsModal = ({
                             />
                         </div>}
 
-                </div>
+                </Box>
                 {!smallScreen &&
                     <FittedThemeBtn imgModalBtn optionalClasses={{position: 'absolute', left: 5}}
                                     isDisabled={prevArrowDisabled}

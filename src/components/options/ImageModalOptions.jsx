@@ -5,6 +5,7 @@ import {renameModal, shareModal} from "../../common/common";
 import {BsFullscreen} from "react-icons/bs";
 import {AiOutlineFullscreenExit} from "react-icons/ai";
 import FittedThemeBtn from "../common/theme/FittedThemeBtn";
+import {Button} from '@mui/material';
 
 const ImageModalOptions = ({
                                handleFullScreen,
@@ -22,7 +23,7 @@ const ImageModalOptions = ({
             type: 'fullscreen',
             icon: <BsFullscreen size={iconSize}/>,
             exitIcon: <AiOutlineFullscreenExit size={iconSize}/>,
-            onClick: () => handleFullScreen(), label: 'Fullscreen'
+            onClick: () => handleFullScreen(), label: `${fullScreen ? 'Exit fullscreen' : 'Fullscreen'}`,
         },
         {
             type: 'rename',
@@ -51,7 +52,8 @@ const ImageModalOptions = ({
 
     return (
         <>
-            {optionItem.map((item, index) => <FittedThemeBtn onClick={item.onClick} imgModalBtn>
+            {optionItem.map((item, index) => <FittedThemeBtn
+                onClick={item.onClick} imgModalBtn>
                 {smallScreen ? (fullScreen && item.exitIcon ? item.exitIcon : item.icon) : item.label}
             </FittedThemeBtn>)}
         </>

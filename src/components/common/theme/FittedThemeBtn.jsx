@@ -12,7 +12,8 @@ const FittedThemeBtn = ({
                             onClick,
                             className,
                             imgModalBtn,
-                            optionalClasses
+                            optionalClasses,
+                            ref = null,
                         }) => {
     const primeActiveColor = useSelector(state => state.app.currentTheme.color)
     const hoverColor = useSelector(state => state.app.currentTheme.navColor)
@@ -33,7 +34,7 @@ const FittedThemeBtn = ({
     }
 
     return (
-        <Button size={size} key={key} className={className} sx={fittedBtnClass} disabled={isDisabled}
+        <Button size={size} key={key} ref={ref} className={className} sx={fittedBtnClass} disabled={isDisabled}
                 onClick={onClick}>
             {children}
         </Button>
