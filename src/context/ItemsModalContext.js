@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {setCurrentModalItemIndex} from "../redux/appSlice";
 import {useSwipeable} from "react-swipeable";
 import {imageItemModal, videoItemModal} from "../common/common";
-import videoModal from "../components/modals/Video/VideoModal";
 
 export const ItemsModalContext = createContext();
 export const ItemsModalContextProvider = ({children}) => {
@@ -82,13 +81,11 @@ export const ItemsModalContextProvider = ({children}) => {
     });
 
     const handleNextModalItem = e => {
-        debugger
         !smallScreen && e.stopPropagation()
-        currentMediaSet.length !== (currentModalItemIndex - 1) && dispatch(setCurrentModalItemIndex(currentModalItemIndex + 1))
+        currentMediaSet.length !== (currentModalItemIndex + 1) && dispatch(setCurrentModalItemIndex(currentModalItemIndex + 1))
     }
 
     const handlePrevModalItem = e => {
-        debugger
         !smallScreen && e.stopPropagation()
         currentModalItemIndex !== 0 && dispatch(setCurrentModalItemIndex(currentModalItemIndex - 1))
     }

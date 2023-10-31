@@ -32,9 +32,9 @@ const ImageModalContainer = ({confirm, handleItemModal, handleModal}) => {
         } = modalContext
 
 
-// binding keys to current modal handlers
-         const [closeModalByBtn, setCloseModalByBtn] = useState(false)
+        const [closeModalByBtn, setCloseModalByBtn] = useState(false)
 
+    // binding keys to current modal handlers
         useEffect(() => {
             const handleArrowKey = e => {
                 if ((e.key === 'ArrowLeft' || e.key === 'ArrowDown')) {
@@ -78,15 +78,12 @@ const ImageModalContainer = ({confirm, handleItemModal, handleModal}) => {
         const nextArrowDisabled = currentModalItemIndex === (searchMode ? searchResults.length - 1 : currentMediaSet.length - 1)
 
         const handleClose = (closeByBtn) => {
-            if (fullScreen) {
-                handleFullScreen()
+            if (closeByBtn) {
+                setCloseModalByBtn(true)
                 return
             }
 
-            if (closeByBtn) {
-                setCloseModalByBtn(true)
-                return;
-            }
+            fullScreen && handleFullScreen()
             handleItemModal()
         }
 
