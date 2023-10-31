@@ -7,12 +7,12 @@ Version: 2.0
 Developer: ThulsaDoom
 
 ### OverView:
-![overview01] (projectImgs/overview01.png)
-![overview02] (projectImgs/overview02.png)
-![overview03] (projectImgs/overview03.png)
+![screenShot01](projectImgs/overview01.png)
+![screenShot02](projectImgs/overview02.png)
+![screenShot03](projectImgs/overview03.png)
 
 ## Stack
-![React] (projectImgs/stack.png)
+![React](projectImgs/stack.png)
 
 ### Features:
 
