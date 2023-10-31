@@ -32,15 +32,17 @@ const VideoModal = ({
                         videoBlockContainerRef,
                         videoContainerRef,
                         fullScreen,
+                        closeByBtn,
                     }) => {
 
     return (
-        <AnimatedContainer onCLick={handleClose}>
+        <AnimatedContainer onCLick={handleClose} shouldClose={closeByBtn}>
             <div
                 className={`inset-0 absolute`}
             >
                 {(!smallScreen && !fullScreen || !smallScreen && isControlsVisible || isControlsVisible) &&
                     <button
+                        onClick={() => handleClose(true)}
                         className={`
               absolute
               text-gray-400

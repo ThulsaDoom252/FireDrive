@@ -1,4 +1,4 @@
-import React, {createContext, useEffect, useRef, useState} from 'react';
+import React, {createContext, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {setCurrentModalItemIndex} from "../redux/appSlice";
 import {useSwipeable} from "react-swipeable";

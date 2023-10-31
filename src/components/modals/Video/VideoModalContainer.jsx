@@ -1,6 +1,5 @@
 import React, {useContext, useState} from 'react';
 import {ItemsModalContext} from "../../../context/ItemsModalContext";
-import {videoItemModal} from "../../../common/common";
 import VideoModal from "./VideoModal";
 import {VideoControlsContext} from "../../../context/VideoControlsContext";
 
@@ -118,9 +117,13 @@ const VideoModalContainer = ({toggleModal, confirm, handleCurrentItemModal}) => 
         setIsVideoReady(true)
     }
 
-    const handleClose = () => {
-        if (fullScreen) {
-            handleFullScreen()
+    const [closeByBtn, setCloseByBtn] = useState(false)
+
+    const handleClose = (closeByBtn) => {
+        fullScreen && handleFullScreen()
+
+        if (closeByBtn) {
+            setCloseByBtn(true)
             return
         }
 
@@ -151,6 +154,7 @@ const VideoModalContainer = ({toggleModal, confirm, handleCurrentItemModal}) => 
         currentVideoTime,
         setCurrentVideoTime,
         isControlsVisible,
+        closeByBtn,
         isVideoReady,
         isVideoPlaying,
         handleVisibility: handleVideoControlsVisibility,
