@@ -209,45 +209,48 @@ export const handleTheme = createAsyncThunk('theme-thunk', async (theme, {dispat
 })
 
 
-export const handleCurrentItemModal = createAsyncThunk('handle-item-modal-thunk', async (itemModalType, {
-    dispatch,
-    getState
-}) => {
+export const handleCurrentItemModal = createAsyncThunk('handle-item-modal-thunk',
+    async (itemModalType, {
+        dispatch,
+        getState
+    }) => {
+        const currentState = getState()
+        const currentItemModal = currentState.app.mountedItemModal
+        const isImageModalMounted = currentItemModal === imageItemModal
+        const isVideoModalMounted = currentItemModal === videoItemModal
 
-    const currentState = getState()
-
-    const currentItemModal = currentState.app.itemModalType
-    const isImageModalMounted = currentItemModal === imageItemModal
-    const isVideoModalMounted = currentItemModal === videoItemModal
-
-    const nullItemModal = async (time = 200) => {
-        dispatch(setItemModalType(noModal))
-        await delay(200)
-        dispatch(setMountedItemModal(noModal))
-    }
-
-    if (itemModalType === imageItemModal) {
-        if (!isImageModalMounted) {
-            dispatch(setMountedItemModal(imageItemModal))
-            await delay(100)
-            dispatch(setItemModalType(imageItemModal))
-
-        } else {
-            nullItemModal().then(() => void 0)
+        const nullItemModal = async (time = 200) => {
+            dispatch(setItemModalType(noModal))
+            await delay(200)
+            dispatch(setMountedItemModal(noModal))
         }
-        return
-    }
 
-    if (itemModalType === videoItemModal) {
-        if (!isVideoModalMounted) {
-            dispatch(setMountedItemModal(videoItemModal))
-            await delay(100)
-            dispatch(setItemModalType(videoItemModal))
-        } else {
-            nullItemModal().then(() => void 0)
+        if (itemModalType === imageItemModal) {
+            if (!isImageModalMounted) {
+                debugger
+                dispatch(setMountedItemModal(imageItemModal))
+                await delay(100)
+                debugger
+                dispatch(setItemModalType(imageItemModal))
+
+            } else {
+                debugger
+                nullItemModal().then(() => void 0)
+            }
+            return
         }
-    }
-})
+
+        if (itemModalType === videoItemModal) {
+            if (!isVideoModalMounted) {
+                debugger
+                dispatch(setMountedItemModal(videoItemModal))
+                await delay(100)
+                dispatch(setItemModalType(videoItemModal))
+            } else {
+                nullItemModal().then(() => void 0)
+            }
+        }
+    })
 
 export const handleCurrentModal = createAsyncThunk('handle-modal-thunk', async ({modalType, name, oldName}, {
     dispatch,

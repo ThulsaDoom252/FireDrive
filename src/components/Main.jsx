@@ -138,9 +138,12 @@ const Main = ({
                 />}
 
                 {isImageModalMounted &&
-                    <ImageModalContainer toggleModal={setItemModalType} animateModal={animateImageModal}
-                                         confirm={confirm} handleCurrentModal={handleCurrentItemModal}
-                                         handleModal={handleCurrentModal}
+                    <ImageModalContainer
+                        toggleModal={setItemModalType}
+                        animateModal={animateImageModal}
+                        confirm={confirm}
+                        handleCurrentModal={handleCurrentItemModal}
+                        handleModal={handleCurrentModal}
                     />}
                 <UserModal toggleModal={setModalType}
                            showModal={modalType === userModal}/>
