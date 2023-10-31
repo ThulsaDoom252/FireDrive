@@ -43,7 +43,7 @@ const ItemsPageContainer = ({
                                 noSearchResults,
                                 searchRequest,
                                 setItemOptionsHovered,
-                                itemModalType,
+                                noMountedModal,
                                 isPaginatorEnabled,
                                 isMediaDeleting,
                                 confirm,
@@ -73,8 +73,6 @@ const ItemsPageContainer = ({
 
 
     const isPaginatorHidden = !isPaginatorEnabled || noMedia || searchMode || noSearchResults || isMediaDeleting
-
-    const noOpenModal = itemModalType === noModal
 
     //search logic
     useEffect(() => {
@@ -164,7 +162,6 @@ const ItemsPageContainer = ({
         handleItemModal(videoItemModal)
     }
 
-
     const handleLayoutMenu = () => {
         toggleGridLayoutMenu(!gridLayoutMenu)
     }
@@ -191,7 +188,7 @@ const ItemsPageContainer = ({
         paginatorProps,
         setItemOptionsHovered,
         deletedItemUrl,
-        noOpenModal,
+        noOpenModal: noMountedModal,
         confirm,
         handleLayoutMenu,
         handleCollValue,

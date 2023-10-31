@@ -1,6 +1,5 @@
 import React from 'react';
 import BurgerMenuWrapper from "./BurgerMenuWrapper";
-import userModal from "../modals/UserModal";
 import UserAvatar from "../user/UserAvatar";
 import UploadContainer from "./Btns/UploadBtnContainer";
 import RemoveAllBtnContainer from "./Btns/RemoveAllBtnContainer";
@@ -10,6 +9,7 @@ import ThemeDropDown from './DropDowns/ThemeDropDown';
 import SettingsDropDown from './DropDowns/SettingsDropDown';
 import ThemedSlider from '../common/theme/ThemedSlider';
 import {Box} from '@mui/material';
+import {userModal} from '../../common/common';
 
 const BurgerMenu = ({
                         smallScreen,
@@ -19,6 +19,7 @@ const BurgerMenu = ({
                         uploadProgress,
                         totalUploadedBytes,
                         totalBytesToUpload,
+                        handleCurrentModal,
                         confirm,
                         currentThemeName,
                         handleListMode,
@@ -30,7 +31,7 @@ const BurgerMenu = ({
     return (
         <BurgerMenuWrapper smallScreen={smallScreen} onClick={hideSearch}>
             <div className={'mt-5 flex flex-col justify-center'}>
-                <div onClick={() => setModalType(userModal)} className={'mb-5 mx-auto'}><UserAvatar
+                <div onClick={() => handleCurrentModal({modalType: userModal})} className={'mb-5 mx-auto'}><UserAvatar
                 /></div>
                 {/*<UploadingProgress {...{isMediaLoading, uploadProgress, totalUploadedBytes, totalBytesToUpload}}/>*/}
                 <Box margin={1}>

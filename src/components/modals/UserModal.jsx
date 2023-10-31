@@ -1,22 +1,25 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {CgCloseR} from "react-icons/cg";
 import {connect} from "react-redux";
 import {changeAvatar} from "../../redux/authSlice";
 import CurrentUser from "../user/CurrentUser";
-import {noModal} from "../../common/common";
-import CommonTransitionParent from "../common/CommonTransitionParent";
+import {noModal, userModal} from "../../common/common"
 import ThemeBtn from "../common/theme/ThemeBtn";
+import AnimatedContainer from '../../common/AnimatedContainer';
+import {Box} from '@mui/material';
 
 const UserModal = ({
-                       toggleModal,
+                       handleModal,
                        changeAvatar,
                        isAvatarLoading,
-                       showModal,
                    }) => {
 
     const hiddenFileInput = useRef(null)
 
-    const uploadPhoto = () => {
+    const [shouldModalClose, setShouldModalClose] = useState(false)
+
+    const uploadPhoto = (e) => {
+        e.stopPropagation()
         const input = document.createElement('input');
         input.type = 'file';
         input.accept = 'image/*';
@@ -27,31 +30,46 @@ const UserModal = ({
         input.click();
     };
 
-    const handleClose = () => toggleModal(noModal)
+    const handleClose = () => handleModal({modalType: noModal})
 
     return (
-        <CommonTransitionParent show={showModal} toggleModal={toggleModal} zIndex={'z-max'}>
-            <input type="file" hidden={true} ref={hiddenFileInput} onChange={uploadPhoto}/>
-            <div className="
+        <AnimatedContainer onCLick={handleClose} shouldClose={shouldModalClose}>
+            <Box
+                position='relative'
+                width='15rem'
+                padding={2}
+                borderRadius='1rem'
+                display='flex'
+                justifyContent='center'
+                alignItems='center'
+                flexDirection='column'
+                className='bg-white'
+                style={{
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                }}
+            >
+                <input type="file" hidden={true} ref={hiddenFileInput} onChange={uploadPhoto}/>
+                <div className="
             absolute
-            top-0
-            right-0
+            top-1
+            right-2
             "
-                 onClick={handleClose}
-            ><CgCloseR size={20} color={'gray'}/></div>
-            <div className={'flex flex-col justify-center items-center'}>
-                <CurrentUser/>
-                <hr/>
-                <div className="w-full flex justify-end">
-                    <ThemeBtn disabled={isAvatarLoading} className={'h-8'} onClick={uploadPhoto}>
-                        Change Avatar
-                    </ThemeBtn>
+                     onClick={() => setShouldModalClose(true)}
+                ><CgCloseR size={20} color={'gray'}/></div>
+                <div className={'flex flex-col justify-center items-center'}>
+                    <CurrentUser/>
+                    <hr/>
+                    <div className="w-full flex justify-end">
+                        <ThemeBtn disabled={isAvatarLoading} className={'h-8'} onClick={uploadPhoto}>
+                            Change Avatar
+                        </ThemeBtn>
+                    </div>
+
                 </div>
-
-            </div>
-        </CommonTransitionParent>
-
-
+            </Box>
+        </AnimatedContainer>
     );
 };
 

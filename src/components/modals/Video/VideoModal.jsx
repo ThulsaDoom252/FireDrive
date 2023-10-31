@@ -5,15 +5,10 @@ import ModalVideoItem from '../../media/ModalVideoItem';
 import {stopPropagation} from '../../../common/common';
 import CustomControls from '../../videoPlayer/controls/CustomControls';
 import {ClipLoader} from "react-spinners";
-import {Fade} from "@mui/material";
 import {Scrollbars} from "react-custom-scrollbars";
+import AnimatedContainer from '../../../common/AnimatedContainer';
 
 const VideoModal = ({
-                        animateModal,
-                        showOverlay = true,
-                        overlayColor = 'bg-gray-900',
-                        overlayOpacity = 'opacity-95',
-                        zIndex = 'z-2',
                         closeIconSize = 30,
                         currentMediaSet,
                         currentModalItemUrl,
@@ -40,12 +35,9 @@ const VideoModal = ({
                     }) => {
 
     return (
-        <Fade in={animateModal}>
+        <AnimatedContainer onCLick={handleClose}>
             <div
-                className={` inset-0 absolute
-            ${showOverlay && `${overlayOpacity} ${overlayColor}`}
-            ${animateModal && zIndex}
-          `}
+                className={`inset-0 absolute`}
             >
                 {(!smallScreen && !fullScreen || !smallScreen && isControlsVisible || isControlsVisible) &&
                     <button
@@ -54,9 +46,7 @@ const VideoModal = ({
               text-gray-400
               hover:text-white z-1
               left-5 top-3
-            `}
-                        onClick={handleClose}
-                    >
+            `}>
                         <IoClose size={closeIconSize}/>
                     </button>}
                 <div
@@ -170,7 +160,7 @@ const VideoModal = ({
                         </div>}
                 </div>
             </div>
-        </Fade>
+        </AnimatedContainer>
     );
 };
 

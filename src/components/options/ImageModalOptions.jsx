@@ -31,7 +31,8 @@ const ImageModalOptions = ({
                 modalType: renameModal,
                 name: currentModalItemName,
                 oldName: currentModalOldName
-            }), label: 'Rename'
+            }),
+            label: 'Rename'
         },
         {
             type: 'share',

@@ -21,7 +21,7 @@ import {
     updateMetadata
 } from "firebase/storage";
 import {storage} from "../firebase";
-import {setModalType} from "./appSlice";
+import {setModalType, setMountedModal} from "./appSlice";
 import {getAuth} from "firebase/auth";
 import {getSpecificState} from "../common/helpers";
 import toast from "react-hot-toast";
@@ -487,7 +487,6 @@ export const renameMedia = createAsyncThunk('rename-thunk', async ({
         alert(`RENAMING ERROR: ${e}`)
     } finally {
         dispatch(toggleIsItemRenaming(false))
-        dispatch(setModalType(noModal))
     }
 
 })

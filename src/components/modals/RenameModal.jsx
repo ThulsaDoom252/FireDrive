@@ -1,33 +1,38 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {connect} from "react-redux";
 import {handleMediaName, renameMedia, setNewMediaName} from "../../redux/mediaSlice";
-import {Button, Fade} from "@mui/material";
+import {Button} from "@mui/material";
 import TextField from '@mui/material/TextField';
-import Overlay from "../common/Overlay";
-import {renameModal, stopPropagation} from "../../common/common";
+import {noModal, renameModal, stopPropagation} from "../../common/common";
+import AnimatedContainer from '../../common/AnimatedContainer';
+import toast from 'react-hot-toast';
 
 const RenameModal = ({
                          oldName,
                          handleMediaName,
                          renameMedia,
-                         toggleModal,
                          newName,
                          editingName,
                          setNewMediaName,
                          isItemRenaming,
-                         showModal,
+                         handleModal,
                      }) => {
+
+    // Should modal auto close  after renaming is done
+    const [shouldModalClose, setShouldModalClose] = useState(false)
 
     const handleRenameMedia = async () => {
         handleMediaName({name: null, oldName: null})
         await renameMedia({newName, editingName, originalName: oldName})
-        toggleModal({modalType: renameModal})
+        setShouldModalClose(true)
     }
 
     const isRenameBtnDisabled = isItemRenaming || newName === editingName || newName === ''
 
+    const closeModal = () => !isItemRenaming && handleModal({modalType: noModal})
+
     return (
-        <Fade in={showModal}>
+        <AnimatedContainer onCLick={closeModal} shouldClose={shouldModalClose} zIndex='z-20'>
             <div className='
             w-screen
             h-screen
@@ -37,7 +42,6 @@ const RenameModal = ({
              justify-center
              items-center
              '>
-                <Overlay toggleModal={() => toggleModal({modalType: renameModal})}/>
                 <div className='
                 bg-white
                 relative
@@ -72,7 +76,8 @@ const RenameModal = ({
 
                 </div>
             </div>
-        </Fade>
+        </AnimatedContainer>
+
     );
 };
 

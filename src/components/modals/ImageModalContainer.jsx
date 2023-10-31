@@ -1,12 +1,12 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {ItemsModalContext} from "../../context/ItemsModalContext";
-import {imageItemModal, imagesRoute, removeCurrentItemMsg, removeCurrentItemTitle} from "../../common/common";
+import {imagesRoute, removeCurrentItemMsg, removeCurrentItemTitle} from "../../common/common";
 import ImageItemsModal from "./ImageItemsModal";
 import {handleAlertModal} from "../../redux/appSlice";
 import {useDispatch} from "react-redux";
 import {deleteCurrentItem} from "../../redux/mediaSlice";
 
-const ImageModalContainer = ({toggleModal, animateModal, confirm, handleCurrentModal, handleModal}) => {
+const ImageModalContainer = ({confirm, handleItemModal, handleModal}) => {
         const modalContext = useContext(ItemsModalContext)
 
         const dispatch = useDispatch()
@@ -33,6 +33,8 @@ const ImageModalContainer = ({toggleModal, animateModal, confirm, handleCurrentM
 
 
 // binding keys to current modal handlers
+         const [closeModalByBtn, setCloseModalByBtn] = useState(false)
+
         useEffect(() => {
             const handleArrowKey = e => {
                 if ((e.key === 'ArrowLeft' || e.key === 'ArrowDown')) {
@@ -75,12 +77,17 @@ const ImageModalContainer = ({toggleModal, animateModal, confirm, handleCurrentM
         const prevArrowDisabled = currentModalItemIndex === 0
         const nextArrowDisabled = currentModalItemIndex === (searchMode ? searchResults.length - 1 : currentMediaSet.length - 1)
 
-        const handleClose = () => {
+        const handleClose = (closeByBtn) => {
             if (fullScreen) {
                 handleFullScreen()
                 return
             }
-            handleCurrentModal(imageItemModal)
+
+            if (closeByBtn) {
+                setCloseModalByBtn(true)
+                return;
+            }
+            handleItemModal()
         }
 
         const carouselSettings = {
@@ -96,8 +103,7 @@ const ImageModalContainer = ({toggleModal, animateModal, confirm, handleCurrentM
             showImageSettingsInSmallScreen, toggleImageSettingInSmallScreen]
 
         return <ImageItemsModal
-            animateModal={animateModal}
-            toggleModal={toggleModal}
+            closeByBtn={closeModalByBtn}
             currentMediaSet={currentMediaSet}
             fullScreen={fullScreen}
             handleFullScreen={handleFullScreen}
@@ -114,7 +120,6 @@ const ImageModalContainer = ({toggleModal, animateModal, confirm, handleCurrentM
             currentModalItemName={currentModalItemName}
             currentModalOldName={currentModalOldName}
             {...confirm}
-
         />
     }
 ;

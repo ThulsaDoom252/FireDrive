@@ -2,22 +2,16 @@ import React from 'react';
 import {IoIosArrowBack, IoIosArrowForward} from 'react-icons/io'
 import {IoClose} from "react-icons/io5";
 import {AiOutlineFullscreenExit} from "react-icons/ai";
-import Overlay from "../common/Overlay";
 import {stopPropagation} from "../../common/common";
 import ImageModalOptions from "../options/ImageModalOptions";
 import {Carousel} from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import {Fade} from "@mui/material";
 import FittedThemeBtn from "../common/theme/FittedThemeBtn";
+import AnimatedContainer from '../../common/AnimatedContainer';
 
 const ImageItemsModal = ({
-                             overlayColor = 'bg-gray-900',
-                             animated = true,
-                             overlayOpacity = 'bg-opacity-95',
-                             showOverlay = true,
                              arrowSize = 30,
                              closeIconSize = 30,
-                             animateModal,
                              carouselSettings,
                              prevArrowDisabled,
                              nextArrowDisabled,
@@ -26,7 +20,6 @@ const ImageItemsModal = ({
                              smallScreen,
                              fullScreen,
                              handleFullScreen,
-                             zIndex = 'z-2',
                              currentModalItemUrl,
                              currentMediaSet,
                              modalOptionsProps,
@@ -34,32 +27,25 @@ const ImageItemsModal = ({
                              handleNextModalItem,
                              currentModalItemName,
                              currentModalOldName,
-
+                             closeByBtn,
                          }) => {
 
     const [handleDeleteCurrentModalItem, showMobileSettings, handleModal, showImageSettingsInSmallScreen, toggleImageSettingInSmallScreen] = modalOptionsProps
 
     return (
-        <Fade in={animateModal} timeout={200}>
+        <AnimatedContainer onCLick={handleClose} shouldClose={closeByBtn}>
             <div
-                onClick={handleClose}
-                hidden={!animated ? animateModal : false}
                 className={`
                 inset-0
                 flex
                  absolute 
                  items-center 
                  justify-center 
-                 ${!smallScreen && 'flex-col'}
-                 ${animateModal && zIndex}
-                 `}>
-                {showOverlay && <Overlay bg={overlayColor} opacity={overlayOpacity}/>}
-                {/*<div*/}
-                {/*    className={`text-white mb-2 ${zIndex} ${smallScreen && 'absolute top-2'}`}>{currentModalItemName}</div>*/}
+                 ${!smallScreen && 'flex-col'}`}>
                 {((!smallScreen && !fullScreen) || showImageSettingsInSmallScreen) &&
                     <FittedThemeBtn imgModalBtn
                                     optionalClasses={{position: 'absolute', right: 5, top: 5, zIndex: 1}}
-                                    onClick={handleClose}><IoClose
+                                    onClick={() => handleClose(true)}><IoClose
                         size={closeIconSize}/></FittedThemeBtn>}
 
                 {smallScreen || !fullScreen ? <div hidden={smallScreen || !fullScreen}
@@ -84,8 +70,8 @@ const ImageItemsModal = ({
                         </Carousel>
                         :
                         <img
-                            className={`rounded  ${fullScreen ? 'max-h-95vh max-w-95vw' : 'max-h-65vh max-w-65vw'}`}
-                            src={currentModalItemUrl} alt=""/>}
+                            className={`rounded  ${fullScreen ? 'max-h-95vh max-w-95vw' : 'max-h-75vh max-w-75vw'}`}
+                            src={currentModalItemUrl} alt="image"/>}
                 </div>
                 <div
                     hidden={!showMobileSettings || (!smallScreen && fullScreen)}
@@ -129,8 +115,8 @@ const ImageItemsModal = ({
                         <IoIosArrowForward
                             size={arrowSize}/></FittedThemeBtn>}
             </div>
+        </AnimatedContainer>
 
-        </Fade>
     )
 };
 
