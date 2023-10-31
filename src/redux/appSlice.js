@@ -3,7 +3,7 @@ import {
     delay, extractUsernameFromEmail,
     imageItemModal,
     noModal, paginateMode, renameModal, shareModal,
-    smallScreenWidth,
+    smallScreenWidth, userModal,
     videoItemModal
 } from "../common/common";
 import {
@@ -30,10 +30,8 @@ const appSlice = createSlice({
         listMode: paginateMode,
         initializing: false,
         smallScreen: window.innerWidth <= smallScreenWidth,
-        modalType: '',
         gridDividerValue: 4,
         gridLayoutIndex: 5,
-        itemModalType: noModal,
         mountedModal: noModal,
         mountedItemModal: noModal,
         alertTitle: '',
@@ -105,6 +103,7 @@ const appSlice = createSlice({
             state.mountedItemModal = action.payload
         },
         setMountedModal(state, action) {
+            debugger
             state.mountedModal = action.payload
         },
         setCurrentLayoutIndex(state, action) {
@@ -116,9 +115,6 @@ const appSlice = createSlice({
         },
         setGridDividerValue(state, action) {
             state.gridDividerValue = action.payload
-        },
-        setItemModalType(state, action) {
-            state.itemModalType = action.payload
         },
         toggleInitializing(state, action) {
             state.initializing = action.payload
@@ -153,8 +149,6 @@ export const {
     setAlertModalContent,
     setCurrentModalItemIndex,
     setItemOptionsHovered,
-    setModalType,
-    setItemModalType,
     toggleCurrentTheme,
     toggleListMode,
     toggleVideoMobileMenu,
@@ -178,23 +172,23 @@ export const handleAlertModal = createAsyncThunk('alertModal-thunk', async ({
 })
 
 
-export const handleInitialModalItem = createAsyncThunk('modal-item-initial-url-thunk', async ({
-                                                                                                  index,
-                                                                                                  modalType = "Image",
-                                                                                              }, {dispatch}) => {
-    dispatch(setCurrentModalItemIndex(index))
-    await delay(10)
-    switch (modalType) {
-        case 'Image':
-            dispatch(setItemModalType(imageItemModal))
-            break;
-        case 'video':
-            dispatch(setItemModalType(videoItemModal))
-            break;
-        default:
-            void 0
-    }
-})
+// export const handleInitialModalItem = createAsyncThunk('modal-item-initial-url-thunk', async ({
+//                                                                                                   index,
+//                                                                                                   modalType = "Image",
+//                                                                                               }, {dispatch}) => {
+//     dispatch(setCurrentModalItemIndex(index))
+//     await delay(10)
+//     switch (modalType) {
+//         case 'Image':
+//             dispatch(setItemModalType(imageItemModal))
+//             break;
+//         case 'video':
+//             dispatch(setItemModalType(videoItemModal))
+//             break;
+//         default:
+//             void 0
+//     }
+// })
 
 export const handleTheme = createAsyncThunk('theme-thunk', async (theme, {dispatch}) => {
     try {
@@ -209,90 +203,50 @@ export const handleTheme = createAsyncThunk('theme-thunk', async (theme, {dispat
 })
 
 
-export const handleCurrentItemModal = createAsyncThunk('handle-item-modal-thunk', async (itemModalType, {
-    dispatch,
-    getState
-}) => {
+export const handleCurrentItemModal = createAsyncThunk('handle-item-modal-thunk',
+    async (itemModalType, {
+        dispatch
+    }) => {
+        const nullModal = !itemModalType
 
-    const currentState = getState()
+        if (nullModal) {
+            dispatch(setMountedItemModal(noModal))
+            return
+        }
 
-    const currentItemModal = currentState.app.itemModalType
-    const isImageModalMounted = currentItemModal === imageItemModal
-    const isVideoModalMounted = currentItemModal === videoItemModal
-
-    const nullItemModal = async (time = 200) => {
-        dispatch(setItemModalType(noModal))
-        await delay(200)
-        dispatch(setMountedItemModal(noModal))
-    }
-
-    if (itemModalType === imageItemModal) {
-        if (!isImageModalMounted) {
+        if (itemModalType === imageItemModal) {
             dispatch(setMountedItemModal(imageItemModal))
-            await delay(100)
-            dispatch(setItemModalType(imageItemModal))
-
-        } else {
-            nullItemModal().then(() => void 0)
+            return
         }
-        return
-    }
 
-    if (itemModalType === videoItemModal) {
-        if (!isVideoModalMounted) {
+        if (itemModalType === videoItemModal) {
             dispatch(setMountedItemModal(videoItemModal))
-            await delay(100)
-            dispatch(setItemModalType(videoItemModal))
-        } else {
-            nullItemModal().then(() => void 0)
         }
-    }
-})
+    })
 
 export const handleCurrentModal = createAsyncThunk('handle-modal-thunk', async ({modalType, name, oldName}, {
     dispatch,
-    getState
 }) => {
-    debugger
-    const currentState = getState()
-    const currentModalType = currentState.app.modalType
-    const isRenameModalMounted = currentModalType === renameModal
-    const isShareModalMounted = currentModalType === shareModal
-
-    const nullMountedModal = async (time = 200) => {
-        dispatch(setModalType(noModal))
-        await delay(time)
+    if (modalType === noModal) {
         dispatch(setMountedModal(noModal))
+        return
     }
 
     if (modalType === renameModal) {
-        if (!isRenameModalMounted) {
-            dispatch(handleMediaName({name, oldName}))
-            await delay(100)
-            dispatch(setMountedModal(renameModal))
-            await delay(100)
-            dispatch(setModalType(renameModal))
-        } else {
-            nullMountedModal().then(() => void 0)
-        }
+        dispatch(handleMediaName({name, oldName}))
+        await delay(100)
+        dispatch(setMountedModal(renameModal))
+        return
+    }
+
+    if (modalType === userModal) {
+        dispatch(setMountedModal(userModal))
         return
     }
 
     if (modalType === shareModal) {
-        if (!isShareModalMounted) {
-            setMountedModal(shareModal)
-            await delay(100)
-            setModalType(shareModal)
-        } else {
-            nullMountedModal().then(() => void 0)
-        }
+        dispatch(setMountedModal(shareModal))
     }
-})
-
-export const nullMountedModal = createAsyncThunk('null-modal-thunk', async (time = 200, {dispatch}) => {
-    dispatch(setModalType(noModal))
-    await delay(time)
-    dispatch(setMountedModal(noModal))
 })
 
 ///Dall

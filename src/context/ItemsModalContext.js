@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {setCurrentModalItemIndex} from "../redux/appSlice";
 import {useSwipeable} from "react-swipeable";
 import {imageItemModal, videoItemModal} from "../common/common";
-import videoModal from "../components/modals/Video/VideoModal";
 
 export const ItemsModalContext = createContext();
 export const ItemsModalContextProvider = ({children}) => {
@@ -15,7 +14,7 @@ export const ItemsModalContextProvider = ({children}) => {
     const currentModalItemIndex = useSelector(state => state.app.currentModalItemIndex)
     const searchMode = useSelector(state => state.media.searchMode)
     const [fullScreen, toggleFullScreen] = useState(false)
-    const [showMobileSettings, toggleMobileSettings] = useState(true)
+    const [showMobileSettings] = useState(true)
     const [showVideoMobileSettings, toggleVideoMobileSettings] = useState(false)
     const [showImageSettingsInSmallScreen, toggleImageSettingInSmallScreen] = useState(true)
 
@@ -41,29 +40,6 @@ export const ItemsModalContextProvider = ({children}) => {
         //eslint-disable-next-line
     }, [fullScreen, mountedItemModal])
 
-    useEffect(() => {
-        const handleLandScapeMode = () => {
-            if (window.innerWidth > window.innerHeight) {
-                if (!fullScreen) {
-                    if (!document.fullscreenElement)
-                        document.documentElement.requestFullscreen().then(() => void 0)
-                }
-            }
-        };
-
-        if (smallScreen && isItemModalMounted) {
-            window.addEventListener('resize', handleLandScapeMode)
-        } else {
-            window.removeEventListener('resize', handleLandScapeMode)
-        }
-
-        return () => {
-            window.removeEventListener('resize', handleLandScapeMode)
-        }
-        //eslint-disable-next-line
-    }, [smallScreen, mountedItemModal]);
-
-
     const handleCurrentModalItemIndex = (index) => {
         dispatch(setCurrentModalItemIndex(index))
     }
@@ -82,13 +58,11 @@ export const ItemsModalContextProvider = ({children}) => {
     });
 
     const handleNextModalItem = e => {
-        debugger
         !smallScreen && e.stopPropagation()
-        currentMediaSet.length !== (currentModalItemIndex - 1) && dispatch(setCurrentModalItemIndex(currentModalItemIndex + 1))
+        currentMediaSet.length !== (currentModalItemIndex + 1) && dispatch(setCurrentModalItemIndex(currentModalItemIndex + 1))
     }
 
     const handlePrevModalItem = e => {
-        debugger
         !smallScreen && e.stopPropagation()
         currentModalItemIndex !== 0 && dispatch(setCurrentModalItemIndex(currentModalItemIndex - 1))
     }
@@ -113,9 +87,8 @@ export const ItemsModalContextProvider = ({children}) => {
         toggleVideoMobileSettings,
         currentModalItemName,
         toggleFullScreen,
-        handleFullScreenState,
         showImageSettingsInSmallScreen,
-        toggleImageSettingInSmallScreen
+        toggleImageSettingInSmallScreen,
     }
 
 

@@ -1,29 +1,30 @@
 import React, {useContext} from 'react';
 import {ItemsModalContext} from "../../context/ItemsModalContext";
 import {FacebookShareButton, TelegramShareButton, ViberShareButton} from "react-share";
-import {shareModal, stopPropagation} from "../../common/common";
+import {noModal, stopPropagation} from "../../common/common";
 import {SiFacebook, SiTelegram, SiViber} from "react-icons/si";
-import {Fade} from "@mui/material";
 import Button from '@mui/material/Button';
+import AnimatedContainer from '../../common/AnimatedContainer';
+import {Box} from '@mui/material';
 
-
-const ShareModal = ({animateModal, toggleModal}) => {
+const ShareModal = ({handleModal}) => {
     const itemsModal = useContext(ItemsModalContext)
+    const closeModal = () => handleModal({modalType: noModal})
 
     const {currentModalItemUrl} = itemsModal
     return (
-        <Fade in={animateModal} timeout={200}>
-            <div className='
-           w-screen
-           h-screen
+        <AnimatedContainer
+            onCLick={closeModal}
+            zIndex='z-20'>
+            <Box
+                width='100%'
+                height='100%'
+                className='
            absolute
-           z-3
-           bg-gray-800
-           bg-opacity-80
            flex
            justify-center
            items-center
-           ' onClick={() => toggleModal({modalType: shareModal})}>
+           '>
                 <div onClick={stopPropagation} className='
             flex
             justify-between
@@ -48,8 +49,9 @@ const ShareModal = ({animateModal, toggleModal}) => {
                         </ViberShareButton>
                     </Button>
                 </div>
-            </div>
-        </Fade>
+            </Box>
+        </AnimatedContainer>
+
     );
 };
 

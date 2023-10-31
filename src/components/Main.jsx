@@ -3,8 +3,8 @@ import HeaderContainer from "./header/HeaderContainer";
 import {
     imageItemModal, lazyMode,
     mainContentId,
-    mediaTypes, paginateMode, renameModal, rootRoute, shareModal,
-    signInRoute,
+    mediaTypes, noModal, paginateMode, renameModal, rootRoute, shareModal,
+    signInRoute, userModal,
     videoItemModal,
 } from "../common/common";
 import {Routes, Route, Navigate, useLocation} from "react-router-dom";
@@ -17,7 +17,7 @@ import ItemsPageContainer from "./media/ItemsPageContainer";
 import {
     handleCurrentItemModal,
     handleCurrentModal,
-    setItemModalType, setModalType, toggleListMode,
+    toggleListMode,
 } from "../redux/appSlice";
 import {Scrollbars} from 'react-custom-scrollbars';
 import AudioPlayer from "./audioPlayer/AudioPlayer";
@@ -25,7 +25,6 @@ import {PaginatorContext} from "../context/PaginatorContext";
 import UserModal from "./modals/UserModal";
 import RenameModal from "./modals/RenameModal";
 import ShareModal from "./modals/ShareModal";
-import userModal from "./modals/UserModal";
 import Home from "./home/Home";
 import ImageModalContainer from "./modals/ImageModalContainer";
 import VideoModalContainer from "./modals/Video/VideoModalContainer";
@@ -44,8 +43,6 @@ const Main = ({
                   smallScreen,
                   searchMode,
                   searchResults,
-                  modalType,
-                  itemModalType,
                   setModalType,
                   setItemModalType,
                   currentTheme,
@@ -74,12 +71,12 @@ const Main = ({
         const location = useLocation()
         const isVideoModalMounted = mountedItemModal === videoItemModal
         const isImageModalMounted = mountedItemModal === imageItemModal
+
         const isRenameModalMounted = mountedModal === renameModal
         const isShareModalMounted = mountedModal === shareModal
-        const animateRenameModal = modalType === renameModal
-        const animateImageModal = itemModalType === imageItemModal
-        const animateVideoModal = itemModalType === videoItemModal
-        const animateShareModal = modalType === shareModal
+        const isUserModalMounted = mountedModal === userModal
+        const noMountedModal = mountedItemModal === noModal
+
 
         const pathName = location.pathname
         const homePage = pathName === rootRoute
@@ -127,23 +124,21 @@ const Main = ({
             <>
                 <Dialog/>
                 {isThemeUpdating && <Overlay zIndex={'z-2'}/>}
-                {isRenameModalMounted &&
-                    <RenameModal toggleModal={handleCurrentModal} showModal={animateRenameModal}/>}
-                {isShareModalMounted && <ShareModal toggleModal={handleCurrentModal} animateModal={animateShareModal}/>}
+                {isRenameModalMounted && <RenameModal handleModal={handleCurrentModal}/>}
+                {isShareModalMounted && <ShareModal handleModal={handleCurrentModal}/>}
                 {isVideoModalMounted && <VideoModalContainer
                     handleCurrentItemModal={handleCurrentItemModal}
                     toggleModal={handleCurrentModal}
-                    animateModal={animateVideoModal}
                     confirm={confirm}
                 />}
 
                 {isImageModalMounted &&
-                    <ImageModalContainer toggleModal={setItemModalType} animateModal={animateImageModal}
-                                         confirm={confirm} handleCurrentModal={handleCurrentItemModal}
-                                         handleModal={handleCurrentModal}
+                    <ImageModalContainer
+                        confirm={confirm}
+                        handleItemModal={handleCurrentItemModal}
+                        handleModal={handleCurrentModal}
                     />}
-                <UserModal toggleModal={setModalType}
-                           showModal={modalType === userModal}/>
+                {isUserModalMounted && <UserModal handleModal={handleCurrentModal}/>}
                 <HeaderContainer
                     searchRequest={searchRequest}
                     setSearchRequest={setSearchRequest}
@@ -160,6 +155,7 @@ const Main = ({
                         <BurgerMenu  {...{
                             smallScreen,
                             hideSearch,
+                            handleCurrentModal,
                             setModalType,
                             isMediaLoading,
                             uploadProgress,
@@ -191,7 +187,7 @@ const Main = ({
                                                      confirm,
                                                      handleItemModal: handleCurrentItemModal,
                                                      handleModal: handleCurrentModal,
-                                                     itemModalType,
+                                                     noMountedModal,
                                                      classes,
                                                      noMedia,
                                                  }}/>}/>}
@@ -227,8 +223,6 @@ const mapStateToProps = (state) => {
         searchMode: state.media.searchMode,
         searchRequest: state.media.searchRequest,
         searchResults: state.media.searchResults,
-        modalType: state.app.modalType,
-        itemModalType: state.app.itemModalType,
         isSearchVisible: state.media.isSearchVisible,
         currentThemeName: state.app.currentThemeName,
         listMode: state.app.listMode,
@@ -248,8 +242,7 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {
-    listMedia, setCurrentRoute,
-    setModalType, setItemModalType, toggleSearch,
+    listMedia, setCurrentRoute, toggleSearch,
     toggleListMode, handleCurrentModal, handleCurrentItemModal, setSearchRequest,
 })(Main);
 

@@ -1,10 +1,9 @@
 import React, {useContext, useState} from 'react';
 import {ItemsModalContext} from "../../../context/ItemsModalContext";
-import {videoItemModal} from "../../../common/common";
 import VideoModal from "./VideoModal";
 import {VideoControlsContext} from "../../../context/VideoControlsContext";
 
-const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentItemModal}) => {
+const VideoModalContainer = ({toggleModal, confirm, handleCurrentItemModal}) => {
 
     const CustomControlsContext = useContext(VideoControlsContext)
     const ModalContext = useContext(ItemsModalContext);
@@ -118,13 +117,17 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentI
         setIsVideoReady(true)
     }
 
-    const handleClose = () => {
-        if (fullScreen) {
-            handleFullScreen()
+    const [closeByBtn, setCloseByBtn] = useState(false)
+
+    const handleClose = (closeByBtn) => {
+        fullScreen && handleFullScreen()
+
+        if (closeByBtn) {
+            setCloseByBtn(true)
             return
         }
 
-        handleCurrentItemModal(videoItemModal)
+        handleCurrentItemModal()
         setIsVideoReady(false);
     };
 
@@ -140,7 +143,6 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentI
     }
 
     return <VideoModal {...{
-        animateModal,
         currentMediaSet,
         currentModalItemUrl,
         currentModalItemIndex,
@@ -152,6 +154,7 @@ const VideoModalContainer = ({animateModal, toggleModal, confirm, handleCurrentI
         currentVideoTime,
         setCurrentVideoTime,
         isControlsVisible,
+        closeByBtn,
         isVideoReady,
         isVideoPlaying,
         handleVisibility: handleVideoControlsVisibility,

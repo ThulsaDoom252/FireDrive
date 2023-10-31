@@ -261,7 +261,7 @@ export const VideoControlsContextProvider = ({children}) => {
     };
 
     const handleVideoControlsVisibility = () => {
-        let visibilityTime = 1000000000
+        let visibilityTime = 10000
         // default time 10000
         setControlInitialVisibilityValue(prevValue => prevValue + 5000)
         if (!isControlsVisible) {
@@ -272,7 +272,6 @@ export const VideoControlsContextProvider = ({children}) => {
             }, [controlInitialVisibilityValue])
         }
     }
-
 
     const videoControlsValues = {
         playerRef,
