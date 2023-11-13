@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {BsFillGridFill} from "react-icons/bs";
 import {Box, Button} from "@mui/material";
 import {Fade} from "@mui/material";
-import ThemeContainer from '../common/theme/ThemeContainer';
 import FittedThemeBtn from '../common/theme/FittedThemeBtn';
 
 const ItemsLayoutMenu = ({

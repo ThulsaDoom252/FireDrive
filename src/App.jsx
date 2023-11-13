@@ -40,10 +40,7 @@ const App = ({
 
     useEffect(() => {
         const handleResize = () => {
-            toggleSmallScreen(window.innerWidth
-                <=
-                smallScreenWidth
-            )
+            toggleSmallScreen(window.innerWidth <= smallScreenWidth)
         }
         window.addEventListener('resize', handleResize)
     }, [])
