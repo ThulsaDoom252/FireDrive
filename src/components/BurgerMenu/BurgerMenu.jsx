@@ -33,7 +33,6 @@ const BurgerMenu = ({
             <div className={'mt-5 flex flex-col justify-center'}>
                 <div onClick={() => handleCurrentModal({modalType: userModal})} className={'mb-5 mx-auto'}><UserAvatar
                 /></div>
-                {/*<UploadingProgress {...{isMediaLoading, uploadProgress, totalUploadedBytes, totalBytesToUpload}}/>*/}
                 <Box margin={1}>
                     <ThemedSlider
                         value={totalUploadedBytes}
@@ -54,7 +53,7 @@ const BurgerMenu = ({
                 </div>
                 <div className={'mb-5 '}><LogOutContainer/></div>
             </div>
-            <div><SortInput/></div>
+            <Box><SortInput/></Box>
         </BurgerMenuWrapper>
     );
 };

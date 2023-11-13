@@ -5,13 +5,14 @@ import {themes} from '../../common/theme/themes';
 import ThemeImage from '../../ThemeImage';
 import {handleTheme} from '../../../redux/appSlice';
 import {useDispatch} from 'react-redux';
+import {burgerMenuIconSize} from '../../../common/common';
 
-const ThemeDropDown = ({currentThemeName}) => {
+const ThemeDropDown = ({currentThemeName, iconSize = burgerMenuIconSize}) => {
     const dispatch = useDispatch()
     const [isThemeBlockOpened, setIsThemeBlockOpened] = useState(false)
     return (
         <DropDownMenu menuType={isThemeBlockOpened} toggleMenu={setIsThemeBlockOpened}
-                      btnLabel={'Change theme'} smallScreenIcon={<BiColorFill/>}>
+                      btnLabel={'Change theme'} smallScreenIcon={<BiColorFill size={iconSize}/>}>
             {themes.map((theme, index) => <ThemeImage
                 currentThemeName={currentThemeName}
                 theme={theme.type}

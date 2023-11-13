@@ -14,12 +14,16 @@ const ThemeBtn = ({children, fullWidth, onClick, disabled, className, size}) => 
         background: primeBg,
         transition: 'background 0.3s',
         '&:hover': {
-            background: activeBg, // Новый цвет фона при наведении
+            background: activeBg,
         },
     }
 
     return (
-        <Button size={size} className={className} sx={themeBtnClass} disabled={disabled} onClick={onClick}>
+        <Button size={size}
+                className={className}
+                sx={themeBtnClass}
+                disabled={disabled}
+                onClick={onClick}>
             {children}
         </Button>
     );

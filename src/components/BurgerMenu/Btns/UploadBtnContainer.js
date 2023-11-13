@@ -1,12 +1,12 @@
 import React, {useContext, useRef} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {uploadMedia} from "../../../redux/mediaSlice";
-import {audioFiles, imageFiles, videoFiles} from "../../../common/common";
+import {audioFiles, burgerMenuIconSize, imageFiles, videoFiles} from "../../../common/common";
 import {PagesContext} from "../../../context/PagesContext";
 import {HiOutlinePlus} from "react-icons/hi";
 import ThemeBtn from "../../common/theme/ThemeBtn";
 
-const UploadBtnContainer = () => {
+const UploadBtnContainer = ({iconSize = burgerMenuIconSize}) => {
     const inputBtnRef = useRef(null)
     const pages = useContext(PagesContext)
     const {
@@ -36,7 +36,7 @@ const UploadBtnContainer = () => {
                 fullWidth
                 disabled={rootPage || mediaLoading}
                 onClick={handleClick}>
-                {smallScreen ? < HiOutlinePlus/> : 'Add media'}</ThemeBtn>
+                {smallScreen ? < HiOutlinePlus size={iconSize}/> : 'Add media'}</ThemeBtn>
         </>
     )
 };

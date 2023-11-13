@@ -24,7 +24,7 @@ const BurgerMenuWrapper = ({
             width={adaptForASmallScreen && smallScreen ? '35%' : void 0}
             isOpen={menuOpenState}
         >
-            <Box className={'w-full flex flex-col justify-center'}>
+            <Box className={'w-full flex flex-col justify-center p-2'}>
                 {children}
             </Box>
         </Menu>

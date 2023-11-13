@@ -36,6 +36,9 @@ export const delay = (ms) => {
     })
 }
 
+// Burger menu icon size
+export const burgerMenuIconSize = 20
+
 //Format time in mm:ss format
 export const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);

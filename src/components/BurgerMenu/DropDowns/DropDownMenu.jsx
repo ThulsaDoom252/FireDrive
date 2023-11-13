@@ -1,9 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {BiDownArrow, BiUpArrow} from "react-icons/bi";
 import {useSelector} from "react-redux";
-import {Transition} from "react-transition-group";
-import {defaultStyle, transitionStyles} from "../../../common/TransitionStyles";
 import ThemeBtn from "../../common/theme/ThemeBtn";
+import {Fade} from '@mui/material';
 
 const DropDownMenu = ({
                           switchToSmallScreenIcon = true,
@@ -17,14 +16,7 @@ const DropDownMenu = ({
                           menuType,
                           toggleMenu,
                       }) => {
-    const [isAnimationExited, setIsAnimationExited] = useState(true)
     const smallScreen = useSelector(state => state.app.smallScreen)
-
-    const handleExitAnimation = () => {
-        setTimeout(() => {
-            setIsAnimationExited(true)
-        }, [duration])
-    }
 
     const handleOpenDropDown = e => {
         e.stopPropagation()
@@ -53,24 +45,17 @@ const DropDownMenu = ({
                     right-2
                     '/>}</ThemeBtn>
             <div className={'w-full'} hidden={!menuType}>
-                <Transition in={menuType}
-                            timeout={duration}
-                            onEntering={() => setIsAnimationExited(false)}
-                            onExit={handleExitAnimation}>
-                    {state => (
-                        <div hidden={!animated ? !menuType : false}
-                             style={{...defaultStyle, ...transitionStyles[state]}}
-                             className={`
+                <Fade in={menuType} timeout={duration}>
+                    <div hidden={!animated ? !menuType : false}
+                         className={`
                              w-full 
                              flex 
                              items-center 
-                             ${!menuType && isAnimationExited ? 'absolute' : 'block'} 
                              ${smallScreen && 'flex-col'}
                              `}>
-                            {children}
-                        </div>
-                    )}
-                </Transition>
+                        {children}
+                    </div>
+                </Fade>
             </div>
         </div>
     );

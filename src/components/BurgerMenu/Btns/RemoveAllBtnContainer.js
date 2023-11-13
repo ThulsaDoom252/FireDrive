@@ -3,11 +3,11 @@ import {PagesContext} from "../../../context/PagesContext";
 import {useDispatch, useSelector,} from "react-redux";
 import {handleAlertModal} from "../../../redux/appSlice";
 import {GoTrash} from "react-icons/go";
-import {removeAllItemsTitle, removeAllMsg} from "../../../common/common";
+import {burgerMenuIconSize, removeAllItemsTitle, removeAllMsg} from "../../../common/common";
 import {deleteAllMedia} from "../../../redux/mediaSlice";
 import ThemeBtn from "../../common/theme/ThemeBtn";
 
-const RemoveAllBtnContainer = ({confirm}) => {
+const RemoveAllBtnContainer = ({confirm, iconSize = burgerMenuIconSize}) => {
     const pages = useContext(PagesContext)
     const dispatch = useDispatch()
     const {rootPage} = pages
@@ -36,7 +36,7 @@ const RemoveAllBtnContainer = ({confirm}) => {
             <ThemeBtn fullWidth
                       onClick={handleClick}
                       disabled={isDisabled}>
-                {smallScreen ? <GoTrash/> : 'Remove all'}
+                {smallScreen ? <GoTrash size={burgerMenuIconSize}/> : 'Remove all'}
             </ThemeBtn>
         </>
     )

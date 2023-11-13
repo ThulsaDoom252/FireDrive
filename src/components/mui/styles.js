@@ -3,6 +3,14 @@ import {Skeleton, styled} from '@mui/material';
 
 export const useStyles = makeStyles(() => ({
     sortInput: (props) => ({
+
+        '& .Mui-disabled': {
+            '&:hover fieldset, &.Mui-focused fieldset ': {
+                border: 'none',
+                boxShadow: 'none',
+            },
+        },
+
         '& .MuiOutlinedInput-root': {
             '&:hover fieldset, &.Mui-focused fieldset ': {
                 borderColor: props.primeBg,
@@ -28,17 +36,12 @@ export const useStyles = makeStyles(() => ({
             fontStyle: 'italic',
         },
     }),
-
     githubIcon: {
         color: "green",
     },
     oAuthBtn: {
         margin: '2px',
         borderColor: "gray"
-    },
-    actionBtn: {
-        backgroundColor: 'blue',
-        color: 'white',
     },
     navLink: (props) => {
         return {
