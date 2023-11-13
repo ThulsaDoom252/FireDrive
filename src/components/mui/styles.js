@@ -2,35 +2,32 @@ import {makeStyles} from "@mui/styles";
 import {Skeleton, styled} from '@mui/material';
 
 export const useStyles = makeStyles(() => ({
-    formControl: (props) => {
-        return {
-            '& .MuiOutlinedInput-root': {
-                '&:hover fieldset': {
-                    borderColor: props.primeBg,
-                },
-                '&.Mui-focused fieldset': {
-                    borderColor: props.primeBg,
-                },
+    sortInput: (props) => ({
+        '& .MuiOutlinedInput-root': {
+            '&:hover fieldset, &.Mui-focused fieldset ': {
+                borderColor: props.primeBg,
             },
-            '& .MuiInputLabel-root': {
-                color: props.color === 'black' ? '#9af0fa' : props.color,
-                fontWeight: 'bold',
-                position: 'relative',
-                top: '1.3rem',
-                fontSize: '1.2rem',
-                fontStyle: 'italic',
-            },
-            '& .MuiInputBase-input': {
-                backgroundColor: 'rgba(255,255,255,0.7)',
-                fontStyle: 'italic',
-            },
+        },
+        '& .MuiInputLabel-root': {
+            color: props.color === 'black' ? '#9af0fa' : props.color,
+            letterSpacing: '0.1rem',
+            fontWeight: 'bold',
+            position: 'relative',
+            top: '1.3rem',
+            fontSize: '1.2rem',
+            fontStyle: 'italic',
             '&.Mui-disabled': {
-                '& .MuiInputLabel-root': {
-                    color: 'gray',
-                },
+                color: 'gray',
             },
-        }
-    },
+            '&.Mui-focused': {
+                color: `${props.primeBg} !important`,
+            },
+        },
+        '& .MuiInputBase-input': {
+            backgroundColor: 'rgba(255,255,255,0.7)',
+            fontStyle: 'italic',
+        },
+    }),
 
     githubIcon: {
         color: "green",

@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {ItemsModalContext} from "../../context/ItemsModalContext";
 import {imagesRoute, removeCurrentItemMsg, removeCurrentItemTitle} from "../../common/common";
-import ImageItemsModal from "./ImageItemsModal";
+import ImageModal from "./ImageModal";
 import {handleAlertModal} from "../../redux/appSlice";
 import {useDispatch} from "react-redux";
 import {deleteCurrentItem} from "../../redux/mediaSlice";
@@ -25,7 +25,7 @@ const ImageModalContainer = ({confirm, handleItemModal, handleModal}) => {
             showMobileSettings,
             handleFullScreen,
             currentModalItemName,
-            currentModalOldName,
+            currentModalItemOldName,
             showImageSettingsInSmallScreen,
             toggleImageSettingInSmallScreen,
         } = modalContext
@@ -101,7 +101,7 @@ const ImageModalContainer = ({confirm, handleItemModal, handleModal}) => {
 
         return (
             <>
-                <ImageItemsModal
+                <ImageModal
                     closeByBtn={closeModalByBtn}
                     currentMediaSet={currentMediaSet}
                     fullScreen={fullScreen}
@@ -117,7 +117,7 @@ const ImageModalContainer = ({confirm, handleItemModal, handleModal}) => {
                     smallScreen={smallScreen}
                     modalOptionsProps={modalOptionsProps}
                     currentModalItemName={currentModalItemName}
-                    currentModalOldName={currentModalOldName}
+                    currentModalItemOldName={currentModalItemOldName}
                     {...confirm}
                 />
 

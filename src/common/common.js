@@ -76,9 +76,9 @@ export const lazyMode = 'LAZY'
 
 
 //Sort media types
-export const byDate = 'by date'
-export const byName = 'by name'
-export const bySize = 'by size'
+export const byDate = 'By date'
+export const byName = 'By name'
+export const bySize = 'By size'
 
 
 //SmallScreenMode

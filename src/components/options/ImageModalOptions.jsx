@@ -5,7 +5,6 @@ import {renameModal, shareModal} from "../../common/common";
 import {BsFullscreen} from "react-icons/bs";
 import {AiOutlineFullscreenExit} from "react-icons/ai";
 import FittedThemeBtn from "../common/theme/FittedThemeBtn";
-import {Button} from '@mui/material';
 
 const ImageModalOptions = ({
                                handleFullScreen,

@@ -34,7 +34,7 @@ const SortInput = ({
 
     return (
         <>
-            <FormControl className={classes.formControl} fullWidth disabled={isDisabled}>
+            <FormControl className={classes.sortInput} fullWidth disabled={isDisabled}>
                 <InputLabel id="sort-form-label">Sort</InputLabel>
                 <Select
                     disabled={isDisabled}

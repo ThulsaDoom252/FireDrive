@@ -10,26 +10,26 @@ import FittedThemeBtn from "../common/theme/FittedThemeBtn";
 import AnimatedContainer from '../../common/AnimatedContainer';
 import {Box} from '@mui/material';
 
-const ImageItemsModal = ({
-                             arrowSize = 30,
-                             closeIconSize = 30,
-                             carouselSettings,
-                             prevArrowDisabled,
-                             nextArrowDisabled,
-                             handleClose,
-                             swipeHandlers,
-                             smallScreen,
-                             fullScreen,
-                             handleFullScreen,
-                             currentModalItemUrl,
-                             currentMediaSet,
-                             modalOptionsProps,
-                             handlePrevModalItem,
-                             handleNextModalItem,
-                             currentModalItemName,
-                             currentModalOldName,
-                             closeByBtn,
-                         }) => {
+const ImageModal = ({
+                        arrowSize = 30,
+                        closeIconSize = 30,
+                        carouselSettings,
+                        prevArrowDisabled,
+                        nextArrowDisabled,
+                        handleClose,
+                        swipeHandlers,
+                        smallScreen,
+                        fullScreen,
+                        handleFullScreen,
+                        currentModalItemUrl,
+                        currentMediaSet,
+                        modalOptionsProps,
+                        handlePrevModalItem,
+                        handleNextModalItem,
+                        currentModalItemName,
+                        currentModalItemOldName,
+                        closeByBtn,
+                    }) => {
 
     const [handleDeleteCurrentModalItem, showMobileSettings, handleModal, showImageSettingsInSmallScreen, toggleImageSettingInSmallScreen] = modalOptionsProps
 
@@ -100,7 +100,7 @@ const ImageItemsModal = ({
                                                fullScreen={fullScreen}
                                                handleModal={handleModal}
                                                currentModalItemName={currentModalItemName}
-                                               currentModalOldName={currentModalOldName}
+                                               currentModalOldName={currentModalItemOldName}
                             />
                         </div>}
 
@@ -123,4 +123,4 @@ const ImageItemsModal = ({
     )
 };
 
-export default ImageItemsModal;
+export default ImageModal;
