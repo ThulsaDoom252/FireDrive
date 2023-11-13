@@ -40,7 +40,7 @@ export const useStyles = makeStyles(() => ({
         backgroundColor: 'blue',
         color: 'white',
     },
-    link: (props) => {
+    navLink: (props) => {
         return {
             textDecoration: 'none',
             fontFamily: 'cursive',

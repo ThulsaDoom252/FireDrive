@@ -142,6 +142,7 @@ const ItemsPage = ({
                                                 <div key={audio.index}>
                                                     <Audio name={audio.name}
                                                            audioIndex={audio.index}
+                                                           oldName={audio.oldName}
                                                            url={audio.url}
                                                            {...{
                                                                hoveredMediaIndex,
@@ -152,6 +153,7 @@ const ItemsPage = ({
                                                                searchMode,
                                                                smallScreen,
                                                                confirm,
+                                                               handleModal,
                                                            }}/>
                                                 </div>
                                             </Grid>

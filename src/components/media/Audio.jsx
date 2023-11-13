@@ -13,6 +13,7 @@ import {ItemDeletingOverlay} from '../mui/styles';
 
 const Audio = ({
                    name,
+                   oldName,
                    url,
                    searchMode,
                    audioIndex = 0,
@@ -25,6 +26,7 @@ const Audio = ({
                    isMediaDeleting,
                    deletedItemUrl,
                    confirm,
+                   handleModal,
                }) => {
 
     const audioContext = useContext(AudioPlayerContext)
@@ -100,11 +102,13 @@ const Audio = ({
                                     initialMode={'show'}
                                     itemOptionsHovered={isAudioHovered} {...{
                                     name,
+                                    oldName,
                                     url,
                                     hoveredMediaIndex,
                                     index,
                                     searchMode,
                                     confirm,
+                                    handleModal,
                                 }}/>
                             </div>
                         </Fade>
