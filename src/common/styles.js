@@ -30,3 +30,19 @@ export const videoPlayerOptionsBlock = {
     transform: 'translate(-50%, -50%)',
     transition: 'all 0.3s ease',
 }
+
+// User modal styles
+export const userModalStyles = {
+    position: 'relative',
+    width: '15rem',
+    padding: 2,
+    borderRadius: '1rem',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    background: 'white',
+}

@@ -3,10 +3,11 @@ import {CgCloseR} from "react-icons/cg";
 import {connect} from "react-redux";
 import {changeAvatar} from "../../redux/authSlice";
 import CurrentUser from "../user/CurrentUser";
-import {noModal, userModal} from "../../common/common"
+import {noModal} from "../../common/common"
 import ThemeBtn from "../common/theme/ThemeBtn";
 import AnimatedContainer from '../../common/AnimatedContainer';
 import {Box} from '@mui/material';
+import {userModalStyles} from '../../common/styles';
 
 const UserModal = ({
                        handleModal,
@@ -33,22 +34,9 @@ const UserModal = ({
     const handleClose = () => handleModal({modalType: noModal})
 
     return (
-        <AnimatedContainer onCLick={handleClose} shouldClose={shouldModalClose}>
+        <AnimatedContainer zIndex={'z-max'} onCLick={handleClose} shouldClose={shouldModalClose}>
             <Box
-                position='relative'
-                width='15rem'
-                padding={2}
-                borderRadius='1rem'
-                display='flex'
-                justifyContent='center'
-                alignItems='center'
-                flexDirection='column'
-                className='bg-white'
-                style={{
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                }}
+                style={userModalStyles}
             >
                 <input type="file" hidden={true} ref={hiddenFileInput} onChange={uploadPhoto}/>
                 <div className="
