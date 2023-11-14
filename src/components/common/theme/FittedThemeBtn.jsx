@@ -34,7 +34,8 @@ const FittedThemeBtn = ({
     }
 
     return (
-        <Button size={size} key={key} ref={ref} className={className} sx={fittedBtnClass} disabled={isDisabled}
+        <Button size={size} key={key} ref={ref} className={className} sx={fittedBtnClass}
+                disabled={isDisabled}
                 onClick={onClick}>
             {children}
         </Button>

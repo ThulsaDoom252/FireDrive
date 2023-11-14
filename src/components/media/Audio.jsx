@@ -121,8 +121,23 @@ const Audio = ({
                     </> : <Tooltip title={'audio loading'}>
                         <Skeleton variant="rectangular" width={skeletonWidth} height={skeletonHeight} animation="wave"
                                   style={{width: '100%', height: '100%'}}/>
+                        <Fade in={isAudioHovered} timeout={100}>
+                            <div hidden={showDeletingOverlay}
+                                 className={'absolute top-1/2 transform -translate-y-1/2 right-0 z-50 mr-40'}>
+                                <ItemOptions
+                                    initialMode={'show'}
+                                    onlyDeleteOption
+                                    itemOptionsHovered={isAudioHovered} {...{
+                                    url,
+                                    hoveredMediaIndex,
+                                    index,
+                                    searchMode,
+                                    confirm,
+                                    handleModal,
+                                }}/>
+                            </div>
+                        </Fade>
                     </Tooltip>}
-
             </AudioThemeContainer>
         </>
 

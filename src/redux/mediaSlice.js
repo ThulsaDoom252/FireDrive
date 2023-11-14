@@ -4,7 +4,7 @@ import {
     audioRoute, byDate, byName, bySize, defaultRef, delay, getLocalStorageItem,
     images,
     imagesOnly,
-    imagesRoute, mediaFetchMode, mediaUploadMode, noModal,
+    imagesRoute, mediaFetchMode, mediaUploadMode,
     rootRoute, sortSet, videos,
     videosOnly,
     videosRoute
@@ -15,13 +15,11 @@ import {
     getMetadata,
     listAll,
     ref,
-    uploadBytes,
     uploadBytesResumable,
     deleteObject,
     updateMetadata
 } from "firebase/storage";
 import {storage} from "../firebase";
-import {setModalType, setMountedModal} from "./appSlice";
 import {getAuth} from "firebase/auth";
 import {getSpecificState} from "../common/helpers";
 import toast from "react-hot-toast";

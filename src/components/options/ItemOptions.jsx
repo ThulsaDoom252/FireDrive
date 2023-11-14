@@ -36,6 +36,7 @@ const ItemOptions = ({
                          showBg = true,
                          setItemOptionsHovered,
                          handleAlertModal,
+                         onlyDeleteOption,
                          confirm,
                          handleModal,
                      }) => {
@@ -93,7 +94,7 @@ const ItemOptions = ({
             onMouseLeave={handleMouseLeave}>
             <Fade in={showOptions} timeout={200}>
                 <div className={`flex ${fullWidth && 'w-full'} justify-between ${displayInCol && 'flex-col'}`}>
-                    <FittedThemeBtn className={iconBlockClass}>
+                    {!onlyDeleteOption && <FittedThemeBtn className={iconBlockClass}>
                         <TelegramShareButton
                             url={url}
                             title={''}>
@@ -102,8 +103,9 @@ const ItemOptions = ({
                                     title={"share via telegram"}
                                     size={iconsSize}
                                     color={tgIconColor}/> : <p>Share via Telegram</p>}</TelegramShareButton>
-                    </FittedThemeBtn>
-                    <FittedThemeBtn className={iconBlockClass}>
+                    </FittedThemeBtn>}
+
+                    {!onlyDeleteOption && <FittedThemeBtn className={iconBlockClass}>
                         <ViberShareButton url={url}>
                             {showIcons ?
                                 <FaViber
@@ -112,24 +114,29 @@ const ItemOptions = ({
                                     color={vbIconColor}/> :
                                 <p>Share via Viber</p>}
                         </ViberShareButton>
-                    </FittedThemeBtn>
-                    <FittedThemeBtn className={iconBlockClass}
-                                    onClick={() => handleModal({modalType: renameModal, name, oldName})}>
+                    </FittedThemeBtn>}
+                    {!onlyDeleteOption && <FittedThemeBtn className={iconBlockClass}
+                                                          onClick={() => handleModal({
+                                                              modalType: renameModal,
+                                                              name,
+                                                              oldName
+                                                          })}>
                         {showIcons ?
                             <BsPencilFill size={iconsSize}
                                           title={"edit current item name"}
                                           color={renameIconColor}/> : 'Rename item'}
-                    </FittedThemeBtn>
+                    </FittedThemeBtn>}
                     <FittedThemeBtn className={iconBlockClass}
                                     onClick={handleDeleteCurrentItem}>
                         {showIcons ?
-                            < BsTrash  title={'delete current item'} size={iconsSize}
+                            < BsTrash title={'delete current item'} size={iconsSize}
                                       color={deleteIconColor}
                             /> : 'Delete Item'}
                     </FittedThemeBtn>
-                    <FittedThemeBtn onClick={() => download(url)}><BsDownload size={iconsSize}
-                                                                              color={downloadIconColor}/></FittedThemeBtn>
-
+                    {!onlyDeleteOption &&
+                        <FittedThemeBtn isHidden={onlyDeleteOption} onClick={() => download(url)}><BsDownload
+                            size={iconsSize}
+                            color={downloadIconColor}/></FittedThemeBtn>}
                 </div>
             </Fade>
             {initialMode === 'hide' &&
