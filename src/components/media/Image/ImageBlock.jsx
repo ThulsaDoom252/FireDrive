@@ -9,7 +9,7 @@ const ImageBlock = ({
                         index,
                         name,
                         oldName,
-                        setHoveredMediaIndex,
+                        handleImageClick,
                         searchMode,
                         hoveredMediaIndex,
                         setItemOptionsHovered,
@@ -38,28 +38,30 @@ const ImageBlock = ({
 
     return (
         <>
-                {(imageIsHovered && showOptions) &&
-                    <Fade in={animateOptions} timeout={200}>
-                        <div className={'absolute top-0 right-0 z-1'}>
-                            <ItemOptions name={name}
-                                         oldName={oldName}
-                                         url={url}
-                                         {...{
-                                             index,
-                                             searchMode,
-                                             hoveredMediaIndex,
-                                             setItemOptionsHovered,
-                                             confirm,
-                                             handleModal,
-                                         }}/></div>
-                    </Fade>}
-                <Image  {...{
-                    isMediaDeleting,
-                    url,
-                    deletedItemUrl,
-                    setIsShowOptions,
-                    imageIsHovered,
-                }}/>
+            {(imageIsHovered && showOptions) && (!isMediaDeleting) &&
+                <Fade in={animateOptions} timeout={200}>
+                    <div className={'absolute top-0 right-0 z-1'}>
+                        <ItemOptions name={name}
+                                     oldName={oldName}
+                                     url={url}
+                                     {...{
+                                         index,
+                                         searchMode,
+                                         hoveredMediaIndex,
+                                         setItemOptionsHovered,
+                                         confirm,
+                                         handleModal,
+                                     }}/></div>
+                </Fade>}
+            <Image  {...{
+                isMediaDeleting,
+                url,
+                index,
+                deletedItemUrl,
+                handleImageClick,
+                setIsShowOptions,
+                imageIsHovered,
+            }}/>
         </>
 
     );

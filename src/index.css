@@ -52,7 +52,6 @@ Note: Beware of modifying this element as it can break the animations - you shou
 
 
 /*Carousel*/
-
 .carousel {
     display: flex;
     align-items: center;
@@ -65,9 +64,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
     max-width: 100vw;
     margin: 0 auto;
     object-fit: contain;
-
 }
-
 
 /*//Animations*/
 /*  */
@@ -85,5 +82,3 @@ Note: Beware of modifying this element as it can break the animations - you shou
 .animate-flash {
     animation: flash 2s infinite;
 }
-
-/*Adaptive module image */

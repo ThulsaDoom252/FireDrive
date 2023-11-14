@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Navigate} from "react-router-dom";
-import {delay, rootRoute} from "../../common/common";
+import {rootRoute} from "../../common/common";
 import Auth from "./Auth";
 import {
     checkUserVerification,
@@ -14,7 +14,7 @@ import {
 import {connect} from "react-redux";
 import {useFormik} from "formik";
 import * as Yup from "yup";
-import {restoreMode, signInMode, signUpMode, verificationMode} from "./authTypes";
+import {restoreMode, signInMode, signUpMode, verificationMode} from "./authModes";
 
 const AuthContainer = ({
                            isAuth,
@@ -91,22 +91,6 @@ const AuthContainer = ({
         validateOnBlur: false,
     })
 
-    useEffect(() => {
-
-        const setSignUpData = async () => {
-            await delay(200)
-            authForm.setFieldValue('email', 'thulsaDev@proton.me')
-            authForm.setFieldValue('password', 'devastator252')
-            authForm.setFieldValue('password2', 'devastator252')
-            authForm.setFieldValue('username', 'thulsa')
-        }
-
-
-        if (isSignUpMode) {
-            setSignUpData().then(() => void 0)
-        }
-
-    }, [authMode])
 
     useEffect(() => {
         setAuthError('')

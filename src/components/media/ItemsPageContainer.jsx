@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react';
 import ItemsPage from "./ItemsPage";
-import {imageItemModal, noModal, rootRoute, videoItemModal} from "../../common/common";
+import {imageItemModal, rootRoute, videoItemModal} from "../../common/common";
 import {
     clearSearchResults,
     handleCurrentMediaSet,

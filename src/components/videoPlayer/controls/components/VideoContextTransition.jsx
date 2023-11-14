@@ -1,10 +1,10 @@
 import React from 'react';
-import {Transition} from "react-transition-group";
+import {Fade} from '@mui/material';
 
 const VideoContextTransition = ({children, isVideoMenuOpen}) => {
     return (
-        <Transition in={isVideoMenuOpen} timeout={200}>
-            {(state) => <div
+        <Fade in={isVideoMenuOpen} timeout={200}>
+           <div
                 className={`
                                             absolute 
                                             bottom-12 
@@ -19,12 +19,10 @@ const VideoContextTransition = ({children, isVideoMenuOpen}) => {
                                             justify-end 
                                             items-start 
                                             p-2
-                                            ${state === 'entering' || state === 'exiting' ? 'opacity-0' : 'opacity-100'}
-                                            ${state === 'exited' ? 'hidden' : ''}
                                             transition-opacity duration-200 ease-in-out
                                             `}>{children}
-            </div>}
-            </Transition>
+            </div>
+            </Fade>
     );
 };
 

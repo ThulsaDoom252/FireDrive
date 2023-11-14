@@ -56,7 +56,7 @@ const mediaSlice = createSlice({
         videosSet: [],
         audioSet: [],
         isItemRenaming: false,
-        uploadProgress: 0,
+        uploadProgress: '0%',
         totalBytesToUpload: 0,
         totalUploadedBytes: 0,
 
@@ -417,13 +417,18 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
     let totalBytesSize = 0;
     let totalBytesTransferred = 0
 
-    allowedFiles.forEach(file => {
-        totalBytesSize += file.size;
-    });
+    const getTotalBytesSize = (files) => {
+        return new Promise((resolve) => {
+            files.forEach(file => {
+                totalBytesSize += file.size;
+            });
+            resolve(totalBytesSize)
+        })
+    }
 
     if (allowedFiles.length > 0) {
+        await getTotalBytesSize(allowedFiles)
         dispatch(setTotalBytesToUpload(totalBytesSize))
-        // totalBytesTransferred !== 0 && dispatch(setUploadedBytes(0))
         dispatch(toggleMediaLoading(true));
         await Promise.all(allowedFiles.map(async (file) => {
             const fileRef = ref(storage, `${username}/${currentRoute === videosRoute ? videos
@@ -432,16 +437,11 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
                         : defaultRef}/${file.name}`);
             const uploadTask = uploadBytesResumable(fileRef, file);
             // Handle progress
-            uploadTask.on('state_changed', (currentUploadingItem) => {
-                totalBytesTransferred = totalBytesTransferred + currentUploadingItem.bytesTransferred
-                // dispatch(setUploadedBytes(totalSize))
-                const totalPercent = (totalBytesTransferred / totalBytesSize) * 100;
-                dispatch(setUploadedBytes(totalBytesTransferred))
-                dispatch(toggleUploadProgress(parseInt(totalPercent)));
-                console.log(`totalPercent: ${totalPercent}`)
-            });
-
             await uploadTask;
+            totalBytesTransferred += file.size;
+            const totalPercent = (totalBytesTransferred / totalBytesSize) * 100;
+            dispatch(setUploadedBytes(totalBytesTransferred));
+            dispatch(toggleUploadProgress(`${parseInt(totalPercent)}%`));
             const uploadedMedia = await Promise.all([
                 getDownloadURL(fileRef), getMetadata(fileRef)
             ]);
@@ -453,9 +453,8 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
         }));
 
         dispatch(toggleMediaLoading(false));
+        dispatch(toggleUploadProgress(`${0}%`))
         toast.success('media uploaded');
-        console.log(`total: ${totalBytesSize}`)
-        console.log(`transfered: ${totalBytesTransferred}`)
         return
     }
     toast.error(`${isImagesRoute ? 'select image file type' : isVideoRoute ? 'select video file type' : 'select audio file type'}`)

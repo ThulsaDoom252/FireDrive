@@ -19,7 +19,7 @@ import {extractUsernameFromEmail, generateRandomString} from "../common/common";
 import {getTheme, toggleCurrentTheme, toggleInitializing} from "./appSlice";
 import {restoreTimerInitialValue, verificationTimerInitialValue} from "../common/Timers";
 import {ref as dbRef, set, query, equalTo, get, orderByChild, remove, update} from 'firebase/database';
-import {signInMode, verificationMode} from "../components/Auth/authTypes";
+import {signInMode, verificationMode} from "../components/Auth/authModes";
 import {dayTheme} from "../components/common/theme/themes";
 
 

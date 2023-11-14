@@ -3,9 +3,8 @@ import {connect} from "react-redux";
 import {handleMediaName, renameMedia, setNewMediaName} from "../../redux/mediaSlice";
 import {Button} from "@mui/material";
 import TextField from '@mui/material/TextField';
-import {noModal, renameModal, stopPropagation} from "../../common/common";
+import {noModal, stopPropagation} from "../../common/common";
 import AnimatedContainer from '../../common/AnimatedContainer';
-import toast from 'react-hot-toast';
 
 const RenameModal = ({
                          oldName,

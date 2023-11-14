@@ -5,7 +5,9 @@ import {Button, IconButton, TextField, Tooltip} from "@mui/material";
 import InputAdornment from "@mui/material/InputAdornment";
 import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {customInput} from "../mui/styles";
-import {restoreMode, signInMode, signUpMode} from "./authTypes";
+import {restoreMode, signInMode, signUpMode} from "./authModes";
+
+
 const Auth = ({
                   authError,
                   isAuthBtnFetching,
@@ -31,7 +33,6 @@ const Auth = ({
                   isVerificationCheckBtnFetching,
                   checkUserVerification,
                   restoreTimerValue,
-
               }) => {
 
         const inputContainerStyle = 'mt-4 h-inputContainerHeight'

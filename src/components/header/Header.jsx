@@ -30,11 +30,8 @@ const Header = ({
             fixed
             z-2
             ${currentTheme.primeBg}
-            
              ${smallScreen ? 'p-4' : ' pr-10  pl-10'}            
             `}>
-
-
                 <div className={`${smallScreen ? 'w-11/12' : 'w-full'} flex justify-center items-center`}>
                     {!isSearchVisible && <div className={`
                 ${smallScreen ? 'w-full' : 'w-300'} 

@@ -13,6 +13,8 @@ const Image = ({
                    skeletonWidth = 300,
                    setIsShowOptions,
                    isMediaDeleting,
+                   handleImageClick,
+                   index,
                    deletedItemUrl,
                }) => {
     const [imageIsLoaded, setImageIsLoaded] = useState(false)
@@ -26,7 +28,7 @@ const Image = ({
 
     return (
         <>
-            {!imageIsLoaded &&
+            {!imageIsLoaded  &&
                 <Tooltip title={'image loading'}>
                     <SkeletonOverlay variant={'rectangular'}/>
                 </Tooltip>
@@ -35,6 +37,7 @@ const Image = ({
                 <ItemDeletingOverlay/>
             </Fade>
             <StyledImage
+                onClick={() => (!isMediaDeleting && imageIsLoaded) && handleImageClick(index)}
                 onContextMenu={preventDefault}
                 className={`
                 rounded 
