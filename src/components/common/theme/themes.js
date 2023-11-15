@@ -29,9 +29,9 @@ export const activeNightBg = '#3960ff'
 export const activeDesertBg = '#ffad73'
 
 //Colors
-export const dayPrimary = 'black'
-export const nightPrimary = 'white'
-export const desertPrimary = 'crimson'
+export const dayPrimary = '#000'
+export const nightPrimary = '#fff'
+export const desertPrimary = '#c42020'
 
 
 // Nav btn default colors

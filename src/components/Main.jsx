@@ -33,6 +33,11 @@ import {useStyles} from "./mui/styles";
 import BurgerMenu from "./BurgerMenu/BurgerMenu";
 import Overlay from "./common/Overlay";
 import ThemeContainer from "./common/theme/ThemeContainer";
+import {AudioPlayerContext} from '../context/AudioPlayerContext';
+import ThemeBtn from './common/theme/ThemeBtn';
+import HeadphonesIcon from '@mui/icons-material/Headphones';
+import equalizerAnimation from "../lottie/equilizer.json"
+import Lottie from 'lottie-react';
 
 const Main = ({
                   currentMediaSet,
@@ -69,6 +74,11 @@ const Main = ({
               }) => {
 
         const location = useLocation()
+
+        const audioPlayerContext = useContext(AudioPlayerContext)
+
+        const {isPlayerHidden, isCurrentTrackPlaying, handlePlayerVisibility} = audioPlayerContext
+
         const isVideoModalMounted = mountedItemModal === videoItemModal
         const isImageModalMounted = mountedItemModal === imageItemModal
 
@@ -192,24 +202,35 @@ const Main = ({
                                                      noMedia,
                                                  }}/>}/>}
                         </Routes>
-                        <ThemeContainer className={` 
+                        <ThemeContainer noBg={isPlayerHidden} className={` 
                     w-full  
                     bg-opacity-90 
                      p-2 rounded 
                   fixed
                    bottom-0 
-                   left-0 
+                   left-0
                    right-0
                      flex
-                     items-center`}>
-                            <AudioPlayer currentTheme={currentTheme}
-                                         smallScreenMode={smallScreen}
-                            />
+                     items-center
+                     ${isPlayerHidden ? 'left-5 bottom-5' : 'left-0 bottom-0'}
+                     `
+                        }>
+                            {isPlayerHidden ?
+                                <ThemeBtn
+
+                                    rounded onClick={handlePlayerVisibility}
+                                    className={`${isCurrentTrackPlaying && 'animate-pulse'}`}>
+                                    <HeadphonesIcon className={'z-1'}/>
+                                    <Lottie animationData={equalizerAnimation}
+                                            hidden={!isCurrentTrackPlaying}
+                                            className={'absolute w-10 h-10 bottom-2'}/>
+                                </ThemeBtn> :
+                                <AudioPlayer currentTheme={currentTheme} smallScreenMode={smallScreen}
+                                             handlePlayerVisibility={handlePlayerVisibility}/>}
                         </ThemeContainer>
                     </Scrollbars>
                 </main>
             </>
-
         );
     }
 ;

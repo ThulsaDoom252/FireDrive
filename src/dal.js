@@ -8,7 +8,6 @@ export async function download(videoUrl, name) {
 
     getDownloadURL(storageRef)
         .then(async (url) => {
-            debugger
             const response = await fetch(url);
             const blob = await response.blob();
             saveAs(blob, 'video.mp4');

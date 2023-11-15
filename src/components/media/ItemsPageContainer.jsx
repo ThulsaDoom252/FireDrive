@@ -61,6 +61,7 @@ const ItemsPageContainer = ({
     const [gridLayoutMenu, toggleGridLayoutMenu] = useState(false)
     const [gridContainerWidth, setGridContainerWidth] = useState('100%')
 
+
     const paginatorContext = useContext(PaginatorContext)
     const {
         handleNextClick, handlePrevClick, disablePrevButton, disableNextButton, handlePageClick,
@@ -152,7 +153,6 @@ const ItemsPageContainer = ({
     ]
 
     const handleImageClick = (index) => {
-        debugger
         setCurrentModalItemIndex(index)
         handleItemModal(imageItemModal)
     }
@@ -170,6 +170,7 @@ const ItemsPageContainer = ({
         setCurrentLayoutIndex(index)
         setGridDividerValue(number)
     }
+
 
     return <ItemsPage {...{
         imagesPage,

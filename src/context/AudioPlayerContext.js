@@ -13,6 +13,7 @@ export function AudioPlayerContextProvider({children}) {
     const [repeatMode, setRepeatMode] = useState('none')
     const [volume, setVolume] = useState(0.5);
     const deletedItemUrl = useSelector(state => state.media.deletedItemUrl)
+    const [isPlayerHidden, hidePlayer] = useState(false)
     const [currentDuration, setCurrentDuration] = useState(0)
     const [totalDuration, setTotalDuration] = useState(0)
     const [currentTrackIndex, setCurrentTrackIndex] = useState(0)
@@ -24,6 +25,8 @@ export function AudioPlayerContextProvider({children}) {
     const lastPlayedAudioNameBeforeSort = useSelector(state => state.media.lastPlayedAudioNameBeforeSort)
 
     const isLastTrack = currentTrackIndex === audioSet?.length
+
+    const handlePlayerVisibility = () => hidePlayer(!isPlayerHidden)
 
     const handleRepeatMode = () => {
         if (repeatMode === 'none') {
@@ -94,7 +97,11 @@ export function AudioPlayerContextProvider({children}) {
     }, [currentTrack])
 
     const handleNextTrack = async ({isEnded = false}) => {
-        handleSetCurrentAudioIndex({index: currentTrackIndex + 1, goToNext: true, isEnded})
+        if (currentTrackIndex !== audioSet.length - 1) {
+            handleSetCurrentAudioIndex({index: currentTrackIndex + 1, goToNext: true, isEnded})
+        } else {
+            toggleCurrentTrackPlaying(false)
+        }
     }
 
     const handlePreviousTrack = async () => {
@@ -219,6 +226,7 @@ export function AudioPlayerContextProvider({children}) {
 
     const audioPlayerState = {
         isCurrentTrackPlaying,
+        isPlayerHidden,
         currentDuration,
         totalDuration,
         setIsCurrentTrackPlaying: toggleCurrentTrackPlaying,
@@ -236,6 +244,7 @@ export function AudioPlayerContextProvider({children}) {
         handleVolumeChange,
         setRepeatMode,
         toggleMuteVolume,
+        handlePlayerVisibility,
         toggleCurrentTrackPlaying,
         audioRef,
         volume,

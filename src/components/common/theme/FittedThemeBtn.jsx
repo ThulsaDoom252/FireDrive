@@ -13,6 +13,7 @@ const FittedThemeBtn = ({
                             className,
                             imgModalBtn,
                             optionalClasses,
+                            isAbsolute,
                             ref = null,
                         }) => {
     const primeActiveColor = useSelector(state => state.app.currentTheme.color)
@@ -24,6 +25,7 @@ const FittedThemeBtn = ({
             ? primaryColorForImageModal : primeActiveColor,
         minHeight: 'fit-content',
         minWidth: 'fit-content',
+        position: isAbsolute && 'absolute',
         maxHeight: 'fit-content',
         maxWidth: 'fit-content',
         transition: 'color 0.3s',
@@ -37,7 +39,7 @@ const FittedThemeBtn = ({
         <Button size={size} key={key} ref={ref} className={className} sx={fittedBtnClass}
                 disabled={isDisabled}
                 onClick={onClick}>
-            {children}
+                {children}
         </Button>
     );
 };

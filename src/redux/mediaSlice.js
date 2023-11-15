@@ -452,6 +452,7 @@ export const uploadMedia = createAsyncThunk('uploadMedia-thunk', async ({
 
         dispatch(toggleMediaLoading(false));
         dispatch(toggleUploadProgress(`${0}%`))
+        dispatch(setUploadedBytes(0))
         toast.success('media uploaded');
         return
     }

@@ -10,12 +10,15 @@ import {IoInfinite} from "react-icons/io5";
 import {ImVolumeHigh, ImVolumeMute2} from "react-icons/im";
 import FittedThemeBtn from "../common/theme/FittedThemeBtn";
 import ThemedVolumeBar from "../common/theme/ThemedVolumeBar";
+import {VisibilityOff} from "@mui/icons-material"
 
 const AudioPlayer = ({
                          smallScreenMode,
                          buttonsSize: iconSize = 28,
                          currentTheme,
+                         handlePlayerVisibility,
                      }) => {
+
 
     const audioContext = useContext(AudioPlayerContext)
 
@@ -56,7 +59,8 @@ const AudioPlayer = ({
             `}>
             <div className={'w-player-controls flex flex-col justify-between items-center'}>
                 <div className={`w-full  flex items-center justify-between `}>
-                    <div className={`flex  items-center justify-between mr-2 ${smallScreenMode && 'relative top-2'}`}>
+                    <div
+                        className={`flex  items-center justify-between mr-2 ${smallScreenMode && 'relative top-2'}`}>
                         <FittedThemeBtn onClick={handlePreviousTrack} isDisabled={prevBtnDisabled}>
                             <FiSkipBack size={iconSize}
                             />
@@ -85,7 +89,10 @@ const AudioPlayer = ({
                     </div>
                     <div>
                         <div
-                            className={`w-40 flex justify-center items-center ${smallScreenMode && 'relative top-2'} `}>
+                            className={`flex justify-center items-center ${smallScreenMode && 'relative top-2'} `}>
+                            <FittedThemeBtn  onClick={handlePlayerVisibility}>
+                                <VisibilityOff/>
+                            </FittedThemeBtn>
                             <FittedThemeBtn
                                 onClick={handleRepeatMode}
                             >
@@ -99,7 +106,8 @@ const AudioPlayer = ({
                                     {volume !== 0 ? <ImVolumeHigh size={20}/> : <ImVolumeMute2 size={20}/>}
                                 </FittedThemeBtn>
                                 <div className={'w-20 relative top-0.5'}>
-                                    <ThemedVolumeBar value={volume} handleChange={handleVolumeChange} barWidth={'5px'}/>
+                                    <ThemedVolumeBar value={volume} handleChange={handleVolumeChange}
+                                                     barWidth={'5px'}/>
                                 </div>
                             </div>
                         </div>
@@ -109,6 +117,7 @@ const AudioPlayer = ({
             <div>
             </div>
         </div>
+
     )
 }
 export default connect(null, {setCurrentAudioIndex})(AudioPlayer);

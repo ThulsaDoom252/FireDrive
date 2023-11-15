@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {BsFillGridFill} from "react-icons/bs";
 import {Box, Button} from "@mui/material";
 import {Fade} from "@mui/material";
@@ -11,14 +11,6 @@ const ItemsLayoutMenu = ({
                              handleLayoutMenu,
                              handleCollValue,
                          }) => {
-
-
-    const [itemIndex, setItemIndex] = useState(gridLayoutIndex)
-
-    const handleItemClick = (divider, index) => {
-        setItemIndex(index)
-        handleCollValue(divider, index)
-    }
 
     return (
         <>
@@ -59,7 +51,7 @@ const ItemsLayoutMenu = ({
                                         backgroundColor: 'white',
                                     },
                                 }}
-                                onClick={() => handleItemClick(gridItem.divider, index)}>
+                                onClick={() => handleCollValue(gridItem.divider, index)}>
                                 <img
                                     className={'h-full'}
                                     key={index}

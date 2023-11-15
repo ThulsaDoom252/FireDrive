@@ -1,5 +1,4 @@
 export const preventDefault = e => e.preventDefault()
-
 export const truncate = (name, maxCharacters = 15) => {
     const maxNumber = maxCharacters
     const mediaLength = name?.length
@@ -24,20 +23,17 @@ export const sortSet = (set, compareFn) => {
 }
 
 export const getLocalStorageItem = (key) => {
-    const currentValue = localStorage.getItem(key)
-    return currentValue
+    return localStorage.getItem(key)
 }
 
-export const delay = (ms) => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve()
-        }, ms)
-    })
-}
+export const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 
 // Burger menu icon size
 export const burgerMenuIconSize = 20
+
+//showItemOptionsTime
+export const showItemOptionsTime = 100
 
 //Format time in mm:ss format
 export const formatTime = (timeInSeconds) => {
@@ -90,7 +86,6 @@ export const smallScreenWidth = 1024
 
 //Modals
 //Types
-export const AlertModal = 'ALERT MODAL'
 export const userModal = 'USER MODAL'
 export const renameModal = 'RENAME MODAL'
 export const imageItemModal = 'IMAGES MODAL'
@@ -101,10 +96,6 @@ export const noModal = 'NO MODAL'
 
 
 //ALERT
-
-//Styles
-export const alertSuccessStyle = 'success'
-
 //Title
 export const removeAllItemsTitle = 'Delete all items'
 export const removeCurrentItemTitle = 'Delete item'
@@ -113,18 +104,12 @@ export const removeCurrentItemTitle = 'Delete item'
 export const removeAllMsg = 'This will delete all media on current page. Sure you want to continue?'
 export const removeCurrentItemMsg = 'This will delete current item. Sure you want to continue?'
 //Actions
-export const removeCurrentItem = 'REMOVE CURRENT ITEM'
-export const removeAllItems = 'REMOVE ALL'
-
 //Routes Refs
 export const imagesRoute = '/images'
 export const videosRoute = '/videos'
 export const audioRoute = '/audio'
 export const rootRoute = '/'
-export const verificationRoute = '/verification'
-export const restoreRoute = '/restore'
 export const signInRoute = '/signIn'
-export const signUpRoute = '/signUp'
 
 // media types
 export const images = 'images'

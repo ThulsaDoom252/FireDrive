@@ -3,7 +3,7 @@ import {AiFillPauseCircle, AiFillPlayCircle} from "react-icons/ai";
 import {useContext} from "react";
 import {AudioPlayerContext} from "../../context/AudioPlayerContext";
 import ItemOptions from "../options/ItemOptions";
-import {formatTime} from "../../common/common";
+import {formatTime, showItemOptionsTime} from "../../common/common";
 import {ClipLoader} from "react-spinners";
 import {Fade} from "@mui/material";
 import {Skeleton, Tooltip} from "@mui/material";
@@ -95,7 +95,7 @@ const Audio = ({
                             </FittedThemeBtn>
                         </div>
                         <div className={`w-60% absolute left-10 truncate`}>{name}</div>
-                        <Fade in={isAudioHovered} timeout={100}>
+                        <Fade in={isAudioHovered} timeout={showItemOptionsTime}>
                             <div hidden={showDeletingOverlay}
                                  className={'absolute top-1/2 transform -translate-y-1/2 right-0 z-50 mr-40'}>
                                 <ItemOptions
@@ -121,7 +121,7 @@ const Audio = ({
                     </> : <Tooltip title={'audio loading'}>
                         <Skeleton variant="rectangular" width={skeletonWidth} height={skeletonHeight} animation="wave"
                                   style={{width: '100%', height: '100%'}}/>
-                        <Fade in={isAudioHovered} timeout={100}>
+                        <Fade in={isAudioHovered} timeout={showItemOptionsTime}>
                             <div hidden={showDeletingOverlay}
                                  className={'absolute top-1/2 transform -translate-y-1/2 right-0 z-50 mr-40'}>
                                 <ItemOptions

@@ -1,8 +1,8 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {
     delay, extractUsernameFromEmail,
-    imageItemModal,
-    noModal, paginateMode, renameModal, shareModal,
+    imageItemModal, lazyMode,
+    noModal, renameModal, shareModal,
     smallScreenWidth, userModal,
     videoItemModal
 } from "../common/common";
@@ -27,10 +27,10 @@ import {handleMediaName} from './mediaSlice';
 const appSlice = createSlice({
     name: 'app-slice',
     initialState: {
-        listMode: paginateMode,
+        listMode: lazyMode,
         initializing: false,
         smallScreen: window.innerWidth <= smallScreenWidth,
-        gridDividerValue: 4,
+        gridDividerValue: 2,
         gridLayoutIndex: 5,
         mountedModal: noModal,
         mountedItemModal: noModal,
