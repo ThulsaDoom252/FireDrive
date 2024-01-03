@@ -3,9 +3,9 @@ import {getStorage} from "firebase/storage";
 import {getDatabase} from 'firebase/database';
 
 const firebaseConfig = {
-    apiKey: 'AIzaSyCrJ7N9i74PgAa1IZsmzo6L5AsjExGCgkI',
-    projectId: 'firedrive3-d9717',
-    storageBucket: 'firedrive3-d9717.appspot.com',
+    apiKey: process.env.REACT_APP_API_KEY,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
 };
 
 const app = initializeApp(firebaseConfig);

@@ -72,7 +72,8 @@ const ItemsPage = ({
 
                 {noSearchResults && <Box><NoSearchResults/></Box>}
                 {noMedia ?
-                    <Box><img className={`mx-auto w-1/2 rounded-md opacity-80 bg-white`}
+                    <Box>
+                        <img className={`mx-auto w-1/2 rounded-md opacity-80 bg-white`}
                               src={(imagesPage ? noImages : videosPage ? noVideo : noAudio)}
                               alt={'No images'}/></Box> :
                     <Grid
