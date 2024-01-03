@@ -106,14 +106,6 @@ export const customInput = {
             },
         },
     },
-    searchField: {
-        '& input': {
-            height: '10px'
-        },
-        '& input:focus': {
-            borderRadius: '10px',
-        }
-    }
 };
 
 export const searchInput = {

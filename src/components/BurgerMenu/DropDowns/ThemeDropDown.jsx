@@ -13,13 +13,17 @@ const ThemeDropDown = ({currentThemeName, iconSize = burgerMenuIconSize}) => {
     return (
         <DropDownMenu menuType={isThemeBlockOpened} toggleMenu={setIsThemeBlockOpened}
                       btnLabel={'Change theme'} smallScreenIcon={<BiColorFill size={iconSize}/>}>
-            {themes.map((theme, index) => <ThemeImage
-                currentThemeName={currentThemeName}
-                theme={theme.type}
-                url={theme.icon}
-                onClick={() => dispatch(handleTheme(theme.type))}
+            {themes.map((theme, index) =>
+                <React.Fragment key={index}>
+                    <ThemeImage
+                        currentThemeName={currentThemeName}
+                        theme={theme.type}
+                        url={theme.icon}
+                        onClick={() => dispatch(handleTheme(theme.type))}
 
-            />)}
+                    />
+                </React.Fragment>
+            )}
         </DropDownMenu>
     );
 };

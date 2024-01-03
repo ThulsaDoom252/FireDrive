@@ -72,7 +72,6 @@ const authSlice = createSlice({
             state.isVerificationCheckBtnFetching = action.payload
         },
         setAuthMode(state, action) {
-            debugger
             state.authMode = action.payload
         },
         toggleAuthStatus(state, action) {
@@ -252,7 +251,6 @@ export const authCheck = createAsyncThunk('auth-check-thunk', async (_, {dispatc
                 dispatch(setUserData({email, username: displayName, avatar: photoURL}))
                 const userTheme = await getTheme()
                 dispatch(toggleCurrentTheme({type: userTheme}))
-                debugger
                 if (user.providerData[0].providerId === 'github.com' || user.emailVerified) {
                     dispatch(toggleAuthStatus(true))
                 } else {

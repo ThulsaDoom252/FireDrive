@@ -7,7 +7,6 @@ import {Visibility, VisibilityOff} from "@mui/icons-material";
 import {customInput} from "../mui/styles";
 import {restoreMode, signInMode, signUpMode} from "./authModes";
 
-
 const Auth = ({
                   authError,
                   isAuthBtnFetching,
@@ -34,8 +33,10 @@ const Auth = ({
                   checkUserVerification,
                   restoreTimerValue,
               }) => {
-
         const inputContainerStyle = 'mt-4 h-inputContainerHeight'
+
+        const isFieldValid = (error) => typeof error === 'string'
+        const isAuthError = (error) => error.length > 0
 
         const handleMode = () => {
             if (isSignUpMode || isVerificationMode || isRestoreMode) {
@@ -47,11 +48,13 @@ const Auth = ({
             }
         }
 
+        const screenWidth = window.innerWidth
+
         return (
             <div
                 className={`
             font-sans
-            mt-5
+            ${screenWidth > 500 && 'mt-5'}
             pb-2
             rounded-md
             bg-gray-200
@@ -110,14 +113,14 @@ const Auth = ({
                         {!isVerificationMode &&
                             <div className={inputContainerStyle}>
                                 <TextField id="email"
+                                           sx={customInput.authField}
                                            disabled={isRestoreMode && isRestoreEmailSend}
                                            fullWidth
                                            label="Email"
-                                           error={errors.email || authError}
+                                           error={isFieldValid(errors.email) || isAuthError(authError)}
                                            helperText={errors.email}
                                            variant="outlined"
                                            onChange={handleChange}
-                                           sx={customInput.authField}
                                            value={values.email}
                                 />
                             </div>}
@@ -146,7 +149,7 @@ const Auth = ({
                                                    root: "text-base", // Установите размер шрифта для helperText
                                                },
                                            }}
-                                           error={errors.password || authError}
+                                           error={isFieldValid(errors.password) || isAuthError(authError)}
                                            helperText={errors.password}
                                            type={showPassword ? 'text' : 'password'}
                                            variant="outlined"
@@ -159,7 +162,7 @@ const Auth = ({
                                 <TextField id="password2"
                                            label="Repeat password"
                                            fullWidth
-                                           error={errors.password2 || errors.passwordsMismatch}
+                                           error={isFieldValid(errors.password2) || errors.passwordsMismatch}
                                            helperText={errors.password2}
                                            type={showPassword ? 'text' : 'password'}
                                            variant="outlined"
@@ -171,7 +174,7 @@ const Auth = ({
                                 <TextField id="username"
                                            fullWidth
                                            label="Username"
-                                           error={errors.username}
+                                           error={isFieldValid(errors.username)}
                                            helperText={errors.username}
                                            variant="outlined"
                                            onChange={handleChange}

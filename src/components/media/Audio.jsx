@@ -119,6 +119,7 @@ const Audio = ({
                                 <ClipLoader size={25}/> : totalDuration}</div>
                         </div>
                     </> : <Tooltip title={'audio loading'}>
+                        <React.Fragment>
                         <Skeleton variant="rectangular" width={skeletonWidth} height={skeletonHeight} animation="wave"
                                   style={{width: '100%', height: '100%'}}/>
                         <Fade in={isAudioHovered} timeout={showItemOptionsTime}>
@@ -137,6 +138,7 @@ const Audio = ({
                                 }}/>
                             </div>
                         </Fade>
+                        </React.Fragment>
                     </Tooltip>}
             </AudioThemeContainer>
         </>

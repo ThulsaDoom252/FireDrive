@@ -1,4 +1,4 @@
-export const signInMode = 'signIn'
-export const signUpMode = 'signUp'
-export const verificationMode = 'verification'
-export const restoreMode  = 'restore'
+export const signInMode = 'signInMode'
+export const signUpMode = 'signUpMode'
+export const verificationMode = 'verificationMode'
+export const restoreMode = 'restoreMode'

@@ -9,22 +9,26 @@ const Paginator = ({paginatorProps}) => {
     const handleChange = (e, value) => handlePageClick(value)
 
     return (
+
         <ThemeContainer>
             <Pagination
+                // eslint-disable-next-line react/prop-types
                 count={totalPages}
                 page={currentPage}
                 onChange={handleChange}
-                nextIconButtonProps={{
+                nexticonbuttonprops={{
                     onClick: handleNextClick,
                     disabled: disableNextButton,
                 }}
-                prevIconButtonProps={{
+                previconbuttonprops={{
                     onClick: handlePrevClick,
                     disabled: disablePrevButton,
                 }}
-                showFirstButton showLastButton
+                showFirstButton
+                showLastButton
             />
         </ThemeContainer>
+
 
     );
 };

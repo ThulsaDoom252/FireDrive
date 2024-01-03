@@ -6,17 +6,26 @@ import {GoTrash} from "react-icons/go";
 import {burgerMenuIconSize, removeAllItemsTitle, removeAllMsg} from "../../../common/common";
 import {deleteAllMedia} from "../../../redux/mediaSlice";
 import ThemeBtn from "../../common/theme/ThemeBtn";
+import {createSelector} from '@reduxjs/toolkit';
 
 const RemoveAllBtnContainer = ({confirm, iconSize = burgerMenuIconSize}) => {
     const pages = useContext(PagesContext)
     const dispatch = useDispatch()
     const {rootPage} = pages
-    const {mediaLoading, isMediaDeleting, currentMediaSet, smallScreen} = useSelector(state => ({
-        mediaLoading: state.media.mediaLoading,
-        isMediaDeleting: state.media.isMediaDeleting,
-        currentMediaSet: state.media.currentMediaSet,
-        smallScreen: state.app.smallScreen
-    }))
+
+    const selectMediaState = state => state.media;
+
+    const selectMediaData = createSelector(
+        [selectMediaState],
+        mediaState => ({
+            mediaLoading: mediaState.mediaLoading,
+            isMediaDeleting: mediaState.isMediaDeleting,
+            currentMediaSet: mediaState.currentMediaSet,
+            smallScreen: mediaState.smallScreen,
+        })
+    );
+
+    const {mediaLoading, isMediaDeleting, currentMediaSet, smallScreen} = useSelector(selectMediaData)
 
     const handleClick = async () => {
         await dispatch(handleAlertModal({

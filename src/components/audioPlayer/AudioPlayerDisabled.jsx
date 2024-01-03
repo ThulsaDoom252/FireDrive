@@ -59,7 +59,6 @@ const AudioPlayerDisabled = ({buttonsSize, smallScreenMode}) => {
                         className={'font-sans'}>
                         No music...no life
                     </div>
-
                     <div>
                     </div>
                 </div>

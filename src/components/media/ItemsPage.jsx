@@ -91,7 +91,7 @@ const ItemsPage = ({
                         />}
 
                         {imagesPage ? mediaToShow.map((media, index) => {
-                                return <Grid item xs={gridDividerValue}>
+                                return <React.Fragment key={index}><Grid item xs={gridDividerValue}>
                                     <GridItemContainer key={index}
                                                        onMouseEnter={() => !smallScreen && setHoveredMediaIndex(index)}
                                                        onMouseLeave={() => setHoveredMediaIndex(null)}>
@@ -113,49 +113,54 @@ const ItemsPage = ({
                                             }}/>
                                     </GridItemContainer>
                                 </Grid>
+                                </React.Fragment>
                             })
                             : videosPage ? mediaToShow.map((video, index) =>
-                                    <Grid item xs={gridDividerValue}>
-                                        <Video url={video.url}
-                                               name={video.name}
-                                               oldName={video.oldName}
-                                               {...{
-                                                   searchMode,
-                                                   index,
-                                                   noOpenModal,
-                                                   deletedItemUrl,
-                                                   isMediaDeleting,
-                                                   hoveredMediaIndex,
-                                                   setHoveredMediaIndex,
-                                                   setItemOptionsHovered,
-                                                   smallScreen,
-                                                   handleVideoClick,
-                                                   handleModal,
-                                                   confirm,
-                                               }}/>
-                                    </Grid>
+                                    <React.Fragment key={index}>
+                                        <Grid item xs={gridDividerValue}>
+                                            <Video url={video.url}
+                                                   name={video.name}
+                                                   oldName={video.oldName}
+                                                   {...{
+                                                       searchMode,
+                                                       index,
+                                                       noOpenModal,
+                                                       deletedItemUrl,
+                                                       isMediaDeleting,
+                                                       hoveredMediaIndex,
+                                                       setHoveredMediaIndex,
+                                                       setItemOptionsHovered,
+                                                       smallScreen,
+                                                       handleVideoClick,
+                                                       handleModal,
+                                                       confirm,
+                                                   }}/>
+                                        </Grid>
+                                    </React.Fragment>
                                 ) :
                                 mediaToShow.map(((audio, index) => {
                                         return (
-                                            <Grid item xs={12}>
-                                                <div key={audio.index}>
-                                                    <Audio name={audio.name}
-                                                           audioIndex={audio.index}
-                                                           oldName={audio.oldName}
-                                                           url={audio.url}
-                                                           {...{
-                                                               hoveredMediaIndex,
-                                                               setHoveredMediaIndex,
-                                                               isMediaDeleting,
-                                                               deletedItemUrl,
-                                                               index,
-                                                               searchMode,
-                                                               smallScreen,
-                                                               confirm,
-                                                               handleModal,
-                                                           }}/>
-                                                </div>
-                                            </Grid>
+                                            <React.Fragment key={index}>
+                                                <Grid item xs={12}>
+                                                    <div key={audio.index}>
+                                                        <Audio name={audio.name}
+                                                               audioIndex={audio.index}
+                                                               oldName={audio.oldName}
+                                                               url={audio.url}
+                                                               {...{
+                                                                   hoveredMediaIndex,
+                                                                   setHoveredMediaIndex,
+                                                                   isMediaDeleting,
+                                                                   deletedItemUrl,
+                                                                   index,
+                                                                   searchMode,
+                                                                   smallScreen,
+                                                                   confirm,
+                                                                   handleModal,
+                                                               }}/>
+                                                    </div>
+                                                </Grid>
+                                            </React.Fragment>
                                         )
 
                                     }

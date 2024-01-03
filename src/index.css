@@ -6,6 +6,14 @@ body {
     overflow-y: hidden;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    background: transparent !important;
+    box-shadow: 0 0 0 30px rgba(0, 0, 0, 0.001) inset !important
+}
+
 /*// BurgerMenuWrapper styles.js*/
 /*Close btn icon*/
 .bm-cross {

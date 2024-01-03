@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import  {useState} from 'react';
 import {connect} from "react-redux";
 import {deleteCurrentItem} from "../../redux/mediaSlice";
 import {BsDownload, BsPencilFill, BsThreeDots, BsTrash} from "react-icons/bs";
@@ -78,6 +78,7 @@ const ItemOptions = ({
     `
         : ''}`
 
+
     return (
         <div
             onClick={stopPropagation}
@@ -141,10 +142,10 @@ const ItemOptions = ({
             </Fade>
             {initialMode === 'hide' &&
                 <div onMouseEnter={handleMouseEnter} className={showOptions ? `text-black` : 'text-gray-500'}>
-                    <BsThreeDots
-                        size={25}/></div>}
+                    <BsThreeDots size={25}/></div>}
         </div>
     );
+
 };
 
 const mapStateToProps = (state) => {

@@ -33,7 +33,7 @@ const NavItems = ({
     return (
         <>
             {navItemsList.map((navItem, index) =>
-                <NavLink to={navItem.path} className={classes.navLink}>
+                <NavLink key={index} to={navItem.path} className={classes.navLink}>
                     <ButtonBase>
                         {smallScreen ?
                             navItem.icon : navItem.label}
