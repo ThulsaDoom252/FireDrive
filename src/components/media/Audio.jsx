@@ -2,7 +2,7 @@ import React, {useRef, useState} from 'react';
 import {AiFillPauseCircle, AiFillPlayCircle} from "react-icons/ai";
 import {useContext} from "react";
 import {AudioPlayerContext} from "../../context/AudioPlayerContext";
-import ItemOptions from "../options/ItemOptions";
+import ItemOptions from "../common/ItemOptions/ItemOptions";
 import {formatTime, showItemOptionsTime} from "../../common/common";
 import {ClipLoader} from "react-spinners";
 import {Fade} from "@mui/material";

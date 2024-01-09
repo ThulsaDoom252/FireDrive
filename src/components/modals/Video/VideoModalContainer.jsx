@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {ItemsModalContext} from "../../../context/ItemsModalContext";
 import VideoModal from "./VideoModal";
 import {VideoControlsContext} from "../../../context/VideoControlsContext";
@@ -112,6 +112,11 @@ const VideoModalContainer = ({toggleModal, confirm, handleCurrentItemModal}) => 
         handleVideoOptions,
     ]
 
+    useEffect(() => {
+        currentMediaSet.length === 0 && handleClose()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentMediaSet.length]);
+
     //Video modal handlers
     const handleVideoIsReady = () => {
         setIsVideoReady(true)
@@ -119,7 +124,7 @@ const VideoModalContainer = ({toggleModal, confirm, handleCurrentItemModal}) => 
 
     const [closeByBtn, setCloseByBtn] = useState(false)
 
-    const handleClose = (closeByBtn) => {
+    function handleClose(closeByBtn) {
         fullScreen && handleFullScreen()
 
         if (closeByBtn) {
@@ -129,7 +134,7 @@ const VideoModalContainer = ({toggleModal, confirm, handleCurrentItemModal}) => 
 
         handleCurrentItemModal()
         setIsVideoReady(false);
-    };
+    }
 
     const handleProgress = (progress) => {
         setCurrentVideoTime(progress.playedSeconds);

@@ -43,10 +43,12 @@ const App = ({
             toggleSmallScreen(window.innerWidth <= smallScreenWidth)
         }
         window.addEventListener('resize', handleResize)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
         authCheck()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user])
 
 

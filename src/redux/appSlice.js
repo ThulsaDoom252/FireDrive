@@ -103,7 +103,6 @@ const appSlice = createSlice({
             state.mountedItemModal = action.payload
         },
         setMountedModal(state, action) {
-            debugger
             state.mountedModal = action.payload
         },
         setCurrentLayoutIndex(state, action) {

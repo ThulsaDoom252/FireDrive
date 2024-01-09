@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import ItemOptions from "../../options/ItemOptions";
+import ItemOptions from "../../common/ItemOptions/ItemOptions";
 import {Fade} from "@mui/material";
 import Image from "./Image";
 import {delay} from "../../../common/common";

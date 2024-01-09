@@ -60,6 +60,13 @@ const ImageModalContainer = ({confirm, handleItemModal, handleModal}) => {
             //eslint-disable-next-line
         }, [handlePrevModalItem, handleNextModalItem]);
 
+        useEffect(() => {
+            currentMediaSet.length === 0 && handleClose()
+        }, [currentMediaSet.length]);
+
+        window.s1 = currentMediaSet
+
+
         const handleDeleteCurrentModalItem = async () => {
             await dispatch(handleAlertModal({message: removeCurrentItemMsg, title: removeCurrentItemTitle}))
             const userAction = await confirm()

@@ -147,15 +147,18 @@ const VideoModal = ({
                                 <>
                                     {currentMediaSet.map((video, index) =>
                                         (
-                                            <ModalVideoItem
-                                                column={smallScreen}
-                                                item={video}
-                                                currentModalItemIndex={currentModalItemIndex}
-                                                onClick={handleVideoFromListClick}
-                                                index={index}
-                                                smallScreen={smallScreen}
-                                                currentModalItemUrl={currentModalItemUrl}
-                                            />
+                                            <React.Fragment key={index}>
+                                                <ModalVideoItem
+                                                    column={smallScreen}
+                                                    item={video}
+                                                    currentModalItemIndex={currentModalItemIndex}
+                                                    onClick={handleVideoFromListClick}
+                                                    index={index}
+                                                    smallScreen={smallScreen}
+                                                    currentModalItemUrl={currentModalItemUrl}
+                                                />
+                                            </React.Fragment>
+
                                         ))}
                                 </>
                             </Scrollbars>

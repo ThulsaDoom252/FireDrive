@@ -54,7 +54,7 @@ export const VideoControlsContextProvider = ({children}) => {
 
     const playBackValues = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]
 
-    //Video options
+    //Video ItemOptions
     const [videoOptions, toggleVideoOptions] = useState(false)
     const [isVideoOptionsWidthExpanded, expandVideoOptionsWidth] = useState(false)
 
@@ -192,7 +192,7 @@ export const VideoControlsContextProvider = ({children}) => {
         }
     }
 
-    // Open/Close video options
+    // Open/Close video ItemOptions
     const handleVideoOptions = async () => {
         const delayTime = 80
         if (!videoOptions) {

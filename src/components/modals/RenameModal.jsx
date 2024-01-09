@@ -58,7 +58,7 @@ const RenameModal = ({
                         id="outlined-basic"
                         variant="outlined"
                         autoFocus={true}
-                        value={newName}
+                        value={!newName ? '' : newName}
                         type={'text'}
                         onChange={e => setNewMediaName(e.currentTarget.value)}
 

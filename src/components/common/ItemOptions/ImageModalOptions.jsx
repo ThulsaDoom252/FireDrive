@@ -1,10 +1,10 @@
 import React from 'react';
 import {BiSolidPencil} from "react-icons/bi";
 import {FaShare, FaTrash} from "react-icons/fa";
-import {renameModal, shareModal} from "../../common/common";
+import {renameModal, shareModal} from "../../../common/common";
 import {BsFullscreen} from "react-icons/bs";
 import {AiOutlineFullscreenExit} from "react-icons/ai";
-import FittedThemeBtn from "../common/theme/FittedThemeBtn";
+import FittedThemeBtn from "../theme/FittedThemeBtn";
 
 const ImageModalOptions = ({
                                handleFullScreen,
@@ -51,10 +51,14 @@ const ImageModalOptions = ({
 
     return (
         <>
-            {optionItem.map((item, index) => <FittedThemeBtn
-                onClick={item.onClick} imgModalBtn>
-                {smallScreen ? (fullScreen && item.exitIcon ? item.exitIcon : item.icon) : item.label}
-            </FittedThemeBtn>)}
+            {optionItem.map((item, index) =>
+                <React.Fragment key={index}>
+                    <FittedThemeBtn
+                        onClick={item.onClick} imgModalBtn>
+                        {smallScreen ? (fullScreen && item.exitIcon ? item.exitIcon : item.icon) : item.label}
+                    </FittedThemeBtn>
+                </React.Fragment>
+            )}
         </>
     );
 };

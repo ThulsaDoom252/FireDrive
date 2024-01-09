@@ -1,5 +1,5 @@
 import React from 'react';
-import ItemOptions from "../../../options/ItemOptions";
+import ItemOptions from "../../../common/ItemOptions/ItemOptions";
 import {Box, Button, Fade} from '@mui/material';
 import {topVideoOptionsBtn, videoPlayerOptionsBlock} from '../../../../common/styles';
 import {PiDotsThreeOutlineFill} from 'react-icons/pi';
@@ -52,7 +52,6 @@ const TopBlock = ({
                             index={index}
                             name={name}
                             oldName={oldName}
-                            showBg={false}
                             confirm={confirm}/>
                     </Box>
                 </Box>

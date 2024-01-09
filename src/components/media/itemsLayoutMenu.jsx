@@ -37,27 +37,28 @@ const ItemsLayoutMenu = ({
                         justify-center`}>
                         <p className={'text-center absolute text-lg font-sans top-2 w-full'}>Select items layout</p>
                         {gridLayoutItemsArr.map((gridItem, index) =>
-                            <Button
-                                sx={{
-                                    width: '50px',
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    margin: '5px',
-                                    height: '50px',
-                                    borderRadius: '10px',
-                                    background: index === gridLayoutIndex ? 'white' : 'none',
-                                    "&:hover": {
-                                        backgroundColor: 'white',
-                                    },
-                                }}
-                                onClick={() => handleCollValue(gridItem.divider, index)}>
-                                <img
-                                    className={'h-full'}
-                                    key={index}
-                                    src={gridItem.img}
-                                    alt={`layout-${index}`}/>
-                            </Button>
+                            <React.Fragment key={index}>
+                                <Button
+                                    sx={{
+                                        width: '50px',
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        margin: '5px',
+                                        height: '50px',
+                                        borderRadius: '10px',
+                                        background: index === gridLayoutIndex ? 'white' : 'none',
+                                        "&:hover": {
+                                            backgroundColor: 'white',
+                                        },
+                                    }}
+                                    onClick={() => handleCollValue(gridItem.divider, index)}>
+                                    <img
+                                        className={'h-full'}
+                                        src={gridItem.img}
+                                        alt={`layout-${index}`}/>
+                                </Button>
+                            </React.Fragment>
                         )}
                     </Box>
 

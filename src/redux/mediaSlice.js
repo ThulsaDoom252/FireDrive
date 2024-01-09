@@ -388,6 +388,7 @@ export const listMedia = createAsyncThunk('listMedia-thunk', async ({mediaType},
     const results = await Promise.all(data.items.map((item) => Promise.all([getDownloadURL(item), getMetadata(item)])))
     const mediaData = filterMediaData(results, mediaFetchMode)
     dispatch(setMediaSet({mediaType, mediaData}))
+    debugger
     dispatch(changeListedMediaName({mediaType}))
     dispatch(toggleFetchMedia({mediaType, toggle: false}))
 })

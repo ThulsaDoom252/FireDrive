@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect, useCallback} from 'react';
 import ReactPlayer from "react-player";
-import ItemOptions from "../options/ItemOptions";
+import ItemOptions from "../common/ItemOptions/ItemOptions";
 import {delay, formatTime, preventDefault} from "../../common/common";
 import {BiSolidVolume, BiVolumeMute} from "react-icons/bi";
 import {Box, Tooltip} from "@mui/material";

@@ -1,18 +1,17 @@
-import {saveAs} from "file-saver"
-import {getStorage, ref, getDownloadURL} from "firebase/storage";
+import {ref,getBytes, getStorage} from 'firebase/storage';
 
-
-export async function download(videoUrl, name) {
+export const download = async (url) => {
     const storage = getStorage();
-    const storageRef = ref(storage, videoUrl);
 
-    getDownloadURL(storageRef)
-        .then(async (url) => {
-            const response = await fetch(url);
-            const blob = await response.blob();
-            saveAs(blob, 'video.mp4');
-        })
-        .catch((error) => {
-            // Обработка ошибок
-        });
-}
+    try {
+        const fileRef = ref(storage, url); // Создаем ссылку на файл в Storage
+        const fileBytes = await getBytes(fileRef); // Получаем байты файла
+
+        // Далее вы можете использовать полученные байты файла по вашему усмотрению
+        // Например, вы можете сохранить файл на устройстве пользователя с помощью FileSaver.js или другой библиотеки
+
+        console.log("Файл успешно загружен:", fileBytes);
+    } catch (error) {
+        console.error("Ошибка при загрузке файла:", error);
+    }
+};
