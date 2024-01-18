@@ -134,6 +134,7 @@ export function AudioPlayerContextProvider({children}) {
                 : audio.pause()
         }
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isCurrentTrackPlaying])
 
 
@@ -216,7 +217,7 @@ export function AudioPlayerContextProvider({children}) {
             audio.removeEventListener('ended', handleEnded);
             audio.removeEventListener('durationchange', handleDurationChange);
         };
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [audioSet?.length, audioSet?.name, audioSet, currentTrackIndex, repeatMode])
 
 

@@ -115,19 +115,20 @@ const Main = ({
         }
         useEffect(() => {
             setCurrentRoute(pathName)
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [pathName])
 
 
         useEffect(() => {
             mediaTypes.forEach(mediaType =>
                 listMedia({mediaType}))
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [])
 
         const hideSearch = () => {
             isSearchVisible && toggleSearch(false)
             searchRequest && setSearchRequest('')
         }
-
 
         const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
         const mediaToShow = searchMode ? searchResults : listMode === paginateMode ? paginatedMedia : currentMediaSet
