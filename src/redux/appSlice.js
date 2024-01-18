@@ -19,7 +19,7 @@ import {
     secNightBg
 } from "../components/common/theme/themes";
 import {get, ref as dbRef, update} from "firebase/database";
-import {database} from "../firebase";
+import {database} from "../config";
 import toast from "react-hot-toast";
 import {getAuth} from "firebase/auth";
 import {handleMediaName} from './mediaSlice';

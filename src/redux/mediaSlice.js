@@ -19,7 +19,7 @@ import {
     deleteObject,
     updateMetadata
 } from "firebase/storage";
-import {storage} from "../firebase";
+import {storage} from "../config";
 import {getAuth} from "firebase/auth";
 import {getSpecificState} from "../common/helpers";
 import toast from "react-hot-toast";

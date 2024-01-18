@@ -33,7 +33,6 @@ const CustomControls = ({
         isScaleSubMenuOpen,
         isSpeedSubMenuOpen,
         isVideoMenuOpen,
-        handleMainClick,
         handleVideoMenu,
         handleScaleSubMenu,
         handleSpeedSubMenu,
@@ -78,7 +77,7 @@ const CustomControls = ({
            ${color} 
            ${(!smallScreenMode && !isFullScreen) && 'pr-10 pl-10'}
         `}
-            onClick={handleMainClick}
+            onClick={() => handlePlay({isMainBtnClicked: true})}
         >
             {/*Top menu block*/}
             <TopBlock

@@ -218,7 +218,6 @@ const Main = ({
                         }>
                             {isPlayerHidden ?
                                 <ThemeBtn
-
                                     rounded onClick={handlePlayerVisibility}
                                     className={`${isCurrentTrackPlaying && 'animate-pulse'}`}>
                                     <HeadphonesIcon className={'z-1'}/>
@@ -226,9 +225,7 @@ const Main = ({
                                             hidden={!isCurrentTrackPlaying}
                                             className={'absolute w-10 h-10 bottom-2'}/>
                                 </ThemeBtn> :
-                                <AudioPlayer currentTheme={currentTheme}
-                                             currentRoute={currentRoute}
-                                             smallScreenMode={smallScreen}
+                                <AudioPlayer smallScreenMode={smallScreen}
                                              handlePlayerVisibility={handlePlayerVisibility}/>}
                         </ThemeContainer>
                     </Scrollbars>

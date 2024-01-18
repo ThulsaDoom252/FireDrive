@@ -14,12 +14,11 @@ import ThemedVolumeBar from "../common/theme/ThemedVolumeBar";
 import {VisibilityOff} from "@mui/icons-material"
 import {download} from "../../dal"
 import {FaDownload} from 'react-icons/fa';
+import {audioRoute} from '../../common/common';
 
 const AudioPlayer = ({
                          smallScreenMode,
                          buttonsSize: iconSize = 28,
-                         currentTheme,
-                         currentRoute,
                          handlePlayerVisibility,
                      }) => {
 
@@ -81,7 +80,7 @@ const AudioPlayer = ({
         },
         {
             type: 'download',
-            onClick: () => download(currentTrack.url, currentTrackName, currentRoute),
+            onClick: () => download(currentTrack.url, currentTrackName, audioRoute),
             icon: <FaDownload/>,
         },
     ]

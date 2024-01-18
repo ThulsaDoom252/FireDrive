@@ -2,12 +2,16 @@ import React, {useContext, useEffect, useState} from 'react';
 import {ItemsModalContext} from "../../../context/ItemsModalContext";
 import VideoModal from "./VideoModal";
 import {VideoControlsContext} from "../../../context/VideoControlsContext";
+import {AudioPlayerContext} from '../../../context/AudioPlayerContext';
 
 const VideoModalContainer = ({toggleModal, confirm, handleCurrentItemModal}) => {
 
     const CustomControlsContext = useContext(VideoControlsContext)
     const ModalContext = useContext(ItemsModalContext);
+    const AudioContext = useContext(AudioPlayerContext)
     const [isVideoReady, setIsVideoReady] = useState(false);
+
+    const {isCurrentTrackPlaying, toggleCurrentTrackPlaying} = AudioContext
 
     const {
         controlBtnAnimation,
@@ -83,7 +87,6 @@ const VideoModalContainer = ({toggleModal, confirm, handleCurrentItemModal}) => 
         isScaleSubMenuOpen,
         isSpeedSubMenuOpen,
         isVideoMenuOpen,
-        handleMainClick,
         handleVideoMenu,
         handleScaleSubMenu,
         handleSpeedSubMenu,
@@ -103,7 +106,7 @@ const VideoModalContainer = ({toggleModal, confirm, handleCurrentItemModal}) => 
         previewTime,
         currentVideoVolume,
         currentSubMenu,
-        handlePlay,
+        handleVideoPlay,
         handleMuteVideoVolume,
         confirm,
         toggleModal,
@@ -111,6 +114,17 @@ const VideoModalContainer = ({toggleModal, confirm, handleCurrentItemModal}) => 
         isVideoOptionsWidthExpanded,
         handleVideoOptions,
     ]
+
+    function handleVideoPlay({isMainBtnClicked}) {
+        debugger
+        isCurrentTrackPlaying && toggleCurrentTrackPlaying(false)
+        if (isMainBtnClicked) {
+            handleMainClick()
+            debugger
+            return
+        }
+        handlePlay()
+    }
 
     useEffect(() => {
         currentMediaSet.length === 0 && handleClose()

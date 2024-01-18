@@ -13,7 +13,7 @@ import {
     signOut,
 } from 'firebase/auth'
 import {uploadBytes, ref, getDownloadURL} from "firebase/storage";
-import {database, storage,} from "../firebase";
+import {database, storage,} from "../config";
 import toast from "react-hot-toast";
 import {extractUsernameFromEmail, generateRandomString} from "../common/common";
 import {getTheme, toggleCurrentTheme, toggleInitializing} from "./appSlice";

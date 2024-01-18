@@ -8,7 +8,6 @@ import {deleteCurrentItem} from "../../redux/mediaSlice";
 
 const ImageModalContainer = ({confirm, handleItemModal, handleModal, currentRoute}) => {
         const modalContext = useContext(ItemsModalContext)
-
         const dispatch = useDispatch()
 
         const {
@@ -29,7 +28,6 @@ const ImageModalContainer = ({confirm, handleItemModal, handleModal, currentRout
             showImageSettingsInSmallScreen,
             toggleImageSettingInSmallScreen,
         } = modalContext
-
 
         const [closeModalByBtn, setCloseModalByBtn] = useState(false)
 
@@ -64,9 +62,6 @@ const ImageModalContainer = ({confirm, handleItemModal, handleModal, currentRout
             currentMediaSet.length === 0 && handleClose()
         }, [currentMediaSet.length]);
 
-        window.s1 = currentMediaSet
-
-
         const handleDeleteCurrentModalItem = async () => {
             await dispatch(handleAlertModal({message: removeCurrentItemMsg, title: removeCurrentItemTitle}))
             const userAction = await confirm()
@@ -85,12 +80,10 @@ const ImageModalContainer = ({confirm, handleItemModal, handleModal, currentRout
 
         const handleClose = (closeByBtn) => {
             fullScreen && handleFullScreen()
-
             if (closeByBtn) {
                 setCloseModalByBtn(true)
                 return
             }
-
             handleItemModal()
         }
 

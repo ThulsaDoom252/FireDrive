@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {animated, useSpring} from "react-spring"
 import {delay} from './common';
+import {defaultModalAnimateDuration} from '../config';
 
 const AnimatedContainer = ({
-                               duration = 300,
+                               duration = defaultModalAnimateDuration,
                                children,
                                onCLick,
                                zIndex = 'z-10',
