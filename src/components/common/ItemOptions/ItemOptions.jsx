@@ -69,12 +69,6 @@ const ItemOptions = ({
             }
         }
 
-        const handleDownload = () => {
-            const link = document.createElement('a');
-            link.href = url;
-            link.click();
-        };
-
 
         const iconBlockClass = `${iconBgColor ? ` 
     bg-opacity-5
@@ -156,7 +150,8 @@ const ItemOptions = ({
                                     /> : 'Delete Item'}
                             </FittedThemeBtn>
                             {!onlyDeleteOption &&
-                                <FittedThemeBtn isHidden={onlyDeleteOption} onClick={() => download(url)}><BsDownload
+                                <FittedThemeBtn isHidden={onlyDeleteOption}
+                                                onClick={() => download(url, name, currentRoute)}><BsDownload
                                     size={iconsSize}
                                     color={downloadIconColor}/></FittedThemeBtn>}
                         </div>

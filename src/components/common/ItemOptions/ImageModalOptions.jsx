@@ -1,10 +1,11 @@
 import React from 'react';
 import {BiSolidPencil} from "react-icons/bi";
-import {FaShare, FaTrash} from "react-icons/fa";
+import {FaDownload, FaShare, FaTrash} from "react-icons/fa";
 import {renameModal, shareModal} from "../../../common/common";
 import {BsFullscreen} from "react-icons/bs";
 import {AiOutlineFullscreenExit} from "react-icons/ai";
 import FittedThemeBtn from "../theme/FittedThemeBtn";
+import {download} from "../../../dal"
 
 const ImageModalOptions = ({
                                handleFullScreen,
@@ -12,12 +13,14 @@ const ImageModalOptions = ({
                                smallScreen,
                                iconSize = 30,
                                handleModal,
+                               currentModalItemUrl,
+                               currentRoute,
                                currentModalItemName,
                                currentModalOldName,
                                fullScreen,
                            }) => {
 
-    const optionItem = [
+    const optionItems = [
         {
             type: 'fullscreen',
             icon: <BsFullscreen size={iconSize}/>,
@@ -41,17 +44,22 @@ const ImageModalOptions = ({
             label: 'Share'
         },
         {
+            type: 'download',
+            icon: <FaDownload size={iconSize}/>,
+            onClick: () => download(currentModalItemUrl, currentModalItemName, currentRoute),
+            label: 'Download'
+        },
+        {
             type: 'delete',
             icon: <FaTrash size={iconSize}/>,
             onClick: () => handleDeleteCurrentModalItem(),
             label: 'Delete'
         },
-
     ]
 
     return (
         <>
-            {optionItem.map((item, index) =>
+            {optionItems.map((item, index) =>
                 <React.Fragment key={index}>
                     <FittedThemeBtn
                         onClick={item.onClick} imgModalBtn>

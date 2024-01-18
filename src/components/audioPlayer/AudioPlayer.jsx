@@ -1,3 +1,4 @@
+import React from 'react';
 import {FiSkipBack, FiSkipForward, FiPlay, FiPause} from 'react-icons/fi';
 import {connect} from "react-redux";
 import {useContext} from "react";
@@ -11,14 +12,16 @@ import {ImVolumeHigh, ImVolumeMute2} from "react-icons/im";
 import FittedThemeBtn from "../common/theme/FittedThemeBtn";
 import ThemedVolumeBar from "../common/theme/ThemedVolumeBar";
 import {VisibilityOff} from "@mui/icons-material"
+import {download} from "../../dal"
+import {FaDownload} from 'react-icons/fa';
 
 const AudioPlayer = ({
                          smallScreenMode,
                          buttonsSize: iconSize = 28,
                          currentTheme,
+                         currentRoute,
                          handlePlayerVisibility,
                      }) => {
-
 
     const audioContext = useContext(AudioPlayerContext)
 
@@ -40,7 +43,48 @@ const AudioPlayer = ({
         handleRepeatMode,
         handleVolumeChange,
         toggleMuteVolume,
+        currentTrack,
     } = audioContext
+
+    const audioPlayerButtons = [
+        {
+            type: 'prev',
+            onClick: () => handlePreviousTrack(),
+            isDisabled: prevBtnDisabled,
+            icon:    <FiSkipBack size={iconSize}/>
+        },
+        {
+            type: 'play',
+            onClick: () => setIsCurrentTrackPlaying(!isCurrentTrackPlaying),
+            isDisabled: playBtnDisabled,
+            icon:    isCurrentTrackPlaying ? <FiPause size={iconSize}/> : <FiPlay size={iconSize}/>
+        },
+        {
+            type: 'next',
+            onClick: handleNextTrack,
+            isDisabled: nextBtnDisabled,
+            icon: <FiSkipForward size={iconSize}/>
+        }
+    ]
+
+    const audioPlayerOptions = [
+        {
+            type: 'toggle',
+            onClick: () => handlePlayerVisibility(),
+            icon: <VisibilityOff/>,
+        },
+        {
+            type: 'repeat',
+            onClick: () => handleRepeatMode(),
+            icon: repeatMode === 'none' ? <LuRepeat size={20}/> : repeatMode === 'once' ?
+                <LuRepeat1 size={20}/> : <IoInfinite size={20}/>,
+        },
+        {
+            type: 'download',
+            onClick: () => download(currentTrack.url, currentTrackName, currentRoute),
+            icon: <FaDownload/>,
+        },
+    ]
 
     if (noAudio) {
         return <AudioPlayerDisabled buttonsSize={iconSize}/>
@@ -61,19 +105,11 @@ const AudioPlayer = ({
                 <div className={`w-full  flex items-center justify-between `}>
                     <div
                         className={`flex  items-center justify-between mr-2 ${smallScreenMode && 'relative top-2'}`}>
-                        <FittedThemeBtn onClick={handlePreviousTrack} isDisabled={prevBtnDisabled}>
-                            <FiSkipBack size={iconSize}
-                            />
-                        </FittedThemeBtn>
-                        <FittedThemeBtn
-                            onClick={() => setIsCurrentTrackPlaying(!isCurrentTrackPlaying)}
-                            isDisabled={playBtnDisabled}>{isCurrentTrackPlaying ? <FiPause size={iconSize}/> :
-                            <FiPlay size={iconSize}/>}</FittedThemeBtn>
-                        <FittedThemeBtn
-                            isDisabled={nextBtnDisabled}
-                            onClick={handleNextTrack}>
-                            <FiSkipForward size={iconSize}/>
-                        </FittedThemeBtn>
+                        {audioPlayerButtons.map((btn, index) => <React.Fragment key={index}>
+                            <FittedThemeBtn isDisabled={btn.isDisabled} onClick={btn.onClick}>
+                                {btn.icon}
+                            </FittedThemeBtn>
+                        </React.Fragment>)}
                     </div>
                     <div className={`
                   w-full
@@ -90,15 +126,11 @@ const AudioPlayer = ({
                     <div>
                         <div
                             className={`flex justify-center items-center ${smallScreenMode && 'relative top-2'} `}>
-                            <FittedThemeBtn  onClick={handlePlayerVisibility}>
-                                <VisibilityOff/>
-                            </FittedThemeBtn>
-                            <FittedThemeBtn
-                                onClick={handleRepeatMode}
-                            >
-                                {repeatMode === 'none' ? <LuRepeat size={20}/> : repeatMode === 'once' ?
-                                    <LuRepeat1 size={20}/> : <IoInfinite size={20}/>}
-                            </FittedThemeBtn>
+                            {audioPlayerOptions.map((btn, index) => <React.Fragment key={index}>
+                                <FittedThemeBtn onClick={btn.onClick}>
+                                    {btn.icon}
+                                </FittedThemeBtn>
+                            </React.Fragment>)}
                             <div className={'flex relative ml-2'}>
                                 <FittedThemeBtn
                                     onClick={toggleMuteVolume}

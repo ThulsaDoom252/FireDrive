@@ -19,6 +19,7 @@ const ImageModal = ({
                         handleClose,
                         swipeHandlers,
                         smallScreen,
+                        currentRoute,
                         fullScreen,
                         handleFullScreen,
                         currentModalItemUrl,
@@ -98,7 +99,9 @@ const ImageModal = ({
                                                handleDeleteCurrentModalItem={handleDeleteCurrentModalItem}
                                                smallScreen={smallScreen}
                                                fullScreen={fullScreen}
+                                               currentRoute={currentRoute}
                                                handleModal={handleModal}
+                                               currentModalItemUrl={currentModalItemUrl}
                                                currentModalItemName={currentModalItemName}
                                                currentModalOldName={currentModalItemOldName}
                             />

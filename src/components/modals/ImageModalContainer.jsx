@@ -6,7 +6,7 @@ import {handleAlertModal} from "../../redux/appSlice";
 import {useDispatch} from "react-redux";
 import {deleteCurrentItem} from "../../redux/mediaSlice";
 
-const ImageModalContainer = ({confirm, handleItemModal, handleModal}) => {
+const ImageModalContainer = ({confirm, handleItemModal, handleModal, currentRoute}) => {
         const modalContext = useContext(ItemsModalContext)
 
         const dispatch = useDispatch()
@@ -113,6 +113,7 @@ const ImageModalContainer = ({confirm, handleItemModal, handleModal}) => {
                     currentMediaSet={currentMediaSet}
                     fullScreen={fullScreen}
                     handleFullScreen={handleFullScreen}
+                    currentRoute={currentRoute}
                     currentModalItemUrl={currentModalItemUrl}
                     swipeHandlers={swipeHandlers}
                     handleNextModalItem={handleNextModalItem}

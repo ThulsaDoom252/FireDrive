@@ -1,17 +1,47 @@
-import {ref,getBytes, getStorage} from 'firebase/storage';
+import {ref, getBytes, getStorage} from 'firebase/storage';
+import {imagesRoute, videosRoute} from './common/common';
 
-export const download = async (url) => {
-    const storage = getStorage();
+const storage = getStorage();
 
+export const download = async (url, fileName, currentRoute) => {
     try {
         const fileRef = ref(storage, url); // Создаем ссылку на файл в Storage
         const fileBytes = await getBytes(fileRef); // Получаем байты файла
 
-        // Далее вы можете использовать полученные байты файла по вашему усмотрению
-        // Например, вы можете сохранить файл на устройстве пользователя с помощью FileSaver.js или другой библиотеки
+        // Создаем объект Blob с байтами файла и его типом MIME
+        const blob = new Blob([fileBytes], {type: 'application/octet-stream'});
 
-        console.log("Файл успешно загружен:", fileBytes);
+        // Создаем временную ссылку на файл
+        const downloadUrl = URL.createObjectURL(blob);
+
+        // Создаем элемент <a> для скачивания файла
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        const extension = await handleFileExtension(currentRoute)
+        link.download = `${fileName}.${extension}`; // Устанавливаем имя файла
+        link.click();
+
+        console.log(`Файл "${fileName}" успешно загружен`);
     } catch (error) {
-        console.error("Ошибка при загрузке файла:", error);
+        console.error(`Ошибка при загрузке файла "${fileName}":`, error);
     }
 };
+
+
+const handleFileExtension = (currentRoute) => {
+    return new Promise((r) => {
+        let extension = ''
+        switch (currentRoute) {
+            case imagesRoute:
+                extension = 'jpg'
+                break
+            case  videosRoute :
+                extension = 'mp4'
+                break
+            default:
+                extension = 'mp3'
+        }
+        r(extension)
+    })
+}
+

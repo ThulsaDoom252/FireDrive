@@ -248,6 +248,7 @@ export function AudioPlayerContextProvider({children}) {
         toggleCurrentTrackPlaying,
         audioRef,
         volume,
+        currentTrack,
     };
 
     return (
