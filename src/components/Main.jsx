@@ -1,6 +1,7 @@
 import React, {useContext, useEffect} from 'react';
 import HeaderContainer from "./header/HeaderContainer";
 import {
+    audioRoute,
     imageItemModal, lazyMode,
     mainContentId,
     mediaTypes, noModal, paginateMode, renameModal, rootRoute, shareModal,
@@ -38,6 +39,7 @@ import ThemeBtn from './common/theme/ThemeBtn';
 import HeadphonesIcon from '@mui/icons-material/Headphones';
 import equalizerAnimation from "../lottie/equilizer.json"
 import Lottie from 'lottie-react';
+import {GridLayoutContext} from '../context/GridLayoutContext';
 
 const Main = ({
                   currentMediaSet,
@@ -49,7 +51,6 @@ const Main = ({
                   searchMode,
                   searchResults,
                   setModalType,
-                  setItemModalType,
                   currentTheme,
                   searchRequest,
                   setSearchRequest,
@@ -76,6 +77,9 @@ const Main = ({
         const location = useLocation()
 
         const audioPlayerContext = useContext(AudioPlayerContext)
+        const gridLayoutContext = useContext(GridLayoutContext)
+
+        const {gridLayoutItemsArr, gridLayoutIndex, gridDividerValue, handleCollValue,} = gridLayoutContext
 
         const {isPlayerHidden, isCurrentTrackPlaying, handlePlayerVisibility} = audioPlayerContext
 
@@ -90,6 +94,7 @@ const Main = ({
 
         const pathName = location.pathname
         const homePage = pathName === rootRoute
+        const audioPage = pathName === audioRoute
         const isPaginatorEnabled = listMode === paginateMode
         const noMedia = currentMediaSet.length === 0
 
@@ -122,6 +127,7 @@ const Main = ({
             isSearchVisible && toggleSearch(false)
             searchRequest && setSearchRequest('')
         }
+
 
         const paginatedMedia = currentMediaSet.slice(firstItemIndex, lastItemIndex)
         const mediaToShow = searchMode ? searchResults : listMode === paginateMode ? paginatedMedia : currentMediaSet
@@ -173,11 +179,16 @@ const Main = ({
                             totalUploadedBytes,
                             totalBytesToUpload,
                             confirm,
+                            currentTheme,
                             currentThemeName,
                             handleListMode,
+                            audioPage,
                             isPaginatorEnabled,
                             itemsPerPage,
-                            setItemsPerPage
+                            setItemsPerPage,
+                            gridLayoutItemsArr,
+                            gridLayoutIndex,
+                            handleCollValue,
                         }}/>
                         {homePage && <Home
                             smallScreen={smallScreen}
@@ -192,6 +203,7 @@ const Main = ({
                                                      isMediaDeleting,
                                                      deletedItemUrl,
                                                      searchMode,
+                                                     gridDividerValue,
                                                      searchResults,
                                                      smallScreen,
                                                      currentTheme,
@@ -264,7 +276,8 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
     listMedia, setCurrentRoute, toggleSearch,
-    toggleListMode, handleCurrentModal, handleCurrentItemModal, setSearchRequest,
+    toggleListMode, handleCurrentModal, handleCurrentItemModal,
+    setSearchRequest
 })(Main);
 
 

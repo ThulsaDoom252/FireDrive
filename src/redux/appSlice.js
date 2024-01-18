@@ -261,7 +261,6 @@ export const updateTheme = async (theme) => {
         .catch(() => {
             toast.error('error updating verification link status')
         })
-
 };
 
 export const getTheme = async () => {

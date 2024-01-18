@@ -12,6 +12,7 @@ import {BurgerMenuContextProvider} from "./context/BurgerMenuContext";
 import PaginatorContextProvider from "./context/PaginatorContext";
 import {ItemsModalContextProvider} from "./context/ItemsModalContext";
 import {VideoControlsContextProvider} from "./context/VideoControlsContext";
+import GridLayoutContextProvider from './context/GridLayoutContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -23,7 +24,9 @@ root.render(
                     <BurgerMenuContextProvider>
                         <PaginatorContextProvider>
                             <ItemsModalContextProvider>
-                                <App/>
+                                <GridLayoutContextProvider>
+                                    <App/>
+                                </GridLayoutContextProvider>
                             </ItemsModalContextProvider>
                         </PaginatorContextProvider>
                     </BurgerMenuContextProvider>

@@ -12,23 +12,13 @@ import {PaginatorContext} from "../../context/PaginatorContext";
 import {connect} from "react-redux";
 import {
     setCurrentModalItemIndex,
-    setCurrentLayoutIndex,
-    setGridDividerValue,
     setItemOptionsHovered
 } from "../../redux/appSlice";
-import columnLayoutImg from "./layout/numbers/1.png"
-import twoColumnsLayoutImg from "./layout/numbers/2.png"
-import threeColumnsLayoutImg from "./layout/numbers/3.png"
-import quadColumnsLayoutImg from "./layout/numbers/4.png"
-import fiveColumnsLayoutImg from "./layout/numbers/5.png"
-import sixColumnsLayoutImg from "./layout/numbers/6.png"
 
 const ItemsPageContainer = ({
                                 currentRoute,
                                 handleCurrentMediaSet,
                                 handleSearchMedia,
-                                gridLayoutIndex,
-                                setCurrentLayoutIndex,
                                 toggleNoSearchResults,
                                 clearSearchResults,
                                 imagesSet,
@@ -47,20 +37,16 @@ const ItemsPageContainer = ({
                                 isPaginatorEnabled,
                                 isMediaDeleting,
                                 confirm,
-                                gridDividerValue,
-                                setGridDividerValue,
                                 setCurrentModalItemIndex,
                                 handleItemModal,
                                 handleModal,
                                 noMedia,
                                 deletedItemUrl,
+                                gridDividerValue,
                             }) => {
     const pagesContext = useContext(PagesContext)
     const {imagesPage, videosPage, audioPage} = pagesContext
     const [hoveredMediaIndex, setHoveredMediaIndex] = useState(null)
-    const [gridLayoutMenu, toggleGridLayoutMenu] = useState(false)
-    const [gridContainerWidth, setGridContainerWidth] = useState('100%')
-
 
     const paginatorContext = useContext(PaginatorContext)
     const {
@@ -84,6 +70,7 @@ const ItemsPageContainer = ({
             searchMode && toggleSearchMode(false)
             clearSearchResults()
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchRequest])
 
     useEffect(() => {
@@ -92,10 +79,12 @@ const ItemsPageContainer = ({
         } else {
             noSearchResults && toggleNoSearchResults(false)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchRequest, searchResults])
 
     useEffect(() => {
         clearSearchResults()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentRoute])
 
     useEffect(() => {
@@ -105,52 +94,8 @@ const ItemsPageContainer = ({
             void 0
         }
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentRoute, imagesSet, audioSet, videosSet])
-
-    useEffect(() => {
-        if (smallScreen) {
-            gridContainerWidth !== '100%' && setGridContainerWidth('100%')
-            return
-        }
-
-        if (!smallScreen) {
-            switch (gridDividerValue) {
-                case 3: {
-                    setGridContainerWidth('80%')
-                    gridContainerWidth !== '80%' && setGridContainerWidth('80%')
-                    break;
-                }
-                case 4: {
-                    setGridContainerWidth('70%')
-                    gridContainerWidth !== '70%' && setGridContainerWidth('70%')
-                    break
-                }
-                case 6: {
-                    gridContainerWidth !== '60%' && setGridContainerWidth('60%')
-                    break
-                }
-                case 12 : {
-                    gridContainerWidth !== '30%' && setGridContainerWidth('30%')
-                    break
-                }
-                default: {
-                    gridContainerWidth !== '100%' && setGridContainerWidth('100%')
-                }
-            }
-        }
-
-    }, [gridDividerValue, smallScreen])
-
-
-    // layout test
-    const gridLayoutItemsArr = [
-        {img: columnLayoutImg, divider: 12},
-        {img: twoColumnsLayoutImg, divider: 6},
-        {img: threeColumnsLayoutImg, divider: 4},
-        {img: quadColumnsLayoutImg, divider: 3},
-        {img: fiveColumnsLayoutImg, divider: 2.4},
-        {img: sixColumnsLayoutImg, divider: 2},
-    ]
 
     const handleImageClick = (index) => {
         setCurrentModalItemIndex(index)
@@ -162,16 +107,6 @@ const ItemsPageContainer = ({
         handleItemModal(videoItemModal)
     }
 
-    const handleLayoutMenu = () => {
-        toggleGridLayoutMenu(!gridLayoutMenu)
-    }
-
-    const handleCollValue = (number, index) => {
-        setCurrentLayoutIndex(index)
-        setGridDividerValue(number)
-    }
-
-
     return <ItemsPage {...{
         imagesPage,
         isMediaDeleting,
@@ -179,6 +114,7 @@ const ItemsPageContainer = ({
         audioPage,
         currentMediaFetch,
         searchMode,
+        gridDividerValue,
         smallScreen,
         mediaToShow,
         noMedia,
@@ -191,12 +127,6 @@ const ItemsPageContainer = ({
         deletedItemUrl,
         noOpenModal: noMountedModal,
         confirm,
-        handleLayoutMenu,
-        handleCollValue,
-        gridLayoutItemsArr,
-        gridLayoutMenu,
-        gridDividerValue,
-        gridLayoutIndex,
         handleImageClick,
         handleVideoClick,
         handleModal,
@@ -205,8 +135,6 @@ const ItemsPageContainer = ({
 
 const mapStateToProps = (state) => {
     return {
-        gridDividerValue: state.app.gridDividerValue,
-        gridLayoutIndex: state.app.gridLayoutIndex,
         imagesSet: state.media.imagesSet,
         videosSet: state.media.videosSet,
         audioSet: state.media.audioSet,
@@ -222,10 +150,8 @@ export default connect(mapStateToProps, {
     handleSearchMedia,
     toggleSearchMode,
     toggleNoSearchResults,
-    setCurrentLayoutIndex,
     clearSearchResults,
     setSearchRequest,
     setCurrentModalItemIndex,
     setItemOptionsHovered,
-    setGridDividerValue,
 })(ItemsPageContainer)

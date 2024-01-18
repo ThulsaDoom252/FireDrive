@@ -10,6 +10,7 @@ import SettingsDropDown from './DropDowns/SettingsDropDown';
 import ThemedSlider from '../common/theme/ThemedSlider';
 import {Box} from '@mui/material';
 import {userModal} from '../../common/common';
+import LayoutDropDown from './DropDowns/LayoutDropDown';
 
 const BurgerMenu = ({
                         smallScreen,
@@ -21,11 +22,16 @@ const BurgerMenu = ({
                         totalBytesToUpload,
                         handleCurrentModal,
                         confirm,
+                        currentTheme,
                         currentThemeName,
                         handleListMode,
                         isPaginatorEnabled,
                         itemsPerPage,
-                        setItemsPerPage
+                        setItemsPerPage,
+                        gridLayoutItemsArr,
+                        gridLayoutIndex,
+                        handleCollValue,
+                        audioPage,
                     }) => {
 
     return (
@@ -45,6 +51,15 @@ const BurgerMenu = ({
                     <div className={'m-1 w-1/2'}><RemoveAllBtnContainer confirm={confirm}/></div>
                 </div>
                 <div className={'bg-gray-100 h-0.5 rounded w-full'}/>
+                <div className='mt-3'>
+                    <LayoutDropDown isDisabled={audioPage}
+                                    {...{
+                        currentTheme,
+                        gridLayoutItemsArr,
+                        gridLayoutIndex,
+                        handleCollValue
+                    }}/>
+                </div>
                 <div className='mt-3 mb-3'>
                     <ThemeDropDown {...{currentThemeName}}/>
                     <div className={'mt-3'}>

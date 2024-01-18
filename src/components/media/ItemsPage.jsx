@@ -6,8 +6,6 @@ import NoSearchResults from "../search/NoSearchResults";
 import Video from "./Video";
 import ImageBlock from "./Image/ImageBlock";
 import {Box, Grid} from "@mui/material";
-import ItemsLayoutMenu from "./itemsLayoutMenu";
-import Overlay from "../common/Overlay";
 import noImages from "./noImages.jpg"
 import noVideo from "./noVideo.jpg"
 import noAudio from "./noAudio.png"
@@ -30,24 +28,16 @@ const ItemsPage = ({
                        setItemOptionsHovered,
                        noOpenModal,
                        confirm,
-                       handleLayoutMenu,
-                       handleCollValue,
-                       gridLayoutItemsArr,
-                       gridLayoutMenu,
-                       gridLayoutIndex,
-                       gridDividerValue,
                        deletedItemUrl,
                        handleVideoClick,
                        handleImageClick,
                        handleModal,
                        isMediaDeleting,
+                       gridDividerValue,
                    }) => {
 
     return (
         <>
-            {gridLayoutMenu &&
-                <Overlay opacity={'bg-transparent'} height={'h-screen'} zIndex={'z-1'} width={'w-screen'}
-                         toggleModal={handleLayoutMenu} position={'fixed'}/>}
             <section
                 className={`
             mx-auto 
@@ -61,14 +51,14 @@ const ItemsPage = ({
              ${audioPage && smallScreen ? 'w-full' : audioPage ? 'w-1/2' : !audioPage && smallScreen ? 'w-full' : 'w-full pl-10 pr-10'} 
              
              `}>
-                {(!noMedia && !noSearchResults && !audioPage) &&
-                    <ItemsLayoutMenu {...{
-                        gridLayoutMenu,
-                        gridLayoutItemsArr,
-                        gridLayoutIndex,
-                        handleLayoutMenu,
-                        handleCollValue,
-                    }}/>}
+                {/*{(!noMedia && !noSearchResults && !audioPage) &&*/}
+                {/*    <ItemsLayoutMenu {...{*/}
+                {/*        gridLayoutMenu,*/}
+                {/*        gridLayoutItemsArr,*/}
+                {/*        gridLayoutIndex,*/}
+                {/*        handleLayoutMenu,*/}
+                {/*        handleCollValue,*/}
+                {/*    }}/>}*/}
 
                 {noSearchResults && <Box><NoSearchResults/></Box>}
                 {noMedia ?

@@ -60,7 +60,6 @@ const VideoModalContainer = ({toggleModal, confirm, handleCurrentItemModal}) => 
         handleVideoOptions,
     } = CustomControlsContext
 
-
     const {
         currentMediaSet,
         currentModalItemUrl,
