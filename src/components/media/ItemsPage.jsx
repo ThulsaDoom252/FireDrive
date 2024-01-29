@@ -10,6 +10,8 @@ import noImages from "./noImages.jpg"
 import noVideo from "./noVideo.jpg"
 import noAudio from "./noAudio.png"
 import {GridItemContainer} from '../mui/styles';
+import {dummys} from '../../test';
+import ItemsList from './ItemsList';
 
 const ItemsPage = ({
                        imagesPage,
@@ -40,6 +42,8 @@ const ItemsPage = ({
         <>
             <section
                 className={`
+                
+                
             mx-auto 
             relative 
             pt-20 
@@ -64,8 +68,8 @@ const ItemsPage = ({
                 {noMedia ?
                     <Box>
                         <img className={`mx-auto w-1/2 rounded-md opacity-80 bg-white`}
-                              src={(imagesPage ? noImages : videosPage ? noVideo : noAudio)}
-                              alt={'No images'}/></Box> :
+                             src={(imagesPage ? noImages : videosPage ? noVideo : noAudio)}
+                             alt={'No images'}/></Box> :
                     <Grid
                         style={{width: '100%'}}
                         container
@@ -129,7 +133,7 @@ const ItemsPage = ({
                                         </Grid>
                                     </React.Fragment>
                                 ) :
-                                mediaToShow.map(((audio, index) => {
+                                mediaToShow.map((audio, index) => {
                                         return (
                                             <React.Fragment key={index}>
                                                 <Grid item xs={12}>
@@ -155,8 +159,17 @@ const ItemsPage = ({
                                         )
 
                                     }
+                                )
 
-                                ))
+                            // <ItemsList {...{  mediaToShow,
+                            // hoveredMediaIndex,
+                            // setHoveredMediaIndex,
+                            // isMediaDeleting,
+                            // deletedItemUrl,
+                            // searchMode,
+                            // smallScreen,
+                            // confirm,
+                            // handleModal,}}/>
                         }
                     </Grid>}
                 <div hidden={isPaginatorHidden} className={'mt-20'}><Paginator {...{paginatorProps}}/></div>
